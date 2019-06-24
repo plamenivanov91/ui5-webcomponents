@@ -41,7 +41,13 @@ sap.ui.define([
 				navigation: [{
 					key: oSideNavigationKeys.home,
 					section: oSideNavigationKeys.home,
-					title: "Getting Started"
+					title: "Getting Started",
+					items: [
+						{
+							title: "Tutorials",
+							key: "tutorials"
+						}
+					]
 				}, {
 					title: "Components",
 					key: oSideNavigationKeys.samples,

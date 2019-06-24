@@ -76,10 +76,14 @@ sap.ui.define([
 
 			// register the pattern matchers
 			this.getRouter().getRoute("home").attachPatternMatched("patternMatched", function (oEvent) {
-				this.selectView();
+				this.selectView({
+					section: oEvent.getParameter("arguments").section
+				});
 			}, this);
 			this.getRouter().getRoute("components").attachPatternMatched("patternMatched", function (oEvent) {
-				this.selectView(oEvent.getParameter("arguments").componentId);
+				this.selectView({
+					componentId: oEvent.getParameter("arguments").componentId
+				});
 			}, this);
 
 			// create the views based on the url/hash
@@ -112,7 +116,7 @@ sap.ui.define([
 			// called by apps to change the route
 			sap.ui.core.routing.Router.prototype.navTo = function (sName, oParameters) {
 				// calculate the path based on the parameters
-				var path = this.getURL(sName, oParameters);
+				var path = this.getURL(sName, oParameters).replace(/^\//, "");
 				console.log("navTo:", path);
 				// update the URL entry
 				window.history.pushState({}, undefined, routeToURL(path));
@@ -121,7 +125,9 @@ sap.ui.define([
 			}
 		},
 
-		selectView: function(sComponent) {
+		selectView: function(urlParameters) {
+			var sComponent = urlParameters.componentId,
+				sSection = urlParameters.section;
 			if (sComponent) {
 				this.getModel().getProperty("/navigation/1/items").forEach(function(oComponent) {
 					if (oComponent.key === sComponent) {
@@ -135,10 +141,10 @@ sap.ui.define([
 						this.getModel().setProperty("/selectedView", getRealBaseURI() + oComponent.url + (sFrameUrlParameters ? "?" + sFrameUrlParameters : ""));
 					}
 				}.bind(this));
-			} else {
+			} else if (sSection) {
 				document.title = "Home - UI5 Web Components";
 				this.getModel().setProperty("/showNavigationLinks", false);
-				this.getModel().setProperty("/selectedView", getRealBaseURI() + "www/home/");
+				this.getModel().setProperty("/selectedView", getRealBaseURI() + "www/" + sSection + "/");
 			}
 		},
 

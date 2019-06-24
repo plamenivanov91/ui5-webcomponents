@@ -68,7 +68,7 @@
             },
             "routes": [
                 {
-                    "pattern": "",
+                    "pattern": "/{section}",
                     "name": "home",
                     "target": "home"
                 },

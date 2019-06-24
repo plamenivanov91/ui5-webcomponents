@@ -72,7 +72,9 @@ sap.ui.define([
 					"componentId": oContext.getProperty("key")
 				});
 			} else {
-				this.oRouter.navTo("home");
+				this.oRouter.navTo("home", {
+					"section": oContext.getProperty("key")
+				});
 			}
 
 			if (this.isSystemPhone) {
