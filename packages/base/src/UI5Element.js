@@ -1,3 +1,4 @@
+import boot from "./boot.js";
 import { getWCNoConflict, getCompactSize } from "./Configuration.js";
 import DOMObserver from "./compatibility/DOMObserver.js";
 import UI5ElementMetadata from "./UI5ElementMetadata.js";
@@ -5,6 +6,8 @@ import Integer from "./types/Integer.js";
 import RenderScheduler from "./RenderScheduler.js";
 import { getConstructableStyle, createHeadStyle, getShadowRootStyle } from "./CSS.js";
 import { attachThemeChange } from "./Theming.js";
+import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
+import isValidPropertyName from "./util/isValidPropertyName.js";
 
 const metadata = {
 	events: {
@@ -39,7 +42,7 @@ class UI5Element extends HTMLElement {
 	}
 
 	onThemeChanged() {
-		if (window.ShadyDOM) {
+		if (window.ShadyDOM || this.constructor.getMetadata().getNoShadowDOM()) {
 			// polyfill theme handling is in head styles directly
 			return;
 		}
@@ -271,7 +274,8 @@ class UI5Element extends HTMLElement {
 		allProps.forEach(this._upgradeProperty.bind(this));
 	}
 
-	static define() {
+	static async define() {
+		await boot();
 		const tag = this.getMetadata().getTag();
 
 		const definedLocally = DefinitionsSet.has(tag);
@@ -589,6 +593,15 @@ class UI5Element extends HTMLElement {
 	}
 
 	/**
+	 * Used to duck-type UI5 elements without using instanceof
+	 * @returns {boolean}
+	 * @private
+	 */
+	get _isUI5Element() {
+		return true;
+	}
+
+	/**
 	 * Used to generate the next auto-increment id for the current class
 	 * @returns {string}
 	 * @private
@@ -677,7 +690,7 @@ class UI5Element extends HTMLElement {
 		// Properties
 		const properties = this.getMetadata().getProperties();
 		for (const [prop, propData] of Object.entries(properties)) { // eslint-disable-line
-			if (nameCollidesWithNative(prop)) {
+			if (!isValidPropertyName(prop)) {
 				throw new Error(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
@@ -730,7 +743,7 @@ class UI5Element extends HTMLElement {
 		// Slots
 		const slots = this.getMetadata().getSlots();
 		for (const [slot, slotData] of Object.entries(slots)) { // eslint-disable-line
-			if (nameCollidesWithNative(slot)) {
+			if (!isValidPropertyName(slot)) {
 				throw new Error(`"${slot}" is not a valid property name. Use a name that does not collide with DOM APIs`);
 			}
 
@@ -751,23 +764,5 @@ class UI5Element extends HTMLElement {
 		}
 	}
 }
-const kebabToCamelCase = string => toCamelCase(string.split("-"));
-const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-const toCamelCase = parts => {
-	return parts.map((string, index) => {
-		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-	}).join("");
-};
-const nameCollidesWithNative = name => {
-	if (name === "disabled") {
-		return false;
-	}
-	const classes = [
-		HTMLElement,
-		Element,
-		Node,
-	];
-	return classes.some(klass => klass.prototype.hasOwnProperty(name)); // eslint-disable-line
-};
 
 export default UI5Element;

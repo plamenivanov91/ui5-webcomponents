@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/src/renderer/LitRenderer.js";
-import Bootstrap from "@ui5/webcomponents-base/src/Bootstrap.js";
 import { isIE } from "@ui5/webcomponents-core/dist/sap/ui/Device.js";
 import ValueState from "@ui5/webcomponents-base/src/types/ValueState.js";
 import { getCompactSize } from "@ui5/webcomponents-base/src/Configuration.js";
@@ -159,7 +158,7 @@ const metadata = {
 		 * Determines the name with which the <code>ui5-input</code> will be submitted in an HTML form.
 		 *
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";</code>
+		 * <code>import "@ui5/webcomponents/dist/InputElementsFormSupport.js";</code>
 		 *
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the <code>ui5-input</code> so that it can be submitted as
@@ -316,8 +315,6 @@ class Input extends UI5Element {
 		// all user interactions
 		this.ACTION_ENTER = "enter";
 		this.ACTION_USER_INPUT = "input";
-
-		this._whenShadowRootReady().then(this.attachFocusHandlers.bind(this));
 	}
 
 	onBeforeRendering() {
@@ -329,7 +326,7 @@ class Input extends UI5Element {
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import InputElementsFormSupport from "@ui5/webcomponents/dist/InputElementsFormSupport";`); // eslint-disable-line
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
@@ -410,12 +407,6 @@ class Input extends UI5Element {
 		if (this.Suggestions) {
 			this.Suggestions.updateSelectedItemPosition(null);
 		}
-	}
-
-	/* Private Methods */
-	attachFocusHandlers() {
-		this.shadowRoot.addEventListener("focusout", this.onfocusout.bind(this));
-		this.shadowRoot.addEventListener("focusin", this.onfocusin.bind(this));
 	}
 
 	enableSuggestions() {
@@ -566,8 +557,6 @@ class Input extends UI5Element {
 	}
 }
 
-Bootstrap.boot().then(_ => {
-	Input.define();
-});
+Input.define();
 
 export default Input;
