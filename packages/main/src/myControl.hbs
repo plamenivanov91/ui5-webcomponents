@@ -1,0 +1,26 @@
+<div class="ui5-mycontrol-root {{classes}}" dir="{{rtl}}">
+	<div class="ui5-mycontrol-section" aria-label="{{mycontrolText}}">
+		<ui5-button @click="{{toggleType}}">Change Type</ui5-button>
+		<ui5-label id="{{_id}}-type-text">{{ this.type }}</ui5-label>
+	</div>
+
+	<div class="ui5-mycontrol-section">
+		<ui5-button @click="{{toggleActive}}">Change Active</ui5-button>
+		<ui5-label>{{ this.active }}</ui5-label>
+	</div>
+	<div class="ui5-mycontrol-section">
+		<div>
+			<div>
+				<slot></slot>
+			</div>
+			<div class="buttons">
+				{{#each buttons}}
+					<slot name="{{this._individualSlot}}"></slot>
+				{{/each}}
+
+				{{!-- <slot name="buttons"></slot>  --}}
+				{{!-- individualSlots: false --}}
+			</div>
+		</div>
+	</div>
+</div>

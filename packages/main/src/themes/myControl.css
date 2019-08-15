@@ -1,0 +1,25 @@
+@import "./InvisibleTextStyles.css";
+
+:host(:not([hidden])) {
+	display: inline-block;
+}
+
+:host {
+	width: 100%;
+	padding: 1rem;
+	border: var(--_ui5_mycontrol_border_styles);
+}
+
+:host([type="Negative"]) {
+	border-color: var(--_ui5_mycontrol_negative_border_color);
+}
+
+.ui5-mycontrol-root {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ui5-mycontrol-section > ui5-button {
+	margin-right: .5rem;
+}

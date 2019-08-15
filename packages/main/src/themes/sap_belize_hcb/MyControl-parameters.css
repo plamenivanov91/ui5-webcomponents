@@ -1,0 +1,7 @@
+@import "../base/Button-parameters.css";
+
+:root {
+	--_ui5_mycontrol_positive_border_color: #ccc;
+    --_ui5_mycontrol_negative_border_color: #fff;
+    --_ui5_mycontrol_border_styles: 2px dotted var(--_ui5_mycontrol_positive_border_color);
+}

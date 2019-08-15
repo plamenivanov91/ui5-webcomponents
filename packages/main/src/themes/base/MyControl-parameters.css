@@ -1,0 +1,6 @@
+:root {
+	--_ui5_mycontrol_positive_border_color: green;
+	--_ui5_mycontrol_negative_border_color: red;
+	--_ui5_mycontrol_border_style: solid;
+	--_ui5_mycontrol_border_styles: 1px solid var(--_ui5_mycontrol_positive_border_color);
+}
