@@ -40,6 +40,7 @@ import TextArea from "./dist/TextArea.js";
 import Timeline from "./dist/Timeline.js";
 import Title from "./dist/Title.js";
 import ToggleButton from "./dist/ToggleButton.js";
+import Wrapper from "./dist/Wrapper.js";
 
 import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";

@@ -1,0 +1,9 @@
+:host {
+    display: block;
+    padding: 1rem;
+    border: var(--_ui5_wrapper_border_style);
+}
+
+:host([design="Negative"]) {
+    border-color: var(--_ui5_wrapper_border_color_negative);
+}

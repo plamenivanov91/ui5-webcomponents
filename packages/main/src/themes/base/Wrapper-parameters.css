@@ -1,0 +1,6 @@
+:root {
+    --_ui5_wrapper_border_color_positive: green;
+    --_ui5_wrapper_border_color_negative: red;
+    --_ui5_wrapper_border_type: solid;
+    --_ui5_wrapper_border_style: 1px var(--_ui5_wrapper_border_type) var(--_ui5_wrapper_border_color_positive);
+}

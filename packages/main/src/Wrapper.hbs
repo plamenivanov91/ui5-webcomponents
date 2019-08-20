@@ -1,0 +1,16 @@
+<div class="ui5-wrapper-root {{classes}}" aria-label="{{itworks}}">
+    <section>
+        <ui5-button @click="{{toggleDesign}}">Change design</ui5-button>
+        <ui5-label>{{design}}</ui5-label>
+    </section>
+
+    <section>
+        <slot></slot>
+    </section>
+
+    <section>
+        {{#each buttons}}
+            <slot name="{{this._individualSlot}}"></slot>
+        {{/each}}
+    </section>
+</div>

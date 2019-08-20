@@ -1,0 +1,7 @@
+@import "../base/Wrapper-parameters.css";
+
+:root {
+    --_ui5_wrapper_border_color_positive: white;
+    --_ui5_wrapper_border_color_negative: yellow;
+    --_ui5_wrapper_border_type: dashed;
+}
