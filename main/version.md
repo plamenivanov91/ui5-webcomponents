@@ -1,13 +1,7 @@
-commit 9d66cbaf8f0ffe7295cdfc4e62a62e0ef2bf371a
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Jul 20 08:10:13 2022 -0700
+commit 9e0c79fe7bf623d9b113be5b6df4a569293babbc
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Fri Sep 2 17:32:52 2022 +0300
 
-    Translation Delivery (#5536)
+    fix(ui5-dialog): fixed text selection when the dialog is draggable (#5724)
     
-    * chore: translation delivery
-    
-    Change-Id: Id171f6cdabdef61569db9e43fa902c571b34a57e
-    
-    * chore: translation delivery
-    
-    Change-Id: I56cd17bb71a2b111e0340ae070f55accf485a48e
+    * fix(ui5-dialog): fixed selection of the content when the dialog is draggable
