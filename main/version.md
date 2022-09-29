@@ -1,5 +1,5 @@
-commit 83b244c300cd179c0584d0bf6d302e3631fb3581
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Thu Sep 15 16:58:59 2022 +0300
+commit d8b7200f30c16d94b7f15ddbdf9808d8efbaa38c
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Thu Sep 29 17:28:38 2022 +0300
 
-    fix(ui5-panel): improve focus outline visualization (#5811)
+    feat(main): add support for custom SVG icons (#5865)
