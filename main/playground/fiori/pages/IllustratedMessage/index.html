@@ -12,7 +12,7 @@
 	
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.f7d8eaaa.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.125c8133.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/IllustratedMessage.html.ebec5a1c.css'>
 </head>
 
@@ -21,6 +21,7 @@
 	<ui5-select id="illustrationSelect">
 		<ui5-option>AddColumn</ui5-option>
 		<ui5-option>AddPeople</ui5-option>
+		<ui5-option>AddDimensions</ui5-option>
 		<ui5-option>BalloonSky</ui5-option>
 		<ui5-option>BeforeSearch</ui5-option>
 		<ui5-option>Connection</ui5-option>
@@ -42,6 +43,7 @@
 		<ui5-option>NoSearchResults</ui5-option>
 		<ui5-option>NoTasks_v1</ui5-option>
 		<ui5-option>NoTasks</ui5-option>
+		<ui5-option>NoDimensionsSet</ui5-option>
 		<ui5-option>PageNotFound</ui5-option>
 		<ui5-option>ReloadScreen</ui5-option>
 		<ui5-option>ResizeColumn</ui5-option>
@@ -71,6 +73,7 @@
 		<ui5-option>UnableToLoad</ui5-option>
 		<ui5-option>UnableToLoadImage</ui5-option>
 		<ui5-option>UnableToUpload</ui5-option>
+		<ui5-option>UploadToCloud</ui5-option>
 		<ui5-option>UploadCollection</ui5-option>
 		<ui5-option>TntChartArea</ui5-option>
 		<ui5-option>TntChartArea2</ui5-option>
@@ -121,7 +124,7 @@
 
 	<ui5-button id="openDialogButton">Open Dialog</ui5-button>
 
-	<ui5-dialog id="hello-dialog" header-text="Error">
+	<ui5-dialog id="hello-dialog" header-text="Error" resizable>
 		<ui5-illustrated-message name="UnableToLoad"></ui5-illustrated-message>
 		<ui5-bar design="Footer" slot="footer">
 			<ui5-button id="closeDialogButton" design="Emphasized" slot="endContent">Close</ui5-button>
