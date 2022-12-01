@@ -1,7 +1,9 @@
-commit 18e0b6e747678dacfb32bc2352ca9f045e4fb493
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Thu Dec 1 10:09:27 2022 +0200
+commit 34f3d6242abab67c24e2f5e81bb0208754ead5b4
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Dec 1 03:27:26 2022 -0800
 
-    fix(ui5-multi-combobox): delete long tokens when icon is clicked (#6069)
+    Translation Delivery (#6123)
     
-    FIXES: #6048
+    chore: translation delivery
+    
+    Change-Id: I2720a0402ba172f32cf7f2329b211146a7c81cd2
