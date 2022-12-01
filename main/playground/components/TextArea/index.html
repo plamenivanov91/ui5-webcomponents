@@ -316,6 +316,8 @@
       
     
       
+    
+      
         
       
     
@@ -355,6 +357,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -959,6 +963,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1843,6 +1849,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2132,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2940,6 +2950,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3275,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -4189,6 +4203,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4594,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -5888,6 +5906,17 @@
 	</code></pre></figure></pre>
 </section>
 
+<section>
+	<h3>TextArea with Label</h3>
+	<div class="snippet">
+		<ui5-label for="textAreaWithLabelID">Description</ui5-label>
+		<ui5-textarea id="textAreaWithLabelID" class="textarea-width" placeholder="Enter description"></ui5-textarea>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-label</span> <span class="na">for=</span><span class="s">"textAreaWithLabelID"</span><span class="nt">&gt;</span>Description<span class="nt">&lt;/ui5-label&gt;</span>
+<span class="nt">&lt;ui5-textarea</span> <span class="na">id=</span><span class="s">"textAreaWithLabelID"</span> <span class="na">class=</span><span class="s">"textarea-width"</span> <span class="na">placeholder=</span><span class="s">"Enter description"</span><span class="nt">&gt;&lt;/ui5-textarea&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 
     <div class="page-container">
       <div class="api-container">
@@ -5970,7 +5999,7 @@ The <code>ui5-textarea</code> component is used to enter multiple lines of text.
                             <br>
                                  <code>growing-max-lines</code>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.Integer</div>
+                        <div class="cell api-table-content-cell">Integer</div>
                         <div class="cell api-table-content-cell">0</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the maximum number of lines that the component can grow.
@@ -5981,7 +6010,7 @@ The <code>ui5-textarea</code> component is used to enter multiple lines of text.
                           maxlength
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.Integer</div>
+                        <div class="cell api-table-content-cell">Integer</div>
                         <div class="cell api-table-content-cell">null</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the maximum number of characters that the <code>value</code> can have.
@@ -6041,7 +6070,7 @@ The <code>ui5-textarea</code> component is used to enter multiple lines of text.
                           rows
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.Integer</div>
+                        <div class="cell api-table-content-cell">Integer</div>
                         <div class="cell api-table-content-cell">0</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the number of visible text lines for the component. <br><br> <b>Notes:</b> <ul> <li>If the <code>growing</code> property is enabled, this property defines the minimum rows to be displayed in the textarea.</li> <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li> </ul>
@@ -6076,7 +6105,7 @@ The <code>ui5-textarea</code> component is used to enter multiple lines of text.
                             <br>
                                  <code>value-state</code>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.ValueState</div>
+                        <div class="cell api-table-content-cell">ValueState</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the value state of the component. <br><br> Available options are: <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul> <br><br> <b>Note:</b> If <code>maxlength</code> property is set, the component turns into "Warning" state once the characters exceeds the limit. In this case, only the "Error" state is considered and can be applied.
