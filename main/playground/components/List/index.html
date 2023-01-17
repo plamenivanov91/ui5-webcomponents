@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>List | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="List" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/components/List/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/components/List/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="List" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"List","url":"https://sap.github.io/ui5-webcomponents/main/playground/components/List/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"List","url":"https://sap.github.io/ui5-webcomponents/main/playground/components/List/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,8 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
     
       
     
@@ -357,6 +362,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -963,6 +970,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1851,6 +1860,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2132,6 +2143,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2952,6 +2965,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3275,6 +3290,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -4205,6 +4222,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4594,6 +4613,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -6088,6 +6109,42 @@
 	</code></pre></figure></pre>
 </section>
 
+<!--List items using imageContent slot-->
+<section>
+	<h3>List items using imageContent slot</h3>
+	<div class="snippet">
+		<ui5-list class="full-width">
+			<ui5-li> Avatar inside imageContent slot
+				<div slot="imageContent">
+					<ui5-avatar shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
+				</div>
+			</ui5-li>
+			<ui5-li> Avatar inside imageContent slot
+				<div slot="imageContent">
+					<ui5-avatar >
+						<img src="./img/woman_avatar_5.png" alt="Woman image">
+					</ui5-avatar>
+				</div>
+			</ui5-li>
+		</ui5-list>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">class=</span><span class="s">"full-width"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span> Avatar inside imageContent slot
+		<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"imageContent"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-avatar</span> <span class="na">shape=</span><span class="s">"Square"</span> <span class="na">initials=</span><span class="s">"ABC"</span> <span class="na">color-scheme=</span><span class="s">"Accent2"</span><span class="nt">&gt;&lt;/ui5-avatar&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span> Avatar inside imageContent slot
+		<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"imageContent"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-avatar</span> <span class="nt">&gt;</span>
+				<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./img/woman_avatar_5.png"</span> <span class="na">alt=</span><span class="s">"Woman image"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/ui5-avatar&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/ui5-li&gt;</span>
+<span class="nt">&lt;/ui5-list&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 <!-- Delete List Example -->
 <section>
 	<h3>List in Delete Mode</h3>
@@ -6587,9 +6644,9 @@ This is a list item, providing the most common use cases such as <code>text</cod
                   </div>
             
                     <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the component. <br><br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">imageContent</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description"><b>Note:</b> While the slot allows option for setting custom avatar, to match the design guidelines, please use the <code>ui5-avatar</code> with it`s default size - S. <b>Note:</b> If bigger <code>ui5-avatar</code> needs to be used, then the size of the <code>ui5-li</code> should be customized in order to fit.</div>
                     </div>
             
                 </div>
@@ -6694,27 +6751,6 @@ The component accepts arbitrary HTML content to allow full customization.
             
                   </div>
             
-                <h3 class="comment-api-title space-top" >Slots</h3>
-            	<p class="small-space-top" >
-            	  This Element provides slot(s). This means it can display its child nodes.<br>
-            	  Unless targeting the default slot, use the <code>slot</code> attribute to define the destination slot for each child.<br>
-            	  Text, along with HTML Elements with no <code>slot</code> attribute, goes the the <code>default</code> slot.
-            	</p>
-            
-                <div class="small-space-top api-table">
-                  <div class="head api-table-header-roll">
-                    <div class="cell api-table-header-cell">Slot</div>
-                    <div class="cell api-table-header-cell">Type</div>
-                    <div class="cell api-table-header-cell">Description</div>
-                  </div>
-            
-                    <div class="row api-table-roll-even">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">Node [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the component. <br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
-                    </div>
-            
-                </div>
             
             
             

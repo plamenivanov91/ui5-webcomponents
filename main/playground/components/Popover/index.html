@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Popover | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Popover" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/components/Popover/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/components/Popover/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Popover" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Popover","url":"https://sap.github.io/ui5-webcomponents/main/playground/components/Popover/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Popover","url":"https://sap.github.io/ui5-webcomponents/main/playground/components/Popover/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,8 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
     
       
     
@@ -357,6 +362,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -963,6 +970,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -1851,6 +1860,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2132,6 +2143,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -2952,6 +2965,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3275,6 +3290,8 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
                 
                   
                 
@@ -4205,6 +4222,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4594,6 +4613,8 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
                 
                   
                 
@@ -6064,7 +6085,7 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                             <br>
                         </div>
                         <div class="cell api-table-content-cell">DOMReference</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell">undefined</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the ID or DOM Reference of the element that the popover is shown at
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
@@ -6083,6 +6104,18 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showAt
+                            <br>
+                                 <code>show-at</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Shows the popover.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           verticalAlign
                             <br>
@@ -6125,25 +6158,6 @@ The popover has three main areas: <ul> <li>Header (optional)</li> <li>Content</l
                 </div>
             
             
-                  <h3 class="comment-api-title space-top">Methods</h3>
-                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">showAt</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Shows the popover.</div>
-                      </div>
-            
-                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">opener</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the element that the popover is shown at</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-bold api-table-param-name">preventInitialFocus</div>
-                        <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> boolean <br/> <strong class="api-table-event-description bold">description:</strong> prevents applying the focus inside the popover</div>
-                  </div>
             
           </section>
         </section>
