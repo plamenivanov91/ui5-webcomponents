@@ -15,8 +15,8 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.356bd83f.js'></script>
-  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Avatar.html.62cc0573.css'>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.73893e24.js'></script>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/Avatar.94951703.css'>
 </head>
 
 <body class="avatar1auto">
@@ -233,7 +233,7 @@
 			input.value = ++inputValue;
 		});
 
-		myInteractiveAvatar.addEventListener("click", function() {
+		myInteractiveAvatar.addEventListener("ui5-click", function() {
 			input2.value = ++inputValue2;
 		});
 	</script>
@@ -250,9 +250,8 @@
 
 	<section>
 		<h3>Avatar with three initials</h3>
-		<ui5-avatar initials="ABC" color-scheme="Accent1"></ui5-avatar>
+		<ui5-avatar id="myAvatar6" initials="ÌÒÙ" color-scheme="Accent1"></ui5-avatar>
 		<ui5-avatar initials="ABC" color-scheme="Accent2" size="XL"></ui5-avatar>
-
 
 		<h3>Avatar with three overflowing initials - icon should be shown</h3>
 		<ui5-avatar initials="WWW" color-scheme="Accent1" size="XS"></ui5-avatar>

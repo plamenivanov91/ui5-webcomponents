@@ -15,8 +15,8 @@
 
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.356bd83f.js'></script>
-  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/DatePicker_test_page.html.882ab55e.css'>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.73893e24.js'></script>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/DatePicker_test_page.3de901b4.css'>
 </head>
 <body class="datepicker_test_page1auto">
 	<ui5-date-picker id="dp12"></ui5-date-picker>
@@ -64,6 +64,15 @@
 	<h3>DatePicker with hide-week-numbers=true/false</h3>
 	<ui5-date-picker id="dp18"></ui5-date-picker>
 	<ui5-date-picker id="dp19" hide-week-numbers></ui5-date-picker>
+
+	<h3>DatePicker with format `yyyy, dd/MM` should open picker on days</h3>
+	<ui5-date-picker id="dpCalendarModeDays" format-pattern="yyyy, dd/MM"></ui5-date-picker>
+
+	<h3>DatePicker with format `MMM y` should open picker on months</h3>
+	<ui5-date-picker id="dpCalendarModeMonths" format-pattern="MMM y"></ui5-date-picker>
+
+	<h3>DatePicker with format `yyyy` should open picker on years</h3>
+	<ui5-date-picker id="dpCalendarModeYears" format-pattern="yyyy"></ui5-date-picker>
 
 	<section>
 		<h3>Test accessibleName and accessibleNameRef</h3>

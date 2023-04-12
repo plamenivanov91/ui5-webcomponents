@@ -1,1 +1,1 @@
-import "./bundle.esm2.js";
+import "./bundle.esm.ba67025e.mjs";

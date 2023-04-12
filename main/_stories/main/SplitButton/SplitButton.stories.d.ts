@@ -1,0 +1,11 @@
+import type { Meta } from "@storybook/web-components";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
+declare const _default: Meta<SplitButton>;
+export default _default;
+export declare const Basic: UI5StoryArgs<SplitButton, StoryArgsSlots>;
+export declare const Disabled: UI5StoryArgs<SplitButton, StoryArgsSlots>;
+export declare const Design: UI5StoryArgs<SplitButton, StoryArgsSlots>;
+export declare const WithIcon: UI5StoryArgs<SplitButton, StoryArgsSlots>;
+export declare const WithActiveIcon: UI5StoryArgs<SplitButton, StoryArgsSlots>;

@@ -11,8 +11,8 @@
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.356bd83f.js'></script>
-  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Input.html.85ce57b4.css'>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.73893e24.js'></script>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/Input.38261f5b.css'>
 </head>
 
 <body class="input1auto">
@@ -334,6 +334,13 @@
 
 	<h3>Short Input With Centered Text</h3>
 	<ui5-input class="short" value="244"></ui5-input>
+
+	<h3>Input with suggestions: clear value on selection change</h3>
+	<ui5-input id="change-event-value" show-suggestions>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
 	
 
 	<h3>Test Backspace</h3>
@@ -717,6 +724,8 @@
 			const resultInput = document.getElementById("input-number35_eventValue");
 			resultInput.value = event.target.value;
 		});
+
+		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
 	</script>
 </body>
 </html>
