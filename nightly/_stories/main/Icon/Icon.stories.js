@@ -2,7 +2,6 @@ import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import argTypes, { componentInfo } from "./argTypes.js";
 import { DocsPage } from "../../../.storybook/docs";
-import IconDesign from "@ui5/webcomponents/dist/types/IconDesign.js";
 const component = "ui5-icon";
 export default {
     title: "Main/Icon",
@@ -27,18 +26,9 @@ export const Basic = Template.bind({});
 Basic.args = {
     name: "activities",
 };
-export const FioriToolsIcons = Template.bind({});
-FioriToolsIcons.args = {
-    name: "tnt/antenna",
-};
 export const Customized = Template.bind({});
 Customized.args = {
-    name: "employee",
+    name: "tnt/antenna",
     style: "width: 3rem; height: 3rem; font-size: 1.5rem; color: crimson; background-color: #fafafa",
-};
-export const SemanticDesign = Template.bind({});
-SemanticDesign.args = {
-    name: "employee",
-    design: IconDesign.Positive,
 };
 //# sourceMappingURL=Icon.stories.js.map

@@ -5,5 +5,4 @@ import type Breadcrumbs from "@ui5/webcomponents/dist/Breadcrumbs.js";
 declare const _default: Meta<Breadcrumbs>;
 export default _default;
 export declare const Basic: UI5StoryArgs<Breadcrumbs, StoryArgsSlots>;
-export declare const NoCurrentPage: UI5StoryArgs<Breadcrumbs, StoryArgsSlots>;
 export declare const SeparatorStyle: StoryFn;

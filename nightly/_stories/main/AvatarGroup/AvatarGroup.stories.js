@@ -1,11 +1,10 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import AvatarGroupType from "@ui5/webcomponents/dist/types/AvatarGroupType.js";
 import argTypes, { componentInfo } from "./argTypes.js";
 import TemplateGroupWithPopover from "./TemplateGroupWithPopover.js";
 import TemplateIndividualWithPopover from "./TemplateIndividualWithPopover.js";
-import TemplateAvatarGroupSizes from "./TemplateAvatarGroupSizes.js";
+import TemplateAvatarGroupTypesAndSizes from "./TemplateAvatarGroupTypesAndSizes.js";
 import { DocsPage } from "../../../.storybook/docs";
 const component = "ui5-avatar-group";
 export default {
@@ -25,32 +24,24 @@ const Template = (args) => html `<ui5-avatar-group
     ${unsafeHTML(args.default)}
     ${unsafeHTML(args.overflowButton)}
   </ui5-avatar-group> `;
-export const TypeGroup = Template.bind({});
-TypeGroup.args = {
+export const Basic = Template.bind({});
+Basic.storyName = "Basic";
+Basic.args = {
     default: `
-  <ui5-avatar size="M" icon="employee"></ui5-avatar>
-  <ui5-avatar size="M" initials="JD"></ui5-avatar>
-  <ui5-avatar size="M">
-    <img
-      src="../assets/images/avatars/woman_avatar_5.png"
-      alt="Woman Avatar 5"
-    />
-  </ui5-avatar>`,
+    <ui5-avatar-group>
+      <ui5-avatar size="S">
+          <img src="../assets/images/avatars/man_avatar_1.png" alt="Man Avatar 1" />
+      </ui5-avatar>
+      <ui5-avatar size="S" initials="JD"></ui5-avatar>
+      <ui5-avatar size="S">
+          <img src="../assets/images/avatars/woman_avatar_5.png" alt="Woman Avatar 5" />
+      </ui5-avatar>
+      <ui5-avatar size="S">
+          <img src="../assets/images/avatars/man_avatar_3.png" alt="Man Avatar 3" />
+      </ui5-avatar>
+    </ui5-avatar-group>`
 };
-export const TypeIndividual = Template.bind({});
-TypeIndividual.args = {
-    type: AvatarGroupType.Individual,
-    default: `
-  <ui5-avatar size="M" icon="employee"></ui5-avatar>
-  <ui5-avatar size="M" initials="JD"></ui5-avatar>
-  <ui5-avatar size="M">
-    <img
-      src="../assets/images/avatars/woman_avatar_5.png"
-      alt="Woman Avatar 5"
-    />
-  </ui5-avatar>`,
-};
+export const TypesAndSizes = TemplateAvatarGroupTypesAndSizes.bind({});
 export const TypeIndividualWithPopover = TemplateIndividualWithPopover.bind({});
 export const TypeGroupWithPopover = TemplateGroupWithPopover.bind({});
-export const Sizes = TemplateAvatarGroupSizes.bind({});
 //# sourceMappingURL=AvatarGroup.stories.js.map

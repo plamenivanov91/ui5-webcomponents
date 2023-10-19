@@ -21,6 +21,7 @@ export default {
 };
 const Template = (args) => html `<ui5-combobox
 		value="${ifDefined(args.value)}"
+		?no-typeahead="${ifDefined(args.noTypeahead)}"
 		placeholder="${ifDefined(args.placeholder)}"
 		?disabled="${ifDefined(args.disabled)}"
 		?readonly="${ifDefined(args.readonly)}"
@@ -76,8 +77,8 @@ Grouping.args = {
     default: `
 		<ui5-cb-group-item text="A"></ui5-cb-group-item>
 		<ui5-cb-item text="Argentina"></ui5-cb-item>
-		<ui5-cb-item text="Australia"></ui5-cb-item>	
-		<ui5-cb-item text="Austria"></ui5-cb-item>	
+		<ui5-cb-item text="Australia"></ui5-cb-item>
+		<ui5-cb-item text="Austria"></ui5-cb-item>
 		<ui5-cb-group-item text="B"></ui5-cb-group-item>
 		<ui5-cb-item text="Bahrain"></ui5-cb-item>
 		<ui5-cb-item text="Belgium"></ui5-cb-item>

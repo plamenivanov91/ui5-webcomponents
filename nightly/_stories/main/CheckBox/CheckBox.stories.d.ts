@@ -6,5 +6,4 @@ declare const _default: Meta<CheckBox>;
 export default _default;
 export declare const Basic: UI5StoryArgs<CheckBox, StoryArgsSlots>;
 export declare const Wrapping: UI5StoryArgs<CheckBox, StoryArgsSlots>;
-export declare const Indeterminate: UI5StoryArgs<CheckBox, StoryArgsSlots>;
 export declare const States: StoryFn;

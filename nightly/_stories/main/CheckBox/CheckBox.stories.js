@@ -38,17 +38,8 @@ Wrapping.args = {
     text: "ui5-checkbox with 'wrapping-type=Normal' set and some long text.",
     wrappingType: WrappingType.Normal,
     style: "width:200px",
-};
-export const Indeterminate = Template.bind({});
-Indeterminate.args = {
-    text: "Select / deselect all",
     indeterminate: true,
     checked: true,
-};
-Indeterminate.parameters = {
-    controls: {
-        include: ["indeterminate", "checked"],
-    },
 };
 export const States = () => html `
     <ui5-checkbox text="Success" value-state="Success"></ui5-checkbox>

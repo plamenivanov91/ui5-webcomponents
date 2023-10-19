@@ -3,8 +3,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import argTypes, { componentInfo } from "./argTypes.js";
 import { DocsPage } from "../../../.storybook/docs";
-import MediaGalleryLayout from "@ui5/webcomponents-fiori/dist/types/MediaGalleryLayout.js";
-import MediaGalleryMenuHorizontalAlign from "@ui5/webcomponents-fiori/dist/types/MediaGalleryMenuHorizontalAlign.js";
+import TemplateMediaGalleryTypes from "./TemplateMediaGalleryTypes.js";
 const component = "ui5-media-gallery";
 const stylesDecorator = (storyFn) => html `
     <style>
@@ -68,66 +67,7 @@ Basic.args = {
 		<img src="../assets/images/HT-2026.jpg" />
 	</ui5-media-gallery-item>`,
 };
-export const VerticalLayout = Template.bind({});
-VerticalLayout.args = {
-    showAllThumbnails: true,
-    layout: MediaGalleryLayout.Vertical,
-    default: `
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1000.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1010.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1022.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1030.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-2002.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-2026.jpg" />
-    </ui5-media-gallery-item>`,
-};
-export const ThumbnailsOnTheRight = Template.bind({});
-ThumbnailsOnTheRight.args = {
-    showAllThumbnails: true,
-    layout: MediaGalleryLayout.Horizontal,
-    menuHorizontalAlign: MediaGalleryMenuHorizontalAlign.Right,
-    default: `
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1000.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1010.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1022.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1030.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-2002.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-2026.jpg" />
-    </ui5-media-gallery-item>`,
-};
-export const SeparateImageThumbnail = Template.bind({});
-SeparateImageThumbnail.args = {
-    default: `
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1000.jpg" />
-        <img
-            src="../assets/images/HT-1000-small.jpg"
-            slot="thumbnail"
-        />
-    </ui5-media-gallery-item>`,
-};
+export const Types = TemplateMediaGalleryTypes.bind({});
 export const VideoContent = Template.bind({});
 VideoContent.args = {
     default: `
@@ -144,26 +84,6 @@ VideoContent.args = {
             slot="thumbnail"
             alt="SAP Video"
         />
-    </ui5-media-gallery-item>`,
-};
-export const DisabledContent = Template.bind({});
-DisabledContent.args = {
-    default: `
-    <ui5-media-gallery-item disabled="">
-        <img src="../assets/images/HT-1000.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1010.jpg" />
-    </ui5-media-gallery-item>`,
-};
-export const InitiallySelected = Template.bind({});
-InitiallySelected.args = {
-    default: `
-    <ui5-media-gallery-item>
-        <img src="../assets/images/HT-1000.jpg" />
-    </ui5-media-gallery-item>
-    <ui5-media-gallery-item selected="">
-        <img src="../assets/images/HT-1010.jpg" />
     </ui5-media-gallery-item>`,
 };
 export const ThumbnailOverflow = Template.bind({});

@@ -2,7 +2,6 @@ import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
-import ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
 import argTypes, { componentInfo } from "./argTypes.js";
 import { DocsPage } from "../../../.storybook/docs";
 const component = "ui5-list";
@@ -122,28 +121,36 @@ Growing.parameters = {
         },
     },
 };
-export const SingleSelection = Template.bind({});
-SingleSelection.storyName = "Single Selection";
-SingleSelection.args = {
-    mode: ListMode.SingleSelect,
-    headerText: "Select a country:",
-    default: `
-	<ui5-li selected icon="map" icon-end>Argentina</ui5-li>
+export const Modes = () => html `
+<ui5-list mode="SingleSelect" header-text="Single Select Mode:">
+<ui5-li selected icon="map" icon-end>Argentina</ui5-li>
 	<ui5-li icon="map" icon-end>Bulgaria</ui5-li>
 	<ui5-li icon="map" icon-end>China</ui5-li>
-	<ui5-li type="Inactive" icon="map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>`,
-};
-export const MultiSelection = Template.bind({});
-MultiSelection.storyName = "Multi Selection";
-MultiSelection.args = {
-    mode: ListMode.MultiSelect,
-    headerText: "Multiple selection is possible",
-    default: `
-	<ui5-li>Pineapple</ui5-li>
-	<ui5-li selected="">Orange</ui5-li>
-	<ui5-li>Banana</ui5-li>
-	<ui5-li>Mango</ui5-li>`,
-};
+	<ui5-li type="Inactive" icon="map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>
+</ui5-list>
+
+</br>
+
+<ui5-list mode="MultiSelect" header-text="Multi Select Mode:">
+<ui5-li>Pineapple</ui5-li>
+<ui5-li selected="">Orange</ui5-li>
+<ui5-li>Banana</ui5-li>
+<ui5-li>Mango</ui5-li>
+</ui5-list>
+
+</br>
+
+<ui5-list mode="Delete" header-text="Delete Mode:">
+<ui5-li>Argentina</ui5-li>
+<ui5-li>Bulgaria</ui5-li>
+<ui5-li>China</ui5-li>
+</ui5-list>
+
+</br>
+
+<ui5-list mode="NoData" header-text="No Data Mode:" no-data-text="No Data Available">
+</ui5-list>
+`;
 export const GroupHeaders = Template.bind({});
 GroupHeaders.storyName = "Group Headers";
 GroupHeaders.args = {
@@ -188,23 +195,6 @@ GroupHeaders.args = {
 		icon-end=""
 	>Adam</ui5-li
 	>`,
-};
-export const Delete = Template.bind({});
-Delete.storyName = "Delete Mode";
-Delete.args = {
-    mode: ListMode.Delete,
-    headerText: "Note: The list items removal is up to application developers",
-    default: `
-	<ui5-li>Argentina</ui5-li>
-	<ui5-li>Bulgaria</ui5-li>
-	<ui5-li>China</ui5-li>`,
-};
-export const NoData = Template.bind({});
-NoData.storyName = "No Data";
-NoData.args = {
-    headerText: "Products",
-    noDataText: "No Data Available",
-    separators: ListSeparators.None,
 };
 export const SeparationTypes = () => html ` <ui5-list
       header-text="No separators"
