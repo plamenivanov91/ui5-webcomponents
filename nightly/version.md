@@ -1,7 +1,8 @@
-commit 45b11f9e47be92d71058960bf7c0c5254cf8ca6a
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Fri Oct 20 13:25:09 2023 +0300
+commit 46e89e757a4a01875d3cd020eb6491f9677b9b77
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Oct 20 15:22:30 2023 +0300
 
-    fix(ui5-calendar): adjust selected border color (#7730)
+    fix(ui5-tree-item-custom): text wrapper allows proper alignment of flex content (#7733)
     
-    The border color of the day grid cell is now correct.
+    fix(ui5-tree-item-custom): text wrapper allows proper alignment of flex content
+    Fixes: #7483
