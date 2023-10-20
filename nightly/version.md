@@ -1,17 +1,7 @@
-commit 1e0627745d863a49cc8659091d9dfa40b2978cc2
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Oct 19 16:34:50 2023 +0300
+commit 45b11f9e47be92d71058960bf7c0c5254cf8ca6a
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Fri Oct 20 13:25:09 2023 +0300
 
-    chore: upgrade to chromedriver 117 (#7721)
+    fix(ui5-calendar): adjust selected border color (#7730)
     
-    * chore: upgrade to chromedriver 117
-    
-    * chore: update actions node version
-    
-    * chore: add missing actions
-    
-    * chore: fix wdio/devtools-services
-    
-    ---------
-    
-    Co-authored-by: Nayden Naydenov <nnaydenow.work@sap.com>
+    The border color of the day grid cell is now correct.
