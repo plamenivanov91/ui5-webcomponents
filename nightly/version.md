@@ -1,8 +1,5 @@
-commit 46e89e757a4a01875d3cd020eb6491f9677b9b77
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Fri Oct 20 15:22:30 2023 +0300
+commit 629e4e61c4c10ac4cb4fd273570c261305e7fb43
+Author: ilhan orhan <ilhan.orhan007@gmail.com>
+Date:   Tue Oct 31 12:54:58 2023 +0200
 
-    fix(ui5-tree-item-custom): text wrapper allows proper alignment of flex content (#7733)
-    
-    fix(ui5-tree-item-custom): text wrapper allows proper alignment of flex content
-    Fixes: #7483
+    Update README.md
