@@ -1,5 +1,5 @@
-commit 629e4e61c4c10ac4cb4fd273570c261305e7fb43
-Author: ilhan orhan <ilhan.orhan007@gmail.com>
-Date:   Tue Oct 31 12:54:58 2023 +0200
+commit b1019aff6c4aced61458c1b718ffe0a3a7802ae2
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Tue Nov 7 09:21:24 2023 +0200
 
-    Update README.md
+    fix(ItemNavigation): more than 1 ItemNavigation per component allowed (#7798)

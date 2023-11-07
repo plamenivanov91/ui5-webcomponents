@@ -23,7 +23,7 @@ export default {
             "parameters": [
                 {
                     "name": "item",
-                    "type": "sap.ui.webc.fiori.ISideNavigationItem|sap.ui.webc.fiori.ISideNavigationSubItem",
+                    "type": "sap.ui.webc.fiori.SideNavigationItemBase",
                     "description": "the clicked item."
                 }
             ]
