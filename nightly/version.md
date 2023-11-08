@@ -1,5 +1,9 @@
-commit b1019aff6c4aced61458c1b718ffe0a3a7802ae2
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Nov 7 09:21:24 2023 +0200
+commit b68b538e9a59888b73f360da9b6bf98c94548e62
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Wed Nov 8 13:51:46 2023 +0200
 
-    fix(ItemNavigation): more than 1 ItemNavigation per component allowed (#7798)
+    docs(ui5-side-navigation): edit sample (#7818)
+    
+    The sample should not have error in the console: "Identifier 'sidenav' has already been declared"
+    
+    Fixes: #7809
