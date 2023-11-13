@@ -14207,6 +14207,18 @@
                         {
                             "deprecated": false,
                             "kind": "field",
+                            "name": "titleLevel",
+                            "privacy": "public",
+                            "static": false,
+                            "type": {
+                                "text": "sap.ui.webc.main.types.TitleLevel"
+                            },
+                            "default": "\"H2\"",
+                            "description": "Defines the semantic level of the title.\n\n<b>Note:</b> Used for accessibility purposes only."
+                        },
+                        {
+                            "deprecated": false,
+                            "kind": "field",
                             "name": "titleText",
                             "privacy": "public",
                             "static": false,

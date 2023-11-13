@@ -1,7 +1,7 @@
-commit f6ac0d8c4e1907122ae6af5c50370ecaaa3331f0
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Wed Nov 8 15:21:18 2023 +0200
+commit 2883c587f367e51e0f08065498b990f86e60e88c
+Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
+Date:   Mon Nov 13 13:32:59 2023 +0200
 
-    chore: Update commit conventions to include commits with samples (#7821)
+    feat(ui5-illustrated-message): titleLevel property added (#7771)
     
-    Added text to specify when a commit changes only a sample, that is should be prefixed with 'docs'.
+    Closes: #7037
