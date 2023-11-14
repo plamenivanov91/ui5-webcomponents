@@ -1,4 +1,9 @@
 export default {
+    "duration": {
+        "control": {
+            "type": "number"
+        }
+    },
     "placement": {
         "control": "select",
         "options": [

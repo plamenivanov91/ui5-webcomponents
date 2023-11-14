@@ -1,4 +1,9 @@
 declare const _default: {
+    defaultColor: {
+        control: {
+            type: string;
+        };
+    };
     default: {
         control: {
             type: string;

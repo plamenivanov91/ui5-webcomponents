@@ -7,6 +7,21 @@ declare const _default: {
         control: string;
         options: string[];
     };
+    itemsPerPageL: {
+        control: {
+            type: string;
+        };
+    };
+    itemsPerPageM: {
+        control: {
+            type: string;
+        };
+    };
+    itemsPerPageS: {
+        control: {
+            type: string;
+        };
+    };
     pageIndicatorBackgroundDesign: {
         control: string;
         options: string[];

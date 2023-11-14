@@ -1,4 +1,9 @@
 export default {
+    "maxlength": {
+        "control": {
+            "type": "number"
+        }
+    },
     "previewItem": {
         "control": {
             "type": false

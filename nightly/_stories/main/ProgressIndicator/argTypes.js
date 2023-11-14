@@ -1,4 +1,9 @@
 export default {
+    "value": {
+        "control": {
+            "type": "number"
+        }
+    },
     "valueState": {
         "control": "select",
         "options": [

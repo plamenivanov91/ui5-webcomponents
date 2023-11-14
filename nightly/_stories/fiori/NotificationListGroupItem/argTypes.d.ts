@@ -4,6 +4,11 @@ declare const _default: {
             type: string;
         };
     };
+    busyDelay: {
+        control: {
+            type: string;
+        };
+    };
     actions: {
         control: {
             type: string;

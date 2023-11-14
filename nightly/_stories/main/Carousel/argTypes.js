@@ -14,6 +14,21 @@ export default {
             "Transparent"
         ]
     },
+    "itemsPerPageL": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "itemsPerPageM": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "itemsPerPageS": {
+        "control": {
+            "type": "number"
+        }
+    },
     "pageIndicatorBackgroundDesign": {
         "control": "select",
         "options": [

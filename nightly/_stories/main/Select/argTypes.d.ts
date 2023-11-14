@@ -1,4 +1,9 @@
 declare const _default: {
+    menu: {
+        control: {
+            type: string;
+        };
+    };
     selectedOption: {
         control: {
             type: boolean;

@@ -1,4 +1,19 @@
 export default {
+    "growingMaxLines": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "maxlength": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "rows": {
+        "control": {
+            "type": "number"
+        }
+    },
     "valueState": {
         "control": "select",
         "options": [

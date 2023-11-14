@@ -1,4 +1,9 @@
 declare const _default: {
+    value: {
+        control: {
+            type: string;
+        };
+    };
     valueState: {
         control: string;
         options: string[];

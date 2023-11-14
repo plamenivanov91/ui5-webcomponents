@@ -1,4 +1,9 @@
 export default {
+    "menu": {
+        "control": {
+            "type": "text"
+        }
+    },
     "selectedOption": {
         "control": {
             "type": false

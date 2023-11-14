@@ -1,4 +1,9 @@
 declare const _default: {
+    busyDelay: {
+        control: {
+            type: string;
+        };
+    };
     growing: {
         control: string;
         options: string[];

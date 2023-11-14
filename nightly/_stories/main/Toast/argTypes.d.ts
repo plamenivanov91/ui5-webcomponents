@@ -1,4 +1,9 @@
 declare const _default: {
+    duration: {
+        control: {
+            type: string;
+        };
+    };
     placement: {
         control: string;
         options: string[];

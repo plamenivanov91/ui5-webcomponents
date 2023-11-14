@@ -1,4 +1,29 @@
 export default {
+    "max": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "min": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "step": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "value": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "valuePrecision": {
+        "control": {
+            "type": "number"
+        }
+    },
     "valueState": {
         "control": "select",
         "options": [

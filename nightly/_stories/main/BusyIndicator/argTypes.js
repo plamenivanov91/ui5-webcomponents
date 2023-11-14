@@ -1,4 +1,9 @@
 export default {
+    "delay": {
+        "control": {
+            "type": "number"
+        }
+    },
     "size": {
         "control": "select",
         "options": [

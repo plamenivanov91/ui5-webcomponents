@@ -1,4 +1,9 @@
 export default {
+    "busyDelay": {
+        "control": {
+            "type": "number"
+        }
+    },
     "growing": {
         "control": "select",
         "options": [

@@ -14,6 +14,11 @@ export default {
             "type": "text"
         }
     },
+    "busyDelay": {
+        "control": {
+            "type": "number"
+        }
+    },
     "actions": {
         "control": {
             "type": "text"

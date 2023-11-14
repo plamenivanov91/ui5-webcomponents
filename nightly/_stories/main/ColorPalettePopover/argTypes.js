@@ -1,4 +1,9 @@
 export default {
+    "defaultColor": {
+        "control": {
+            "type": "text"
+        }
+    },
     "default": {
         "control": {
             "type": "text"

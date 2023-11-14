@@ -52,6 +52,11 @@ export default {
             "Stretch"
         ]
     },
+    "opener": {
+        "control": {
+            "type": "text"
+        }
+    },
     "placementType": {
         "control": "select",
         "options": [

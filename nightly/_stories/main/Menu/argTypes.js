@@ -1,4 +1,14 @@
 export default {
+    "busyDelay": {
+        "control": {
+            "type": "number"
+        }
+    },
+    "opener": {
+        "control": {
+            "type": "text"
+        }
+    },
     "default": {
         "control": {
             "type": "text"

@@ -1,4 +1,9 @@
 declare const _default: {
+    delay: {
+        control: {
+            type: string;
+        };
+    };
     size: {
         control: string;
         options: string[];

@@ -1,4 +1,19 @@
 declare const _default: {
+    growingMaxLines: {
+        control: {
+            type: string;
+        };
+    };
+    maxlength: {
+        control: {
+            type: string;
+        };
+    };
+    rows: {
+        control: {
+            type: string;
+        };
+    };
     valueState: {
         control: string;
         options: string[];

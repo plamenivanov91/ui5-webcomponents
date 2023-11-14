@@ -1,4 +1,14 @@
 declare const _default: {
+    busyDelay: {
+        control: {
+            type: string;
+        };
+    };
+    opener: {
+        control: {
+            type: string;
+        };
+    };
     default: {
         control: {
             type: string;

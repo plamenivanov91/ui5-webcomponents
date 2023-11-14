@@ -3,6 +3,11 @@ declare const _default: {
         control: string;
         options: string[];
     };
+    opener: {
+        control: {
+            type: string;
+        };
+    };
     placementType: {
         control: string;
         options: string[];

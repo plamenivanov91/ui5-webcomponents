@@ -1,4 +1,9 @@
 declare const _default: {
+    maxlength: {
+        control: {
+            type: string;
+        };
+    };
     previewItem: {
         control: {
             type: boolean;
