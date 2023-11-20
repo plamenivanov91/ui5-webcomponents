@@ -1,13 +1,5 @@
-commit e344a02dd271fcb66af4c77d1570bd2c8bebc75d
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Nov 15 14:44:59 2023 +0200
+commit 1534d897f15f52f947a96430ca498a5548e4b6c8
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Mon Nov 20 09:55:12 2023 +0200
 
-    chore: stable ui5-menu tests (#7849)
-    
-    * chore: stable ui5-menu tests
-    
-    * chore: remove only keyword
-    
-    ---------
-    
-    Co-authored-by: Nayden Naydenov <nnaydenow.work@sap.com>
+    fix(ui5-wizard): scrollbar styles are now present on root (#7838)
