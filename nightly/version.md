@@ -1,10 +1,9 @@
-commit 007e755f301e6112bf98afef1b47676b422eb268
-Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
-Date:   Tue Nov 21 11:23:29 2023 +0200
+commit 87535f1ba30b85d3c1c718451a89f0121e441338
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Tue Nov 21 13:38:13 2023 +0200
 
-    fix(ui5-switch): align 'off' text in RTL, add compact mode params (#7603)
+    fix(framework): redundant fonts loading (#7868)
     
-    In RTL mode the 'off' icon of `Graphical` type Switch was misaligned due to missing parameters for RTL scenario of the control.
+    fix(framework): font loading
     
-    Fixes: #7522
-    Fixes: #7806
+    Co-authored-by: Nayden Naydenov <nnaydenow.work@sap.com>
