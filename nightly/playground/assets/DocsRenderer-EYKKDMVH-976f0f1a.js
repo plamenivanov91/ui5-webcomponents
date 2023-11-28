@@ -1,0 +1,2 @@
+import{D,d as c}from"./chunk-PCJTTTQV-19c7bb98.js";import"./iframe-6df52ef3.js";import"../sb-preview/runtime.js";import"./index-c0290abd.js";import"./_commonjsHelpers-725317a4.js";import"./client-295e1f1c.js";import"./index-7bd4487d.js";import"./index-d475d2ea.js";import"./index-d37d4223.js";import"./index-d38538b0.js";import"./index-356e4a49.js";export{D as DocsRenderer,c as defaultComponents};
+//# sourceMappingURL=DocsRenderer-EYKKDMVH-976f0f1a.js.map

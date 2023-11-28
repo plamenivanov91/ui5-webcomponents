@@ -8773,6 +8773,18 @@
                         {
                             "deprecated": false,
                             "kind": "field",
+                            "name": "disabled",
+                            "privacy": "public",
+                            "static": false,
+                            "type": {
+                                "text": "boolean"
+                            },
+                            "default": "false",
+                            "description": "Defines whether the component is in disabled state. <br><br> <b>Note:</b> A disabled component is hidden."
+                        },
+                        {
+                            "deprecated": false,
+                            "kind": "field",
                             "name": "displayText",
                             "privacy": "public",
                             "static": false,
@@ -8814,13 +8826,45 @@
                                 "text": "string"
                             },
                             "description": "Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected. For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>."
+                        },
+                        {
+                            "deprecated": false,
+                            "kind": "field",
+                            "name": "accessibleName",
+                            "privacy": "public",
+                            "static": false,
+                            "type": {
+                                "text": "string"
+                            },
+                            "default": "\"\"",
+                            "description": "Defines the text alternative of the component. Note: If not provided a default text alternative will be set, if present."
+                        },
+                        {
+                            "deprecated": false,
+                            "kind": "field",
+                            "name": "selected",
+                            "privacy": "public",
+                            "static": false,
+                            "type": {
+                                "text": "boolean"
+                            },
+                            "default": "false",
+                            "description": "Defines the selected state of the <code>ListItem</code>."
                         }
                     ],
                     "superclass": {
-                        "module": "UI5Element.js",
-                        "name": "UI5Element",
-                        "package": "@ui5/webcomponents-base"
-                    }
+                        "module": "CustomListItem.js",
+                        "name": "CustomListItem",
+                        "package": "@ui5/webcomponents"
+                    },
+                    "events": [
+                        {
+                            "deprecated": false,
+                            "name": "detail-click",
+                            "type": "CustomEvent",
+                            "description": "Fired when the user clicks on the detail button when type is <code>Detail</code>."
+                        }
+                    ]
                 }
             ],
             "exports": [
