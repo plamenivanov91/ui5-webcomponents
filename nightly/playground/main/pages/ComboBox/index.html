@@ -19,8 +19,8 @@
 	
 
 
-  <script type="module" crossorigin src="../../../../assets/test/pages/ComboBox.html-efc5aadc.js"></script>
-  <link rel="modulepreload" crossorigin href="../../../../assets/bundle.esm-c7714441.js">
+  <script type="module" crossorigin src="../../../../assets/test/pages/ComboBox.html-7a1ac172.js"></script>
+  <link rel="modulepreload" crossorigin href="../../../../assets/bundle.esm-4b7d9cc4.js">
   <link rel="stylesheet" href="../../../../assets/ComboBox-de651845.css">
 </head>
 
@@ -301,6 +301,27 @@
 			<ui5-cb-item text="Bosnia and Herzegovina"></ui5-cb-item>
 			<div slot="valueStateMessage">Please choose a country</div>
 		</ui5-combobox>
+	</div>
+
+	<div class="demo-section">
+		<ui5-combobox id="dynamic-items">
+			<ui5-cb-item text="Hello World"></ui5-cb-item>
+		</ui5-combobox>
+	
+		<ui5-button id="add-items-btn">Start adding items</ui5-button>
+	
+		<script>
+			const addItemsBtn = document.getElementById("add-items-btn");
+			const dynamicItemsCb = document.getElementById("dynamic-items");
+	
+			addItemsBtn.addEventListener("click", () => {
+				setInterval(() => {
+					const item = document.createElement("ui5-cb-item");
+					item.text = "test";
+					dynamicItemsCb.appendChild(item);
+				}, 1000);
+			});
+		</script>
 	</div>
 
 	

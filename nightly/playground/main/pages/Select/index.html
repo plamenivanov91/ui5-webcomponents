@@ -14,7 +14,7 @@
 
 
 
-  <script type="module" crossorigin src="../../../../assets/bundle.esm-c7714441.js"></script>
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-4b7d9cc4.js"></script>
   <link rel="stylesheet" href="../../../../assets/Select-e17517bf.css">
 </head>
 
@@ -154,6 +154,18 @@
 			<ui5-option additional-text="AU">Australia</ui5-option>
 		</ui5-select>
 	</section>
+
+	<section>
+		<h2>Select "value" property</h2>
+		<ui5-select id="mySelect7">
+			<ui5-option>Item1</ui5-option>
+			<ui5-option>Item2</ui5-option>
+			<ui5-option selected>Item3</ui5-option>
+		</ui5-select>
+		<ui5-button id="btnSetValue">select.value = "Item2"</ui5-button>
+		<ui5-button id="btnSetInvalidValue">select.value = "NAN"</ui5-button>
+	</section>
+
 </body>
 <script>
 	var countries =  [{ key: "Aus", text: "Australia" }, { key: "Aruba", text: "Aruba" }, { key: "Antigua", text: "Antigua and Barbuda" }, { key: "Bel", text: "Belgium" }, { key: "Bg", text: "Bulgaria" }, { key: "Bra", text: "Brazil" }];
@@ -267,6 +279,13 @@
 
 	restoreItemsBtn.addEventListener("click", function(event) {
 		select.innerHTML = initialItemsHTML;
+	});
+
+	btnSetValue.addEventListener("click", function(e) {
+		mySelect7.value = "Item2";
+	});
+	btnSetInvalidValue.addEventListener("click", function(e) {
+		mySelect7.value = "NAN";
 	});
 </script>
 </html>

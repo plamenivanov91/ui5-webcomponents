@@ -1,4 +1,4 @@
-import "@ui5/webcomponents-fiori/bundle.esm.js";
+import "@ui5/webcomponents-fiori/dist/bundle.esm.js";
 import type { Parameters, GlobalTypes, DecoratorFunction, ArgTypesEnhancer } from '@storybook/types';
 export declare const parameters: Parameters;
 export declare const globalTypes: GlobalTypes;
