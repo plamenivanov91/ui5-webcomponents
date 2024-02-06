@@ -1,7 +1,7 @@
-commit 7b6eab225d964de112ae8f100fdcdf39aae122f6
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Mon Dec 11 14:09:27 2023 +0200
+commit 3ea5c664aaf20908ab04a933a7587c35206aebf6
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Feb 6 14:23:40 2024 +0200
 
-    fix(ui5-toolbar): story error fixed (#7986)
+    fix(ui5-table): prevent load-more event on initial load (#8240)
     
-    Co-authored-by: PetyaMarkovaBogdanova <petya.markova@sap.com>
+    Co-authored-by: Nia Peeva <niya.peeva@sap.com>

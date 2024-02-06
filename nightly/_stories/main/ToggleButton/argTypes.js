@@ -2,29 +2,35 @@ export default {
     "design": {
         "control": "select",
         "options": [
-            "Attention",
             "Default",
-            "Emphasized",
-            "Negative",
             "Positive",
-            "Transparent"
+            "Negative",
+            "Transparent",
+            "Emphasized",
+            "Attention"
         ]
     },
     "type": {
         "control": "select",
         "options": [
             "Button",
-            "Reset",
-            "Submit"
+            "Submit",
+            "Reset"
         ]
     },
     "default": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<Node>"
+            }
         }
     }
 };
 export const componentInfo = {
-    "package": "@ui5/webcomponents"
+    "package": "@ui5/webcomponents",
+    "tagName": "ui5-toggle-button"
 };
 //# sourceMappingURL=argTypes.js.map

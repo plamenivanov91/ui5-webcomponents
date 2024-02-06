@@ -1,17 +1,10 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import SwitchDesign from "@ui5/webcomponents/dist/types/SwitchDesign.js";
-const component = "ui5-switch";
 export default {
     title: "Main/Switch",
     component: "Switch",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-switch

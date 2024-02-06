@@ -1,16 +1,9 @@
 import { html } from "lit";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-const component = "ui5-range-slider";
 export default {
     title: "Main/Range Slider",
     component: "RangeSlider",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `

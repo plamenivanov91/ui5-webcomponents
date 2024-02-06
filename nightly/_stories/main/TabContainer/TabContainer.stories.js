@@ -1,19 +1,11 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import TabLayout from "@ui5/webcomponents/dist/types/TabLayout.js";
-const component = "ui5-tabcontainer";
 export default {
     title: "Main/Tab Container",
     component: "TabContainer",
-    subcomponents: { "Tab": "Tab", "TabSeparator": "TabSeparator" },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => {

@@ -1,23 +1,12 @@
 declare const _default: {
-    busyDelay: {
-        control: {
-            type: string;
-        };
-    };
-    opener: {
-        control: {
-            type: string;
-        };
-    };
     default: {
         control: {
             type: string;
         };
-    };
-    close: {
-        description: string;
         table: {
-            category: string;
+            type: {
+                summary: string;
+            };
         };
     };
     showAt: {
@@ -28,47 +17,85 @@ declare const _default: {
         UI5CustomData: {
             parameters: {
                 name: string;
-                type: string;
-                optional: boolean;
+                type: {
+                    text: string;
+                };
                 description: string;
+                _ui5privacy: string;
             }[];
+            returnValue: {
+                type: {
+                    text: string;
+                };
+            };
         };
     };
-    "before-close": {
+    close: {
         description: string;
         table: {
             category: string;
         };
         UI5CustomData: {
+            returnValue: {
+                type: {
+                    text: string;
+                };
+            };
+        };
+    };
+    "item-click": {
+        description: string;
+        control: {
+            type: boolean;
+        };
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
     "before-open": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
-    "item-click": {
+    "before-close": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
@@ -78,6 +105,7 @@ export default _default;
 export declare const componentInfo: {
     package: string;
     since: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
     default: string;

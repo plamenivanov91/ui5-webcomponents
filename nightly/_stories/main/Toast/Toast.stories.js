@@ -1,18 +1,11 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import ToastPlacement from "@ui5/webcomponents/dist/types/ToastPlacement.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-toast";
 export default {
     title: "Main/Toast",
     component: "Toast",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 let index = 0;

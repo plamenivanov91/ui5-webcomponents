@@ -1,18 +1,11 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import SideContentVisibility from "@ui5/webcomponents-fiori/dist/types/SideContentVisibility.js";
-const component = "ui5-dynamic-side-content";
 export default {
     title: "Fiori/DynamicSideContent",
     component: "DynamicSideContent",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `

@@ -2,11 +2,11 @@ export default {
     "valueState": {
         "control": "select",
         "options": [
-            "Error",
-            "Information",
             "None",
             "Success",
-            "Warning"
+            "Warning",
+            "Error",
+            "Information"
         ]
     },
     "wrappingType": {
@@ -18,6 +18,7 @@ export default {
     }
 };
 export const componentInfo = {
-    "package": "@ui5/webcomponents"
+    "package": "@ui5/webcomponents",
+    "tagName": "ui5-checkbox"
 };
 //# sourceMappingURL=argTypes.js.map

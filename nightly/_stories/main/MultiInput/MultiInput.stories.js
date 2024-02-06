@@ -1,18 +1,10 @@
 import { html } from "lit";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-const component = "ui5-multi-input";
 export default {
     title: "Main/Multi Input",
     component: "MultiInput",
-    subcomponents: { 'Token': 'Token' },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 let index = 0;

@@ -1,18 +1,11 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import BarDesign from "@ui5/webcomponents-fiori/dist/types/BarDesign.js";
-const component = "ui5-bar";
 export default {
     title: "Fiori/Bar",
     component: "Bar",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-bar

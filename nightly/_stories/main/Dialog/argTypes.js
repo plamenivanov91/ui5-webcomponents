@@ -2,21 +2,49 @@ export default {
     "state": {
         "control": "select",
         "options": [
-            "Error",
-            "Information",
             "None",
             "Success",
-            "Warning"
+            "Warning",
+            "Error",
+            "Information"
         ]
     },
-    "footer": {
-        "control": {
-            "type": "text"
-        }
+    "accessibleRole": {
+        "control": "select",
+        "options": [
+            "None",
+            "Dialog",
+            "AlertDialog"
+        ]
     },
     "header": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<HTMLElement>"
+            }
+        }
+    },
+    "footer": {
+        "control": {
+            "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<HTMLElement>"
+            }
+        }
+    },
+    "default": {
+        "control": {
+            "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<HTMLElement>"
+            }
         }
     },
     "show": {
@@ -28,47 +56,35 @@ export default {
             "parameters": [
                 {
                     "name": "preventInitialFocus",
-                    "type": "boolean",
+                    "default": "false",
+                    "description": "Prevents applying the focus inside the popup",
                     "optional": true,
-                    "defaultValue": false,
-                    "description": "Prevents applying the focus inside the popup"
+                    "_ui5privacy": "public",
+                    "type": {
+                        "text": "boolean"
+                    }
                 }
             ],
             "returnValue": {
-                "type": "Promise",
+                "type": {
+                    "text": "Promise<void>"
+                },
                 "description": "Resolves when the dialog is open"
             }
         }
     },
-    "accessibleRole": {
-        "control": "select",
-        "options": [
-            "AlertDialog",
-            "Dialog",
-            "None"
-        ]
-    },
-    "default": {
-        "control": {
-            "type": "text"
-        }
-    },
     "applyFocus": {
-        "description": "Focuses the element denoted by <code>initialFocus</code>, if provided, or the first focusable element otherwise.",
+        "description": "Focuses the element denoted by <code>initialFocus</code>, if provided,\nor the first focusable element otherwise.",
         "table": {
             "category": "methods"
         },
         "UI5CustomData": {
             "returnValue": {
-                "type": "Promise",
+                "type": {
+                    "text": "Promise<void>"
+                },
                 "description": "Promise that resolves when the focus is applied"
             }
-        }
-    },
-    "close": {
-        "description": "Closes the popup.",
-        "table": {
-            "category": "methods"
         }
     },
     "isOpen": {
@@ -78,20 +94,41 @@ export default {
         },
         "UI5CustomData": {
             "returnValue": {
-                "type": "boolean"
+                "type": {
+                    "text": "boolean"
+                }
+            }
+        }
+    },
+    "close": {
+        "description": "Closes the popup.",
+        "table": {
+            "category": "methods"
+        },
+        "UI5CustomData": {
+            "returnValue": {
+                "type": {
+                    "text": "void"
+                }
             }
         }
     },
     "before-close": {
         "description": "Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>",
+        "control": {
+            "type": false
+        },
         "table": {
             "category": "events"
         },
         "UI5CustomData": {
             "parameters": [
                 {
+                    "type": {
+                        "text": "boolean"
+                    },
                     "name": "escPressed",
-                    "type": "boolean",
+                    "_ui5privacy": "public",
                     "description": "Indicates that <code>ESC</code> key has triggered the event."
                 }
             ]
@@ -99,6 +136,7 @@ export default {
     }
 };
 export const componentInfo = {
-    "package": "@ui5/webcomponents"
+    "package": "@ui5/webcomponents",
+    "tagName": "ui5-dialog"
 };
 //# sourceMappingURL=argTypes.js.map

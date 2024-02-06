@@ -1,17 +1,10 @@
 import { html } from "lit";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
-const component = "ui5-radio-button";
 export default {
     title: "Main/Radio Button",
     component: "RadioButton",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => {

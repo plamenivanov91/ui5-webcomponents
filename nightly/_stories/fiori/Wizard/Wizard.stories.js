@@ -1,18 +1,8 @@
 import { html } from "lit";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-wizard";
+import argTypes from "./argTypes.js";
 export default {
     title: "Fiori/Wizard",
     component: "Wizard",
-    subcomponents: {
-        WizardStep: 'WizardStep'
-    },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 let index = 0;

@@ -1,16 +1,9 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-color-picker";
+import argTypes from "./argTypes.js";
 export default {
     title: "Main/ColorPicker",
     component: "ColorPicker",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-color-picker

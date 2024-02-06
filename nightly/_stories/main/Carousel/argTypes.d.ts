@@ -1,26 +1,11 @@
 declare const _default: {
-    arrowsPlacement: {
+    pageIndicatorStyle: {
         control: string;
         options: string[];
     };
     backgroundDesign: {
         control: string;
         options: string[];
-    };
-    itemsPerPageL: {
-        control: {
-            type: string;
-        };
-    };
-    itemsPerPageM: {
-        control: {
-            type: string;
-        };
-    };
-    itemsPerPageS: {
-        control: {
-            type: string;
-        };
     };
     pageIndicatorBackgroundDesign: {
         control: string;
@@ -30,13 +15,23 @@ declare const _default: {
         control: string;
         options: string[];
     };
-    pageIndicatorStyle: {
+    arrowsPlacement: {
         control: string;
         options: string[];
+    };
+    visibleItemsIndices: {
+        control: {
+            type: boolean;
+        };
     };
     default: {
         control: {
             type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
         };
     };
     navigateTo: {
@@ -47,21 +42,39 @@ declare const _default: {
         UI5CustomData: {
             parameters: {
                 name: string;
-                type: string;
-                optional: boolean;
+                type: {
+                    text: string;
+                };
                 description: string;
+                _ui5privacy: string;
             }[];
+            returnValue: {
+                type: {
+                    text: string;
+                };
+            };
         };
     };
     navigate: {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                    references: {
+                        name: string;
+                        package: string;
+                        module: string;
+                    }[];
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
@@ -71,6 +84,7 @@ export default _default;
 export declare const componentInfo: {
     package: string;
     since: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
     default: string;

@@ -1,19 +1,9 @@
 declare const _default: {
-    columnLayout: {
-        control: {
-            type: boolean;
-        };
-    };
-    endColumnVisible: {
-        control: {
-            type: boolean;
-        };
-    };
     layout: {
         control: string;
         options: string[];
     };
-    midColumnVisible: {
+    columnLayout: {
         control: {
             type: boolean;
         };
@@ -23,37 +13,81 @@ declare const _default: {
             type: boolean;
         };
     };
-    visibleColumns: {
+    midColumnVisible: {
         control: {
             type: boolean;
         };
     };
-    endColumn: {
+    endColumnVisible: {
         control: {
-            type: string;
+            type: boolean;
         };
     };
-    midColumn: {
+    visibleColumns: {
         control: {
-            type: string;
+            type: boolean;
         };
     };
     startColumn: {
         control: {
             type: string;
         };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
+    };
+    midColumn: {
+        control: {
+            type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
+    };
+    endColumn: {
+        control: {
+            type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
     };
     "layout-change": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
-            parameters: {
+            parameters: ({
+                type: {
+                    text: string;
+                    references: {
+                        name: string;
+                        package: string;
+                        module: string;
+                    }[];
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
-            }[];
+            } | {
+                type: {
+                    text: string;
+                    references?: undefined;
+                };
+                name: string;
+                _ui5privacy: string;
+                description: string;
+            })[];
         };
     };
 };
@@ -61,9 +95,10 @@ export default _default;
 export declare const componentInfo: {
     package: string;
     since: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
-    endColumn: string;
-    midColumn: string;
     startColumn: string;
+    midColumn: string;
+    endColumn: string;
 };

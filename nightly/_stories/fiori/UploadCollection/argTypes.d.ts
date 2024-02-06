@@ -1,49 +1,62 @@
 declare const _default: {
+    mode: {
+        control: string;
+        options: string[];
+    };
     default: {
         control: {
             type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
         };
     };
     header: {
         control: {
             type: string;
         };
-    };
-    drop: {
-        description: string;
         table: {
-            category: string;
-        };
-        UI5CustomData: {
-            parameters: {
-                name: string;
-                type: string;
-                description: string;
-            }[];
+            type: {
+                summary: string;
+            };
         };
     };
     "item-delete": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
     "selection-change": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
@@ -53,6 +66,7 @@ export default _default;
 export declare const componentInfo: {
     package: string;
     since: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
     default: string;

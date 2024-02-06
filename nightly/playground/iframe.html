@@ -18,9 +18,11 @@
     window.LOGLEVEL = 'info';
     window.FRAMEWORK_OPTIONS = {};
     window.CHANNEL_OPTIONS = {};
-    window.FEATURES = {"warnOnLegacyHierarchySeparator":true,"buildStoriesJson":false,"storyStoreV7":true,"argTypeTargetsV7":true,"legacyDecoratorFileOrder":false};
-    window.STORIES = [{"titlePrefix":"","directory":"./docs","files":"**/*.mdx","importPathMatcher":"^\\.[\\\\/](?:docs(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.mdx)$"},{"titlePrefix":"","directory":"./_stories","files":"**/*.stories.@(ts)","importPathMatcher":"^\\.[\\\\/](?:_stories(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(ts))$"}];
-    window.DOCS_OPTIONS = {"defaultName":"Docs","autodocs":true};
+    window.FEATURES = {"warnOnLegacyHierarchySeparator":true,"buildStoriesJson":true,"storyStoreV7":true,"argTypeTargetsV7":true,"legacyDecoratorFileOrder":false,"disallowImplicitActionsInRenderV8":false};
+    window.STORIES = [{"titlePrefix":"","directory":"./docs","files":"**/*.mdx","importPathMatcher":"^\\.[\\\\/](?:docs(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.mdx)$"},{"titlePrefix":"","directory":"./_stories","files":"**/*.stories.@(ts)","importPathMatcher":"^\\.[\\\\/](?:_stories(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(ts))$"},{"titlePrefix":"","directory":"./_stories","files":"**/*.mdx","importPathMatcher":"^\\.[\\\\/](?:_stories(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.mdx)$"}];
+    window.DOCS_OPTIONS = {"defaultName":"Docs","autodocs":"tag"};
+
+    
 
     // We do this so that "module && module.hot" etc. in Storybook source code
     // doesn't fail (it will simply be disabled)
@@ -377,7 +379,7 @@
     }
 </style>
 
-  <script type="module" crossorigin src="./assets/iframe-94adb783.js"></script>
+  <script type="module" crossorigin src="./assets/iframe-8b26ed8b.js"></script>
 </head>
 
 <body>

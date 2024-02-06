@@ -9,6 +9,12 @@ export const enhanceArgTypes = (context) => {
     const withExtractedTypes = extractedArgTypes
         ? combineParameters(extractedArgTypes, userArgTypes)
         : userArgTypes;
+    Object.keys(withExtractedTypes)
+        .filter(key => key.startsWith("_ui5"))
+        .forEach(argType => {
+        withExtractedTypes[argType].name = withExtractedTypes[argType].name.replaceAll("_ui5", "");
+        withExtractedTypes[argType].control = "text";
+    });
     // enhance descriptions
     enhanceArgTypesDescriptions(withExtractedTypes);
     return withExtractedTypes;

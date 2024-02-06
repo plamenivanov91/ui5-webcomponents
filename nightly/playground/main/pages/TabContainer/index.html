@@ -14,7 +14,7 @@
 	</script>
 	
 	
-  <script type="module" crossorigin src="../../../../assets/bundle.esm-4b7d9cc4.js"></script>
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-cc30a116.js"></script>
   <link rel="stylesheet" href="../../../../assets/TabContainer-718b814c.css">
 </head>
 
@@ -807,6 +807,37 @@
 			<ui5-button id="buttonAddTabs">add tabs</ui5-button>
 		</section>
 
+	</section>
+
+
+	<section>
+		<h3>Custom padding</h3>
+		<style>
+			.customPadding::part(tabstrip) {
+				padding: 0;
+			}
+			.customPadding::part(content) {
+				padding: 0;
+			}
+		</style>
+		<ui5-tabcontainer class="customPadding">
+			<ui5-tab text="One">
+				<ui5-button>Button 1</ui5-button>
+			</ui5-tab>
+			<ui5-tab-separator>
+				<ui5-button>Button 2</ui5-button>
+			</ui5-tab-separator>
+			<ui5-tab text="Two">
+				<ui5-button>Button 3</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Three">
+				<ui5-button>Button 4</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Four">
+				<ui5-button>Button 5</ui5-button>
+			</ui5-tab>
+			<ui5-tab text="Five">Tab Content</ui5-tab>
+		</ui5-tabcontainer>
 	</section>
 
 	<script>

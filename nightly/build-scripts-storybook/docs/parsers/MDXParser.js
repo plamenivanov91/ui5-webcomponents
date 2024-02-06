@@ -22,10 +22,12 @@ export class MDXParser {
     }
     parseContent(content, articleName) {
         return `import { Meta } from '@storybook/blocks';
+import { Footer } from "@sb/components/footer/Footer.tsx";
 
 <Meta title="${articleName}" />
 
-${content}`;
+${content}
+<Footer />`;
     }
     removePrefixNumbers(name) {
         return capitalize(name

@@ -1,19 +1,12 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import PanelAccessibleRole from "@ui5/webcomponents/dist/types/PanelAccessibleRole.js";
-const component = "ui5-panel";
 let index = 0;
 export default {
     title: "Main/Panel",
     component: "Panel",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `

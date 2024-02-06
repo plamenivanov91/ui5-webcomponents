@@ -6,12 +6,20 @@ export interface IArgTypeEnhancer {
     enhance: (argsType: ArgType) => ArgType;
 }
 export type ReturnValue = {
-    type: string;
+    type: {
+        text: string;
+    };
     description: string;
 };
 export type Parameter = {
     name: string;
-    type: string;
+    type: {
+        text: string;
+    };
+    optional: boolean;
+    deprecated?: string | boolean;
+    _ui5since?: string;
+    default: string;
     description: string;
 };
 export type IDescriptionRendererProps = {

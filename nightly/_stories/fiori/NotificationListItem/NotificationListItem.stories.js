@@ -1,17 +1,13 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-const component = "ui5-li-notification";
 export default {
     title: "Fiori/Notification List Item",
     component: "NotificationListItem",
-    subcomponents: { 'NotificationAction': 'NotificationAction' },
     parameters: {
         docs: {
-            page: DocsPage({ ...componentInfo, component }),
             story: {
                 iframeHeight: "470px",
                 inline: false,

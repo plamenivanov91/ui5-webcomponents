@@ -1,36 +1,27 @@
 export default {
-    "growingMaxLines": {
-        "control": {
-            "type": "number"
-        }
-    },
-    "maxlength": {
-        "control": {
-            "type": "number"
-        }
-    },
-    "rows": {
-        "control": {
-            "type": "number"
-        }
-    },
     "valueState": {
         "control": "select",
         "options": [
-            "Error",
-            "Information",
             "None",
             "Success",
-            "Warning"
+            "Warning",
+            "Error",
+            "Information"
         ]
     },
     "valueStateMessage": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<HTMLElement>"
+            }
         }
     }
 };
 export const componentInfo = {
-    "package": "@ui5/webcomponents"
+    "package": "@ui5/webcomponents",
+    "tagName": "ui5-textarea"
 };
 //# sourceMappingURL=argTypes.js.map

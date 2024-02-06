@@ -1,17 +1,10 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-rating-indicator";
+import argTypes from "./argTypes.js";
 let index = 0;
 export default {
     title: "Main/Rating Indicator",
     component: "RatingIndicator",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `

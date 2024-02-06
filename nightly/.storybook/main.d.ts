@@ -31,12 +31,13 @@ declare const config: {
     };
     features: {
         storyStoreV7: boolean;
+        buildStoriesJson: boolean;
     };
     typescript: {
         reactDocgen: string;
     };
     docs: {
-        autodocs: boolean;
+        autodocs: string;
     };
 };
 export default config;

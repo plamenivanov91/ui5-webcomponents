@@ -11,8 +11,8 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src="../../../../assets/bundle.esm-4b7d9cc4.js"></script>
-  <link rel="stylesheet" href="../../../../assets/Toast-d7517578.css">
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-cc30a116.js"></script>
+  <link rel="stylesheet" href="../../../../assets/Toast-c3b7d660.css">
 </head>
 
 <body>
@@ -71,6 +71,19 @@
 	<ui5-button id="wcBtnShowToastBE">Show BottomEnd Toast</ui5-button>
 	<ui5-toast id="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
 
+	<br>
+
+		<!--BottomEnd-->
+		<ui5-button id="wcBtnShowToastStyled">Show Styled Toast</ui5-button>
+		<ui5-toast id="wcToastStyled" placement="BottomCenter">
+			<div class="styled-content" tabindex="-1">
+				<span>Styled Toast</span>
+				<div class="actions">
+					<ui5-button design="Transparent">UNDO</ui5-button>
+					<ui5-button design="Transparent">DISMISS</ui5-button>
+				</div>
+			</div>
+		</ui5-toast>
 
 	<!--Toast and Dialog-->
 	<ui5-dialog id="dialog">

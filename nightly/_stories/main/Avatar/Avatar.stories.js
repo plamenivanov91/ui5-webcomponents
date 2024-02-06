@@ -3,19 +3,12 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
 import AvatarShape from "@ui5/webcomponents/dist/types/AvatarShape.js";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import TemplateAvatarTypesAndSizes from "./TemplateAvatarTypesandSizes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-avatar";
 export default {
     title: "Main/Avatar",
     component: "Avatar",
     argTypes,
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
 };
 const Template = (args) => html `<ui5-avatar
     icon="${ifDefined(args.icon)}"

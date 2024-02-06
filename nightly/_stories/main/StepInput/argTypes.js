@@ -1,47 +1,28 @@
 export default {
-    "max": {
-        "control": {
-            "type": "number"
-        }
-    },
-    "min": {
-        "control": {
-            "type": "number"
-        }
-    },
-    "step": {
-        "control": {
-            "type": "number"
-        }
-    },
-    "value": {
-        "control": {
-            "type": "number"
-        }
-    },
-    "valuePrecision": {
-        "control": {
-            "type": "number"
-        }
-    },
     "valueState": {
         "control": "select",
         "options": [
-            "Error",
-            "Information",
             "None",
             "Success",
-            "Warning"
+            "Warning",
+            "Error",
+            "Information"
         ]
     },
     "valueStateMessage": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<HTMLElement>"
+            }
         }
     }
 };
 export const componentInfo = {
     "package": "@ui5/webcomponents",
-    "since": "1.0.0-rc.13"
+    "since": "1.0.0-rc.13",
+    "tagName": "ui5-step-input"
 };
 //# sourceMappingURL=argTypes.js.map

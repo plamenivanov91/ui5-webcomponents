@@ -1,18 +1,10 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-shellbar";
+import argTypes from "./argTypes.js";
 export default {
     title: "Fiori/ShellBar",
     component: "ShellBar",
-    subcomponents: { ShellBarItem: "ShellBarItem" },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-shellbar
@@ -20,7 +12,6 @@ const Template = (args) => html `<ui5-shellbar
     secondary-title="${ifDefined(args.secondaryTitle)}"
     notifications-count="${ifDefined(args.notificationsCount)}"
     ?show-notifications="${ifDefined(args.showNotifications)}"
-    ?show-product-switch="${ifDefined(args.showProductSwitch)}"
     ?show-co-pilot="${ifDefined(args.showCoPilot)}"
     ?show-search-field="${ifDefined(args.showSearchField)}"
     .accessibilityRoles="${ifDefined(args.accessibilityRoles)}"
@@ -55,8 +46,8 @@ Search.args = {
     logo: `<img slot="logo" src="../assets/images/sap-logo-svg.svg" />`,
     searchField: `<ui5-input slot="searchField" placeholder="Enter service..."></ui5-input>`,
 };
-export const WithCoPilot = Template.bind({});
-WithCoPilot.args = {
+export const WithJoule = Template.bind({});
+WithJoule.args = {
     primaryTitle: "Corporate Portal",
     secondaryTitle: "secondary title",
     showCoPilot: true,
@@ -76,7 +67,6 @@ export const Advanced = () => {
             secondary-title="secondary title"
             notifications-count="99+"
             show-notifications=""
-            show-product-switch=""
             show-co-pilot=""
         >
             <ui5-avatar slot="profile">

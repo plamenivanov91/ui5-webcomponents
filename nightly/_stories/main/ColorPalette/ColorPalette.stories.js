@@ -1,17 +1,9 @@
 import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-color-palette";
+import argTypes from "./argTypes.js";
 export default {
     title: "Main/ColorPalette",
     component: "ColorPalette",
-    subcomponents: { 'ColorPaletteItem': 'ColorPaletteItem' },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-color-palette>

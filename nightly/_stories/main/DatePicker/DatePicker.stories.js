@@ -1,19 +1,12 @@
 import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
-const component = "ui5-date-picker";
 export default {
     title: "Main/DatePicker",
     component: "DatePicker",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-date-picker

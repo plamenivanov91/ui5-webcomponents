@@ -1,24 +1,13 @@
 import { html } from "lit";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import InputType from "@ui5/webcomponents/dist/types/InputType.js";
-const component = "ui5-input";
 let index = 0;
 export default {
     title: "Main/Input",
     component: "Input",
-    subcomponents: {
-        SuggestionItem: 'SuggestionItem',
-        SuggestionGroupItem: 'SuggestionGroupItem'
-    },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `

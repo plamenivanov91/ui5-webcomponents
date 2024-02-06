@@ -8,7 +8,7 @@
 
 	
 	
-  <script type="module" crossorigin src="../../../../assets/bundle.esm-4b7d9cc4.js"></script>
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-cc30a116.js"></script>
   <link rel="stylesheet" href="../../../../assets/SelectMenu-b70fbe8e.css">
 </head>
 
@@ -40,6 +40,8 @@
 				<ui5-select menu="selectOptions3" value-state="Information"></ui5-select>
 
 				<ui5-select menu="selectMultipleItems" value-state="Error"></ui5-select>
+
+				<ui5-select menu="selectReadOnly" readonly></ui5-select>
 			</section>
 			
 			<section>
@@ -612,6 +614,40 @@
 				</div>
 			</div>
 		</ui5-select-menu-option>
+	</ui5-select-menu>
+
+	<ui5-select-menu id="selectReadOnly">
+
+		<ui5-select-menu-option display-text="Phone">
+			<div class="selectMenuOption">
+				Phone
+				<div>
+					<ui5-icon name="phone"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="Tablet">
+			<div class="selectMenuOption">
+				Tablet
+				<div>
+					<ui5-icon name="ipad-2"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="Desktop">
+			<div class="selectMenuOption">
+				Desktop
+				<div>
+					<ui5-icon name="laptop"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
 	</ui5-select-menu>
 
 	<script>

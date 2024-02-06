@@ -2,56 +2,79 @@ export default {
     "design": {
         "control": "select",
         "options": [
-            "NoCurrentPage",
-            "Standard"
+            "Standard",
+            "NoCurrentPage"
         ]
     },
     "separatorStyle": {
         "control": "select",
         "options": [
+            "Slash",
             "BackSlash",
             "DoubleBackSlash",
             "DoubleGreaterThan",
             "DoubleSlash",
-            "GreaterThan",
-            "Slash"
+            "GreaterThan"
         ]
     },
     "default": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<BreadcrumbsItem>"
+            }
         }
     },
     "item-click": {
-        "description": "Fires when a <code>BreadcrumbsItem</code> is clicked. <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.",
+        "description": "Fires when a <code>BreadcrumbsItem</code> is clicked.\n<b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.",
+        "control": {
+            "type": false
+        },
         "table": {
             "category": "events"
         },
         "UI5CustomData": {
             "parameters": [
                 {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
                     "name": "item",
-                    "type": "HTMLElement",
+                    "_ui5privacy": "public",
                     "description": "The clicked item."
                 },
                 {
+                    "type": {
+                        "text": "Boolean"
+                    },
                     "name": "altKey",
-                    "type": "Boolean",
+                    "_ui5privacy": "public",
                     "description": "Returns whether the \"ALT\" key was pressed when the event was triggered."
                 },
                 {
+                    "type": {
+                        "text": "Boolean"
+                    },
                     "name": "ctrlKey",
-                    "type": "Boolean",
+                    "_ui5privacy": "public",
                     "description": "Returns whether the \"CTRL\" key was pressed when the event was triggered."
                 },
                 {
+                    "type": {
+                        "text": "Boolean"
+                    },
                     "name": "metaKey",
-                    "type": "Boolean",
+                    "_ui5privacy": "public",
                     "description": "Returns whether the \"META\" key was pressed when the event was triggered."
                 },
                 {
+                    "type": {
+                        "text": "Boolean"
+                    },
                     "name": "shiftKey",
-                    "type": "Boolean",
+                    "_ui5privacy": "public",
                     "description": "Returns whether the \"SHIFT\" key was pressed when the event was triggered."
                 }
             ]
@@ -60,6 +83,7 @@ export default {
 };
 export const componentInfo = {
     "package": "@ui5/webcomponents",
-    "since": "1.0.0-rc.15"
+    "since": "1.0.0-rc.15",
+    "tagName": "ui5-breadcrumbs"
 };
 //# sourceMappingURL=argTypes.js.map

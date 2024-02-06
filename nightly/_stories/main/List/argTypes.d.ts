@@ -1,13 +1,4 @@
 declare const _default: {
-    busyDelay: {
-        control: {
-            type: string;
-        };
-    };
-    growing: {
-        control: string;
-        options: string[];
-    };
     mode: {
         control: string;
         options: string[];
@@ -16,77 +7,126 @@ declare const _default: {
         control: string;
         options: string[];
     };
+    growing: {
+        control: string;
+        options: string[];
+    };
     default: {
         control: {
             type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
         };
     };
     header: {
         control: {
             type: string;
         };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
     };
     "item-click": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
     "item-close": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
-                description: string;
-            }[];
-        };
-    };
-    "item-delete": {
-        description: string;
-        table: {
-            category: string;
-        };
-        UI5CustomData: {
-            parameters: {
-                name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
     "item-toggle": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
+                description: string;
+            }[];
+        };
+    };
+    "item-delete": {
+        description: string;
+        control: {
+            type: boolean;
+        };
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
+            parameters: {
+                type: {
+                    text: string;
+                };
+                name: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
     "selection-change": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                    references: {
+                        name: string;
+                        package: string;
+                        module: string;
+                    }[];
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
@@ -95,6 +135,7 @@ declare const _default: {
 export default _default;
 export declare const componentInfo: {
     package: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
     default: string;

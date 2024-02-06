@@ -1,15 +1,8 @@
 import { html } from "lit";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-barcode-scanner-dialog";
+import argTypes from "./argTypes.js";
 export default {
     title: "Fiori/Barcode Scanner Dialog",
     component: "BarcodeScannerDialog",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `

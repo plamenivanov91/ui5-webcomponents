@@ -1,29 +1,18 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-select";
+import argTypes from "./argTypes.js";
 export default {
     title: "Main/Select",
     component: "Select",
-    subcomponents: {
-        Option: "Option",
-        SelectMenu: "SelectMenu",
-        SelectMenuOption: "SelectMenuOption",
-    },
     argTypes,
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
 };
 const Template = (args) => {
     return html `<ui5-select
     name="${ifDefined(args.name)}"
     ?disabled="${ifDefined(args.disabled)}"
     ?required="${ifDefined(args.required)}"
+    ?readonly="${ifDefined(args.readonly)}"
     value-state="${ifDefined(args.valueState)}"
     value-state-message="${ifDefined(args.valueStateMessage)}"
     selected-option="${ifDefined(args.selectedOption)}"
@@ -89,6 +78,11 @@ export const ValueStateAndValueStateMessage = () => html `<ui5-select value-stat
         used as an information message. Extra long text used as an information
         message - 2. Extra long text used as an information message - 3.
       </div>
+    </ui5-select>
+    <ui5-select class="select" readonly>
+      <ui5-option icon="meal" selected="">Apple</ui5-option>
+      <ui5-option icon="meal">Avocado</ui5-option>
+      <ui5-option icon="meal">Mango</ui5-option>
     </ui5-select>`;
 ValueStateAndValueStateMessage.storyName = "Value State";
 export const TwoColumnLayout = () => html ` <ui5-select class="select">

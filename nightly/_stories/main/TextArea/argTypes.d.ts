@@ -1,19 +1,4 @@
 declare const _default: {
-    growingMaxLines: {
-        control: {
-            type: string;
-        };
-    };
-    maxlength: {
-        control: {
-            type: string;
-        };
-    };
-    rows: {
-        control: {
-            type: string;
-        };
-    };
     valueState: {
         control: string;
         options: string[];
@@ -22,11 +7,17 @@ declare const _default: {
         control: {
             type: string;
         };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
     };
 };
 export default _default;
 export declare const componentInfo: {
     package: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
     valueStateMessage: string;

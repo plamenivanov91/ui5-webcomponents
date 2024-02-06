@@ -1,19 +1,11 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
-const component = "ui5-calendar";
 export default {
     title: "Main/Calendar",
     component: "Calendar",
-    subcomponents: { 'CalendarDate': 'CalendarDate' },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-calendar

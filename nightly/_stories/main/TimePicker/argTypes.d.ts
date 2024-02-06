@@ -12,6 +12,25 @@ declare const _default: {
         control: {
             type: string;
         };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
+    };
+    openPicker: {
+        description: string;
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
+            returnValue: {
+                type: {
+                    text: string;
+                };
+                description: string;
+            };
+        };
     };
     closePicker: {
         description: string;
@@ -20,8 +39,23 @@ declare const _default: {
         };
         UI5CustomData: {
             returnValue: {
-                type: string;
+                type: {
+                    text: string;
+                };
                 description: string;
+            };
+        };
+    };
+    isOpen: {
+        description: string;
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
+            returnValue: {
+                type: {
+                    text: string;
+                };
             };
         };
     };
@@ -33,23 +67,17 @@ declare const _default: {
         UI5CustomData: {
             parameters: {
                 name: string;
-                type: string;
-                optional: boolean;
+                type: {
+                    text: string;
+                };
                 description: string;
+                _ui5privacy: string;
             }[];
             returnValue: {
-                type: string;
-            };
-        };
-    };
-    isOpen: {
-        description: string;
-        table: {
-            category: string;
-        };
-        UI5CustomData: {
-            returnValue: {
-                type: string;
+                type: {
+                    text: string;
+                };
+                description: string;
             };
         };
     };
@@ -61,49 +89,53 @@ declare const _default: {
         UI5CustomData: {
             parameters: {
                 name: string;
-                type: string;
-                optional: boolean;
+                type: {
+                    text: string;
+                };
                 description: string;
+                _ui5privacy: string;
             }[];
             returnValue: {
-                type: string;
-            };
-        };
-    };
-    openPicker: {
-        description: string;
-        table: {
-            category: string;
-        };
-        UI5CustomData: {
-            returnValue: {
-                type: string;
-                description: string;
+                type: {
+                    text: string;
+                };
             };
         };
     };
     change: {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
     input: {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
@@ -113,6 +145,7 @@ export default _default;
 export declare const componentInfo: {
     package: string;
     since: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
     valueStateMessage: string;

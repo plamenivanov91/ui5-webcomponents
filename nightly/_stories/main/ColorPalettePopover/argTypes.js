@@ -1,28 +1,12 @@
 export default {
-    "defaultColor": {
-        "control": {
-            "type": "text"
-        }
-    },
     "default": {
         "control": {
             "type": "text"
-        }
-    },
-    "openPopover": {
-        "description": "Shows the ColorPalettePopover. <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.",
-        "table": {
-            "category": "methods"
         },
-        "UI5CustomData": {
-            "parameters": [
-                {
-                    "name": "opener",
-                    "type": "HTMLElement",
-                    "optional": false,
-                    "description": "the element that the popover is shown at"
-                }
-            ]
+        "table": {
+            "type": {
+                "summary": "Array<IColorPaletteItem>"
+            }
         }
     },
     "showAt": {
@@ -34,23 +18,59 @@ export default {
             "parameters": [
                 {
                     "name": "opener",
-                    "type": "HTMLElement",
-                    "optional": false,
-                    "description": "the element that the popover is shown at"
+                    "type": {
+                        "text": "HTMLElement"
+                    },
+                    "description": "the element that the popover is shown at",
+                    "_ui5privacy": "public"
                 }
-            ]
+            ],
+            "returnValue": {
+                "type": {
+                    "text": "void"
+                }
+            }
+        }
+    },
+    "openPopover": {
+        "description": "Shows the ColorPalettePopover.",
+        "table": {
+            "category": "methods"
+        },
+        "UI5CustomData": {
+            "parameters": [
+                {
+                    "name": "opener",
+                    "type": {
+                        "text": "HTMLElement"
+                    },
+                    "description": "the element that the popover is shown at",
+                    "_ui5privacy": "public"
+                }
+            ],
+            "returnValue": {
+                "type": {
+                    "text": "void"
+                }
+            }
         }
     },
     "item-click": {
         "description": "Fired when the user selects a color.",
+        "control": {
+            "type": false
+        },
         "table": {
             "category": "events"
         },
         "UI5CustomData": {
             "parameters": [
                 {
+                    "type": {
+                        "text": "string"
+                    },
                     "name": "color",
-                    "type": "string",
+                    "_ui5privacy": "public",
                     "description": "the selected color"
                 }
             ]
@@ -59,6 +79,7 @@ export default {
 };
 export const componentInfo = {
     "package": "@ui5/webcomponents",
-    "since": "1.0.0-rc.16"
+    "since": "1.0.0-rc.16",
+    "tagName": "ui5-color-palette-popover"
 };
 //# sourceMappingURL=argTypes.js.map

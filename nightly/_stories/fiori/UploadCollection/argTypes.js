@@ -1,54 +1,73 @@
 export default {
+    "mode": {
+        "control": "select",
+        "options": [
+            "None",
+            "SingleSelect",
+            "SingleSelectBegin",
+            "SingleSelectEnd",
+            "SingleSelectAuto",
+            "MultiSelect",
+            "Delete"
+        ]
+    },
     "default": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<IUploadCollectionItem>"
+            }
         }
     },
     "header": {
         "control": {
             "type": "text"
-        }
-    },
-    "drop": {
-        "description": "Fired when an element is dropped inside the drag and drop overlay. <br><br> <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.",
-        "table": {
-            "category": "events"
         },
-        "UI5CustomData": {
-            "parameters": [
-                {
-                    "name": "dataTransfer",
-                    "type": "DataTransfer",
-                    "description": "The <code>drop</code> event operation data."
-                }
-            ]
+        "table": {
+            "type": {
+                "summary": "Array<HTMLElement>"
+            }
         }
     },
     "item-delete": {
         "description": "Fired when the delete button of any item is pressed.",
+        "control": {
+            "type": false
+        },
         "table": {
             "category": "events"
         },
         "UI5CustomData": {
             "parameters": [
                 {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
                     "name": "item",
-                    "type": "HTMLElement",
+                    "_ui5privacy": "public",
                     "description": "The <code>ui5-upload-collection-item</code> which was deleted."
                 }
             ]
         }
     },
     "selection-change": {
-        "description": "Fired when selection is changed by user interaction in <code>SingleSelect</code> and <code>MultiSelect</code> modes.",
+        "description": "Fired when selection is changed by user interaction\nin <code>SingleSelect</code> and <code>MultiSelect</code> modes.",
+        "control": {
+            "type": false
+        },
         "table": {
             "category": "events"
         },
         "UI5CustomData": {
             "parameters": [
                 {
+                    "type": {
+                        "text": "Array"
+                    },
                     "name": "selectedItems",
-                    "type": "Array",
+                    "_ui5privacy": "public",
                     "description": "An array of the selected items."
                 }
             ]
@@ -57,6 +76,7 @@ export default {
 };
 export const componentInfo = {
     "package": "@ui5/webcomponents-fiori",
-    "since": "1.0.0-rc.7"
+    "since": "1.0.0-rc.7",
+    "tagName": "ui5-upload-collection"
 };
 //# sourceMappingURL=argTypes.js.map

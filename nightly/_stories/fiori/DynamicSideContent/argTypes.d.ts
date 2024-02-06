@@ -1,8 +1,4 @@
 declare const _default: {
-    sideContentFallDown: {
-        control: string;
-        options: string[];
-    };
     sideContentPosition: {
         control: string;
         options: string[];
@@ -11,14 +7,28 @@ declare const _default: {
         control: string;
         options: string[];
     };
+    sideContentFallDown: {
+        control: string;
+        options: string[];
+    };
     default: {
         control: {
             type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
         };
     };
     sideContent: {
         control: {
             type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
         };
     };
     toggleContents: {
@@ -26,16 +36,29 @@ declare const _default: {
         table: {
             category: string;
         };
+        UI5CustomData: {
+            returnValue: {
+                type: {
+                    text: string;
+                };
+            };
+        };
     };
     "layout-change": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
@@ -45,6 +68,7 @@ export default _default;
 export declare const componentInfo: {
     package: string;
     since: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
     default: string;

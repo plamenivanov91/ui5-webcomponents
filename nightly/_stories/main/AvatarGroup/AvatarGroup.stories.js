@@ -1,21 +1,14 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
+import argTypes from "./argTypes.js";
 import TemplateGroupWithPopover from "./TemplateGroupWithPopover.js";
 import TemplateIndividualWithPopover from "./TemplateIndividualWithPopover.js";
 import TemplateAvatarGroupTypesAndSizes from "./TemplateAvatarGroupTypesAndSizes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-avatar-group";
 export default {
     title: "Main/AvatarGroup",
     component: "AvatarGroup",
     argTypes,
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
 };
 const Template = (args) => html `<ui5-avatar-group
     .type="${ifDefined(args.type)}"

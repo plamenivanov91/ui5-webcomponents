@@ -1,10 +1,8 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-const component = "ui5-dialog";
 export default {
     title: "Main/Dialog",
     component: "Dialog",
@@ -15,7 +13,6 @@ export default {
                 iframeHeight: "800px",
                 inline: false,
             },
-            page: DocsPage({ ...componentInfo, component }),
         },
     },
 };

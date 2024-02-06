@@ -1,10 +1,10 @@
 export default {
-    "copilotDomRef": {
+    "logoDomRef": {
         "control": {
             "type": false
         }
     },
-    "logoDomRef": {
+    "copilotDomRef": {
         "control": {
             "type": false
         }
@@ -19,12 +19,12 @@ export default {
             "type": false
         }
     },
-    "productSwitchDomRef": {
+    "profileDomRef": {
         "control": {
             "type": false
         }
     },
-    "profileDomRef": {
+    "productSwitchDomRef": {
         "control": {
             "type": false
         }
@@ -32,109 +32,92 @@ export default {
     "default": {
         "control": {
             "type": "text"
-        }
-    },
-    "logo": {
-        "control": {
-            "type": "text"
-        }
-    },
-    "menuItems": {
-        "control": {
-            "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<ShellBarItem>"
+            }
         }
     },
     "profile": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<HTMLElement>"
+            }
+        }
+    },
+    "logo": {
+        "control": {
+            "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<HTMLElement>"
+            }
+        }
+    },
+    "menuItems": {
+        "control": {
+            "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<ListItemBase>"
+            }
         }
     },
     "searchField": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<Input>"
+            }
         }
     },
     "startButton": {
         "control": {
             "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<IButton>"
+            }
         }
     },
     "closeOverflow": {
-        "description": "Closes the overflow area. Useful to manually close the overflow after having suppressed automatic closing with preventDefault() of ShellbarItem's press event",
+        "description": "Closes the overflow area.\nUseful to manually close the overflow after having suppressed automatic closing with preventDefault() of ShellbarItem's press event",
         "table": {
             "category": "methods"
-        }
-    },
-    "co-pilot-click": {
-        "description": "Fired, when the co pilot is activated.",
-        "table": {
-            "category": "events"
         },
         "UI5CustomData": {
-            "parameters": [
-                {
-                    "name": "targetRef",
-                    "type": "HTMLElement",
-                    "description": "dom ref of the activated element"
+            "returnValue": {
+                "type": {
+                    "text": "void"
                 }
-            ]
-        }
-    },
-    "logo-click": {
-        "description": "Fired, when the logo is activated.",
-        "table": {
-            "category": "events"
-        },
-        "UI5CustomData": {
-            "parameters": [
-                {
-                    "name": "targetRef",
-                    "type": "HTMLElement",
-                    "description": "dom ref of the activated element"
-                }
-            ]
-        }
-    },
-    "menu-item-click": {
-        "description": "Fired, when a menu item is activated <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.",
-        "table": {
-            "category": "events"
-        },
-        "UI5CustomData": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "type": "HTMLElement",
-                    "description": "DOM ref of the activated list item"
-                }
-            ]
+            }
         }
     },
     "notifications-click": {
         "description": "Fired, when the notification icon is activated.",
+        "control": {
+            "type": false
+        },
         "table": {
             "category": "events"
         },
         "UI5CustomData": {
             "parameters": [
                 {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
                     "name": "targetRef",
-                    "type": "HTMLElement",
-                    "description": "dom ref of the activated element"
-                }
-            ]
-        }
-    },
-    "product-switch-click": {
-        "description": "Fired, when the product switch icon is activated. <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.",
-        "table": {
-            "category": "events"
-        },
-        "UI5CustomData": {
-            "parameters": [
-                {
-                    "name": "targetRef",
-                    "type": "HTMLElement",
+                    "_ui5privacy": "public",
                     "description": "dom ref of the activated element"
                 }
             ]
@@ -142,15 +125,105 @@ export default {
     },
     "profile-click": {
         "description": "Fired, when the profile slot is present.",
+        "control": {
+            "type": false
+        },
         "table": {
             "category": "events"
         },
         "UI5CustomData": {
             "parameters": [
                 {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
                     "name": "targetRef",
-                    "type": "HTMLElement",
+                    "_ui5privacy": "public",
                     "description": "dom ref of the activated element"
+                }
+            ]
+        }
+    },
+    "product-switch-click": {
+        "description": "Fired, when the product switch icon is activated.\n<b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.",
+        "control": {
+            "type": false
+        },
+        "table": {
+            "category": "events"
+        },
+        "UI5CustomData": {
+            "parameters": [
+                {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
+                    "name": "targetRef",
+                    "_ui5privacy": "public",
+                    "description": "dom ref of the activated element"
+                }
+            ]
+        }
+    },
+    "logo-click": {
+        "description": "Fired, when the logo is activated.",
+        "control": {
+            "type": false
+        },
+        "table": {
+            "category": "events"
+        },
+        "UI5CustomData": {
+            "parameters": [
+                {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
+                    "name": "targetRef",
+                    "_ui5privacy": "public",
+                    "description": "dom ref of the activated element"
+                }
+            ]
+        }
+    },
+    "co-pilot-click": {
+        "description": "Fired, when the co pilot is activated.",
+        "control": {
+            "type": false
+        },
+        "table": {
+            "category": "events"
+        },
+        "UI5CustomData": {
+            "parameters": [
+                {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
+                    "name": "targetRef",
+                    "_ui5privacy": "public",
+                    "description": "dom ref of the activated element"
+                }
+            ]
+        }
+    },
+    "menu-item-click": {
+        "description": "Fired, when a menu item is activated\n<b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.",
+        "control": {
+            "type": false
+        },
+        "table": {
+            "category": "events"
+        },
+        "UI5CustomData": {
+            "parameters": [
+                {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
+                    "name": "item",
+                    "_ui5privacy": "public",
+                    "description": "DOM ref of the activated list item"
                 }
             ]
         }
@@ -158,6 +231,7 @@ export default {
 };
 export const componentInfo = {
     "package": "@ui5/webcomponents-fiori",
-    "since": "0.8.0"
+    "since": "0.8.0",
+    "tagName": "ui5-shellbar"
 };
 //# sourceMappingURL=argTypes.js.map

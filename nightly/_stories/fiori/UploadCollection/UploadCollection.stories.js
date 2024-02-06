@@ -1,21 +1,13 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import UploadState from "@ui5/webcomponents-fiori/dist/types/UploadState.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
-const component = "ui5-upload-collection";
 export default {
     title: "Fiori/Upload Collection",
     component: "UploadCollection",
-    subcomponents: { 'UploadCollectionItem': 'UploadCollectionItem' },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 };
 const uploadCollectionItem = (fileName, fileNameClickable, uploadState, defaultSlot, thumbnail, type, progress, disableDeleteButton, hideDeleteButton, hideRetryButton, hideTerminateButton) => {

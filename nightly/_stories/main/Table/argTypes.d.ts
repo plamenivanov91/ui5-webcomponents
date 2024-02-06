@@ -1,9 +1,4 @@
 declare const _default: {
-    busyDelay: {
-        control: {
-            type: string;
-        };
-    };
     growing: {
         control: string;
         options: string[];
@@ -12,51 +7,79 @@ declare const _default: {
         control: string;
         options: string[];
     };
-    columns: {
-        control: {
-            type: string;
-        };
-    };
     default: {
         control: {
             type: string;
         };
-    };
-    "popin-change": {
-        description: string;
         table: {
-            category: string;
+            type: {
+                summary: string;
+            };
         };
-        UI5CustomData: {
-            parameters: {
-                name: string;
-                type: string;
-                description: string;
-            }[];
+    };
+    columns: {
+        control: {
+            type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
         };
     };
     "row-click": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
+                description: string;
+            }[];
+        };
+    };
+    "popin-change": {
+        description: string;
+        control: {
+            type: boolean;
+        };
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
+            parameters: {
+                type: {
+                    text: string;
+                };
+                name: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
     "selection-change": {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
@@ -65,8 +88,9 @@ declare const _default: {
 export default _default;
 export declare const componentInfo: {
     package: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
-    columns: string;
     default: string;
+    columns: string;
 };

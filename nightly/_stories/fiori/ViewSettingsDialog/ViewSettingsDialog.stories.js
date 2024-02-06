@@ -1,18 +1,11 @@
 import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-view-settings-dialog";
+import argTypes from "./argTypes.js";
 export default {
-    title: "Fiori/ViewSettingsDialog",
+    title: "Fiori/View Settings Dialog",
     component: "ViewSettingsDialog",
     subcomponents: { 'SortItem': 'SortItem', 'FilterItem': 'FilterItem', 'FilterItemOption': 'FilterItemOption' },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-view-settings-dialog

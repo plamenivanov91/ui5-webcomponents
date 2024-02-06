@@ -1,21 +1,13 @@
 import { html } from "lit";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import TableMode from "@ui5/webcomponents/dist/types/TableMode.js";
 import TableGrowingMode from "@ui5/webcomponents/dist/types/TableGrowingMode.js";
-const component = "ui5-table";
 let index = 0;
 export default {
     title: "Main/Table",
     component: "Table",
-    subcomponents: { 'TableColumn': 'TableColumn', 'TableRow': 'TableRow', 'TableGroupRow': 'TableGroupRow', 'TableCell': 'TableCell' },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component })
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `

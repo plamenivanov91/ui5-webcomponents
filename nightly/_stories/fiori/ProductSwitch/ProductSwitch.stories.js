@@ -1,17 +1,9 @@
 import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
-const component = "ui5-product-switch";
+import argTypes from "./argTypes.js";
 export default {
     title: "Fiori/Product Switch",
     component: "ProductSwitch",
-    subcomponents: { ProductSwitchItem: "ProductSwitchItem" },
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `

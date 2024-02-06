@@ -1,10 +1,18 @@
 declare const _default: {
+    valueState: {
+        control: string;
+        options: string[];
+    };
     dateValue: {
         control: {
             type: boolean;
         };
     };
-    valueState: {
+    primaryCalendarType: {
+        control: string;
+        options: string[];
+    };
+    secondaryCalendarType: {
         control: string;
         options: string[];
     };
@@ -12,58 +20,22 @@ declare const _default: {
         control: {
             type: string;
         };
-    };
-    closePicker: {
-        description: string;
         table: {
-            category: string;
-        };
-    };
-    formatValue: {
-        description: string;
-        table: {
-            category: string;
-        };
-        UI5CustomData: {
-            parameters: {
-                name: string;
-                type: string;
-                optional: boolean;
-                description: string;
-            }[];
-            returnValue: {
-                type: string;
-                description: string;
+            type: {
+                summary: string;
             };
         };
     };
-    isInValidRange: {
-        description: string;
-        table: {
-            category: string;
-        };
-        UI5CustomData: {
-            parameters: {
-                name: string;
-                type: string;
-                optional: boolean;
-                defaultValue: string;
-                description: string;
-            }[];
-            returnValue: {
-                type: string;
-            };
-        };
-    };
-    isOpen: {
+    openPicker: {
         description: string;
         table: {
             category: string;
         };
         UI5CustomData: {
             returnValue: {
-                type: string;
-                description: string;
+                type: {
+                    text: string;
+                };
             };
         };
     };
@@ -75,67 +47,152 @@ declare const _default: {
         UI5CustomData: {
             parameters: {
                 name: string;
-                type: string;
-                optional: boolean;
-                defaultValue: string;
+                type: {
+                    text: string;
+                };
                 description: string;
+                _ui5privacy: string;
             }[];
             returnValue: {
-                type: string;
+                type: {
+                    text: string;
+                };
             };
         };
     };
-    openPicker: {
+    isInValidRange: {
+        description: string;
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
+            parameters: {
+                name: string;
+                type: {
+                    text: string;
+                };
+                description: string;
+                _ui5privacy: string;
+            }[];
+            returnValue: {
+                type: {
+                    text: string;
+                };
+            };
+        };
+    };
+    formatValue: {
+        description: string;
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
+            parameters: {
+                name: string;
+                type: {
+                    text: string;
+                };
+                description: string;
+                _ui5privacy: string;
+            }[];
+            returnValue: {
+                type: {
+                    text: string;
+                };
+                description: string;
+            };
+        };
+    };
+    closePicker: {
         description: string;
         table: {
             category: string;
         };
         UI5CustomData: {
             returnValue: {
-                type: string;
+                type: {
+                    text: string;
+                };
+            };
+        };
+    };
+    isOpen: {
+        description: string;
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
+            returnValue: {
+                type: {
+                    text: string;
+                };
                 description: string;
             };
         };
     };
     change: {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
     input: {
         description: string;
+        control: {
+            type: boolean;
+        };
         table: {
             category: string;
         };
         UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
     };
-    primaryCalendarType: {
-        control: string;
-        options: string[];
-    };
-    secondaryCalendarType: {
-        control: string;
-        options: string[];
+    "value-state-change": {
+        description: string;
+        control: {
+            type: boolean;
+        };
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
+            parameters: {
+                type: {
+                    text: string;
+                };
+                name: string;
+                _ui5privacy: string;
+                description: string;
+            }[];
+        };
     };
 };
 export default _default;
 export declare const componentInfo: {
     package: string;
     since: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
     valueStateMessage: string;

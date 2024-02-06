@@ -1,17 +1,10 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
-const component = "ui5-checkbox";
 export default {
     title: "Main/Check Box",
     component: "CheckBox",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 };
 const Template = (args) => html `<ui5-checkbox

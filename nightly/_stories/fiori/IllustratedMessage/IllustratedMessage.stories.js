@@ -1,18 +1,11 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import argTypes, { componentInfo } from "./argTypes.js";
-import { DocsPage } from "../../../.storybook/docs";
+import argTypes from "./argTypes.js";
 import IllustrationMessageType from "@ui5/webcomponents-fiori/dist/types/IllustrationMessageType.js";
-const component = "ui5-illustrated-message";
 export default {
     title: "Fiori/Illustrated Message",
     component: "IllustratedMessage",
-    parameters: {
-        docs: {
-            page: DocsPage({ ...componentInfo, component }),
-        },
-    },
     argTypes,
 };
 const Template = (args) => html ` <ui5-illustrated-message

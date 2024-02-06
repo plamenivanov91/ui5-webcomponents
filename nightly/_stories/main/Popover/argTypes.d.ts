@@ -1,14 +1,9 @@
 declare const _default: {
-    horizontalAlign: {
+    placementType: {
         control: string;
         options: string[];
     };
-    opener: {
-        control: {
-            type: string;
-        };
-    };
-    placementType: {
+    horizontalAlign: {
         control: string;
         options: string[];
     };
@@ -16,14 +11,38 @@ declare const _default: {
         control: string;
         options: string[];
     };
-    footer: {
-        control: {
-            type: string;
-        };
+    accessibleRole: {
+        control: string;
+        options: string[];
     };
     header: {
         control: {
             type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
+    };
+    footer: {
+        control: {
+            type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
+    };
+    default: {
+        control: {
+            type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
         };
     };
     showAt: {
@@ -34,30 +53,29 @@ declare const _default: {
         UI5CustomData: {
             parameters: ({
                 name: string;
-                type: string;
-                optional: boolean;
+                type: {
+                    text: string;
+                };
                 description: string;
-                defaultValue?: undefined;
+                _ui5privacy: string;
+                default?: undefined;
+                optional?: undefined;
             } | {
                 name: string;
-                type: string;
-                optional: boolean;
-                defaultValue: boolean;
+                default: string;
                 description: string;
+                optional: boolean;
+                _ui5privacy: string;
+                type: {
+                    text: string;
+                };
             })[];
             returnValue: {
-                type: string;
+                type: {
+                    text: string;
+                };
                 description: string;
             };
-        };
-    };
-    accessibleRole: {
-        control: string;
-        options: string[];
-    };
-    default: {
-        control: {
-            type: string;
         };
     };
     applyFocus: {
@@ -67,15 +85,11 @@ declare const _default: {
         };
         UI5CustomData: {
             returnValue: {
-                type: string;
+                type: {
+                    text: string;
+                };
                 description: string;
             };
-        };
-    };
-    close: {
-        description: string;
-        table: {
-            category: string;
         };
     };
     isOpen: {
@@ -85,19 +99,40 @@ declare const _default: {
         };
         UI5CustomData: {
             returnValue: {
-                type: string;
+                type: {
+                    text: string;
+                };
             };
         };
     };
-    "before-close": {
+    close: {
         description: string;
         table: {
             category: string;
         };
         UI5CustomData: {
+            returnValue: {
+                type: {
+                    text: string;
+                };
+            };
+        };
+    };
+    "before-close": {
+        description: string;
+        control: {
+            type: boolean;
+        };
+        table: {
+            category: string;
+        };
+        UI5CustomData: {
             parameters: {
+                type: {
+                    text: string;
+                };
                 name: string;
-                type: string;
+                _ui5privacy: string;
                 description: string;
             }[];
         };
@@ -107,9 +142,10 @@ export default _default;
 export declare const componentInfo: {
     package: string;
     since: string;
+    tagName: string;
 };
 export type StoryArgsSlots = {
-    footer: string;
     header: string;
+    footer: string;
     default: string;
 };

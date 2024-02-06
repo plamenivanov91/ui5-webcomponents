@@ -1,6 +1,6 @@
 import remarkGfm from 'remark-gfm';
 const config = {
-    stories: ["../docs/**/*.mdx", "../_stories/**/*.stories.@(ts)"],
+    stories: ["../docs/**/*.mdx", "../_stories/**/*.stories.@(ts)", "../_stories/**/*.mdx"],
     staticDirs: [
         { from: "../assets", to: "../assets" },
         { from: "../docs/storybook-pages", to: "/" },
@@ -34,13 +34,14 @@ const config = {
         builder: "@storybook/builder-vite"
     },
     features: {
-        storyStoreV7: true
+        storyStoreV7: true,
+        buildStoriesJson: true,
     },
     typescript: {
         reactDocgen: 'react-docgen'
     },
     docs: {
-        autodocs: true
+        autodocs: 'tag'
     }
 };
 export default config;
