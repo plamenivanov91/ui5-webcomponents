@@ -15,6 +15,7 @@ const Template = (args) => html `<ui5-checkbox
         ?required="${ifDefined(args.required)}"
         ?indeterminate="${ifDefined(args.indeterminate)}"
         ?checked="${ifDefined(args.checked)}"
+        ?display-only="${ifDefined(args.displayOnly)}"
         text="${ifDefined(args.text)}"
         value-state="${ifDefined(args.valueState)}"
         wrapping-type="${ifDefined(args.wrappingType)}"

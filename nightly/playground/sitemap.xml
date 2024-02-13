@@ -1632,4 +1632,20 @@
     <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/fiori/fiori-wizard-wizard-step--wizard-step-overview</loc>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/fiori/fiori-enums--enums</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/fiori/fiori-interfaces--interfaces</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-enums--enums</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-interfaces--interfaces</loc>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

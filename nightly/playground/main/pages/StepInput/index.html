@@ -23,7 +23,7 @@
 	</script>
 
 	
-  <script type="module" crossorigin src="../../../../assets/bundle.esm-cc30a116.js"></script>
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-87892fb6.js"></script>
   <link rel="stylesheet" href="../../../../assets/StepInput-5c7e8966.css">
 </head>
 <body class="stepinput1auto">
@@ -89,6 +89,15 @@
 			placeholder="Enter number"
 			class="stepinput2auto"
 			readonly
+		></ui5-step-input>
+	</div>
+
+	<div>
+		<h3>StepInput with valueStateChange Prevented</h3>
+		<ui5-step-input id="stepInputValueStateChange"
+			placeholder="Enter number"
+			value-state="Error"
+			class="stepinput2auto"
 		></ui5-step-input>
 	</div>
 
@@ -183,6 +192,9 @@
 
 		stepInputChange2.addEventListener('ui5-change', displayChange);
 
+		stepInputValueStateChange.addEventListener("value-state-change", function(e) {
+			e.preventDefault();
+		});
 	</script>
 
 </body>

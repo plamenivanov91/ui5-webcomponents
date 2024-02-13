@@ -1,7 +1,10 @@
-commit 3ea5c664aaf20908ab04a933a7587c35206aebf6
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Feb 6 14:23:40 2024 +0200
+commit ca7b46d53a66516f4ffb107d755d16d15ac5125f
+Author: petyabegovska <pbegovska@gmail.com>
+Date:   Tue Feb 13 09:47:21 2024 +0200
 
-    fix(ui5-table): prevent load-more event on initial load (#8240)
+    docs(landing-page): fix link to Blog post (#8271)
     
-    Co-authored-by: Nia Peeva <niya.peeva@sap.com>
+    The new link points to https://community.sap.com with tag:
+    "ui5 web components" in "Technology Blogs by SAP".
+    
+     Fixes #8270

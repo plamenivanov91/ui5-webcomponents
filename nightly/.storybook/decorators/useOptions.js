@@ -12,10 +12,12 @@ export const themes = {
 export const useOptions = (StoryFn) => {
     const [{ theme, rtl, density }] = useGlobals();
     useEffect(() => {
-        const Conf = window["sap-ui-webcomponents-bundle"].configuration;
+        const Bundle = window["sap-ui-webcomponents-bundle"];
+        const Conf = Bundle.configuration;
         const currentTheme = themes[theme];
         Conf.setTheme(currentTheme);
         document.body.setAttribute("dir", rtl === "RTL" ? "rtl" : "ltr");
+        Bundle.applyDirection();
         document.body.setAttribute("data-ui5-theme", currentTheme);
         document.body.classList.remove("sapUiSizeCozy");
         document.body.classList.remove("sapUiSizeCompact");
