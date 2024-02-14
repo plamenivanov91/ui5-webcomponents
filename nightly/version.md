@@ -1,10 +1,17 @@
-commit ca7b46d53a66516f4ffb107d755d16d15ac5125f
-Author: petyabegovska <pbegovska@gmail.com>
-Date:   Tue Feb 13 09:47:21 2024 +0200
+commit 7f46b0b9a6f91b52f466b0c617d6ece9a541e950
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Tue Feb 13 15:43:27 2024 +0200
 
-    docs(landing-page): fix link to Blog post (#8271)
+    feat(ui5-rating-indicator): introduced "remaining-bar" CSS part (#8276)
     
-    The new link points to https://community.sap.com with tag:
-    "ui5 web components" in "Technology Blogs by SAP".
+    The part can be used like this to alter the end points' size.
     
-     Fixes #8270
+    ```
+    [ui5-progress-indicator]::part(remaining-bar)::before,
+    [ui5-progress-indicator]::part(remaining-bar)::after {
+            width: 0.375rem;
+            height: 0.375rem;
+    }
+    ```
+    
+    Related to: #8213
