@@ -10,7 +10,7 @@
 
 
 
-  <script type="module" crossorigin src="../../../../assets/bundle.esm-464481d1.js"></script>
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-24f84b75.js"></script>
   <link rel="stylesheet" href="../../../../assets/List_test_page-bd80d576.css">
 </head>
 
@@ -239,6 +239,16 @@
 		<ui5-li >item</ui5-li>
 	</ui5-list>
 
+	<br/><br/>
+
+	<ui5-list id="myList7" header-text="API: ListItem tooltip">
+		<ui5-li tooltip="Option #1">Option 1</ui5-li>
+		<ui5-li tooltip="Option #2">Option 2</ui5-li>
+		<ui5-li tooltip="Option #3">Option 3</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
 	<ui5-list id="listWithEmptyItem">
 		<ui5-li id="emptyItem"></ui5-li>
 		<ui5-li>IPhone 3</ui5-li>
@@ -408,7 +418,7 @@
 		listWithCustomItems.addEventListener("ui5-item-close", function(e) {
 			customListItemSelectResult.value = ++customListItemSelectResult.value
 		});
-		
+
 	</script>
 
 	<ui5-list growing="Scroll">

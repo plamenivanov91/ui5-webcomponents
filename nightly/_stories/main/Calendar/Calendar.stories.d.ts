@@ -7,3 +7,4 @@ export default _default;
 export declare const Basic: UI5StoryArgs<Calendar, StoryArgsSlots>;
 export declare const Bounds: UI5StoryArgs<Calendar, StoryArgsSlots>;
 export declare const CalendarTypes: UI5StoryArgs<Calendar, StoryArgsSlots>;
+export declare const CalendarWithLegend: UI5StoryArgs<Calendar, StoryArgsSlots>;

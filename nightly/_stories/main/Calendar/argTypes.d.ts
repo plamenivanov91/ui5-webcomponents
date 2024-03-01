@@ -11,7 +11,27 @@ declare const _default: {
         control: string;
         options: string[];
     };
+    calendarLegend: {
+        control: {
+            type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
+    };
     default: {
+        control: {
+            type: string;
+        };
+        table: {
+            type: {
+                summary: string;
+            };
+        };
+    };
+    specialDates: {
         control: {
             type: string;
         };
@@ -48,5 +68,7 @@ export declare const componentInfo: {
     tagName: string;
 };
 export type StoryArgsSlots = {
+    calendarLegend: string;
     default: string;
+    specialDates: string;
 };

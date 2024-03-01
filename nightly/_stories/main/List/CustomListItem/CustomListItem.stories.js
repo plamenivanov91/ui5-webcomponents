@@ -15,6 +15,7 @@ const Template = (args) => {
       ?navigated="${ifDefined(args.navigated)}"
       type="${ifDefined(args.type)}"
       ?selected="${ifDefined(args.selected)}"
+	  tooltip="${ifDefined(args.tooltip)}"
     >
       ${unsafeHTML(args.default)}
       ${unsafeHTML(args.deleteButton)}

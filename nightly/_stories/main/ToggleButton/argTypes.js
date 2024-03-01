@@ -18,6 +18,13 @@ export default {
             "Reset"
         ]
     },
+    "accessibleRole": {
+        "control": "select",
+        "options": [
+            "Button",
+            "Link"
+        ]
+    },
     "default": {
         "control": {
             "type": "text"

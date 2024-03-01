@@ -23,6 +23,7 @@ const Template = (args) => {
 		?hide-delete-button="${ifDefined(args.hideDeleteButton)}"
 		?hide-retry-button="${ifDefined(args.hideRetryButton)}"
 		?hide-terminate-button="${ifDefined(args.hideTerminateButton)}"
+		tooltip="${ifDefined(args.tooltip)}"
 	>
 		${unsafeHTML(args.default)}
 		${unsafeHTML(args.thumbnail)}

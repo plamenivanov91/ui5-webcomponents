@@ -21,6 +21,7 @@ const Template = (args) => html `<ui5-tree>
         navigated="${ifDefined(args.navigated)}"
         type="${ifDefined(args.type)}"
         selected="${ifDefined(args.selected)}"
+		tooltip="${ifDefined(args.tooltip)}"
     >
         ${unsafeHTML(args.default)}
         ${unsafeHTML(args.deleteButton)}

@@ -1,17 +1,7 @@
-commit 7f46b0b9a6f91b52f466b0c617d6ece9a541e950
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Tue Feb 13 15:43:27 2024 +0200
+commit a03921cc4ad90418d3ca9dd2241a3cafe24e4fff
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Fri Mar 1 13:14:52 2024 +0200
 
-    feat(ui5-rating-indicator): introduced "remaining-bar" CSS part (#8276)
+    fix(ui5-side-navigation): fix private types (#8158)
     
-    The part can be used like this to alter the end points' size.
-    
-    ```
-    [ui5-progress-indicator]::part(remaining-bar)::before,
-    [ui5-progress-indicator]::part(remaining-bar)::after {
-            width: 0.375rem;
-            height: 0.375rem;
-    }
-    ```
-    
-    Related to: #8213
+    * fix(ui5-side-navigation): fix private types

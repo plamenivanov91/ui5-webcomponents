@@ -27,6 +27,16 @@ export default {
             "Persian"
         ]
     },
+    "calendarLegend": {
+        "control": {
+            "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<CalendarLegend>"
+            }
+        }
+    },
     "default": {
         "control": {
             "type": "text"
@@ -34,6 +44,16 @@ export default {
         "table": {
             "type": {
                 "summary": "Array<CalendarDate>"
+            }
+        }
+    },
+    "specialDates": {
+        "control": {
+            "type": "text"
+        },
+        "table": {
+            "type": {
+                "summary": "Array<SpecialCalendarDate>"
             }
         }
     },

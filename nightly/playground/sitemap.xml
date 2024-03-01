@@ -261,6 +261,10 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar-legend--calendar-legend-overview</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-card--card-overview</loc>
     <changefreq>monthly</changefreq>
   </url>
@@ -458,6 +462,10 @@
   </url>
   <url>
     <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar--basic</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar-legend--basic</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -697,7 +705,19 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar--calendar-with-legend</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar-calendar-date--basic</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar-special-calendar-date--basic</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar-legend-calendar-legend-item--basic</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -1206,6 +1226,14 @@
   </url>
   <url>
     <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar-calendar-date--calendar-date-overview</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar-special-calendar-date--special-calendar-date-overview</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://sap.github.io/ui5-webcomponents/playground/?path=/main/main-calendar-legend-calendar-legend-item--calendar-legend-item-overview</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
