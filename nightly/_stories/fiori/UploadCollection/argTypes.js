@@ -47,13 +47,13 @@ export default {
                     },
                     "name": "item",
                     "_ui5privacy": "public",
-                    "description": "The <code>ui5-upload-collection-item</code> which was deleted."
+                    "description": "The `ui5-upload-collection-item` which was deleted."
                 }
             ]
         }
     },
     "selection-change": {
-        "description": "Fired when selection is changed by user interaction\nin <code>SingleSelect</code> and <code>MultiSelect</code> modes.",
+        "description": "Fired when selection is changed by user interaction\nin `SingleSelect` and `MultiSelect` modes.",
         "control": {
             "type": false
         },

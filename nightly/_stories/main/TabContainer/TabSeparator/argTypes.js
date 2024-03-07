@@ -1,6 +1,6 @@
 export default {
     "getTabInStripDomRef": {
-        "description": "Returns the DOM reference of the separator that is placed in the header.\n<b>Note:</b> Tabs and separators, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return <code>null</code>.",
+        "description": "Returns the DOM reference of the separator that is placed in the header.\n\n**Note:** Tabs and separators, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `null`.",
         "table": {
             "category": "methods"
         },

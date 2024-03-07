@@ -145,7 +145,7 @@ export default {
         }
     },
     "product-switch-click": {
-        "description": "Fired, when the product switch icon is activated.\n<b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.",
+        "description": "Fired, when the product switch icon is activated.\n\n**Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.",
         "control": {
             "type": false
         },
@@ -208,7 +208,7 @@ export default {
         }
     },
     "menu-item-click": {
-        "description": "Fired, when a menu item is activated\n<b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.",
+        "description": "Fired, when a menu item is activated\n\n**Note:** You can prevent closing of overflow popover by calling `event.preventDefault()`.",
         "control": {
             "type": false
         },

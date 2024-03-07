@@ -1,7 +1,23 @@
-commit a03921cc4ad90418d3ca9dd2241a3cafe24e4fff
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Fri Mar 1 13:14:52 2024 +0200
+commit 30763ffee896d691d6d1d2d65900c47458293eda
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Mar 7 11:21:23 2024 +0200
 
-    fix(ui5-side-navigation): fix private types (#8158)
+    chore: prepare setup for reusable styles (#8182)
     
-    * fix(ui5-side-navigation): fix private types
+    * wip: provide styles for specific components
+    
+    * update plugin
+    
+    * copy of files revert logic
+    
+    * chore: add test pages
+    
+    * rework toollayout
+    
+    * chore: make wathc and test pages to consume styles from dist
+    
+    * chore: cleanup
+    
+    ---------
+    
+    Co-authored-by: Nayden Naydenov <nnaydenow.work@sap.com>

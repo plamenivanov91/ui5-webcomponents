@@ -78,6 +78,7 @@ declare const _default: {
                 name: string;
                 _ui5privacy: string;
                 description: string;
+                _ui5since: string;
             }[];
         };
     };

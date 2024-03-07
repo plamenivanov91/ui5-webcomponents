@@ -104,7 +104,7 @@ export default {
         }
     },
     "formatValue": {
-        "description": "Formats a Java Script date object into a string representing a locale date\naccording to the <code>formatPattern</code> property of the DatePicker instance",
+        "description": "Formats a Java Script date object into a string representing a locale date\naccording to the `formatPattern` property of the DatePicker instance",
         "table": {
             "category": "methods"
         },
@@ -228,7 +228,7 @@ export default {
                     },
                     "name": "valueState",
                     "_ui5privacy": "public",
-                    "description": "The new <code>valueState</code> that will be set."
+                    "description": "The new `valueState` that will be set."
                 },
                 {
                     "type": {

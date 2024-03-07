@@ -35,7 +35,7 @@ export default {
                     },
                     "name": "valueState",
                     "_ui5privacy": "public",
-                    "description": "The new <code>valueState</code> that will be set."
+                    "description": "The new `valueState` that will be set."
                 },
                 {
                     "type": {

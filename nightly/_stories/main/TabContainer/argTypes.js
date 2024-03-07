@@ -87,7 +87,7 @@ export default {
                     },
                     "name": "tab",
                     "_ui5privacy": "public",
-                    "description": "The selected <code>tab</code>."
+                    "description": "The selected `tab`."
                 },
                 {
                     "type": {
@@ -102,7 +102,7 @@ export default {
                     },
                     "name": "tabIndex",
                     "_ui5privacy": "public",
-                    "description": "The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter."
+                    "description": "The selected `tab` index in the flattened array of all tabs and their subTabs, provided by the `allItems` getter."
                 }
             ]
         }

@@ -36,7 +36,7 @@ export default {
         }
     },
     "row-click": {
-        "description": "Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.",
+        "description": "Fired when a row in `Active` mode is clicked or `Enter` key is pressed.",
         "control": {
             "type": false
         },
@@ -57,7 +57,7 @@ export default {
         }
     },
     "popin-change": {
-        "description": "Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.",
+        "description": "Fired when `ui5-table-column` is shown as a pop-in instead of hiding it.",
         "control": {
             "type": false
         },
@@ -78,7 +78,7 @@ export default {
         }
     },
     "selection-change": {
-        "description": "Fired when selection is changed by user interaction\nin <code>SingleSelect</code> and <code>MultiSelect</code> modes.",
+        "description": "Fired when selection is changed by user interaction\nin `SingleSelect` and `MultiSelect` modes.",
         "control": {
             "type": false
         },

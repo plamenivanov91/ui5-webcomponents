@@ -56,7 +56,7 @@ export default {
         }
     },
     "close": {
-        "description": "Fired when the <code>Close</code> button is pressed.",
+        "description": "Fired when the `Close` button is pressed.",
         "control": {
             "type": false
         },

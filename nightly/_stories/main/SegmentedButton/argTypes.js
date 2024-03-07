@@ -50,7 +50,7 @@ export default {
                     "name": "selectedItem",
                     "_ui5privacy": "public",
                     "description": "the pressed item.",
-                    "deprecated": "deprecated since 1.14.0 and will be removed in the next major release, use the <code>selectedItems</code> parameter instead."
+                    "deprecated": "deprecated since 1.14.0 and will be removed in the next major release, use the `selectedItems` parameter instead."
                 },
                 {
                     "type": {

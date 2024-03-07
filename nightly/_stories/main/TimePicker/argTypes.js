@@ -66,7 +66,7 @@ export default {
         }
     },
     "formatValue": {
-        "description": "Formats a Java Script date object into a string representing a locale date and time\naccording to the <code>formatPattern</code> property of the TimePicker instance",
+        "description": "Formats a Java Script date object into a string representing a locale date and time\naccording to the `formatPattern` property of the TimePicker instance",
         "table": {
             "category": "methods"
         },
@@ -90,7 +90,7 @@ export default {
         }
     },
     "isValid": {
-        "description": "Checks if a value is valid against the current <code>formatPattern</code> value.\n\n<br><br>\n<b>Note:</b> an empty string is considered as valid value.",
+        "description": "Checks if a value is valid against the current `formatPattern` value.\n\n**Note:** an empty string is considered as valid value.",
         "table": {
             "category": "methods"
         },
@@ -142,7 +142,7 @@ export default {
         }
     },
     "input": {
-        "description": "Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.",
+        "description": "Fired when the value of the `ui5-time-picker` is changed at each key stroke.",
         "control": {
             "type": false
         },

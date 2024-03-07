@@ -62,7 +62,7 @@ export default {
         }
     },
     "item-toggle": {
-        "description": "Fired when a tree item is expanded or collapsed.\n<i>Note:</i> You can call <code>preventDefault()</code> on the event object to suppress the event, if needed.\nThis may be handy for example if you want to dynamically load tree items upon the user expanding a node.\nEven if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.",
+        "description": "Fired when a tree item is expanded or collapsed.\n\n**Note:** You can call `preventDefault()` on the event object to suppress the event, if needed.\nThis may be handy for example if you want to dynamically load tree items upon the user expanding a node.\nEven if you prevented the event's default behavior, you can always manually call `toggle()` on a tree item.",
         "control": {
             "type": false
         },
@@ -146,7 +146,7 @@ export default {
         }
     },
     "item-delete": {
-        "description": "Fired when the Delete button of any tree item is pressed.\n<br><br>\n<b>Note:</b> A Delete button is displayed on each item,\nwhen the component <code>mode</code> property is set to <code>Delete</code>.",
+        "description": "Fired when the Delete button of any tree item is pressed.\n\n**Note:** A Delete button is displayed on each item,\nwhen the component `mode` property is set to `Delete`.",
         "control": {
             "type": false
         },
@@ -167,7 +167,7 @@ export default {
         }
     },
     "selection-change": {
-        "description": "Fired when selection is changed by user interaction\nin <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.",
+        "description": "Fired when selection is changed by user interaction\nin `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.",
         "control": {
             "type": false
         },

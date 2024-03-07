@@ -33,7 +33,7 @@ export default {
         }
     },
     "setConfirmedSettings": {
-        "description": "Sets a JavaScript object, as settings to the <code>ui5-view-settings-dialog</code>.\nThis method can be used after the dialog is initially open, as the dialog needs\nto set its initial settings.<br>\nThe <code>ui5-view-settings-dialog</code> throws an event called \"before-open\",\nwhich can be used as a trigger point.<br>\nThe object should have the following format:<br>\n<pre>\n{\nsortOrder: \"Ascending\",\nsortBy: \"Name\",\nfilters: [\n\t{\"Filter 1\": [\"Some filter 1\", \"Some filter 2\"]},\n\t{\"Filter 2\": [\"Some filter 4\"]},\n]\n}\n</pre>",
+        "description": "Sets a JavaScript object, as settings to the `ui5-view-settings-dialog`.\nThis method can be used after the dialog is initially open, as the dialog needs\nto set its initial settings.\nThe `ui5-view-settings-dialog` throws an event called \"before-open\",\nwhich can be used as a trigger point.\nThe object should have the following format:",
         "table": {
             "category": "methods"
         },
@@ -86,7 +86,7 @@ export default {
                     },
                     "name": "sortBy",
                     "_ui5privacy": "public",
-                    "description": "The currently selected <code>ui5-sort-item</code> text attribute."
+                    "description": "The currently selected `ui5-sort-item` text attribute."
                 },
                 {
                     "type": {
@@ -94,7 +94,7 @@ export default {
                     },
                     "name": "sortByItem",
                     "_ui5privacy": "public",
-                    "description": "The currently selected <code>ui5-sort-item</code>."
+                    "description": "The currently selected `ui5-sort-item`."
                 },
                 {
                     "type": {
@@ -139,7 +139,7 @@ export default {
                     },
                     "name": "sortBy",
                     "_ui5privacy": "public",
-                    "description": "The currently selected <code>ui5-sort-item</code> text attribute."
+                    "description": "The currently selected `ui5-sort-item` text attribute."
                 },
                 {
                     "type": {
@@ -147,7 +147,7 @@ export default {
                     },
                     "name": "sortByItem",
                     "_ui5privacy": "public",
-                    "description": "The currently selected <code>ui5-sort-item</code>."
+                    "description": "The currently selected `ui5-sort-item`."
                 },
                 {
                     "type": {

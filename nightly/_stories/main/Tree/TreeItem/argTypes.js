@@ -39,7 +39,7 @@ export default {
         }
     },
     "toggle": {
-        "description": "Call this method to manually switch the <code>expanded</code> state of a tree item.",
+        "description": "Call this method to manually switch the `expanded` state of a tree item.",
         "table": {
             "category": "methods"
         },

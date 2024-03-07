@@ -48,7 +48,7 @@ export default {
         }
     },
     "item-click": {
-        "description": "Fired when an item is activated, unless the item's <code>type</code> property\nis set to <code>Inactive</code>.",
+        "description": "Fired when an item is activated, unless the item's `type` property\nis set to `Inactive`.",
         "control": {
             "type": false
         },
@@ -69,7 +69,7 @@ export default {
         }
     },
     "item-close": {
-        "description": "Fired when the <code>Close</code> button of any item is clicked\n<br><br>\n<b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),\nnot to be confused with <code>item-delete</code>.",
+        "description": "Fired when the `Close` button of any item is clicked\n\n**Note:** This event is only applicable to list items that can be closed (such as notification list items),\nnot to be confused with `item-delete`.",
         "control": {
             "type": false
         },
@@ -90,7 +90,7 @@ export default {
         }
     },
     "item-toggle": {
-        "description": "Fired when the <code>Toggle</code> button of any item is clicked.\n<br><br>\n<b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).",
+        "description": "Fired when the `Toggle` button of any item is clicked.\n\n**Note:** This event is only applicable to list items that can be toggled (such as notification group list items).",
         "control": {
             "type": false
         },
@@ -111,7 +111,7 @@ export default {
         }
     },
     "item-delete": {
-        "description": "Fired when the Delete button of any item is pressed.\n<br><br>\n<b>Note:</b> A Delete button is displayed on each item,\nwhen the component <code>mode</code> property is set to <code>Delete</code>.",
+        "description": "Fired when the Delete button of any item is pressed.\n\n**Note:** A Delete button is displayed on each item,\nwhen the component `mode` property is set to `Delete`.",
         "control": {
             "type": false
         },
@@ -132,7 +132,7 @@ export default {
         }
     },
     "selection-change": {
-        "description": "Fired when selection is changed by user interaction\nin <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.",
+        "description": "Fired when selection is changed by user interaction\nin `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.",
         "control": {
             "type": false
         },

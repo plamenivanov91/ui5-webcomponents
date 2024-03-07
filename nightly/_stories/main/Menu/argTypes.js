@@ -46,7 +46,7 @@ export default {
         }
     },
     "item-click": {
-        "description": "Fired when an item is being clicked.\n<br />\n<b>Note:</b> Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.",
+        "description": "Fired when an item is being clicked.\n\n**Note:** Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.",
         "control": {
             "type": false
         },
@@ -75,7 +75,7 @@ export default {
         }
     },
     "before-open": {
-        "description": "Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. <b>This event does not bubble.</b>\n<br />\n<b>Note:</b> Since 1.14.0 the event is also fired before a sub-menu opens.",
+        "description": "Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. **This event does not bubble.**\n\n**Note:** Since 1.14.0 the event is also fired before a sub-menu opens.",
         "control": {
             "type": false
         },
@@ -90,13 +90,14 @@ export default {
                     },
                     "name": "item",
                     "_ui5privacy": "public",
-                    "description": "The <code>ui5-menu-item</code> that triggers opening of the sub-menu or undefined when fired upon root menu opening. <b>Note:</b> available since 1.14.0."
+                    "description": "The `ui5-menu-item` that triggers opening of the sub-menu or undefined when fired upon root menu opening.",
+                    "_ui5since": "1.14.0"
                 }
             ]
         }
     },
     "before-close": {
-        "description": "Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. <b>This event does not bubble.</b>",
+        "description": "Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**",
         "control": {
             "type": false
         },
@@ -111,7 +112,7 @@ export default {
                     },
                     "name": "escPressed",
                     "_ui5privacy": "public",
-                    "description": "Indicates that <code>ESC</code> key has triggered the event."
+                    "description": "Indicates that `ESC` key has triggered the event."
                 }
             ]
         }

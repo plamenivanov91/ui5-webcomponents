@@ -4,6 +4,7 @@ export default {
         "options": [
             "Auto",
             "Base",
+            "Dot",
             "Spot",
             "Dialog",
             "Scene"

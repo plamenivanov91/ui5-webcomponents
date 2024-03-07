@@ -30,7 +30,7 @@ export default {
         }
     },
     "getTabInStripDomRef": {
-        "description": "Returns the DOM reference of the tab that is placed in the header.\n<b>Note:</b> Tabs, placed in the <code>subTabs</code> slot of other tabs are not shown in the header. Calling this method on such tabs will return <code>null</code>.\n<b>Note:</b> If you need a DOM ref to the tab content please use the <code>getDomRef</code> method.",
+        "description": "Returns the DOM reference of the tab that is placed in the header.\n\n**Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.\n\n**Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.",
         "table": {
             "category": "methods"
         },

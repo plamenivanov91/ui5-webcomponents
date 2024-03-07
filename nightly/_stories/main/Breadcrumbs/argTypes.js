@@ -28,7 +28,7 @@ export default {
         }
     },
     "item-click": {
-        "description": "Fires when a <code>BreadcrumbsItem</code> is clicked.\n<b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.",
+        "description": "Fires when a `BreadcrumbsItem` is clicked.\n\n**Note:** You can prevent browser location change by calling `event.preventDefault()`.",
         "control": {
             "type": false
         },

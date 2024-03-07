@@ -125,7 +125,7 @@ export default {
         }
     },
     "applyFocus": {
-        "description": "Focuses the element denoted by <code>initialFocus</code>, if provided,\nor the first focusable element otherwise.",
+        "description": "Focuses the element denoted by `initialFocus`, if provided,\nor the first focusable element otherwise.",
         "table": {
             "category": "methods"
         },
@@ -139,7 +139,7 @@ export default {
         }
     },
     "before-close": {
-        "description": "Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>",
+        "description": "Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. **This event does not bubble.**",
         "control": {
             "type": false
         },
@@ -154,7 +154,7 @@ export default {
                     },
                     "name": "escPressed",
                     "_ui5privacy": "public",
-                    "description": "Indicates that <code>ESC</code> key has triggered the event."
+                    "description": "Indicates that `ESC` key has triggered the event."
                 }
             ]
         }
