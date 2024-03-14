@@ -551,6 +551,31 @@ Menu = Menu_1 = __decorate([
      */
     ,
     event("after-close")
+    /**
+     * Fired when a menu item receives focus.
+     *
+     * @public
+     * @param { HTMLElement } ref The currently focused element representing a <code>ui5-menu-item</code>.
+     * @param { HTMLElement } item The <code>ui5-menu-item</code> represented by the focused element.
+     * @since 1.23.1
+     */
+    ,
+    event("item-focus", {
+        detail: {
+            /**
+             * @public
+             */
+            ref: {
+                type: HTMLElement,
+            },
+            /**
+             * @public
+             */
+            item: {
+                type: HTMLElement,
+            },
+        },
+    })
 ], Menu);
 Menu.define();
 export default Menu;

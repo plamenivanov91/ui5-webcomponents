@@ -22,6 +22,10 @@ type MenuBeforeOpenEventDetail = {
 type MenuBeforeCloseEventDetail = {
     escPressed: boolean;
 };
+type MenuItemFocusEventDetail = {
+    ref: HTMLElement;
+    item: MenuItem;
+};
 type OpenerStandardListItem = StandardListItem & {
     associatedItem: MenuItem;
 };
@@ -191,4 +195,4 @@ declare class Menu extends UI5Element {
     _afterPopoverClose(): void;
 }
 export default Menu;
-export type { MenuItemClickEventDetail, MenuBeforeCloseEventDetail, MenuBeforeOpenEventDetail, };
+export type { MenuItemClickEventDetail, MenuBeforeCloseEventDetail, MenuBeforeOpenEventDetail, MenuItemFocusEventDetail, };

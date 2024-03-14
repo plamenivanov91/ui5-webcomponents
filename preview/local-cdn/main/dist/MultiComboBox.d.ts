@@ -254,7 +254,7 @@ declare class MultiComboBox extends UI5Element {
     _handleMobileInput(e: CustomEvent<InputEventDetail>): void;
     _inputChange(): void;
     _mobileInputChange(e: CustomEvent): Promise<void>;
-    togglePopover(): void;
+    _togglePopover(): void;
     togglePopoverByDropdownIcon(): void;
     _showFilteredItems(): void;
     filterSelectedItems(e: MouseEvent): void;
