@@ -3726,7 +3726,7 @@
                                     }
                                 ]
                             },
-                            "description": "Defines the visual indication and behavior of the breadcrumbs.\n\n**Note:** The `Standard` breadcrumbs show the current page as the last item in the trail.\nThe last item contains only plain text and is not a link.",
+                            "description": "Defines the visual appearance of the last BreadcrumbsItem.\n\nThe Breadcrumbs supports two visual appearances for the last BreadcrumbsItem:\n- \"Standard\" - displaying the last item as \"current page\" (bold and without separator)\n- \"NoCurrentPage\" - displaying the last item as a regular BreadcrumbsItem, followed by separator",
                             "default": "\"Standard\"",
                             "privacy": "public",
                             "_ui5validator": "BreadcrumbsDesign"
@@ -10750,6 +10750,40 @@
                             },
                             "description": "Fired after the menu is closed. **This event does not bubble.**",
                             "_ui5since": "1.10.0"
+                        },
+                        {
+                            "name": "item-focus",
+                            "_ui5privacy": "public",
+                            "type": {
+                                "text": "CustomEvent<MenuItemFocusEventDetail>",
+                                "references": [
+                                    {
+                                        "name": "MenuItemFocusEventDetail",
+                                        "package": "@ui5/webcomponents",
+                                        "module": "dist/Menu.js"
+                                    }
+                                ]
+                            },
+                            "description": "Fired when a menu item receives focus.",
+                            "_ui5since": "1.23.1",
+                            "_ui5parameters": [
+                                {
+                                    "type": {
+                                        "text": "HTMLElement"
+                                    },
+                                    "name": "ref",
+                                    "_ui5privacy": "public",
+                                    "description": "The currently focused element representing a <code>ui5-menu-item</code>."
+                                },
+                                {
+                                    "type": {
+                                        "text": "HTMLElement"
+                                    },
+                                    "name": "item",
+                                    "_ui5privacy": "public",
+                                    "description": "The <code>ui5-menu-item</code> represented by the focused element."
+                                }
+                            ]
                         }
                     ],
                     "superclass": {

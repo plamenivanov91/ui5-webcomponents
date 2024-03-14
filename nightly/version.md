@@ -1,23 +1,10 @@
-commit 30763ffee896d691d6d1d2d65900c47458293eda
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Mar 7 11:21:23 2024 +0200
+commit b56477c671988554046a7c020dcbaf3e4bcdcf74
+Author: ilhan orhan <ilhan.orhan007@gmail.com>
+Date:   Tue Mar 12 11:38:16 2024 +0200
 
-    chore: prepare setup for reusable styles (#8182)
+    docs: add article for Manually Building Custom Theme (#8416)
     
-    * wip: provide styles for specific components
+    We recommend using UI Theme Designer for custom theme creation, however not everyone has access to the tool.
+    The newly created article aim to assist them.
     
-    * update plugin
-    
-    * copy of files revert logic
-    
-    * chore: add test pages
-    
-    * rework toollayout
-    
-    * chore: make wathc and test pages to consume styles from dist
-    
-    * chore: cleanup
-    
-    ---------
-    
-    Co-authored-by: Nayden Naydenov <nnaydenow.work@sap.com>
+    The article describes the flow from finding and taking the Less sources, changing the Less variables, and compiling them to produce the customized CSS variables to finally using them.

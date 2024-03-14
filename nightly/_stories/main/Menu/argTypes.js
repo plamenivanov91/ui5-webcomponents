@@ -116,6 +116,35 @@ export default {
                 }
             ]
         }
+    },
+    "item-focus": {
+        "description": "Fired when a menu item receives focus.",
+        "control": {
+            "type": false
+        },
+        "table": {
+            "category": "events"
+        },
+        "UI5CustomData": {
+            "parameters": [
+                {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
+                    "name": "ref",
+                    "_ui5privacy": "public",
+                    "description": "The currently focused element representing a <code>ui5-menu-item</code>."
+                },
+                {
+                    "type": {
+                        "text": "HTMLElement"
+                    },
+                    "name": "item",
+                    "_ui5privacy": "public",
+                    "description": "The <code>ui5-menu-item</code> represented by the focused element."
+                }
+            ]
+        }
     }
 };
 export const componentInfo = {
