@@ -313,7 +313,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             return;
         }
         if (isInsertShift(e)) {
-            this._handleInsertPaste();
+            this._handleInsertPaste(e);
             return;
         }
         if (isCtrl && e.key.toLowerCase() === "i" && this._tokenizer.tokens.length > 0) {
@@ -338,8 +338,18 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         }
         this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(e) || isDelete(e) || isEscape(e) || isEnter(e));
     }
+    _selectItems(matchingItems) {
+        this._previouslySelectedItems = this._getSelectedItems();
+        matchingItems.forEach(item => {
+            item.selected = true;
+            this.value = "";
+            const changePrevented = this.fireSelectionChange();
+            if (changePrevented) {
+                this._revertSelection();
+            }
+        });
+    }
     _handlePaste(e) {
-        e.preventDefault();
         if (this.readonly || !e.clipboardData) {
             return;
         }
@@ -347,9 +357,17 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         if (!pastedText) {
             return;
         }
-        this._createTokenFromText(pastedText);
+        this._handleTokenCreationUponPaste(pastedText, e);
     }
-    async _handleInsertPaste() {
+    _handleTokenCreationUponPaste(pastedText, e) {
+        const separatedText = pastedText.split(/\r\n|\r|\n|\t/g).filter(t => !!t);
+        const matchingItems = this.items.filter(item => separatedText.includes(item.text) && !item.selected);
+        if (matchingItems.length > 1) {
+            e.preventDefault();
+            this._selectItems(matchingItems);
+        }
+    }
+    async _handleInsertPaste(e) {
         if (this.readonly || isFirefox()) {
             return;
         }
@@ -357,26 +375,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         if (!pastedText) {
             return;
         }
-        this._createTokenFromText(pastedText);
-    }
-    _createTokenFromText(pastedText) {
-        const separatedText = pastedText.split(/\r\n|\r|\n|\t/g).filter(t => !!t);
-        const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
-        if (separatedText.length > 1) {
-            this._previouslySelectedItems = this._getSelectedItems();
-            matchingItems.forEach(item => {
-                item.selected = true;
-                this.value = "";
-                const changePrevented = this.fireSelectionChange();
-                if (changePrevented) {
-                    this._revertSelection();
-                }
-            });
-        }
-        else {
-            this.value = pastedText;
-            this.fireEvent("input");
-        }
+        this._handleTokenCreationUponPaste(pastedText, e);
     }
     _handleShow(e) {
         const items = this.items;
@@ -743,7 +742,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             return this._tokenizer._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
         }
         if (isInsertShift(e)) {
-            this._handleInsertPaste();
+            this._handleInsertPaste(e);
         }
         if (isHome(e)) {
             this._handleHome(e);

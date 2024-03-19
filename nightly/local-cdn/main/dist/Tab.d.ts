@@ -69,6 +69,13 @@ declare class Tab extends UI5Element implements ITab, ITabbable {
      * @public
      */
     selected: boolean;
+    /**
+     * Defines if the tab is movable.
+     *
+     * @default false
+     * @private
+     */
+    movable: boolean;
     forcedSelected: boolean;
     realTabReference: Tab;
     isTopLevelTab: boolean;
@@ -114,6 +121,7 @@ declare class Tab extends UI5Element implements ITab, ITabbable {
      */
     getTabInStripDomRef(): ITab | null;
     getFocusDomRef(): HTMLElement | undefined;
+    focus(focusOptions?: FocusOptions): Promise<void>;
     get isMixedModeTab(): boolean | undefined;
     get isTextOnlyTab(): boolean;
     get isIconTab(): boolean;
@@ -138,5 +146,7 @@ declare class Tab extends UI5Element implements ITab, ITabbable {
     static get stripTemplate(): typeof TabInStripTemplate;
     static get overflowTemplate(): typeof TabInOverflowTemplate;
     static onDefine(): Promise<void>;
+    _ondragstart(e: DragEvent): void;
+    _ondragend(e: DragEvent): void;
 }
 export default Tab;

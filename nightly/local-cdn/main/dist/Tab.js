@@ -13,6 +13,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { TAB_ARIA_DESIGN_POSITIVE, TAB_ARIA_DESIGN_NEGATIVE, TAB_ARIA_DESIGN_CRITICAL, TAB_ARIA_DESIGN_NEUTRAL, TABCONTAINER_END_OVERFLOW, TAB_SPLIT_ROLE_DESCRIPTION, } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
@@ -30,6 +31,7 @@ import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.l
 // Styles
 import css from "./generated/themes/Tab.css.js";
 import stripCss from "./generated/themes/TabInStrip.css.js";
+import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 import overflowCss from "./generated/themes/TabInOverflow.css.js";
 const DESIGN_DESCRIPTIONS = {
     [SemanticColor.Positive]: TAB_ARIA_DESIGN_POSITIVE,
@@ -116,6 +118,10 @@ let Tab = Tab_1 = class Tab extends UI5Element {
             focusedDomRef = this.getElementInStrip();
         }
         return focusedDomRef;
+    }
+    async focus(focusOptions) {
+        await renderFinished();
+        return super.focus(focusOptions);
     }
     get isMixedModeTab() {
         return !this.icon && this.forcedMixedMode;
@@ -261,6 +267,16 @@ let Tab = Tab_1 = class Tab extends UI5Element {
     static async onDefine() {
         Tab_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
     }
+    _ondragstart(e) {
+        if (e.target instanceof HTMLElement) {
+            e.target.setAttribute("data-moving", "");
+        }
+    }
+    _ondragend(e) {
+        if (e.target instanceof HTMLElement) {
+            e.target.removeAttribute("data-moving");
+        }
+    }
 };
 __decorate([
     property()
@@ -280,6 +296,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Tab.prototype, "selected", void 0);
+__decorate([
+    property({ type: Boolean })
+], Tab.prototype, "movable", void 0);
 __decorate([
     property({ type: Boolean })
 ], Tab.prototype, "forcedSelected", void 0);
@@ -325,6 +344,7 @@ Tab = Tab_1 = __decorate([
 ], Tab);
 Tab.define();
 TabContainer.registerTabStyles(stripCss);
+TabContainer.registerTabStyles(draggableElementStyles);
 TabContainer.registerStaticAreaTabStyles(overflowCss);
 export default Tab;
 //# sourceMappingURL=Tab.js.map

@@ -866,13 +866,6 @@ class UI5Element extends HTMLElement {
         }
     }
     /**
-     * Returns the CSS for this UI5 Web Component Class
-     * @protected
-     */
-    static get styles() {
-        return "";
-    }
-    /**
      * Returns the Static Area CSS for this UI5 Web Component Class
      * @protected
      */
@@ -964,6 +957,11 @@ class UI5Element extends HTMLElement {
  * @protected
  */
 UI5Element.metadata = {};
+/**
+ * Returns the CSS for this UI5 Web Component Class
+ * @protected
+ */
+UI5Element.styles = "";
 /**
  * Always use duck-typing to cover all runtimes on the page.
  */

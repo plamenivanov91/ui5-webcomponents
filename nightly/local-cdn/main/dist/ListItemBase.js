@@ -14,6 +14,7 @@ import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
+import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
 /**
  * @class
  * A class to serve as a foundation
@@ -103,6 +104,9 @@ __decorate([
 ], ListItemBase.prototype, "selected", void 0);
 __decorate([
     property({ type: Boolean })
+], ListItemBase.prototype, "movable", void 0);
+__decorate([
+    property({ type: Boolean })
 ], ListItemBase.prototype, "hasBorder", void 0);
 __decorate([
     property({ defaultValue: "-1", noAttribute: true })
@@ -116,7 +120,7 @@ __decorate([
 ListItemBase = __decorate([
     customElement({
         renderer: litRender,
-        styles,
+        styles: [styles, draggableElementStyles],
     }),
     event("_request-tabindex-change"),
     event("_focused"),

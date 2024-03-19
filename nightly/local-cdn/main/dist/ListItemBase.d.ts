@@ -18,6 +18,12 @@ declare class ListItemBase extends UI5Element implements ITabbable {
      */
     selected: boolean;
     /**
+     * Defines whether the item is movable.
+     * @default false
+     * @private
+     */
+    movable: boolean;
+    /**
     * Defines if the list item should display its bottom border.
     * @private
     */

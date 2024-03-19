@@ -12,6 +12,7 @@ import TabSeparatorInOverflowTemplate from "./generated/templates/TabSeparatorIn
  * @public
  */
 declare class TabSeparator extends UI5Element implements ITab {
+    realTabReference: TabSeparator;
     getElementInStrip?: () => ITab | null;
     static get stripTemplate(): typeof TabSeparatorInStripTemplate;
     static get overflowTemplate(): typeof TabSeparatorInOverflowTemplate;

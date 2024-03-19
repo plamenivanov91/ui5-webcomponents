@@ -4,9 +4,12 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
+import type { SetDraggedElementFunction } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import Button from "./Button.js";
+import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
-import type { ListItemClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -40,7 +43,7 @@ interface ITab extends UI5Element {
     forcedMixedMode?: boolean;
     forcedPosinset?: number;
     forcedSetsize?: number;
-    realTabReference?: Tab;
+    realTabReference: ITab;
     isTopLevelTab?: boolean;
     forcedStyle?: Record<string, any>;
 }
@@ -48,6 +51,15 @@ type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
 type TabContainerTabSelectEventDetail = {
     tab: ITab;
     tabIndex: number;
+};
+type TabContainerMoveEventDetail = {
+    source: {
+        element: HTMLElement;
+    };
+    destination: {
+        element: HTMLElement;
+        placement: `${MovePlacement}`;
+    };
 };
 interface TabContainerTabInOverflow extends CustomListItem {
     realTabReference: Tab;
@@ -201,7 +213,10 @@ declare class TabContainer extends UI5Element {
     _itemNavigation: ItemNavigation;
     _itemsFlat?: Array<ITab>;
     responsivePopover?: ResponsivePopover;
+    _hasScheduledPopoverOpen: boolean;
     _handleResizeBound: () => void;
+    _setDraggedElement?: SetDraggedElementFunction;
+    _setDraggedElementInStaticArea?: SetDraggedElementFunction;
     static registerTabStyles(styles: StyleData): void;
     static registerStaticAreaTabStyles(styles: StyleData): void;
     static i18nBundle: I18nBundle;
@@ -214,6 +229,13 @@ declare class TabContainer extends UI5Element {
     _updateMediaRange(width: number): void;
     _setItemsPrivateProperties(items: Array<ITab>): void;
     _onHeaderFocusin(e: FocusEvent): void;
+    _onHeaderDragStart(e: DragEvent): void;
+    _onHeaderDragEnter(e: DragEvent): void;
+    _onHeaderDragOver(e: DragEvent, isLongDragOver: boolean): void;
+    _onHeaderDrop(e: DragEvent): void;
+    _onHeaderDragLeave(e: DragEvent): void;
+    _onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>): void;
+    _onPopoverListMove(e: CustomEvent<ListMoveEventDetail>): void;
     _onTabStripClick(e: Event): Promise<void>;
     _onTabExpandButtonClick(e: Event): Promise<void>;
     _setPopoverInitialFocus(): void;
@@ -278,7 +300,7 @@ declare class TabContainer extends UI5Element {
     _getPopoverItemsFor(targetOwner: TabContainerPopoverOwner): ITab[];
     _setPopoverItems(items: Array<ITab>): void;
     _togglePopover(opener: HTMLElement, setInitialFocus?: boolean): Promise<void>;
-    _showPopoverAt(opener: HTMLElement, setInitialFocus?: boolean): Promise<void>;
+    _showPopoverAt(opener: HTMLElement, setInitialFocus?: boolean, preventInitialFocus?: boolean): Promise<void>;
     get hasSubTabs(): boolean;
     _getTabStrip(): HTMLElement;
     _getStartOverflow(): HTMLElement;
@@ -286,7 +308,8 @@ declare class TabContainer extends UI5Element {
     _getStartOverflowBtnDOM(): Button | null;
     _getEndOverflowBtnDOM(): Button | null;
     _respPopover(): Promise<ResponsivePopover>;
-    _closeRespPopover(): Promise<void>;
+    _closePopover(): void;
+    get dropIndicatorDOM(): DropIndicator | null;
     get classes(): {
         root: {
             "ui5-tc-root": boolean;
@@ -325,4 +348,4 @@ declare class TabContainer extends UI5Element {
     static onDefine(): Promise<void>;
 }
 export default TabContainer;
-export type { ITab, TabContainerTabSelectEventDetail, };
+export type { ITab, TabContainerTabSelectEventDetail, TabContainerMoveEventDetail, };

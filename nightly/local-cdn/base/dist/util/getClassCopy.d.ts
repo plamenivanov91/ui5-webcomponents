@@ -407,7 +407,7 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
     _needsStaticArea(): boolean;
     _generateAccessors(): void;
     metadata: import("../UI5ElementMetadata.js").Metadata;
-    readonly styles: import("../types.js").ComponentStylesData;
+    styles: import("../types.js").ComponentStylesData;
     readonly staticAreaStyles: import("../types.js").ComponentStylesData;
     readonly dependencies: (typeof UI5Element)[];
     getUniqueDependencies(this: typeof UI5Element): (typeof UI5Element)[];

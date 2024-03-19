@@ -16,6 +16,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isTabNext, isSpace, isEnter, isTabPrevious, } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -23,9 +25,12 @@ import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEff
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListMode from "./types/ListMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import "./ListItemBase.js";
+import DropIndicator from "./DropIndicator.js";
 import ListSeparators from "./types/ListSeparators.js";
 import BusyIndicator from "./BusyIndicator.js";
 // Template
@@ -118,10 +123,14 @@ let List = List_1 = class List extends UI5Element {
         // for the first time.
         this.initialIntersection = true;
     }
+    onEnterDOM() {
+        DragRegistry.subscribe(this);
+    }
     onExitDOM() {
         this.unobserveListEnd();
         this.resizeListenerAttached = false;
         ResizeHandler.deregister(this.getDomRef(), this._handleResize);
+        DragRegistry.unsubscribe(this);
     }
     onBeforeRendering() {
         this.prepareListItems();
@@ -155,6 +164,9 @@ let List = List_1 = class List extends UI5Element {
     }
     get listEndDOM() {
         return this.shadowRoot.querySelector(".ui5-list-end-marker");
+    }
+    get dropIndicatorDOM() {
+        return this.shadowRoot.querySelector("[ui5-drop-indicator]");
     }
     get hasData() {
         return this.getItems().length !== 0;
@@ -456,6 +468,64 @@ let List = List_1 = class List extends UI5Element {
         }
         this.setForwardingFocus(false);
     }
+    _ondragenter(e) {
+        e.preventDefault();
+    }
+    _ondragleave(e) {
+        if (e.relatedTarget instanceof Node && this.shadowRoot.contains(e.relatedTarget)) {
+            return;
+        }
+        this.dropIndicatorDOM.targetReference = null;
+    }
+    _ondragover(e) {
+        const draggedElement = DragRegistry.getDraggedElement();
+        if (!(e.target instanceof HTMLElement) || !draggedElement) {
+            return;
+        }
+        const closestPosition = findClosestPosition(this.items, e.clientY, Orientation.Vertical);
+        if (!closestPosition) {
+            this.dropIndicatorDOM.targetReference = null;
+            return;
+        }
+        let placements = closestPosition.placements;
+        if (closestPosition.element === draggedElement) {
+            placements = placements.filter(placement => placement !== MovePlacement.On);
+        }
+        const placementAccepted = placements.some(placement => {
+            const beforeItemMovePrevented = !this.fireEvent("move-over", {
+                source: {
+                    element: draggedElement,
+                },
+                destination: {
+                    element: closestPosition.element,
+                    placement,
+                },
+            }, true);
+            if (beforeItemMovePrevented) {
+                e.preventDefault();
+                this.dropIndicatorDOM.targetReference = closestPosition.element;
+                this.dropIndicatorDOM.placement = placement;
+                return true;
+            }
+            return false;
+        });
+        if (!placementAccepted) {
+            this.dropIndicatorDOM.targetReference = null;
+        }
+    }
+    _ondrop(e) {
+        e.preventDefault();
+        this.fireEvent("move", {
+            source: {
+                element: DragRegistry.getDraggedElement(),
+            },
+            destination: {
+                element: this.dropIndicatorDOM.targetReference,
+                placement: this.dropIndicatorDOM.placement,
+            },
+        });
+        this.dropIndicatorDOM.targetReference = null;
+    }
     isForwardElement(element) {
         const elementId = element.id;
         const beforeElement = this.getBeforeElement();
@@ -698,7 +768,7 @@ List = List_1 = __decorate([
         renderer: litRender,
         template: ListTemplate,
         styles: [browserScrollbarCSS, listCss],
-        dependencies: [BusyIndicator],
+        dependencies: [BusyIndicator, DropIndicator],
     })
     /**
      * Fired when an item is activated, unless the item's `type` property

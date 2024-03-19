@@ -15,6 +15,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
@@ -128,6 +129,9 @@ let Avatar = Avatar_1 = class Avatar extends UI5Element {
         }
     }
     onEnterDOM() {
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
         this.initialsContainer && ResizeHandler.register(this.initialsContainer, this._handleResizeBound);
     }
     onExitDOM() {
@@ -181,14 +185,6 @@ let Avatar = Avatar_1 = class Avatar extends UI5Element {
         this.fireEvent("click");
         this.pressed = !this.pressed;
     }
-    _onfocusout() {
-        this.focused = false;
-    }
-    _onfocusin() {
-        if (this._interactive) {
-            this.focused = true;
-        }
-    }
     _getAriaHasPopup() {
         if (!this._interactive || this.ariaHaspopup === "") {
             return;
@@ -202,9 +198,6 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Avatar.prototype, "interactive", void 0);
-__decorate([
-    property({ type: Boolean })
-], Avatar.prototype, "focused", void 0);
 __decorate([
     property({ type: Boolean })
 ], Avatar.prototype, "pressed", void 0);

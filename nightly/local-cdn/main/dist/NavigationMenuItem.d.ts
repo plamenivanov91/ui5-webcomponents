@@ -50,5 +50,6 @@ declare class NavigationMenuItem extends MenuItem {
      * @since 1.22.0
      */
     target: string;
+    get isExternalLink(): boolean | "";
 }
 export default NavigationMenuItem;

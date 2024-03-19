@@ -1,22 +1,23 @@
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 /**
  * @class
  *
  * ### Overview
- *
+ * Represents a single navigation action within `ui5-side-navigation-item`.
  * The `ui5-side-navigation-sub-item` is intended to be used inside a `ui5-side-navigation-item` only.
  *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`
+ *
  * @constructor
- * @extends SideNavigationItemBase
+ * @extends SideNavigationSelectableItemBase
  * @public
  * @abstract
  * @since 1.0.0-rc.8
  */
-declare class SideNavigationSubItem extends SideNavigationItemBase {
-    get isFixedItem(): boolean;
+declare class SideNavigationSubItem extends SideNavigationSelectableItemBase {
     _onkeydown: (e: KeyboardEvent) => void;
     _onkeyup: (e: KeyboardEvent) => void;
     _onfocusin: (e: FocusEvent) => void;

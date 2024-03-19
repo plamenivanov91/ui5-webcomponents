@@ -31,6 +31,9 @@ import MenuItem from "./MenuItem.js";
  * @private
  */
 let NavigationMenuItem = class NavigationMenuItem extends MenuItem {
+    get isExternalLink() {
+        return this.href && this.target === "_blank";
+    }
 };
 __decorate([
     property()

@@ -2,6 +2,7 @@ import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/ty
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
+import HighlightTypes from "./types/HighlightTypes.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -109,6 +110,14 @@ declare abstract class ListItem extends ListItemBase {
      */
     title: string;
     /**
+     * Defines the highlight state of the list items.
+     * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+     * @default "None"
+     * @public
+     * @since 1.24
+     */
+    highlight: `${HighlightTypes}`;
+    /**
      * Indicates if the list item is actionable, e.g has hover and pressed effects.
      * @private
     */
@@ -170,6 +179,8 @@ declare abstract class ListItem extends ListItemBase {
     _ontouchend(e: TouchEvent): void;
     _onfocusout(): void;
     _onclick(e: MouseEvent): void;
+    _ondragstart(e: DragEvent): void;
+    _ondragend(e: DragEvent): void;
     onMultiSelectionComponentPress(e: MouseEvent): void;
     onSingleSelectionComponentPress(e: MouseEvent): void;
     activate(): void;
@@ -198,7 +209,9 @@ declare abstract class ListItem extends ListItemBase {
     get hasDeleteButtonSlot(): boolean;
     get _accessibleNameRef(): string;
     get _accInfo(): AccInfo;
+    get _hasHighlightColor(): boolean;
     get hasConfigurableMode(): boolean;
+    get _listItem(): HTMLLIElement | null;
     static onDefine(): Promise<void>;
 }
 export default ListItem;

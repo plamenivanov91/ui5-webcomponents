@@ -3,9 +3,11 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import ListMode from "./types/ListMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListItemBase from "./ListItemBase.js";
+import DropIndicator from "./DropIndicator.js";
 import type { SelectionRequestEventDetail, PressEventDetail } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
 type ListItemFocusEventDetail = {
@@ -20,6 +22,15 @@ type ListSelectionChangeEventDetail = {
 };
 type ListItemDeleteEventDetail = {
     item: ListItemBase;
+};
+type ListMoveEventDetail = {
+    source: {
+        element: HTMLElement;
+    };
+    destination: {
+        element: HTMLElement;
+        placement: `${MovePlacement}`;
+    };
 };
 type ListItemCloseEventDetail = {
     item: ListItemBase;
@@ -226,6 +237,7 @@ declare class List extends UI5Element {
     _afterElement?: HTMLElement | null;
     static onDefine(): Promise<void>;
     constructor();
+    onEnterDOM(): void;
     onExitDOM(): void;
     onBeforeRendering(): void;
     onAfterRendering(): void;
@@ -234,6 +246,7 @@ declare class List extends UI5Element {
     get headerID(): string;
     get modeLabelID(): string;
     get listEndDOM(): Element | null;
+    get dropIndicatorDOM(): DropIndicator | null;
     get hasData(): boolean;
     get showNoDataText(): string | false;
     get isDelete(): boolean;
@@ -280,6 +293,10 @@ declare class List extends UI5Element {
     loadMore(): void;
     _handleTabNext(e: KeyboardEvent): void;
     _onfocusin(e: FocusEvent): void;
+    _ondragenter(e: DragEvent): void;
+    _ondragleave(e: DragEvent): void;
+    _ondragover(e: DragEvent): void;
+    _ondrop(e: DragEvent): void;
     isForwardElement(element: HTMLElement): boolean;
     isForwardAfterElement(element: HTMLElement): boolean;
     onItemTabIndexChange(e: CustomEvent): void;
@@ -317,4 +334,4 @@ declare class List extends UI5Element {
     getIntersectionObserver(): IntersectionObserver;
 }
 export default List;
-export type { ListItemClickEventDetail, ListItemFocusEventDetail, ListItemDeleteEventDetail, ListItemCloseEventDetail, ListItemToggleEventDetail, ListSelectionChangeEventDetail, };
+export type { ListItemClickEventDetail, ListItemFocusEventDetail, ListItemDeleteEventDetail, ListItemCloseEventDetail, ListItemToggleEventDetail, ListSelectionChangeEventDetail, ListMoveEventDetail, };

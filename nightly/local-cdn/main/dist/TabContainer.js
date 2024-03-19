@@ -26,10 +26,16 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
+import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
+import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
+import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
+import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import { TABCONTAINER_PREVIOUS_ICON_ACC_NAME, TABCONTAINER_NEXT_ICON_ACC_NAME, TABCONTAINER_OVERFLOW_MENU_TITLE, TABCONTAINER_END_OVERFLOW, TABCONTAINER_POPOVER_CANCEL_BUTTON, TABCONTAINER_SUBTABS_DESCRIPTION, } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
+import DropIndicator from "./DropIndicator.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
@@ -95,6 +101,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     }
     constructor() {
         super();
+        this._hasScheduledPopoverOpen = false;
         this._handleResizeBound = this._handleResize.bind(this);
         // Init ItemNavigation
         this._itemNavigation = new ItemNavigation(this, {
@@ -140,19 +147,28 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                 this._setPopoverItems(popoverItems);
             }
             else {
-                this.responsivePopover.close();
+                this._closePopover();
             }
         }
     }
     onEnterDOM() {
         ResizeHandler.register(this._getHeader(), this._handleResizeBound);
+        DragRegistry.subscribe(this);
+        this._setDraggedElement = DragRegistry.addSelfManagedArea(this);
     }
     onExitDOM() {
         ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
+        DragRegistry.unsubscribe(this);
+        DragRegistry.removeSelfManagedArea(this);
+        this._setDraggedElement = undefined;
+        if (this.staticAreaItem && this._setDraggedElementInStaticArea) {
+            DragRegistry.removeSelfManagedArea(this.staticAreaItem);
+            this._setDraggedElementInStaticArea = undefined;
+        }
     }
     _handleResize() {
         if (this.responsivePopover && this.responsivePopover.opened) {
-            this.responsivePopover.close();
+            this._closePopover();
         }
         // invalidate
         this._width = this.offsetWidth;
@@ -181,6 +197,122 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         if (tab) {
             this._itemNavigation.setCurrentItem(tab.realTabReference);
         }
+    }
+    _onHeaderDragStart(e) {
+        if (!e.dataTransfer || !(e.target instanceof HTMLElement)) {
+            return;
+        }
+        this._setDraggedElement(e.target.realTabReference);
+    }
+    _onHeaderDragEnter(e) {
+        e.preventDefault();
+    }
+    _onHeaderDragOver(e, isLongDragOver) {
+        if (!(e.target instanceof HTMLElement) || !e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab],[role=separator]")) {
+            this.dropIndicatorDOM.targetReference = null;
+            return;
+        }
+        const draggedElement = DragRegistry.getDraggedElement();
+        const closestPosition = findClosestPosition([...this._getTabStrip().querySelectorAll(`[role="tab"]:not([hidden])`)], e.clientX, Orientation.Horizontal);
+        const overflowButton = e.target.closest("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end]");
+        let popoverTarget = null;
+        if (overflowButton) {
+            popoverTarget = overflowButton;
+            e.preventDefault();
+        }
+        else if (closestPosition) {
+            const dropTarget = closestPosition.element.realTabReference;
+            let placements = closestPosition.placements;
+            if (dropTarget === draggedElement) {
+                placements = placements.filter(placement => placement !== MovePlacement.On);
+            }
+            const acceptedPlacement = placements.find(placement => {
+                const dragOverPrevented = !this.fireEvent("move-over", {
+                    source: {
+                        element: draggedElement,
+                    },
+                    destination: {
+                        element: dropTarget,
+                        placement,
+                    },
+                }, true);
+                if (dragOverPrevented) {
+                    e.preventDefault();
+                    this.dropIndicatorDOM.targetReference = closestPosition.element;
+                    this.dropIndicatorDOM.placement = placement;
+                    return true;
+                }
+                return false;
+            });
+            if (acceptedPlacement === MovePlacement.On && closestPosition.element.realTabReference.subTabs.length) {
+                popoverTarget = closestPosition.element;
+            }
+            else if (!acceptedPlacement) {
+                this.dropIndicatorDOM.targetReference = null;
+            }
+        }
+        if (popoverTarget && isLongDragOver) {
+            this._showPopoverAt(popoverTarget, false, true);
+        }
+        else {
+            this._closePopover();
+        }
+    }
+    _onHeaderDrop(e) {
+        e.preventDefault();
+        this.fireEvent("move", {
+            source: {
+                element: DragRegistry.getDraggedElement(),
+            },
+            destination: {
+                element: this.dropIndicatorDOM.targetReference.realTabReference,
+                placement: this.dropIndicatorDOM.placement,
+            },
+        });
+        this.dropIndicatorDOM.targetReference = null;
+    }
+    _onHeaderDragLeave(e) {
+        if (e.relatedTarget instanceof Node && this.shadowRoot.contains(e.relatedTarget)) {
+            return;
+        }
+        this.dropIndicatorDOM.targetReference = null;
+    }
+    _onPopoverListMoveOver(e) {
+        const { destination } = e.detail;
+        const draggedElement = DragRegistry.getDraggedElement();
+        const dropTarget = destination.element.realTabReference;
+        if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
+            return;
+        }
+        const placementAccepted = !this.fireEvent("move-over", {
+            source: {
+                element: draggedElement,
+            },
+            destination: {
+                element: dropTarget,
+                placement: destination.placement,
+            },
+        }, true);
+        if (placementAccepted) {
+            e.preventDefault();
+        }
+        else {
+            this.dropIndicatorDOM.targetReference = null;
+        }
+    }
+    _onPopoverListMove(e) {
+        const { destination } = e.detail;
+        e.preventDefault();
+        this.fireEvent("move", {
+            source: {
+                element: DragRegistry.getDraggedElement(),
+            },
+            destination: {
+                element: destination.element.realTabReference,
+                placement: destination.placement,
+            },
+        }, true);
+        this.dropIndicatorDOM.targetReference = null;
     }
     async _onTabStripClick(e) {
         const tab = getTab(e.target);
@@ -285,7 +417,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     async _onOverflowListItemClick(e) {
         e.preventDefault(); // cancel the item selection
         this._onItemSelect(e.detail.item.id.slice(0, -3)); // strip "-li" from end of id
-        this.responsivePopover.close();
+        this._closePopover();
         await renderFinished();
         const selectedTopLevel = this._getRootTab(this._selectedTab);
         selectedTopLevel.getTabInStripDomRef().focus();
@@ -720,22 +852,22 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     async _togglePopover(opener, setInitialFocus = false) {
         this.responsivePopover = await this._respPopover();
         if (this.responsivePopover.isOpen()) {
-            this.responsivePopover.close();
+            this._closePopover();
         }
         else {
-            this._showPopoverAt(opener, setInitialFocus);
+            await this._showPopoverAt(opener, setInitialFocus);
         }
     }
-    async _showPopoverAt(opener, setInitialFocus = false) {
+    async _showPopoverAt(opener, setInitialFocus = false, preventInitialFocus = false) {
+        this._hasScheduledPopoverOpen = true;
         this._setPopoverItems(this._getPopoverItemsFor(this._getPopoverOwner(opener)));
         this.responsivePopover = await this._respPopover();
-        if (this.responsivePopover.isOpen() && this.responsivePopover._opener !== opener) {
-            this.responsivePopover.close();
-        }
         if (setInitialFocus) {
             this._setPopoverInitialFocus();
         }
-        this.responsivePopover.showAt(opener);
+        if (this._hasScheduledPopoverOpen) {
+            await this.responsivePopover.showAt(opener, preventInitialFocus);
+        }
     }
     get hasSubTabs() {
         const tabs = this._getTabs();
@@ -762,12 +894,21 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         return this._getEndOverflow().querySelector("[ui5-button]");
     }
     async _respPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
+        const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
+        if (!this._setDraggedElementInStaticArea) {
+            this._setDraggedElementInStaticArea = DragRegistry.addSelfManagedArea(this.staticAreaItem);
+            staticAreaItemDomRef.addEventListener("dragstart", e => {
+                this._setDraggedElementInStaticArea(e.target.realTabReference);
+            });
+        }
+        return staticAreaItemDomRef.querySelector(`#${this._id}-overflowMenu`);
     }
-    async _closeRespPopover() {
-        this.responsivePopover = await this._respPopover();
-        this.responsivePopover.close();
+    _closePopover() {
+        this._hasScheduledPopoverOpen = false;
+        this.responsivePopover?.close();
+    }
+    get dropIndicatorDOM() {
+        return this.shadowRoot.querySelector("[ui5-drop-indicator]");
     }
     get classes() {
         return {
@@ -903,6 +1044,9 @@ __decorate([
 __decorate([
     slot()
 ], TabContainer.prototype, "startOverflowButton", void 0);
+__decorate([
+    longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
+], TabContainer.prototype, "_onHeaderDragOver", null);
 TabContainer = TabContainer_1 = __decorate([
     customElement({
         tag: "ui5-tabcontainer",
@@ -918,6 +1062,7 @@ TabContainer = TabContainer_1 = __decorate([
             Icon,
             List,
             ResponsivePopover,
+            DropIndicator,
         ],
     })
     /**

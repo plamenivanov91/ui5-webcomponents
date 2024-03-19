@@ -5,24 +5,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import SideNavigationItemBase from "./SideNavigationItemBase.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
+import SideNavigationSubItemTemplate from "./generated/templates/SideNavigationSubItemTemplate.lit.js";
+// Styles
+import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
 /**
  * @class
  *
  * ### Overview
- *
+ * Represents a single navigation action within `ui5-side-navigation-item`.
  * The `ui5-side-navigation-sub-item` is intended to be used inside a `ui5-side-navigation-item` only.
  *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";`
+ *
  * @constructor
- * @extends SideNavigationItemBase
+ * @extends SideNavigationSelectableItemBase
  * @public
  * @abstract
  * @since 1.0.0-rc.8
  */
-let SideNavigationSubItem = class SideNavigationSubItem extends SideNavigationItemBase {
+let SideNavigationSubItem = class SideNavigationSubItem extends SideNavigationSelectableItemBase {
     constructor() {
         super(...arguments);
         this._onkeydown = (e) => {
@@ -38,12 +45,17 @@ let SideNavigationSubItem = class SideNavigationSubItem extends SideNavigationIt
             super._onclick(e);
         };
     }
-    get isFixedItem() {
-        return this.parentElement?.slot === "fixedItems";
-    }
 };
 SideNavigationSubItem = __decorate([
-    customElement("ui5-side-navigation-sub-item")
+    customElement({
+        tag: "ui5-side-navigation-sub-item",
+        renderer: litRender,
+        template: SideNavigationSubItemTemplate,
+        styles: SideNavigationItemCss,
+        dependencies: [
+            Icon,
+        ],
+    })
 ], SideNavigationSubItem);
 SideNavigationSubItem.define();
 export default SideNavigationSubItem;

@@ -273,9 +273,10 @@ declare class MultiComboBox extends UI5Element {
     _tokenizerFocusOut(e: FocusEvent): void;
     _tokenizerFocusIn(): void;
     _onkeydown(e: KeyboardEvent): void;
+    _selectItems(matchingItems: IMultiComboBoxItem[]): void;
     _handlePaste(e: ClipboardEvent): void;
-    _handleInsertPaste(): Promise<void>;
-    _createTokenFromText(pastedText: string): void;
+    _handleTokenCreationUponPaste(pastedText: string, e: KeyboardEvent | ClipboardEvent): void;
+    _handleInsertPaste(e: KeyboardEvent): Promise<void>;
     _handleShow(e: KeyboardEvent): void;
     _handlePageUp(e: KeyboardEvent): void;
     _handlePageDown(e: KeyboardEvent): void;

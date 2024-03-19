@@ -14,6 +14,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
+import HighlightTypes from "./types/HighlightTypes.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -117,6 +118,16 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
             return;
         }
         this.fireItemPress(e);
+    }
+    _ondragstart(e) {
+        if (e.target === this._listItem) {
+            this.setAttribute("data-moving", "");
+        }
+    }
+    _ondragend(e) {
+        if (e.target === this._listItem) {
+            this.removeAttribute("data-moving");
+        }
     }
     /*
      * Called when selection components in Single (ui5-radio-button)
@@ -241,8 +252,14 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
             tooltip: this.tooltip || this.title,
         };
     }
+    get _hasHighlightColor() {
+        return this.highlight !== HighlightTypes.None;
+    }
     get hasConfigurableMode() {
         return true;
+    }
+    get _listItem() {
+        return this.shadowRoot.querySelector("li");
     }
     static async onDefine() {
         ListItem_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -266,6 +283,9 @@ __decorate([
 __decorate([
     property()
 ], ListItem.prototype, "title", void 0);
+__decorate([
+    property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
+], ListItem.prototype, "highlight", void 0);
 __decorate([
     property({ type: Boolean })
 ], ListItem.prototype, "actionable", void 0);
