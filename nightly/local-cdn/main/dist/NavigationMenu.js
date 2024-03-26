@@ -8,7 +8,7 @@ var NavigationMenu_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isDesktop, isPhone, isTablet, } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
 import Menu from "./Menu.js";
 import "./StandardListItem.js";
 import "./MenuItem.js";
@@ -38,6 +38,9 @@ import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT, } from "./generated/i18n/i18n-defa
  * @private
  */
 let NavigationMenu = NavigationMenu_1 = class NavigationMenu extends Menu {
+    _isMenu(element) {
+        return element.hasAttribute("ui5-navigation-menu");
+    }
     _itemMouseOver(e) {
         if (isDesktop()) {
             // respect mouseover only on desktop
@@ -85,14 +88,7 @@ let NavigationMenu = NavigationMenu_1 = class NavigationMenu extends Menu {
             } while (parentMenu._parentMenuItem);
             mainMenu._popover.close();
         }
-        if (isPhone()) {
-            // prepares and opens sub-menu on phone
-            this._prepareSubMenuPhone(item);
-        }
-        else if (isTablet()) {
-            // prepares and opens sub-menu on tablet
-            this._prepareSubMenuDesktopTablet(item, opener);
-        }
+        this._prepareSubMenu(item, opener);
     }
     get accSideNavigationPopoverHiddenText() {
         return NavigationMenu_1.i18nBundle.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);

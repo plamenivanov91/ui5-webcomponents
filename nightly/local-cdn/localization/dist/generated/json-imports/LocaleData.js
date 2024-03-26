@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { registerLocaleDataLoader } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-const availableLocales = ["ar", "ar_EG", "ar_SA", "bg", "ca", "cs", "da", "de", "de_AT", "de_CH", "el", "el_CY", "en", "en_AU", "en_GB", "en_HK", "en_IE", "en_IN", "en_NZ", "en_PG", "en_SG", "en_ZA", "es", "es_AR", "es_BO", "es_CL", "es_CO", "es_MX", "es_PE", "es_UY", "es_VE", "et", "fa", "fi", "fr", "fr_BE", "fr_CA", "fr_CH", "fr_LU", "he", "hi", "hr", "hu", "id", "it", "it_CH", "ja", "kk", "ko", "lt", "lv", "ms", "nb", "nl", "nl_BE", "pl", "pt", "pt_PT", "ro", "ru", "ru_UA", "sk", "sl", "sr", "sr_Latn", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_HK", "zh_SG", "zh_TW"];
+const availableLocales = ["ar", "ar_EG", "ar_SA", "bg", "ca", "cnr", "cs", "da", "de", "de_AT", "de_CH", "el", "el_CY", "en", "en_AU", "en_GB", "en_HK", "en_IE", "en_IN", "en_NZ", "en_PG", "en_SG", "en_ZA", "es", "es_AR", "es_BO", "es_CL", "es_CO", "es_MX", "es_PE", "es_UY", "es_VE", "et", "fa", "fi", "fr", "fr_BE", "fr_CA", "fr_CH", "fr_LU", "he", "hi", "hr", "hu", "id", "it", "it_CH", "ja", "kk", "ko", "lt", "lv", "ms", "mk", "nb", "nl", "nl_BE", "pl", "pt", "pt_PT", "ro", "ru", "ru_UA", "sk", "sl", "sr", "sr_Latn", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_HK", "zh_SG", "zh_TW"];
 const importCldrJson = async (localeId) => {
     switch (localeId) {
         case "ar": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-ar" */ "../assets/cldr/ar.json")).default;
@@ -8,6 +8,7 @@ const importCldrJson = async (localeId) => {
         case "ar_SA": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-ar_SA" */ "../assets/cldr/ar_SA.json")).default;
         case "bg": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-bg" */ "../assets/cldr/bg.json")).default;
         case "ca": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-ca" */ "../assets/cldr/ca.json")).default;
+        case "cnr": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-cnr" */ "../assets/cldr/cnr.json")).default;
         case "cs": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-cs" */ "../assets/cldr/cs.json")).default;
         case "da": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-da" */ "../assets/cldr/da.json")).default;
         case "de": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-de" */ "../assets/cldr/de.json")).default;
@@ -55,6 +56,7 @@ const importCldrJson = async (localeId) => {
         case "lt": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-lt" */ "../assets/cldr/lt.json")).default;
         case "lv": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-lv" */ "../assets/cldr/lv.json")).default;
         case "ms": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-ms" */ "../assets/cldr/ms.json")).default;
+        case "mk": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-mk" */ "../assets/cldr/mk.json")).default;
         case "nb": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-nb" */ "../assets/cldr/nb.json")).default;
         case "nl": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-nl" */ "../assets/cldr/nl.json")).default;
         case "nl_BE": return (await import(/* webpackChunkName: "ui5-webcomponents-cldr-nl_BE" */ "../assets/cldr/nl_BE.json")).default;

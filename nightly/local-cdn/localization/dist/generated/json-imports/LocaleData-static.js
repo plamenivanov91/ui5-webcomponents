@@ -5,6 +5,7 @@ import ar_EG from "../assets/cldr/ar_EG.json";
 import ar_SA from "../assets/cldr/ar_SA.json";
 import bg from "../assets/cldr/bg.json";
 import ca from "../assets/cldr/ca.json";
+import cnr from "../assets/cldr/cnr.json";
 import cs from "../assets/cldr/cs.json";
 import da from "../assets/cldr/da.json";
 import de from "../assets/cldr/de.json";
@@ -52,6 +53,7 @@ import ko from "../assets/cldr/ko.json";
 import lt from "../assets/cldr/lt.json";
 import lv from "../assets/cldr/lv.json";
 import ms from "../assets/cldr/ms.json";
+import mk from "../assets/cldr/mk.json";
 import nb from "../assets/cldr/nb.json";
 import nl from "../assets/cldr/nl.json";
 import nl_BE from "../assets/cldr/nl_BE.json";
@@ -75,7 +77,7 @@ import zh_HK from "../assets/cldr/zh_HK.json";
 import zh_SG from "../assets/cldr/zh_SG.json";
 import zh_TW from "../assets/cldr/zh_TW.json";
 const cldrData = {
-    ar, ar_EG, ar_SA, bg, ca, cs, da, de, de_AT, de_CH, el, el_CY, en, en_AU, en_GB, en_HK, en_IE, en_IN, en_NZ, en_PG, en_SG, en_ZA, es, es_AR, es_BO, es_CL, es_CO, es_MX, es_PE, es_UY, es_VE, et, fa, fi, fr, fr_BE, fr_CA, fr_CH, fr_LU, he, hi, hr, hu, id, it, it_CH, ja, kk, ko, lt, lv, ms, nb, nl, nl_BE, pl, pt, pt_PT, ro, ru, ru_UA, sk, sl, sr, sr_Latn, sv, th, tr, uk, vi, zh_CN, zh_HK, zh_SG, zh_TW
+    ar, ar_EG, ar_SA, bg, ca, cnr, cs, da, de, de_AT, de_CH, el, el_CY, en, en_AU, en_GB, en_HK, en_IE, en_IN, en_NZ, en_PG, en_SG, en_ZA, es, es_AR, es_BO, es_CL, es_CO, es_MX, es_PE, es_UY, es_VE, et, fa, fi, fr, fr_BE, fr_CA, fr_CH, fr_LU, he, hi, hr, hu, id, it, it_CH, ja, kk, ko, lt, lv, ms, mk, nb, nl, nl_BE, pl, pt, pt_PT, ro, ru, ru_UA, sk, sl, sr, sr_Latn, sv, th, tr, uk, vi, zh_CN, zh_HK, zh_SG, zh_TW
 };
 const fetchCldrJson = async (localeId) => {
     if (typeof cldrData[localeId] === "object") {

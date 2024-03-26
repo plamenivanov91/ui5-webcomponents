@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
 /**
  * @class
  *
@@ -67,6 +68,13 @@ declare class BusyIndicator extends UI5Element {
      */
     delay: number;
     /**
+     * Defines the placement of the text.
+     *
+     * @default "Bottom"
+     * @public
+     */
+    textPlacement: `${BusyIndicatorTextPlacement}`;
+    /**
      * Defines if the component is currently in busy state.
      * @private
      */
@@ -86,6 +94,14 @@ declare class BusyIndicator extends UI5Element {
         root: {
             "ui5-busy-indicator-root": boolean;
         };
+        textPosition: {
+            "ui5-busy-indicator-text-placement-top ": boolean;
+            "ui5-busy-indicator-text-placement-bottom ": boolean;
+        };
+    };
+    get textPosition(): {
+        top: boolean | "";
+        bottom: boolean | "";
     };
     onBeforeRendering(): void;
     _handleKeydown(e: KeyboardEvent): void;

@@ -187,6 +187,5 @@ declare class RadioButton extends UI5Element implements IFormElement {
     get valueStateText(): string;
     get radioButtonGroupRequiredText(): string;
     get effectiveTabIndex(): string;
-    get strokeWidth(): "1" | "2";
 }
 export default RadioButton;

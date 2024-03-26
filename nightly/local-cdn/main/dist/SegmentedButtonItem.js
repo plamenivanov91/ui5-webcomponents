@@ -11,6 +11,9 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 import ToggleButton from "./ToggleButton.js";
 import ButtonDesign from "./types/ButtonDesign.js";
+import ButtonType from "./types/ButtonType.js";
+import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import "./Button.js";
 import Icon from "./Icon.js";
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 /**
@@ -47,6 +50,15 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], SegmentedButtonItem.prototype, "submits", void 0);
+__decorate([
+    property({ type: Object })
+], SegmentedButtonItem.prototype, "accessibilityAttributes", void 0);
+__decorate([
+    property({ type: ButtonType, defaultValue: ButtonType.Button })
+], SegmentedButtonItem.prototype, "type", void 0);
+__decorate([
+    property({ type: ButtonAccessibleRole, defaultValue: ButtonAccessibleRole.Button })
+], SegmentedButtonItem.prototype, "accessibleRole", void 0);
 __decorate([
     property({ validator: Integer, defaultValue: 0 })
 ], SegmentedButtonItem.prototype, "posInSet", void 0);

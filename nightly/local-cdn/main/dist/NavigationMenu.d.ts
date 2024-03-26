@@ -30,6 +30,7 @@ declare class NavigationMenu extends Menu {
      * @public
      */
     items: Array<NavigationMenuItem>;
+    _isMenu(element: HTMLElement): boolean;
     _itemMouseOver(e: MouseEvent): void;
     _clonedItemsFragment(item: MenuItem): DocumentFragment;
     _itemClick(e: CustomEvent<ListItemClickEventDetail>): void;

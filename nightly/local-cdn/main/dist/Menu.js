@@ -12,7 +12,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { isLeft, isRight, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
-import { isPhone, isTablet, isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -93,13 +93,13 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         return isPhone();
     }
     get isSubMenuOpened() {
-        return !!this._parentMenuItem;
+        return this._parentMenuItem && this._popover?.isOpen();
     }
     get menuHeaderTextPhone() {
         return this._parentMenuItem ? this._parentMenuItem.text : this.headerText;
     }
     onBeforeRendering() {
-        !isPhone() && this._prepareCurrentItems(this.items);
+        this._prepareCurrentItems(this.items);
         const itemsWithChildren = this.itemsWithChildren;
         const itemsWithIcon = this.itemsWithIcon;
         this._currentItems.forEach(item => {
@@ -124,7 +124,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         }
         if (this.open) {
             const opener = this.getOpener();
-            if (opener) {
+            if (opener && !this.isSubMenuOpened) {
                 this.showAt(opener);
             }
         }
@@ -138,33 +138,27 @@ let Menu = Menu_1 = class Menu extends UI5Element {
      * @public
      */
     async showAt(opener) {
-        if (isPhone()) {
-            this._prepareCurrentItems(this.items);
-            this._parentItemsStack = [];
-        }
         if (!this._isSubMenu) {
             this._parentMenuItem = undefined;
             this._opener = undefined;
         }
+        const busyWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.busy;
         const popover = await this._createPopover();
         popover.initialFocus = `${this._id}-menu-item-0`;
-        popover.showAt(opener);
+        popover.showAt(opener, busyWithoutItems);
     }
     /**
      * Closes the Menu.
      * @public
      */
     close() {
-        if (this._popover) {
-            if (isPhone()) {
-                this._parentItemsStack = [];
-            }
-            this._popover.close(false, false, true);
-        }
+        this._popover?.close(false, false, true);
     }
     async _createPopover() {
-        const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-        this._popover = staticAreaItemDomRef.querySelector("[ui5-responsive-popover]");
+        if (!this._popover) {
+            const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
+            this._popover = staticAreaItemDomRef.querySelector("[ui5-responsive-popover]");
+        }
         return this._popover;
     }
     getOpener() {
@@ -172,13 +166,11 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         return this.opener instanceof HTMLElement ? this.opener : rootNode?.getElementById?.(this.opener);
     }
     _navigateBack() {
-        const parentMenuItem = this._parentItemsStack.pop();
-        this.focus();
-        if (parentMenuItem) {
-            const parentMenuItemParent = parentMenuItem.parentElement;
-            this._prepareCurrentItems(parentMenuItemParent.items);
-            this._parentMenuItem = this._parentItemsStack.length ? this._parentItemsStack[this._parentItemsStack.length - 1] : undefined;
-        }
+        this._closeItemSubMenu(this._parentMenuItem, true);
+    }
+    _closeAll() {
+        const mainMenu = this._findMainMenu(this);
+        mainMenu?.close();
     }
     _prepareCurrentItems(items) {
         this._currentItems = items.map((item, index) => {
@@ -190,6 +182,9 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         });
     }
     _createSubMenu(item, opener) {
+        if (item._subMenu) {
+            return;
+        }
         const ctor = this.constructor;
         const subMenu = document.createElement(ctor.getMetadata().getTag());
         subMenu._isSubMenu = true;
@@ -213,7 +208,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
     }
     _openItemSubMenu(item, opener) {
         const mainMenu = this._findMainMenu(item);
-        mainMenu.fireEvent("before-open", {
+        mainMenu?.fireEvent("before-open", {
             item,
         }, false, false);
         item._subMenu.showAt(opener);
@@ -237,8 +232,6 @@ let Menu = Menu_1 = class Menu extends UI5Element {
             const parentItem = subMenu._parentMenuItem;
             if (forceClose || !parentItem._preventSubMenuClose) {
                 subMenu.close();
-                subMenu.remove();
-                parentItem._subMenu = undefined;
                 if (keyboard) {
                     subMenu._opener?.focus();
                 }
@@ -247,7 +240,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
             }
         }
     }
-    _prepareSubMenuDesktopTablet(item, opener) {
+    _prepareSubMenu(item, opener) {
         if (opener.id !== this._subMenuOpenerId || (item && item.hasSubmenu)) {
             // close opened sub-menu if there is any opened
             this._closeItemSubMenu(this._openedSubMenuItem, true);
@@ -260,11 +253,6 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         if (this._parentMenuItem) {
             this._parentMenuItem._preventSubMenuClose = true;
         }
-    }
-    _prepareSubMenuPhone(item) {
-        this._prepareCurrentItems(item.items);
-        this._parentMenuItem = item;
-        this._parentItemsStack.push(item);
     }
     _onfocusin(e) {
         const target = e.target;
@@ -279,7 +267,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         clearTimeout(this._timeout);
         // Sets the new timeout
         this._timeout = setTimeout(() => {
-            this._prepareSubMenuDesktopTablet(item, opener);
+            this._prepareSubMenu(item, opener);
         }, MENU_OPEN_DELAY);
     }
     _startCloseTimeout(item) {
@@ -326,7 +314,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         if (shouldOpenMenu) {
             const opener = e.target;
             const item = opener.associatedItem;
-            item.hasSubmenu && this._prepareSubMenuDesktopTablet(item, opener);
+            item.hasSubmenu && this._prepareSubMenu(item, opener);
         }
         else if (shouldCloseMenu && this._isSubMenu && this._parentMenuItem) {
             const parentMenuItemParent = this._parentMenuItem.parentElement;
@@ -339,9 +327,6 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         if (!item.hasSubmenu) {
             // click on an item that doesn't have sub-items fires an "item-click" event
             if (!this._isSubMenu) {
-                if (isPhone()) {
-                    this._parentMenuItem = undefined;
-                }
                 // fire event if the click is on top-level menu item
                 const prevented = !this.fireEvent("item-click", {
                     "item": item,
@@ -370,21 +355,19 @@ let Menu = Menu_1 = class Menu extends UI5Element {
                 }
             }
         }
-        else if (isPhone()) {
-            // prepares and opens sub-menu on phone
-            this._prepareSubMenuPhone(item);
-        }
-        else if (isTablet()) {
-            // prepares and opens sub-menu on tablet
-            this._prepareSubMenuDesktopTablet(item, opener);
+        else {
+            this._prepareSubMenu(item, opener);
         }
     }
-    _findMainMenu(item) {
-        let parentMenu = item.parentElement;
-        while (parentMenu._parentMenuItem) {
-            parentMenu = parentMenu._parentMenuItem.parentElement;
+    _findMainMenu(element) {
+        let menu = this._isMenu(element) ? element : element.parentElement;
+        while (menu && menu._parentMenuItem) {
+            menu = menu._parentMenuItem.parentElement;
         }
-        return parentMenu;
+        return menu;
+    }
+    _isMenu(element) {
+        return element.hasAttribute("ui5-menu");
     }
     _beforePopoverOpen(e) {
         const prevented = !this.fireEvent("before-open", {}, true, false);
@@ -438,9 +421,6 @@ __decorate([
 __decorate([
     property({ type: Object, multiple: true })
 ], Menu.prototype, "_currentItems", void 0);
-__decorate([
-    property({ type: Object, multiple: true })
-], Menu.prototype, "_parentItemsStack", void 0);
 __decorate([
     property({ type: Object, defaultValue: undefined })
 ], Menu.prototype, "_popover", void 0);

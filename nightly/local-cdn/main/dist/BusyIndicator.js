@@ -13,6 +13,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
+import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
 import Label from "./Label.js";
 // Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
@@ -93,6 +94,16 @@ let BusyIndicator = BusyIndicator_1 = class BusyIndicator extends UI5Element {
             root: {
                 "ui5-busy-indicator-root": true,
             },
+            textPosition: {
+                "ui5-busy-indicator-text-placement-top ": this.textPlacement === BusyIndicatorTextPlacement.Top,
+                "ui5-busy-indicator-text-placement-bottom ": this.textPlacement === BusyIndicatorTextPlacement.Bottom,
+            },
+        };
+    }
+    get textPosition() {
+        return {
+            top: this.text && this.textPlacement === BusyIndicatorTextPlacement.Top,
+            bottom: this.text && this.textPlacement === BusyIndicatorTextPlacement.Bottom,
         };
     }
     onBeforeRendering() {
@@ -152,6 +163,9 @@ __decorate([
 __decorate([
     property({ validator: Integer, defaultValue: 1000 })
 ], BusyIndicator.prototype, "delay", void 0);
+__decorate([
+    property({ type: BusyIndicatorTextPlacement, defaultValue: BusyIndicatorTextPlacement.Bottom })
+], BusyIndicator.prototype, "textPlacement", void 0);
 __decorate([
     property({ type: Boolean })
 ], BusyIndicator.prototype, "_isBusy", void 0);

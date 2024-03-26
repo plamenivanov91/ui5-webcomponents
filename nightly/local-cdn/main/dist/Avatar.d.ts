@@ -21,8 +21,8 @@ import "@ui5/webcomponents-icons/dist/alert.js";
  *
  * ### Keyboard Handling
  *
- * - [SPACE, ENTER, RETURN] - Fires the `click` event if the `interactive` property is set to true.
- * - [SHIFT] - If [SPACE] is pressed, pressing [SHIFT] releases the component without triggering the click event.
+ * - [Space] / [Enter] or [Return] - Fires the `click` event if the `interactive` property is set to true.
+ * - [Shift] - If [Space] is pressed, pressing [Shift] releases the component without triggering the click event.
  *
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Avatar.js";`
@@ -50,11 +50,6 @@ declare class Avatar extends UI5Element implements ITabbable, IAvatarGroupItem {
      * @public
      */
     interactive: boolean;
-    /**
-     * Indicates if the elements is pressed
-     * @private
-     */
-    pressed: boolean;
     /**
      * Defines the name of the UI5 Icon, that will be displayed.
      *

@@ -75,7 +75,7 @@ const PAGE_UP_DOWN_SIZE = 5;
  * ### Keyboard Handling
  *
  * #### Fast Navigation
- * This component provides a build in fast navigation group which can be used via `F6 / Shift + F6` or ` Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up`.
+ * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
  * In order to use this functionality, you need to import the following module:
  * `import "@ui5/webcomponents-base/dist/features/F6Navigation.js"`
  *
@@ -260,9 +260,10 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     }
     _onHeaderDrop(e) {
         e.preventDefault();
+        const draggedElement = DragRegistry.getDraggedElement();
         this.fireEvent("move", {
             source: {
-                element: DragRegistry.getDraggedElement(),
+                element: draggedElement,
             },
             destination: {
                 element: this.dropIndicatorDOM.targetReference.realTabReference,
@@ -270,6 +271,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
             },
         });
         this.dropIndicatorDOM.targetReference = null;
+        draggedElement.focus();
     }
     _onHeaderDragLeave(e) {
         if (e.relatedTarget instanceof Node && this.shadowRoot.contains(e.relatedTarget)) {
@@ -302,10 +304,11 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     }
     _onPopoverListMove(e) {
         const { destination } = e.detail;
+        const draggedElement = DragRegistry.getDraggedElement();
         e.preventDefault();
         this.fireEvent("move", {
             source: {
-                element: DragRegistry.getDraggedElement(),
+                element: draggedElement,
             },
             destination: {
                 element: destination.element.realTabReference,
@@ -313,6 +316,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
             },
         }, true);
         this.dropIndicatorDOM.targetReference = null;
+        draggedElement.focus();
     }
     async _onTabStripClick(e) {
         const tab = getTab(e.target);

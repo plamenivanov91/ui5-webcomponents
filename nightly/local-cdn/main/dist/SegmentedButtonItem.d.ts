@@ -1,6 +1,9 @@
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
 import ToggleButton from "./ToggleButton.js";
 import ButtonDesign from "./types/ButtonDesign.js";
+import ButtonType from "./types/ButtonType.js";
+import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import { AccessibilityAttributes } from "./Button.js";
 /**
  * @class
  *
@@ -40,6 +43,24 @@ declare class SegmentedButtonItem extends ToggleButton implements ISegmentedButt
      * @public
      */
     submits: boolean;
+    /**
+     * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+     * @default {}
+     * @public
+     */
+    accessibilityAttributes: AccessibilityAttributes;
+    /**
+     * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+     * @default "Button"
+     * @public
+     */
+    type: `${ButtonType}`;
+    /**
+     * **Note:** The property is inherited and not supported. If set, it won't take any effect.
+     * @default "Button"
+     * @public
+     */
+    accessibleRole: `${ButtonAccessibleRole}`;
     /**
      * Defines the index of the item inside of the SegmentedButton.
      * @default 0

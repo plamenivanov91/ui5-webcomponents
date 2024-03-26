@@ -354,7 +354,7 @@ let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends
         return result;
     }
     /**
-     * If the dialog is closed by [ESC] key, do the same as if the `Cancel` button is pressed.
+     * If the dialog is closed by [Escape] key, do the same as if the `Cancel` button is pressed.
      * @param evt
      */
     _restoreConfirmedOnEscape(evt) {

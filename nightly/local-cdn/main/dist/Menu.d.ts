@@ -116,11 +116,6 @@ declare class Menu extends UI5Element {
      */
     _currentItems: Array<CurrentItem>;
     /**
-     * Stores a list of parent menu items for each sub-menu (on phone).
-     * @private
-     */
-    _parentItemsStack: Array<MenuItem>;
-    /**
      * Stores the ResponsivePopover instance
      */
     _popover?: ResponsivePopover;
@@ -154,7 +149,7 @@ declare class Menu extends UI5Element {
     get labelBack(): string;
     get labelClose(): string;
     get isPhone(): boolean;
-    get isSubMenuOpened(): boolean;
+    get isSubMenuOpened(): boolean | undefined;
     get menuHeaderTextPhone(): string;
     onBeforeRendering(): void;
     onAfterRendering(): void;
@@ -172,14 +167,14 @@ declare class Menu extends UI5Element {
     _createPopover(): Promise<ResponsivePopover>;
     getOpener(): HTMLElement | null;
     _navigateBack(): void;
+    _closeAll(): void;
     _prepareCurrentItems(items: Array<MenuItem>): void;
     _createSubMenu(item: MenuItem, opener: HTMLElement): void;
     _clonedItemsFragment(item: MenuItem): DocumentFragment;
     _openItemSubMenu(item: MenuItem, opener: HTMLElement): void;
     _closeItemSubMenu(item: MenuItem, forceClose?: boolean, keyboard?: boolean): void;
     _closeSubMenuPopover(subMenu: Menu, forceClose?: boolean, keyboard?: boolean): void;
-    _prepareSubMenuDesktopTablet(item: MenuItem, opener: HTMLElement): void;
-    _prepareSubMenuPhone(item: MenuItem): void;
+    _prepareSubMenu(item: MenuItem, opener: HTMLElement): void;
     _onfocusin(e: FocusEvent): void;
     _startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem): void;
     _startCloseTimeout(item: MenuItem): void;
@@ -188,7 +183,8 @@ declare class Menu extends UI5Element {
     _itemMouseOut(e: MouseEvent): void;
     _itemKeyDown(e: KeyboardEvent): void;
     _itemClick(e: CustomEvent<ListItemClickEventDetail>): void;
-    _findMainMenu(item: MenuItem): Menu;
+    _findMainMenu(element: MenuItem | Menu): Menu;
+    _isMenu(element: HTMLElement): boolean;
     _beforePopoverOpen(e: CustomEvent): void;
     _afterPopoverOpen(): void;
     _beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>): void;

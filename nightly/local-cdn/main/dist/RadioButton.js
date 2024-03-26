@@ -244,9 +244,6 @@ let RadioButton = RadioButton_1 = class RadioButton extends UI5Element {
         }
         return tabindex || "0";
     }
-    get strokeWidth() {
-        return this.valueState === "None" ? "1" : "2";
-    }
 };
 __decorate([
     property({ type: Boolean })

@@ -37,7 +37,7 @@ import type { IFormElement } from "./features/InputElementsFormSupport.js";
  *
  * The user can use the following keyboard shortcuts to toggle the checked state of the `ui5-checkbox`.
  *
- * - [SPACE, ENTER] - Toggles between different states: checked, not checked.
+ * - [Space],[Enter] - Toggles between different states: checked, not checked.
  *
  * ### ES6 Module Import
  *
