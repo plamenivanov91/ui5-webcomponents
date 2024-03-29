@@ -94,10 +94,6 @@ declare class BusyIndicator extends UI5Element {
         root: {
             "ui5-busy-indicator-root": boolean;
         };
-        textPosition: {
-            "ui5-busy-indicator-text-placement-top ": boolean;
-            "ui5-busy-indicator-text-placement-bottom ": boolean;
-        };
     };
     get textPosition(): {
         top: boolean | "";

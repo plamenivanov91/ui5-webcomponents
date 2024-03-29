@@ -1,5 +1,5 @@
-commit f781150a7f7018c551fea426cd4b8dffb205150a
+commit 0f753da96aab9efbd1d45b2c87a44f8e4a574ad9
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Mar 26 13:20:00 2024 +0200
+Date:   Thu Mar 28 18:16:22 2024 +0200
 
-    docs: reset clears the project only, not all settings (#8539)
+    docs: prevent 404 request on each keystroke (#8560)

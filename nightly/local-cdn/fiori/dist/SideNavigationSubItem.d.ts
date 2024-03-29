@@ -1,4 +1,5 @@
 import "@ui5/webcomponents-icons/dist/circle-task-2.js";
+import "@ui5/webcomponents-icons/dist/arrow-right.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 /**
  * @class

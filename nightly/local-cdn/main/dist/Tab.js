@@ -86,13 +86,13 @@ let Tab = Tab_1 = class Tab extends UI5Element {
         return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
     }
     get isOnSelectedTabPath() {
-        return this.selected || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
+        return this._selectedTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
     }
     get _effectiveSlotName() {
         return this.isOnSelectedTabPath ? this._individualSlot : `disabled-${this._individualSlot}`;
     }
     get _defaultSlotName() {
-        return this.selected ? "" : "disabled-slot";
+        return this._selectedTabReference === this ? "" : "disabled-slot";
     }
     get hasOwnContent() {
         return willShowContent(this.content);
@@ -308,6 +308,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Tab.prototype, "isTopLevelTab", void 0);
+__decorate([
+    property({ type: Object, defaultValue: null })
+], Tab.prototype, "_selectedTabReference", void 0);
 __decorate([
     slot({
         type: Node,

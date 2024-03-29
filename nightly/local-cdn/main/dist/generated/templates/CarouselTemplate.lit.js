@@ -8,7 +8,7 @@ function block4(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-
 function block5(context, tags, suffix) { return html `${this.isPageTypeDots ? block6.call(this, context, tags, suffix) : block8.call(this, context, tags, suffix)}`; }
 function block6(context, tags, suffix) { return html `${repeat(this.dots, (item, index) => item._id || index, (item, index) => block7.call(this, context, tags, suffix, item, index))}`; }
 function block7(context, tags, suffix, item, index) { return html `<div role="img" aria-label="${ifDefined(item.ariaLabel)}" ?active="${item.active}" class="ui5-carousel-navigation-dot"></div>`; }
-function block8(context, tags, suffix) { return html `<div class="ui5-carousel-navigation-text">${ifDefined(this.selectedIndexToShow)}&nbsp;${ifDefined(this.ofText)}&nbsp;${ifDefined(this.pagesCount)}</div>`; }
+function block8(context, tags, suffix) { return html `<div dir="auto" class="ui5-carousel-navigation-text">${ifDefined(this.selectedIndexToShow)}&nbsp;${ifDefined(this.ofText)}&nbsp;${ifDefined(this.pagesCount)}</div>`; }
 function block9(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-button", tags, suffix)} arrow-forward tooltip="${ifDefined(this.nextPageText)}" class="ui5-carousel-navigation-button ${classMap(this.classes.navNextButton)}" icon="slim-arrow-right" tabindex="-1" @click=${this._navButtonClick}></${scopeTag("ui5-button", tags, suffix)}>` : html `<ui5-button arrow-forward tooltip="${ifDefined(this.nextPageText)}" class="ui5-carousel-navigation-button ${classMap(this.classes.navNextButton)}" icon="slim-arrow-right" tabindex="-1" @click=${this._navButtonClick}></ui5-button>`; }
 export default block0;
 //# sourceMappingURL=CarouselTemplate.lit.js.map

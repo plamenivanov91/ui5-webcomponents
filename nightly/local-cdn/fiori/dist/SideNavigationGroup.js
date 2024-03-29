@@ -18,7 +18,7 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationGroupTemplate from "./generated/templates/SideNavigationGroupTemplate.lit.js";
 import { SIDE_NAVIGATION_GROUP_HEADER_DESC, } from "./generated/i18n/i18n-defaults.js";
 // Styles
-import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js";
+import SideNavigationGroupCss from "./generated/themes/SideNavigationGroup.css.js";
 /**
  * @class
  *
@@ -131,7 +131,7 @@ SideNavigationGroup = SideNavigationGroup_1 = __decorate([
         tag: "ui5-side-navigation-group",
         renderer: litRender,
         template: SideNavigationGroupTemplate,
-        styles: SideNavigationItemCss,
+        styles: SideNavigationGroupCss,
         dependencies: [
             Icon,
         ],

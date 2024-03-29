@@ -190,6 +190,11 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
             tab.forcedSetsize = arr.length;
             tab.isTopLevelTab = items.some(i => i === tab);
         });
+        walk(items, item => {
+            if (!item.isSeparator) {
+                item._selectedTabReference = this._selectedTab;
+            }
+        });
         this._setIndentLevels(items);
     }
     _onHeaderFocusin(e) {

@@ -79,6 +79,7 @@ declare class Tab extends UI5Element implements ITab, ITabbable {
     forcedSelected: boolean;
     realTabReference: Tab;
     isTopLevelTab: boolean;
+    _selectedTabReference: Tab;
     /**
      * Holds the content associated with this tab.
      * @public
