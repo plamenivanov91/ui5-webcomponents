@@ -315,6 +315,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
     formSupport: Array<HTMLElement>;
     /**
      * Defines the value state message that will be displayed as pop up under the component.
+     * The value state message slot should contain only one root element.
      *
      * **Note:** If not specified, a default text (in the respective language) will be displayed.
      *

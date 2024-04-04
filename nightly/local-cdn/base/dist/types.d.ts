@@ -15,4 +15,14 @@ type ClassMap = {
 type PassiveEventListenerObject = EventListenerObject & {
     passive: boolean;
 };
-export type { PromiseResolve, Timeout, Interval, StyleData, StyleDataCSP, ComponentStylesData, ClassMap, ClassMapValue, PassiveEventListenerObject, };
+type LowercaseString<T> = T extends string ? Lowercase<T> : never;
+type AccessibilityInfo = {
+    role?: LowercaseString<string>;
+    type?: LowercaseString<string>;
+    description?: string;
+    disabled?: boolean;
+    readonly?: boolean;
+    required?: boolean;
+    children?: Array<HTMLElement>;
+};
+export type { AccessibilityInfo, PromiseResolve, Timeout, Interval, StyleData, StyleDataCSP, ComponentStylesData, ClassMap, ClassMapValue, PassiveEventListenerObject, };

@@ -62,6 +62,20 @@ type CarouselNavigateEventDetail = {
  */
 declare class Carousel extends UI5Element {
     /**
+     * Defines the accessible name of the component.
+     * @default ""
+     * @public
+     * @since 1.24
+     */
+    accessibleName: string;
+    /**
+     * Defines the IDs of the elements that label the input.
+     * @default ""
+     * @public
+     * @since 1.24
+     */
+    accessibleNameRef: string;
+    /**
      * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
      * @default false
      * @public
@@ -274,6 +288,7 @@ declare class Carousel extends UI5Element {
     get selectedIndexToShow(): number;
     get ofText(): string;
     get ariaActiveDescendant(): string | undefined;
+    get ariaLabelTxt(): string | undefined;
     get nextPageText(): string;
     get previousPageText(): string;
     /**

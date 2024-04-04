@@ -3,7 +3,7 @@ import UI5ElementMetadata, { Slot, SlotValue, State, PropertyValue, Metadata } f
 import EventProvider from "./EventProvider.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
+import type { AccessibilityInfo, PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RendererOptions) => void;
 type RendererOptions = {
     /**
@@ -303,6 +303,11 @@ declare abstract class UI5Element extends HTMLElement {
      */
     get isUI5Element(): boolean;
     get classes(): ClassMap;
+    /**
+     * Returns the component accessibility info.
+     * @private
+     */
+    get accessibilityInfo(): AccessibilityInfo;
     /**
      * Do not override this method in derivatives of UI5Element, use metadata properties instead
      * @private

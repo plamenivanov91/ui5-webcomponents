@@ -186,7 +186,7 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
      * @private
      */
     namesTooLong(dayNames) {
-        return dayNames.some(dayName => dayName.length > 3);
+        return dayNames.some(dayName => dayName.length > 4);
     }
     onAfterRendering() {
         if (this._autoFocus && !this._hidden) {
