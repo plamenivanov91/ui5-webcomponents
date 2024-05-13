@@ -390,43 +390,43 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
         return this.shadowRoot.querySelector(".ui5-fcl-column--end");
     }
     get accStartColumnText() {
-        return this.accessibilityTexts.startColumnAccessibleName || FlexibleColumnLayout_1.i18nBundle.getText(FCL_START_COLUMN_TXT);
+        return this.accessibilityAttributes.startColumn?.name || FlexibleColumnLayout_1.i18nBundle.getText(FCL_START_COLUMN_TXT);
     }
     get accMiddleColumnText() {
-        return this.accessibilityTexts.midColumnAccessibleName || FlexibleColumnLayout_1.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
+        return this.accessibilityAttributes.midColumn?.name || FlexibleColumnLayout_1.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
     }
     get accEndColumnText() {
-        return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout_1.i18nBundle.getText(FCL_END_COLUMN_TXT);
+        return this.accessibilityAttributes.endColumn?.name || FlexibleColumnLayout_1.i18nBundle.getText(FCL_END_COLUMN_TXT);
     }
     get accStartArrowContainerText() {
-        return this.accessibilityTexts.startArrowContainerAccessibleName || undefined;
+        return this.accessibilityAttributes.startArrowContainer?.name || undefined;
     }
     get accEndArrowContainerText() {
-        return this.accessibilityTexts.endArrowContainerAccessibleName || undefined;
+        return this.accessibilityAttributes.endArrowContainer?.name || undefined;
     }
     get accStartColumnRole() {
         if (this.startColumnVisible) {
-            return this.accessibilityRoles.startColumnRole || "region";
+            return this.accessibilityAttributes.startColumn?.role || "region";
         }
         return undefined;
     }
     get accMiddleColumnRole() {
         if (this.midColumnVisible) {
-            return this.accessibilityRoles.midColumnRole || "region";
+            return this.accessibilityAttributes.midColumn?.role || "region";
         }
         return undefined;
     }
     get accEndColumnRole() {
         if (this.endColumnVisible) {
-            return this.accessibilityRoles.endColumnRole || "region";
+            return this.accessibilityAttributes.endColumn?.role || "region";
         }
         return undefined;
     }
     get accStartArrowContainerRole() {
-        return this.accessibilityRoles.startArrowContainerRole || undefined;
+        return this.accessibilityAttributes.startArrowContainer?.role || undefined;
     }
     get accEndArrowContainerRole() {
-        return this.accessibilityRoles.endArrowContainerRole || undefined;
+        return this.accessibilityAttributes.endArrowContainer?.role || undefined;
     }
     get _effectiveLayoutsByMedia() {
         return this._layoutsConfiguration || getLayoutsByMedia();
@@ -450,18 +450,18 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
         };
     }
     get accStartArrowText() {
-        const customTexts = this.accessibilityTexts;
+        const a11yAttrs = this.accessibilityAttributes;
         if (this.startArrowDirection === "mirror") {
-            return customTexts.startArrowLeftText || FlexibleColumnLayout_1.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+            return a11yAttrs.startArrowLeft?.name || FlexibleColumnLayout_1.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
         }
-        return customTexts.startArrowRightText || FlexibleColumnLayout_1.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
+        return a11yAttrs.startArrowRight?.name || FlexibleColumnLayout_1.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
     }
     get accEndArrowText() {
-        const customTexts = this.accessibilityTexts;
+        const a11yAttrs = this.accessibilityAttributes;
         if (this.endArrowDirection === "mirror") {
-            return customTexts.endArrowRightText || FlexibleColumnLayout_1.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
+            return a11yAttrs.endArrowRight?.name || FlexibleColumnLayout_1.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
         }
-        return customTexts.endArrowLeftText || FlexibleColumnLayout_1.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
+        return a11yAttrs.endArrowLeft?.name || FlexibleColumnLayout_1.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
     }
 };
 __decorate([
@@ -472,10 +472,7 @@ __decorate([
 ], FlexibleColumnLayout.prototype, "hideArrows", void 0);
 __decorate([
     property({ type: Object })
-], FlexibleColumnLayout.prototype, "accessibilityTexts", void 0);
-__decorate([
-    property({ type: Object })
-], FlexibleColumnLayout.prototype, "accessibilityRoles", void 0);
+], FlexibleColumnLayout.prototype, "accessibilityAttributes", void 0);
 __decorate([
     property({ validator: Float, defaultValue: 0 })
 ], FlexibleColumnLayout.prototype, "_width", void 0);

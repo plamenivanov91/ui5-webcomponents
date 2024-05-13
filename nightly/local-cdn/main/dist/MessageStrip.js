@@ -21,7 +21,7 @@ import MessageStripDesign from "./types/MessageStripDesign.js";
 import MessageStripTemplate from "./generated/templates/MessageStripTemplate.lit.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-import { MESSAGE_STRIP_CLOSE_BUTTON, MESSAGE_STRIP_CLOSABLE, MESSAGE_STRIP_ERROR, MESSAGE_STRIP_WARNING, MESSAGE_STRIP_SUCCESS, MESSAGE_STRIP_INFORMATION, } from "./generated/i18n/i18n-defaults.js";
+import { MESSAGE_STRIP_CLOSE_BUTTON, MESSAGE_STRIP_CLOSABLE, MESSAGE_STRIP_ERROR, MESSAGE_STRIP_WARNING, MESSAGE_STRIP_SUCCESS, MESSAGE_STRIP_INFORMATION, MESSAGE_STRIP_CUSTOM, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";
 var DesignClassesMapping;
@@ -29,22 +29,17 @@ var DesignClassesMapping;
     DesignClassesMapping["Information"] = "ui5-message-strip-root--info";
     DesignClassesMapping["Positive"] = "ui5-message-strip-root--positive";
     DesignClassesMapping["Negative"] = "ui5-message-strip-root--negative";
-    DesignClassesMapping["Warning"] = "ui5-message-strip-root--warning";
+    DesignClassesMapping["Critical"] = "ui5-message-strip-root--critical";
+    DesignClassesMapping["ColorSet1"] = "ui5-message-strip-root--color-set-1";
+    DesignClassesMapping["ColorSet2"] = "ui5-message-strip-root--color-set-2";
 })(DesignClassesMapping || (DesignClassesMapping = {}));
-var IconMapping;
-(function (IconMapping) {
-    IconMapping["Information"] = "information";
-    IconMapping["Positive"] = "sys-enter-2";
-    IconMapping["Negative"] = "error";
-    IconMapping["Warning"] = "alert";
-})(IconMapping || (IconMapping = {}));
 /**
  * @class
  *
  * ### Overview
  *
  * The `ui5-message-strip` component enables the embedding of app-related messages.
- * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
+ * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Critical and Negative.
  * Each message can have a Close button, so that it can be removed from the UI, if needed.
  *
  * ### Usage
@@ -87,7 +82,9 @@ let MessageStrip = MessageStrip_1 = class MessageStrip extends UI5Element {
             Information: getTranslation(MESSAGE_STRIP_INFORMATION),
             Positive: getTranslation(MESSAGE_STRIP_SUCCESS),
             Negative: getTranslation(MESSAGE_STRIP_ERROR),
-            Warning: getTranslation(MESSAGE_STRIP_WARNING),
+            Critical: getTranslation(MESSAGE_STRIP_WARNING),
+            ColorSet1: getTranslation(MESSAGE_STRIP_CUSTOM),
+            ColorSet2: getTranslation(MESSAGE_STRIP_CUSTOM),
         };
     }
     get hiddenText() {
@@ -113,7 +110,18 @@ let MessageStrip = MessageStrip_1 = class MessageStrip extends UI5Element {
         return this.icon.length > 0;
     }
     get standardIconName() {
-        return IconMapping[this.design];
+        switch (this.design) {
+            case MessageStripDesign.Critical:
+                return "alert";
+            case MessageStripDesign.Positive:
+                return "sys-enter-2";
+            case MessageStripDesign.Negative:
+                return "error";
+            case MessageStripDesign.Information:
+                return "information";
+            default:
+                return null;
+        }
     }
     get designClasses() {
         return DesignClassesMapping[this.design];
@@ -125,6 +133,9 @@ __decorate([
         defaultValue: MessageStripDesign.Information,
     })
 ], MessageStrip.prototype, "design", void 0);
+__decorate([
+    property({ defaultValue: "1" })
+], MessageStrip.prototype, "colorScheme", void 0);
 __decorate([
     property({ type: Boolean })
 ], MessageStrip.prototype, "hideIcon", void 0);

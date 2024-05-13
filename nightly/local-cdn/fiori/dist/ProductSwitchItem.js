@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -48,6 +49,9 @@ let ProductSwitchItem = class ProductSwitchItem extends UI5Element {
     }
     onEnterDOM() {
         document.addEventListener("mouseup", this._deactivate);
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
     }
     onExitDOM() {
         document.removeEventListener("mouseup", this._deactivate);
@@ -79,10 +83,8 @@ let ProductSwitchItem = class ProductSwitchItem extends UI5Element {
     }
     _onfocusout() {
         this.active = false;
-        this.focused = false;
     }
     _onfocusin(e) {
-        this.focused = true;
         this.fireEvent("_focused", e);
     }
     _fireItemClick() {
@@ -107,9 +109,6 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], ProductSwitchItem.prototype, "active", void 0);
-__decorate([
-    property({ type: Boolean })
-], ProductSwitchItem.prototype, "focused", void 0);
 __decorate([
     property({ type: Boolean })
 ], ProductSwitchItem.prototype, "selected", void 0);

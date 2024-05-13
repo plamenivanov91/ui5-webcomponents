@@ -16,6 +16,8 @@ declare class MultiComboBoxItem extends ComboBoxItem implements IMultiComboBoxIt
      * @public
      */
     selected: boolean;
-    get stableDomRef(): string;
+    get isMultiComboBoxItem(): boolean;
 }
+declare const isInstanceOfMultiComboBoxItem: (object: any) => object is MultiComboBoxItem;
 export default MultiComboBoxItem;
+export { isInstanceOfMultiComboBoxItem };

@@ -12,15 +12,15 @@ var HighlightTypes;
     /**
      * @public
      */
-    HighlightTypes["Success"] = "Success";
+    HighlightTypes["Positive"] = "Positive";
     /**
      * @public
      */
-    HighlightTypes["Warning"] = "Warning";
+    HighlightTypes["Critical"] = "Critical";
     /**
      * @public
      */
-    HighlightTypes["Error"] = "Error";
+    HighlightTypes["Negative"] = "Negative";
     /**
      * @public
      */

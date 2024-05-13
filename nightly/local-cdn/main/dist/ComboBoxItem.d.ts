@@ -38,5 +38,6 @@ declare class ComboBoxItem extends UI5Element implements IComboBoxItem {
      * @protected
      */
     get isGroupItem(): boolean;
+    get stableDomRef(): string;
 }
 export default ComboBoxItem;

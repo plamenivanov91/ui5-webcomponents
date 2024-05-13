@@ -30,7 +30,7 @@ import cardCss from "./generated/themes/Card.css.js";
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/Card";`
+ * `import "@ui5/webcomponents/dist/Card.js";`
  *
  * `import "@ui5/webcomponents/dist/CardHeader.js";` (for `ui5-card-header`)
  * @constructor

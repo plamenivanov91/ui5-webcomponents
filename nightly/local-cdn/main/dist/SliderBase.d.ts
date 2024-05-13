@@ -104,7 +104,7 @@ declare abstract class SliderBase extends UI5Element {
         VISIBLE: string;
         HIDDEN: string;
     };
-    static get render(): import("@ui5/webcomponents-base/dist/UI5Element.js").Renderer;
+    static get renderer(): import("@ui5/webcomponents-base/dist/UI5Element.js").Renderer;
     static get styles(): import("@ui5/webcomponents-base/dist/types.js").StyleData;
     get classes(): {
         root: {

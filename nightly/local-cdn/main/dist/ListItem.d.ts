@@ -1,13 +1,14 @@
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import HighlightTypes from "./types/HighlightTypes.js";
 import ListItemType from "./types/ListItemType.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
 import type { IButton } from "./Button.js";
-import HasPopup from "./types/HasPopup.js";
+import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 interface IAccessibleListItem {
     accessibleName?: string;
@@ -31,7 +32,7 @@ type AccInfo = {
     ariaLabel: string;
     ariaLabelRadioButton: string;
     ariaSelectedText?: string;
-    ariaHaspopup?: `${Lowercase<HasPopup>}`;
+    ariaHaspopup?: `${Lowercase<AriaHasPopup>}`;
     posinset?: number;
     setsize?: number;
     ariaSelected?: boolean;
@@ -40,10 +41,7 @@ type AccInfo = {
     ariaOwns?: string;
     tooltip?: string;
 };
-type AccessibilityAttributes = {
-    ariaSetsize?: number;
-    ariaPosinset?: number;
-};
+type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaSetsize" | "ariaPosinset">;
 /**
  * @class
  * A class to serve as a base
@@ -65,22 +63,20 @@ declare abstract class ListItem extends ListItemBase {
     */
     type: `${ListItemType}`;
     /**
-     * An object of strings that defines several additional accessibility attribute values
-     * for customization depending on the use case.
+     * Defines the additional accessibility attributes that will be applied to the component.
+     * The following fields are supported:
      *
-     *  It supports the following fields:
+     * - **ariaSetsize**: Defines the number of items in the current set  when not all items in the set are present in the DOM.
+     * **Note:** The value is an integer reflecting the number of items in the complete set. If the size of the entire set is unknown, set `-1`.
      *
-     * - `ariaSetsize`: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
-     * 	The value of each `aria-setsize` is an integer reflecting number of items in the complete set.
+     * 	- **ariaPosinset**: Defines an element's number or position in the current set when not all items are present in the DOM.
+     * 	**Note:** The value is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
      *
-     * 	**Note:** If the size of the entire set is unknown, set `aria-setsize="-1"`.
-     * 	- `ariaPosinset`: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
-     * 	The value of each `aria-posinset` is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
      * @default {}
      * @public
      * @since 1.15.0
      */
-    accessibilityAttributes: AccessibilityAttributes;
+    accessibilityAttributes: ListItemAccessibilityAttributes;
     /**
      * The navigated state of the list item.
      * If set to `true`, a navigation indicator is displayed at the end of the list item.
@@ -102,16 +98,8 @@ declare abstract class ListItem extends ListItemBase {
     */
     active: boolean;
     /**
-     * Defines the tooltip of the component.
-     * @default ""
-     * @deprecated
-     * @private
-     * @since 1.0.0-rc.15
-     */
-    title: string;
-    /**
      * Defines the highlight state of the list items.
-     * Available options are: `"None"` (by default), `"Success"`, `"Warning"`, `"Information"` and `"Error"`.
+     * Available options are: `"None"` (by default), `"Positive"`, `"Critical"`, `"Information"` and `"Negative"`.
      * @default "None"
      * @public
      * @since 1.24
@@ -125,33 +113,12 @@ declare abstract class ListItem extends ListItemBase {
     /**
      * Used to define the role of the list item.
      * @private
-     * @default "listitem"
-     * @since 1.0.0-rc.9
-     *
-     */
-    role: string;
-    /**
-     * Defines the description for the accessible role of the component.
-     * @protected
-     * @default undefined
-     * @since 1.10.0
-     */
-    accessibleRoleDescription?: string;
-    /**
-     * Used to define the role of the list item.
-     * @private
-     * @default ""
+     * @default "ListItem"
      * @since 1.3.0
      *
      */
-    accessibleRole: string;
-    _mode: `${ListMode}`;
-    /**
-     * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-     * @since 1.10.0
-     * @private
-     */
-    ariaHaspopup?: `${HasPopup}`;
+    accessibleRole: `${ListItemAccessibleRole}`;
+    _selectionMode: `${ListSelectionMode}`;
     /**
      * Defines the delete button, displayed in "Delete" mode.
      * **Note:** While the slot allows custom buttons, to match
@@ -172,7 +139,7 @@ declare abstract class ListItem extends ListItemBase {
     onBeforeRendering(): void;
     onEnterDOM(): void;
     onExitDOM(): void;
-    _onkeydown(e: KeyboardEvent): void;
+    _onkeydown(e: KeyboardEvent): Promise<void>;
     _onkeyup(e: KeyboardEvent): void;
     _onmousedown(e: MouseEvent): void;
     _onmouseup(e: MouseEvent): void;
@@ -191,7 +158,7 @@ declare abstract class ListItem extends ListItemBase {
     get placeSelectionElementBefore(): boolean;
     get placeSelectionElementAfter(): boolean;
     get modeSingleSelect(): boolean;
-    get modeMultiSelect(): boolean;
+    get modeMultiple(): boolean;
     get modeDelete(): boolean;
     /**
      * Used in UploadCollectionItem
@@ -204,6 +171,7 @@ declare abstract class ListItem extends ListItemBase {
     get typeNavigation(): boolean;
     get typeActive(): boolean;
     get _ariaSelected(): boolean | undefined;
+    get listItemAccessibleRole(): string;
     get ariaSelectedText(): string | undefined;
     get deleteText(): string;
     get hasDeleteButtonSlot(): boolean;
@@ -215,4 +183,4 @@ declare abstract class ListItem extends ListItemBase {
     static onDefine(): Promise<void>;
 }
 export default ListItem;
-export type { IAccessibleListItem, SelectionRequestEventDetail, PressEventDetail, AccessibilityAttributes, };
+export type { IAccessibleListItem, SelectionRequestEventDetail, PressEventDetail, ListItemAccessibilityAttributes, };

@@ -4,12 +4,14 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import ListItemBase from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
 import type { SelectionRequestEventDetail, PressEventDetail } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
+import ListItemGroup from "./ListItemGroup.js";
 type ListItemFocusEventDetail = {
     item: ListItemBase;
 };
@@ -53,11 +55,11 @@ type ListItemClickEventDetail = {
  *
  * - `ui5-li`
  * - `ui5-li-custom`
- * - `ui5-li-groupheader`
+ * - `ui5-li-group`
  *
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
- * `SingleSelect`, `MultiSelect` and `Delete`.
+ * `Single`, `Multiple` and `Delete`.
  *
  * Additionally, the `ui5-list` provides header, footer, and customization for the list item separators.
  *
@@ -73,10 +75,10 @@ type ListItemClickEventDetail = {
  * - [End] - Navigates to the last item
  *
  * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
- * when the `mode` property is in use:
+ * when the `selectionMode` property is in use:
  *
- * - [Space] - Select an item (if `type` is 'Active') when `mode` is selection
- * - [Delete] - Delete an item if `mode` property is `Delete`
+ * - [Space] - Select an item (if `type` is 'Active') when `selectionMode` is selection
+ * - [Delete] - Delete an item if `selectionMode` property is `Delete`
  *
  * #### Fast Navigation
  * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
@@ -91,7 +93,7 @@ type ListItemClickEventDetail = {
  *
  * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
  *
- * `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` (for `ui5-li-groupheader`)
+ * `import "@ui5/webcomponents/dist/ListItemGroup.js";` (for `ui5-li-group`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -118,11 +120,11 @@ declare class List extends UI5Element {
      */
     indent: boolean;
     /**
-     * Defines the mode of the component.
+     * Defines the selection mode of the component.
      * @default "None"
      * @public
      */
-    mode: `${ListMode}`;
+    selectionMode: `${ListSelectionMode}`;
     /**
      * Defines the text that is displayed when the component contains no items.
      * @default ""
@@ -163,13 +165,13 @@ declare class List extends UI5Element {
      * @public
      * @since 1.0.0-rc.6
      */
-    busy: boolean;
+    loading: boolean;
     /**
-     * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+     * Defines the delay in milliseconds, after which the loading indicator will show up for this component.
      * @default 1000
      * @public
      */
-    busyDelay: number;
+    loadingDelay: number;
     /**
      * Defines the accessible name of the component.
      * @default ""
@@ -187,17 +189,10 @@ declare class List extends UI5Element {
     /**
      * Defines the accessible role of the component.
      * @public
-     * @default "list"
+     * @default "List"
      * @since 1.0.0-rc.15
      */
-    accessibleRole: string;
-    /**
-     * Defines the description for the accessible role of the component.
-     * @protected
-     * @default undefined
-     * @since 1.10.0
-     */
-    accessibleRoleDescription?: string;
+    accessibleRole: `${ListAccessibleRole}`;
     /**
      * Defines if the entire list is in view port.
      * @private
@@ -211,10 +206,10 @@ declare class List extends UI5Element {
     /**
      * Defines the items of the component.
      *
-     * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-groupheader` for the intended design.
+     * **Note:** Use `ui5-li`, `ui5-li-custom`, and `ui5-li-group` for the intended design.
      * @public
      */
-    items: Array<ListItemBase>;
+    items: Array<ListItemBase | ListItemGroup>;
     /**
      * Defines the component header.
      *
@@ -235,12 +230,25 @@ declare class List extends UI5Element {
     _itemNavigation: ItemNavigation;
     _beforeElement?: HTMLElement | null;
     _afterElement?: HTMLElement | null;
+    onItemFocusedBound: (e: CustomEvent) => void;
+    onForwardAfterBound: (e: CustomEvent) => void;
+    onForwardBeforeBound: (e: CustomEvent) => void;
+    onItemTabIndexChangeBound: (e: CustomEvent) => void;
     static onDefine(): Promise<void>;
     constructor();
+    /**
+     * Returns an array containing the list item instances without the groups in a flat structure.
+     * @default []
+     * @since 2.0.0
+     * @public
+     */
+    get listItems(): ListItemBase[];
     onEnterDOM(): void;
     onExitDOM(): void;
     onBeforeRendering(): void;
     onAfterRendering(): void;
+    attachGroupHeaderEvents(): void;
+    detachGroupHeaderEvents(): void;
     attachForResize(): void;
     get shouldRenderH1(): string | false;
     get headerID(): string;
@@ -251,7 +259,7 @@ declare class List extends UI5Element {
     get showNoDataText(): string | false;
     get isDelete(): boolean;
     get isSingleSelect(): boolean;
-    get isMultiSelect(): boolean;
+    get isMultiple(): boolean;
     get ariaLabelledBy(): string | undefined;
     get ariaLabelTxt(): string | undefined;
     get ariaLabelModeText(): string;
@@ -259,23 +267,24 @@ declare class List extends UI5Element {
     get growsOnScroll(): boolean;
     get growsWithButton(): boolean;
     get _growingButtonText(): string;
-    get busyIndPosition(): "absolute" | "sticky";
+    get loadingIndPosition(): "absolute" | "sticky";
     get styles(): {
-        busyInd: {
+        loadingInd: {
             position: string;
         };
     };
+    get listAccessibleRole(): string;
     get classes(): ClassMap;
     prepareListItems(): void;
     observeListEnd(): Promise<void>;
     unobserveListEnd(): void;
     onInteresection(entries: Array<IntersectionObserverEntry>): void;
     onSelectionRequested(e: CustomEvent<SelectionRequestEventDetail>): void;
-    handleSingleSelect(item: ListItemBase): boolean;
-    handleSingleSelectBegin(item: ListItemBase): boolean;
-    handleSingleSelectEnd(item: ListItemBase): boolean;
-    handleSingleSelectAuto(item: ListItemBase): boolean;
-    handleMultiSelect(item: ListItemBase, selected: boolean): boolean;
+    handleSingle(item: ListItemBase): boolean;
+    handleSingleStart(item: ListItemBase): boolean;
+    handleSingleEnd(item: ListItemBase): boolean;
+    handleSingleAuto(item: ListItemBase): boolean;
+    handleMultiple(item: ListItemBase, selected: boolean): boolean;
     handleDelete(item: ListItemBase): boolean;
     deselectSelectedItems(): void;
     getSelectedItems(): Array<ListItemBase>;

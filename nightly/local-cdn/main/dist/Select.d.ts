@@ -21,8 +21,7 @@ import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
  */
 interface IOption extends UI5Element {
     selected: boolean;
-    disabled: boolean;
-    title: string;
+    tooltip: string;
     icon?: string | null;
     value: string;
     additionalText?: string;
@@ -242,7 +241,7 @@ declare class Select extends UI5Element implements IFormElement {
     _onfocusin(): void;
     _onfocusout(): void;
     get _isPickerOpen(): boolean;
-    _respPopover(): Promise<ResponsivePopover>;
+    _respPopover(): ResponsivePopover;
     /**
      * Defines the value of the component:
      *
@@ -273,8 +272,8 @@ declare class Select extends UI5Element implements IFormElement {
     onMenuChange(e: CustomEvent<SelectMenuChange>): void;
     _toggleSelectMenu(): void;
     onExitDOM(): void;
-    _toggleRespPopover(): Promise<void>;
-    _attachRealDomRefs(): Promise<void>;
+    _toggleRespPopover(): void;
+    _attachRealDomRefs(): void;
     _syncSelection(): void;
     _getSelectMenu(): SelectMenu | undefined;
     attachMenuListeners(menu: HTMLElement): void;
@@ -313,16 +312,16 @@ declare class Select extends UI5Element implements IFormElement {
     get hasCustomLabel(): boolean;
     _fireChangeEvent(selectedOption: IOption): void;
     get valueStateTextMappings(): {
-        Success: string;
+        Positive: string;
         Information: string;
-        Error: string;
-        Warning: string;
+        Negative: string;
+        Critical: string;
     };
     get valueStateTypeMappings(): {
-        Success: string;
+        Positive: string;
         Information: string;
-        Error: string;
-        Warning: string;
+        Negative: string;
+        Critical: string;
     };
     get valueStateText(): string;
     get valueStateDefaultText(): string;
@@ -369,13 +368,12 @@ declare class Select extends UI5Element implements IFormElement {
     get shouldOpenValueStateMessagePopover(): boolean;
     get _ariaRoleDescription(): string;
     get _isPhone(): boolean;
-    get _filteredItems(): IOption[];
     itemSelectionAnnounce(): void;
-    openValueStatePopover(): Promise<void>;
+    openValueStatePopover(): void;
     closeValueStatePopover(): void;
     toggleValueStatePopover(open: boolean): void;
     get selectedOptionIcon(): string | null | undefined;
-    _getPopover(): Promise<Popover | null>;
+    _getPopover(): Popover | null;
     static onDefine(): Promise<void>;
 }
 export default Select;

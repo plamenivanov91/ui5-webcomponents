@@ -27,6 +27,7 @@ import { NOTIFICATION_LIST_GROUP_ITEM_TXT, NOTIFICATION_LIST_GROUP_ITEM_COUNTER_
 import NotificationListGroupItemTemplate from "./generated/templates/NotificationListGroupItemTemplate.lit.js";
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
+import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 /**
  * @class
  *
@@ -150,7 +151,10 @@ NotificationListGroupItem = NotificationListGroupItem_1 = __decorate([
     customElement({
         tag: "ui5-li-notification-group",
         languageAware: true,
-        styles: NotificationListGroupItemCss,
+        styles: [
+            NotificationListGroupItemCss,
+            NotificationOverflowActionsPopoverCss,
+        ],
         template: NotificationListGroupItemTemplate,
         dependencies: [
             List,

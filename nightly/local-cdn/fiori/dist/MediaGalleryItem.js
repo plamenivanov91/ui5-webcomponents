@@ -140,12 +140,6 @@ let MediaGalleryItem = class MediaGalleryItem extends UI5Element {
             this._fireItemClick();
         }
     }
-    _onfocusout() {
-        this.focused = false;
-    }
-    _onfocusin() {
-        this.focused = true;
-    }
     _fireItemClick() {
         this.fireEvent("click", { item: this });
     }
@@ -174,9 +168,6 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], MediaGalleryItem.prototype, "_thumbnailDesign", void 0);
-__decorate([
-    property({ type: Boolean })
-], MediaGalleryItem.prototype, "focused", void 0);
 __decorate([
     property()
 ], MediaGalleryItem.prototype, "forcedTabIndex", void 0);

@@ -67,10 +67,6 @@ declare class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
     /**
      * @private
      */
-    focused: boolean;
-    /**
-     * @private
-     */
     forcedTabIndex: string;
     /**
      * @private
@@ -111,8 +107,6 @@ declare class MediaGalleryItem extends UI5Element implements IMediaGalleryItem {
     _updateThumbnailLoaded(image: HTMLImageElement): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
-    _onfocusout(): void;
-    _onfocusin(): void;
     _fireItemClick(): void;
 }
 export default MediaGalleryItem;

@@ -151,6 +151,9 @@ let SideNavigationItem = class SideNavigationItem extends SideNavigationSelectab
         }
         return this.selected;
     }
+    get isSideNavigationItem() {
+        return true;
+    }
 };
 __decorate([
     property({ type: Boolean })
@@ -176,5 +179,9 @@ SideNavigationItem = __decorate([
     })
 ], SideNavigationItem);
 SideNavigationItem.define();
+const isInstanceOfSideNavigationItem = (object) => {
+    return "isSideNavigationItem" in object;
+};
 export default SideNavigationItem;
+export { isInstanceOfSideNavigationItem };
 //# sourceMappingURL=SideNavigationItem.js.map

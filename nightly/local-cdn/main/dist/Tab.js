@@ -52,14 +52,14 @@ const DESIGN_DESCRIPTIONS = {
  */
 let Tab = Tab_1 = class Tab extends UI5Element {
     set forcedTabIndex(val) {
-        this.getTabInStripDomRef().setAttribute("tabindex", val);
+        this.getDomRefInStrip().setAttribute("tabindex", val);
     }
     get forcedTabIndex() {
-        return this.getTabInStripDomRef().getAttribute("tabindex");
+        return this.getDomRefInStrip().getAttribute("tabindex");
     }
     get displayText() {
         let text = this.text;
-        if (this.isInline && this.additionalText) {
+        if (this._isInline && this.additionalText) {
             text += ` (${this.additionalText})`;
         }
         return text;
@@ -77,13 +77,13 @@ let Tab = Tab_1 = class Tab extends UI5Element {
         return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
     }
     get requiresExpandButton() {
-        return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+        return this.items.length > 0 && this._isTopLevelTab && this.hasOwnContent;
     }
     get isSingleClickArea() {
-        return this.subTabs.length > 0 && this.isTopLevelTab && !this.hasOwnContent;
+        return this.items.length > 0 && this._isTopLevelTab && !this.hasOwnContent;
     }
     get isTwoClickArea() {
-        return this.subTabs.length > 0 && this.isTopLevelTab && this.hasOwnContent;
+        return this.items.length > 0 && this._isTopLevelTab && this.hasOwnContent;
     }
     get isOnSelectedTabPath() {
         return this._selectedTabReference === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
@@ -97,25 +97,39 @@ let Tab = Tab_1 = class Tab extends UI5Element {
     get hasOwnContent() {
         return willShowContent(this.content);
     }
+    get expandBtnAccessibilityAttributes() {
+        return {
+            hasPopup: "menu",
+        };
+    }
+    receiveStripInfo({ getElementInStrip, posinset, setsize, isInline, isTopLevelTab, mixedMode, }) {
+        this._getElementInStrip = getElementInStrip;
+        this._forcedPosinset = posinset;
+        this._forcedSetsize = setsize;
+        this._forcedMixedMode = mixedMode;
+        this._isInline = isInline;
+        this._isTopLevelTab = !!isTopLevelTab;
+    }
+    receiveOverflowInfo({ getElementInOverflow, style }) {
+        this._getElementInOverflow = getElementInOverflow;
+        this._forcedStyleInOverflow = style;
+    }
     /**
      * Returns the DOM reference of the tab that is placed in the header.
      *
-     * **Note:** Tabs, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs will return `null`.
+     * **Note:** Tabs, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such tabs will return `undefined`.
      *
      * **Note:** If you need a DOM ref to the tab content please use the `getDomRef` method.
      * @public
      * @since 1.0.0-rc.16
      */
-    getTabInStripDomRef() {
-        if (this.getElementInStrip) {
-            return this.getElementInStrip();
-        }
-        return null;
+    getDomRefInStrip() {
+        return this._getElementInStrip?.();
     }
     getFocusDomRef() {
-        let focusedDomRef = super.getFocusDomRef();
-        if (this.getElementInStrip && this.getElementInStrip()) {
-            focusedDomRef = this.getElementInStrip();
+        let focusedDomRef = this._getElementInOverflow?.();
+        if (!focusedDomRef) {
+            focusedDomRef = this._getElementInStrip?.();
         }
         return focusedDomRef;
     }
@@ -124,10 +138,10 @@ let Tab = Tab_1 = class Tab extends UI5Element {
         return super.focus(focusOptions);
     }
     get isMixedModeTab() {
-        return !this.icon && this.forcedMixedMode;
+        return !this.icon && this._forcedMixedMode;
     }
     get isTextOnlyTab() {
-        return !this.icon && !this.forcedMixedMode;
+        return !this.icon && !this._forcedMixedMode;
     }
     get isIconTab() {
         return !!this.icon;
@@ -137,13 +151,13 @@ let Tab = Tab_1 = class Tab extends UI5Element {
     }
     get effectiveSelected() {
         const subItemSelected = this.tabs.some(elem => elem.effectiveSelected);
-        return this.selected || this.forcedSelected || subItemSelected;
+        return this.selected || this._selectedTabReference === this || subItemSelected;
     }
     get effectiveHidden() {
         return !this.effectiveSelected;
     }
     get tabs() {
-        return this.subTabs.filter((tab) => !tab.isSeparator);
+        return this.items.filter((tab) => !tab.isSeparator);
     }
     get ariaLabelledBy() {
         const labels = [];
@@ -169,19 +183,19 @@ let Tab = Tab_1 = class Tab extends UI5Element {
         if (this.disabled) {
             classes.push("ui5-tab-strip-item--disabled");
         }
-        if (this.isInline) {
+        if (this._isInline) {
             classes.push("ui5-tab-strip-item--inline");
         }
         if (this.additionalText) {
             classes.push("ui5-tab-strip-item--withAdditionalText");
         }
-        if (!this.icon && !this.forcedMixedMode) {
+        if (!this.icon && !this._forcedMixedMode) {
             classes.push("ui5-tab-strip-item--textOnly");
         }
         if (this.icon) {
             classes.push("ui5-tab-strip-item--withIcon");
         }
-        if (!this.icon && this.forcedMixedMode) {
+        if (!this.icon && this._forcedMixedMode) {
             classes.push("ui5-tab-strip-item--mixedMode");
         }
         if (this.design !== SemanticColor.Default) {
@@ -212,7 +226,7 @@ let Tab = Tab_1 = class Tab extends UI5Element {
         return Tab_1.i18nBundle.getText(TABCONTAINER_END_OVERFLOW);
     }
     get _roleDescription() {
-        return this.subTabs.length > 0 ? Tab_1.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
+        return this.items.length > 0 ? Tab_1.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
     }
     get _ariaHasPopup() {
         return this.isSingleClickArea ? "menu" : undefined;
@@ -301,13 +315,7 @@ __decorate([
 ], Tab.prototype, "movable", void 0);
 __decorate([
     property({ type: Boolean })
-], Tab.prototype, "forcedSelected", void 0);
-__decorate([
-    property({ type: Object, defaultValue: null })
-], Tab.prototype, "realTabReference", void 0);
-__decorate([
-    property({ type: Boolean })
-], Tab.prototype, "isTopLevelTab", void 0);
+], Tab.prototype, "_isTopLevelTab", void 0);
 __decorate([
     property({ type: Object, defaultValue: null })
 ], Tab.prototype, "_selectedTabReference", void 0);
@@ -330,7 +338,7 @@ __decorate([
             slots: false,
         },
     })
-], Tab.prototype, "subTabs", void 0);
+], Tab.prototype, "items", void 0);
 Tab = Tab_1 = __decorate([
     customElement({
         tag: "ui5-tab",
@@ -348,6 +356,6 @@ Tab = Tab_1 = __decorate([
 Tab.define();
 TabContainer.registerTabStyles(stripCss);
 TabContainer.registerTabStyles(draggableElementStyles);
-TabContainer.registerStaticAreaTabStyles(overflowCss);
+TabContainer.registerTabStyles(overflowCss);
 export default Tab;
 //# sourceMappingURL=Tab.js.map

@@ -20,9 +20,9 @@ interface ICalendarPicker {
     _firstYear?: number;
     _lastYear?: number;
 }
-type CalendarSelectedDatesChangeEventDetail = {
-    values: Array<string>;
-    dates: Array<number>;
+type CalendarSelectionChangeEventDetail = {
+    selectedValues: Array<string>;
+    selectedDates: Array<number>;
     timestamp: number | undefined;
 };
 type SpecialCalendarDateT = {
@@ -41,7 +41,7 @@ type SpecialCalendarDateT = {
  * date string, correctly formatted according to the `ui5-calendar`'s `formatPattern` property.
  * Whenever the user changes the date selection, `ui5-calendar` will automatically create/remove instances
  * of `ui5-date` in itself, unless you prevent this behavior by calling `preventDefault()` for the
- * `selected-dates-change` event. This is useful if you want to control the selected dates externally.
+ * `selection-change` event. This is useful if you want to control the selected dates externally.
  *
  * ### Usage
  *
@@ -255,4 +255,4 @@ declare class Calendar extends CalendarPart {
     set selectedDates(selectedDates: Array<number>);
 }
 export default Calendar;
-export type { ICalendarPicker, CalendarSelectedDatesChangeEventDetail, SpecialCalendarDateT, };
+export type { ICalendarPicker, CalendarSelectionChangeEventDetail, SpecialCalendarDateT, };

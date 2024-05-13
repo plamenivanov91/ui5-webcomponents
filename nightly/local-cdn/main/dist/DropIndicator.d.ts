@@ -53,6 +53,5 @@ declare class DropIndicator extends UI5Element {
             "ui5-di-needle": boolean;
         };
     };
-    get _needle(): HTMLElement | null;
 }
 export default DropIndicator;

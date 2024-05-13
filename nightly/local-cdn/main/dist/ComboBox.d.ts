@@ -21,12 +21,13 @@ import { InputEventDetail } from "./Input.js";
  * Interface for components that may be slotted inside a `ui5-combobox`
  * @public
  */
-interface IComboBoxItem {
+interface IComboBoxItem extends UI5Element {
     text: string;
     focused: boolean;
     isGroupItem: boolean;
     selected?: boolean;
     additionalText?: string;
+    stableDomRef: string;
 }
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
@@ -216,7 +217,7 @@ declare class ComboBox extends UI5Element {
     FormSupport?: typeof FormSupportT;
     static i18nBundle: I18nBundle;
     constructor();
-    onBeforeRendering(): void;
+    onBeforeRendering(): Promise<void>;
     get iconsCount(): number;
     onAfterRendering(): Promise<void>;
     shouldClosePopover(): Promise<boolean>;
@@ -304,6 +305,7 @@ declare class ComboBox extends UI5Element {
             "min-width": string;
             "max-width": string;
         };
+        popoverValueStateMessage: {};
     };
     get classes(): {
         popover: {

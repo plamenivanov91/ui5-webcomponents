@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
 /**
  * @class
  * The `ui5-suggestion-group-item` is type of suggestion item,
@@ -35,7 +35,7 @@ __decorate([
 SuggestionGroupItem = __decorate([
     customElement({
         tag: "ui5-suggestion-group-item",
-        dependencies: [GroupHeaderListItem],
+        dependencies: [ListItemGroupHeader],
     })
 ], SuggestionGroupItem);
 SuggestionGroupItem.define();

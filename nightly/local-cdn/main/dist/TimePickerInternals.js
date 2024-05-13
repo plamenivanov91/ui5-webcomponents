@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var TimePickerInternals_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -17,6 +18,7 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; //
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import "./SegmentedButton.js";
 import { getHoursConfigByFormat, getTimeControlsByFormat, } from "./timepicker-utils/TimeSlider.js";
 import { TIMEPICKER_HOURS_LABEL, TIMEPICKER_MINUTES_LABEL, TIMEPICKER_SECONDS_LABEL, TIMEPICKER_CLOCK_DIAL_LABEL, } from "./generated/i18n/i18n-defaults.js";
@@ -72,10 +74,10 @@ let TimePickerInternals = TimePickerInternals_1 = class TimePickerInternals exte
         return this._neededComponents[3];
     }
     get dateValue() {
-        return this.value ? this.getFormat().parse(this.value, undefined, undefined) : new Date();
+        return this.value ? this.getFormat().parse(this.value, undefined, undefined) : UI5Date.getInstance();
     }
     get validDateValue() {
-        return this.value !== undefined && this.isValid(this.value) ? this.dateValue : new Date();
+        return this.value !== undefined && this.isValid(this.value) ? this.dateValue : UI5Date.getInstance();
     }
     get periodsArray() {
         // @ts-ignore aDayPeriodsAbbrev is a private API of DateFormat
@@ -239,7 +241,7 @@ let TimePickerInternals = TimePickerInternals_1 = class TimePickerInternals exte
             this.periodsArray.forEach(item => {
                 this._periods.push({
                     "label": item,
-                    "pressed": this._period === item,
+                    "selected": this._period === item,
                 });
             });
         }
@@ -343,7 +345,7 @@ __decorate([
 ], TimePickerInternals.prototype, "_keyboardBuffer", void 0);
 TimePickerInternals = TimePickerInternals_1 = __decorate([
     customElement({
-        tag: "ui5-time-picker-internals",
+        renderer: litRender,
     })
     /**
      * Fired when the value changes due to user interaction with the sliders.
@@ -356,6 +358,5 @@ TimePickerInternals = TimePickerInternals_1 = __decorate([
         },
     })
 ], TimePickerInternals);
-TimePickerInternals.define();
 export default TimePickerInternals;
 //# sourceMappingURL=TimePickerInternals.js.map

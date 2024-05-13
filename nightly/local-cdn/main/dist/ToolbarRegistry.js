@@ -12,11 +12,8 @@ const getRegisteredToolbarItem = (name) => {
 const getRegisteredStyles = () => {
     return [...registry.values()].map((ElementClass) => ElementClass.styles);
 };
-const getRegisteredStaticAreaStyles = () => {
-    return [...registry.values()].map((ElementClass) => ElementClass.staticAreaStyles);
-};
 const getRegisteredDependencies = () => {
     return [...registry.values()].map((ElementClass) => ElementClass.dependencies).flat();
 };
-export { registerToolbarItem, getRegisteredToolbarItem, getRegisteredStyles, getRegisteredStaticAreaStyles, getRegisteredDependencies, };
+export { registerToolbarItem, getRegisteredToolbarItem, getRegisteredStyles, getRegisteredDependencies, };
 //# sourceMappingURL=ToolbarRegistry.js.map

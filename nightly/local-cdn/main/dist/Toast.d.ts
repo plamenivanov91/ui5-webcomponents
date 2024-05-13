@@ -54,7 +54,9 @@ declare class Toast extends UI5Element {
     placement: `${ToastPlacement}`;
     /**
      * Indicates whether the component is open (visible).
-     * @private
+     * @default false
+     * @public
+     * @since 2.0.0
      */
     open: boolean;
     /**
@@ -79,15 +81,14 @@ declare class Toast extends UI5Element {
      * @private
      */
     focused: boolean;
-    _reopen: boolean;
+    _onfocusinFn: () => void;
+    _onfocusoutFn: () => void;
+    _onkeydownFn: (e: KeyboardEvent) => void;
+    _onmouseoverFn: () => void;
+    _onmouseleaveFn: () => void;
+    _ontransitionendFn: () => void;
     constructor();
     onBeforeRendering(): void;
-    onAfterRendering(): void;
-    /**
-     * Shows the component.
-     * @public
-     */
-    show(): void;
     _onfocusin(): void;
     _onfocusout(): void;
     /**
@@ -102,5 +103,7 @@ declare class Toast extends UI5Element {
     _onmouseleave(): void;
     _onkeydown(e: KeyboardEvent): void;
     get _tabindex(): "0" | "-1";
+    onEnterDOM(): void;
+    onExitDOM(): void;
 }
 export default Toast;

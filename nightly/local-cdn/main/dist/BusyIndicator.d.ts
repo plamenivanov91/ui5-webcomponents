@@ -51,7 +51,7 @@ declare class BusyIndicator extends UI5Element {
     text: string;
     /**
      * Defines the size of the component.
-     * @default "Medium"
+     * @default "M"
      * @public
      */
     size: `${BusyIndicatorSize}`;

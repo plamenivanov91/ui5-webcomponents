@@ -16,7 +16,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
-import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
+import ListItemGroup from "@ui5/webcomponents/dist/ListItemGroup.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -262,11 +262,11 @@ let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends
             this._restoreSettings(this._confirmedSettings);
         }
         this.fireEvent("before-open", {}, true, false);
-        this._dialog.show(true);
+        this._dialog.open = true;
         this._dialog.querySelector("[ui5-list]")?.focusFirstItem();
     }
     _handleModeChange(e) {
-        const mode = e.detail.selectedItem.getAttribute("mode");
+        const mode = e.detail.selectedItems[0].getAttribute("mode");
         this._currentMode = ViewSettingsDialogMode[mode];
     }
     _handleFilterValueItemClick(e) {
@@ -297,7 +297,9 @@ let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends
      * Closes the dialog.
      */
     close() {
-        this._dialog && this._dialog.close();
+        if (this._dialog) {
+            this._dialog.open = false;
+        }
     }
     /**
      * Sets focus on recently used control within the dialog.
@@ -417,7 +419,7 @@ let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends
      * @public
      */
     setConfirmedSettings(settings) {
-        if (settings && this._dialog && !this._dialog.isOpen()) {
+        if (settings && this._dialog && !this._dialog.open) {
             const tempSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
             if (settings.sortOrder) {
                 for (let i = 0; i < tempSettings.sortOrder.length; i++) {
@@ -499,7 +501,7 @@ ViewSettingsDialog = ViewSettingsDialog_1 = __decorate([
             Label,
             List,
             StandardListItem,
-            GroupHeaderListItem,
+            ListItemGroup,
             SegmentedButton,
             SegmentedButtonItem,
         ],

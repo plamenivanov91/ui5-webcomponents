@@ -47,6 +47,7 @@ declare const testAssets: {
     detachThemeLoaded: (listener: (theme: string) => void) => void;
     getIconNames: () => Promise<string[]>;
     getIconAccessibleName: (name: string) => Promise<string | undefined>;
+    getAcceptIconPathData: () => Promise<string>;
     renderFinished: () => Promise<void>;
     defaultTexts: typeof defaultTexts;
     getExportedIconsValues: () => ("accept" | "SAP-icons-v4/accept" | "SAP-icons-v5/accept" | "tnt/actor" | "tnt-v2/actor" | "tnt-v3/actor" | "business-suite/3d" | "business-suite-v1/3d" | "business-suite-v2/3d")[];

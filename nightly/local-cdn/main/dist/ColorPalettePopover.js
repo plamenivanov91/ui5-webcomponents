@@ -61,29 +61,6 @@ let ColorPalettePopover = ColorPalettePopover_1 = class ColorPalettePopover exte
     get respPopover() {
         return this.shadowRoot.querySelector("[ui5-responsive-popover]");
     }
-    /**
-     * Shows the ColorPalettePopover.
-     * @param opener the element that the popover is shown at
-     * @public
-     * @deprecated The method is deprecated in favour of `open` and `opener` properties.
-     * @since 1.1.1
-     */
-    showAt(opener) {
-        console.warn("The method 'showAt' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
-        this.open = true;
-        this.opener = opener;
-    }
-    /**
-     * Shows the ColorPalettePopover.
-     * @param opener the element that the popover is shown at
-     * @public
-     * @since 1.0.0-rc.16
-     * @deprecated The method is deprecated in favour of `open` and `opener` properties.
-     */
-    openPopover(opener) {
-        console.warn("The method 'openPopover' is deprecated and will be removed in future, use 'open' and 'opener' props instead."); // eslint-disable-line
-        this.showAt(opener);
-    }
     closePopover() {
         this.open = false;
     }

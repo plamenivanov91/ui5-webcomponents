@@ -4,13 +4,12 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import List from "../List.js";
-import ResponsivePopover from "../ResponsivePopover.js";
+import "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
 import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
 import Icon from "../Icon.js";
-import Popover from "../Popover.js";
-import GroupHeaderListItem from "../GroupHeaderListItem.js";
+import ListItemGroupHeader from "../ListItemGroupHeader.js";
 import SuggestionListItem from "../SuggestionListItem.js";
 import { LIST_ITEM_POSITION, LIST_ITEM_GROUP_HEADER, } from "../generated/i18n/i18n-defaults.js";
 /**
@@ -32,7 +31,6 @@ class Suggestions {
         this.fnOnSuggestionItemPress = this.onItemPress.bind(this);
         this.fnOnSuggestionItemMouseOver = this.onItemMouseOver.bind(this);
         this.fnOnSuggestionItemMouseOut = this.onItemMouseOut.bind(this);
-        this._getSuggestionPopover();
         // An integer value to store the currently selected item position,
         // that changes due to user interaction.
         this.selectedItemIndex = -1;
@@ -145,20 +143,19 @@ class Suggestions {
             this.close(options.preventFocusRestore);
         }
     }
-    async _isScrollable() {
-        const sc = await this._getScrollContainer();
+    _isScrollable() {
+        const sc = this._getScrollContainer();
         return sc.offsetHeight < sc.scrollHeight;
     }
     open() {
         this._getComponent().open = true;
-        this._beforeOpen();
-        this.responsivePopover.showAt(this._getComponent());
     }
-    async close(preventFocusRestore = false) {
+    close(preventFocusRestore = false) {
         const selectedItem = this._getItems() && this._getItems()[this.selectedItemIndex];
         this._getComponent().open = false;
-        this.responsivePopover = await this._getSuggestionPopover();
-        this.responsivePopover.close(false, false, preventFocusRestore);
+        const picker = this._getPicker();
+        picker.preventFocusRestore = preventFocusRestore;
+        picker.open = false;
         if (selectedItem && selectedItem.focused) {
             selectedItem.focused = false;
         }
@@ -191,13 +188,13 @@ class Suggestions {
         if (item.type === "Inactive" || item.groupItem) {
             return;
         }
-        this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], keyboardUsed);
+        this._getComponent().onItemSelected(this._getRealItems()[this.selectedItemIndex], item, keyboardUsed);
         item.selected = false;
         item.focused = false;
         this._getComponent().open = false;
     }
-    onItemPreviewed(item) {
-        this._getComponent().onItemPreviewed(item);
+    onItemSelect(item) {
+        this._getComponent().onItemSelect(item);
     }
     /* Private methods */
     // Note: Split into two separate handlers
@@ -218,34 +215,6 @@ class Suggestions {
         }
         this.onItemSelected(pressedItem, false /* keyboardUsed */);
     }
-    _beforeOpen() {
-        this._attachItemsListeners();
-        this._attachPopupListeners();
-    }
-    async _attachItemsListeners() {
-        const list = await this._getList();
-        list.removeEventListener("ui5-item-click", this.fnOnSuggestionItemPress);
-        list.addEventListener("ui5-item-click", this.fnOnSuggestionItemPress);
-        list.removeEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
-        list.addEventListener("ui5-selection-change", this.fnOnSuggestionItemPress);
-        list.removeEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
-        list.addEventListener("mouseover", this.fnOnSuggestionItemMouseOver);
-        list.removeEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
-        list.addEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
-    }
-    _attachPopupListeners() {
-        if (!this.handleFocus) {
-            return;
-        }
-        if (!this.attachedAfterOpened) {
-            this.responsivePopover.addEventListener("ui5-after-open", this._onOpen.bind(this));
-            this.attachedAfterOpened = true;
-        }
-        if (!this.attachedAfterClose) {
-            this.responsivePopover.addEventListener("ui5-after-close", this._onClose.bind(this));
-            this.attachedAfterClose = true;
-        }
-    }
     _onOpen() {
         this._applyFocus();
     }
@@ -254,7 +223,7 @@ class Suggestions {
     }
     _applyFocus() {
         if (this.selectedItemIndex) {
-            this._getItems()[this.selectedItemIndex].focus();
+            this._getItems()[this.selectedItemIndex]?.focus();
         }
     }
     _isItemOnTarget() {
@@ -268,7 +237,7 @@ class Suggestions {
         return (items[this.selectedItemIndex].groupItem || items[this.selectedItemIndex].type === "Inactive");
     }
     isOpened() {
-        return !!(this.responsivePopover && this.responsivePopover.opened);
+        return !!(this._getPicker()?.open);
     }
     _handleItemNavigation(forward) {
         if (!this._getItems().length) {
@@ -359,7 +328,7 @@ class Suggestions {
             }
         }
         this.component.hasSuggestionItemSelected = true;
-        this.onItemPreviewed(currentItem);
+        this.onItemSelect(currentItem);
         if (!this._isItemIntoView(currentItem)) {
             this._scrollItemIntoView(currentItem);
         }
@@ -383,20 +352,19 @@ class Suggestions {
         const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
         return (rectItem.top + Suggestions.SCROLL_STEP <= windowHeight) && (rectItem.top >= rectInput.top);
     }
-    async _scrollItemIntoView(item) {
+    _scrollItemIntoView(item) {
         const pos = item.getDomRef().offsetTop;
-        const scrollContainer = await this._getScrollContainer();
+        const scrollContainer = this._getScrollContainer();
         scrollContainer.scrollTop = pos;
     }
-    async _getScrollContainer() {
+    _getScrollContainer() {
         if (!this._scrollContainer) {
-            await this._getSuggestionPopover();
-            this._scrollContainer = this.responsivePopover.shadowRoot.querySelector(".ui5-popup-content");
+            this._scrollContainer = this._getPicker().shadowRoot.querySelector(".ui5-popup-content");
         }
         return this._scrollContainer;
     }
     _getItems() {
-        return this.responsivePopover ? [...this.responsivePopover.querySelector("[ui5-list]").children] : [];
+        return [...this._getList().items] || [];
     }
     _getNonGroupItems() {
         return this._getItems().filter(item => !item.groupItem);
@@ -404,24 +372,17 @@ class Suggestions {
     _getComponent() {
         return this.component;
     }
-    async _getList() {
-        this.responsivePopover = await this._getSuggestionPopover();
-        return this.responsivePopover.querySelector("[ui5-list]");
+    _getList() {
+        return this._getPicker().querySelector("[ui5-list]");
     }
-    async _getListWidth() {
-        const list = await this._getList();
-        return list.offsetWidth;
+    _getListWidth() {
+        return this._getList()?.offsetWidth;
     }
     _getRealItems() {
         return this._getComponent().getSlottedNodes(this.slotName);
     }
-    async _getSuggestionPopover() {
-        if (this.responsivePopover) {
-            return this.responsivePopover;
-        }
-        const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-        this.responsivePopover = staticAreaItem.querySelector("[ui5-responsive-popover]");
-        return this.responsivePopover;
+    _getPicker() {
+        return this._getComponent().shadowRoot.querySelector("[ui5-responsive-popover]");
     }
     get itemSelectionAnnounce() {
         if (!this.accInfo) {
@@ -473,13 +434,11 @@ class Suggestions {
         return [
             SuggestionItem,
             SuggestionGroupItem,
-            ResponsivePopover,
             List,
             SuggestionListItem,
-            GroupHeaderListItem,
+            ListItemGroupHeader,
             Button,
             Icon,
-            Popover,
         ];
     }
     static async init() {

@@ -82,22 +82,6 @@ declare class ColorPalettePopover extends UI5Element {
     constructor();
     get responsivePopover(): ResponsivePopover;
     get respPopover(): ResponsivePopover;
-    /**
-     * Shows the ColorPalettePopover.
-     * @param opener the element that the popover is shown at
-     * @public
-     * @deprecated The method is deprecated in favour of `open` and `opener` properties.
-     * @since 1.1.1
-     */
-    showAt(opener: HTMLElement): void;
-    /**
-     * Shows the ColorPalettePopover.
-     * @param opener the element that the popover is shown at
-     * @public
-     * @since 1.0.0-rc.16
-     * @deprecated The method is deprecated in favour of `open` and `opener` properties.
-     */
-    openPopover(opener: HTMLElement): void;
     closePopover(): void;
     onAfterClose(): void;
     onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>): void;

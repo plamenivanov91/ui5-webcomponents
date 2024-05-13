@@ -18,16 +18,15 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL, } from "./generated/i18n/i18n-defaults.js";
 import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
-import ToolbarPopoverTemplate from "./generated/templates/ToolbarPopoverTemplate.lit.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 import ToolbarAlign from "./types/ToolbarAlign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
-import HasPopup from "./types/HasPopup.js";
 import "./ToolbarItem.js";
-import { getRegisteredToolbarItem, getRegisteredStyles, getRegisteredStaticAreaStyles, getRegisteredDependencies, } from "./ToolbarRegistry.js";
+import { getRegisteredToolbarItem, getRegisteredStyles, getRegisteredDependencies, } from "./ToolbarRegistry.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
 function calculateCSSREMValue(styleSet, propertyName) {
@@ -62,12 +61,6 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
         const styles = getRegisteredStyles();
         return [
             ToolbarCss,
-            ...styles,
-        ];
-    }
-    static get staticAreaStyles() {
-        const styles = getRegisteredStaticAreaStyles();
-        return [
             ToolbarPopoverCss,
             ...styles,
         ];
@@ -170,7 +163,7 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
                 tooltip: Toolbar_1.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
                 accessibilityAttributes: {
                     expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
-                    hasPopup: HasPopup.Menu.toLowerCase(),
+                    hasPopup: AriaHasPopup.Menu.toLowerCase(),
                 },
             },
         };
@@ -217,18 +210,19 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
      * Returns if the overflow popup is open.
      * @public
      */
-    async isOverflowOpen() {
-        const overflowPopover = await this.getOverflowPopover();
-        return overflowPopover.isOpen();
+    isOverflowOpen() {
+        const overflowPopover = this.getOverflowPopover();
+        return overflowPopover.open;
     }
-    async openOverflow() {
-        const overflowPopover = await this.getOverflowPopover();
-        overflowPopover.showAt(this.overflowButtonDOM);
-        this.reverseOverflow = overflowPopover.actualPlacementType === "Top";
+    openOverflow() {
+        const overflowPopover = this.getOverflowPopover();
+        overflowPopover.opener = this.overflowButtonDOM;
+        overflowPopover.open = true;
+        this.reverseOverflow = overflowPopover.actualPlacement === "Top";
     }
-    async closeOverflow() {
-        const overflowPopover = await this.getOverflowPopover();
-        overflowPopover.close();
+    closeOverflow() {
+        const overflowPopover = this.getOverflowPopover();
+        overflowPopover.open = false;
     }
     toggleOverflow() {
         if (this.popoverOpen) {
@@ -238,9 +232,8 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
             this.openOverflow();
         }
     }
-    async getOverflowPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector(".ui5-overflow-popover");
+    getOverflowPopover() {
+        return this.shadowRoot.querySelector(".ui5-overflow-popover");
     }
     /**
      * Layout management
@@ -351,9 +344,10 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
         const refItemId = target.getAttribute("data-ui5-external-action-item-id");
         if (refItemId) {
             const abstractItem = this.getItemByID(refItemId);
-            const eventType = e.type.replace("ui5-", "");
-            const prevented = !abstractItem?.fireEvent(eventType, e.detail, true);
-            const eventOptions = abstractItem?.subscribedEvents.get(eventType);
+            const eventType = e.type;
+            const eventTypeNonPrefixed = e.type.replace("ui5-", "");
+            const prevented = !abstractItem?.fireEvent(eventTypeNonPrefixed, e.detail, true);
+            const eventOptions = abstractItem?.subscribedEvents.get(eventType) || abstractItem?.subscribedEvents.get(eventTypeNonPrefixed);
             if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
                 return;
             }
@@ -363,15 +357,15 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
     /**
      * Private members
      */
-    async attachListeners() {
-        const popover = await this.getOverflowPopover();
+    attachListeners() {
+        const popover = this.getOverflowPopover();
         this.subscribedEvents.forEach((e) => {
             this.itemsDOM?.addEventListener(e, this._onInteract);
             popover?.addEventListener(e, this._onInteract);
         });
     }
-    async detachListeners() {
-        const popover = await this.getOverflowPopover();
+    detachListeners() {
+        const popover = this.getOverflowPopover();
         this.subscribedEvents.forEach((e) => {
             this.itemsDOM?.removeEventListener(e, this._onInteract);
             popover?.removeEventListener(e, this._onInteract);
@@ -451,7 +445,6 @@ Toolbar = Toolbar_1 = __decorate([
         languageAware: true,
         renderer: litRender,
         template: ToolbarTemplate,
-        staticAreaTemplate: ToolbarPopoverTemplate,
     })
 ], Toolbar);
 Toolbar.define();

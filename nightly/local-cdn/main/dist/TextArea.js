@@ -21,12 +21,12 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
+import "./types/PopoverHorizontalAlign.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
-import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 import { VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import styles from "./generated/themes/TextArea.css.js";
@@ -37,7 +37,7 @@ import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
  *
  * ### Overview
  *
- * The `ui5-textarea` component is used to enter multiple lines of text.
+ * The `ui5-textarea` component is used to enter multiple rows of text.
  *
  * When empty, it can hold a placeholder similar to a `ui5-input`.
  * You can define the rows of the `ui5-textarea` and also determine specific behavior when handling long texts.
@@ -154,7 +154,7 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
     }
     _setCSSParams() {
         this.style.setProperty("--_textarea_rows", this.rows ? String(this.rows) : "2");
-        this.style.setProperty("--_textarea_growing_max_lines", String(this.growingMaxLines));
+        this.style.setProperty("--_textarea_growing_max_rows", String(this.growingMaxRows));
     }
     toggleValueStateMessage(toggle) {
         if (toggle) {
@@ -164,17 +164,21 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
             this.closePopover();
         }
     }
-    async openPopover() {
-        this.valueStatePopover = await this._getPopover();
-        this.valueStatePopover && await this.valueStatePopover.showAt(this.shadowRoot.querySelector(".ui5-textarea-root .ui5-textarea-wrapper"));
+    openPopover() {
+        this.valueStatePopover = this._getPopover();
+        if (this.valueStatePopover) {
+            this.valueStatePopover.opener = this.shadowRoot.querySelector(".ui5-textarea-root .ui5-textarea-wrapper");
+            this.valueStatePopover.open = true;
+        }
     }
-    async closePopover() {
-        this.valueStatePopover = await this._getPopover();
-        this.valueStatePopover && this.valueStatePopover.close();
+    closePopover() {
+        this.valueStatePopover = this._getPopover();
+        if (this.valueStatePopover) {
+            this.valueStatePopover.open = false;
+        }
     }
-    async _getPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector("[ui5-popover]");
+    _getPopover() {
+        return this.shadowRoot.querySelector("[ui5-popover]");
     }
     _tokenizeText(value) {
         const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "<")
@@ -222,8 +226,8 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
             },
             valueStateMsg: {
                 "ui5-valuestatemessage-header": true,
-                "ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-                "ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+                "ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+                "ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
                 "ui5-valuestatemessage--information": this.valueState === ValueState.Information,
             },
         };
@@ -270,7 +274,7 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
         return "";
     }
     get ariaInvalid() {
-        return this.valueState === "Error" ? "true" : null;
+        return this.valueState === ValueState.Negative ? "true" : null;
     }
     get openValueStateMsgPopover() {
         return !this._firstRendering && this._openValueStateMsgPopover && this.displayValueStateMessagePopover;
@@ -282,40 +286,40 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
         return !!this.valueStateMessage.length && this.hasValueState;
     }
     get hasValueState() {
-        return this.valueState === ValueState.Error || this.valueState === ValueState.Warning || this.valueState === ValueState.Information;
+        return this.valueState === ValueState.Negative || this.valueState === ValueState.Critical || this.valueState === ValueState.Information;
     }
     get valueStateMessageText() {
         return this.valueStateMessage.map(x => x.cloneNode(true));
     }
     get _valueStatePopoverHorizontalAlign() {
-        return this.effectiveDir !== "rtl" ? "Left" : "Right";
+        return this.effectiveDir !== "rtl" ? "Start" : "End";
     }
     /**
      * This method is relevant for sap_horizon theme only
      */
     get _valueStateMessageIcon() {
         const iconPerValueState = {
-            Error: "error",
-            Warning: "alert",
-            Success: "sys-enter-2",
+            Negative: "error",
+            Critical: "alert",
+            Positive: "sys-enter-2",
             Information: "information",
         };
         return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
     }
     get valueStateTextMappings() {
         return {
-            "Success": TextArea_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
+            "Positive": TextArea_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
             "Information": TextArea_1.i18nBundle.getText(VALUE_STATE_INFORMATION),
-            "Error": TextArea_1.i18nBundle.getText(VALUE_STATE_ERROR),
-            "Warning": TextArea_1.i18nBundle.getText(VALUE_STATE_WARNING),
+            "Negative": TextArea_1.i18nBundle.getText(VALUE_STATE_ERROR),
+            "Critical": TextArea_1.i18nBundle.getText(VALUE_STATE_WARNING),
         };
     }
     get valueStateTypeMappings() {
         return {
-            "Success": TextArea_1.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+            "Positive": TextArea_1.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
             "Information": TextArea_1.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-            "Error": TextArea_1.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-            "Warning": TextArea_1.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+            "Negative": TextArea_1.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+            "Critical": TextArea_1.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
         };
     }
 };
@@ -351,7 +355,7 @@ __decorate([
 ], TextArea.prototype, "growing", void 0);
 __decorate([
     property({ validator: Integer, defaultValue: 0 })
-], TextArea.prototype, "growingMaxLines", void 0);
+], TextArea.prototype, "growingMaxRows", void 0);
 __decorate([
     property()
 ], TextArea.prototype, "name", void 0);
@@ -386,11 +390,9 @@ TextArea = TextArea_1 = __decorate([
     customElement({
         tag: "ui5-textarea",
         languageAware: true,
-        styles: [browserScrollbarCSS, styles],
+        styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
         renderer: litRender,
         template: TextAreaTemplate,
-        staticAreaTemplate: TextAreaPopoverTemplate,
-        staticAreaStyles: valueStateMessageStyles,
         dependencies: [Popover, Icon],
     })
     /**

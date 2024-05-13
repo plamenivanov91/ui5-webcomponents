@@ -7,16 +7,16 @@ declare enum BusyIndicatorSize {
      * small size
      * @public
      */
-    Small = "Small",
+    S = "S",
     /**
      * medium size
      * @public
      */
-    Medium = "Medium",
+    M = "M",
     /**
      * large size
      * @public
      */
-    Large = "Large"
+    L = "L"
 }
 export default BusyIndicatorSize;

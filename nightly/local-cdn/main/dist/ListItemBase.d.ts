@@ -4,7 +4,7 @@ import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 /**
  * @class
  * A class to serve as a foundation
- * for the `ListItem` and `GroupHeaderListItem` classes.
+ * for the `ListItem` and `ListItemGroupHeader` classes.
  * @constructor
  * @abstract
  * @extends UI5Element

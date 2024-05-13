@@ -65,21 +65,21 @@ declare class MenuItem extends UI5Element {
      */
     disabled: boolean;
     /**
-     * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
+     * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
      *
      * **Note:** If set to `true` a `ui5-busy-indicator` component will be displayed into the related one to the current `ui5-menu-item` sub-menu popover.
      * @default false
      * @public
      * @since 1.13.0
      */
-    busy: boolean;
+    loading: boolean;
     /**
-     * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
+     * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
      * @default 1000
      * @public
      * @since 1.13.0
      */
-    busyDelay: number;
+    loadingDelay: number;
     /**
      * Defines the accessible ARIA name of the component.
      * @default ""

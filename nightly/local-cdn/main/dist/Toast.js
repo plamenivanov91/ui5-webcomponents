@@ -7,11 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isMac } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ToastPlacement from "./types/ToastPlacement.js";
 // Template
 import ToastTemplate from "./generated/templates/ToastTemplate.lit.js";
@@ -81,48 +81,26 @@ const handleGlobalKeydown = (e) => {
 let Toast = class Toast extends UI5Element {
     constructor() {
         super();
-        this._reopen = false;
-        this.addEventListener("focusin", this._onfocusin.bind(this));
-        this.addEventListener("focusout", this._onfocusout.bind(this));
-        this.addEventListener("keydown", this._onkeydown.bind(this));
-        this.addEventListener("mouseover", this._onmouseover.bind(this));
-        this.addEventListener("mouseleave", this._onmouseleave.bind(this));
-        this.addEventListener("transitionend", this._ontransitionend.bind(this));
+        this._onfocusinFn = this._onfocusin.bind(this);
+        this._onfocusoutFn = this._onfocusout.bind(this);
+        this._onkeydownFn = this._onkeydown.bind(this);
+        this._onmouseoverFn = this._onmouseover.bind(this);
+        this._onmouseleaveFn = this._onmouseleave.bind(this);
+        this._ontransitionendFn = this._ontransitionend.bind(this);
     }
     onBeforeRendering() {
+        if (this.open) {
+            this._initiateOpening();
+        }
         // Transition duration (animation) should be a third of the duration
         // property, but not bigger than the maximum allowed (1000ms).
         const transitionDuration = Math.min(this.effectiveDuration / 3, MAX_DURATION);
         this.style.transitionDuration = this.open ? `${transitionDuration}ms` : "";
         this.style.transitionDelay = this.open ? `${this.effectiveDuration - transitionDuration}ms` : "";
         this.style.opacity = this.open && !this.hover && !this.focused ? "0" : "";
-        this.style.zIndex = `${getNextZIndex()}`;
         if (!globalListenerAdded) {
             document.addEventListener("keydown", handleGlobalKeydown);
             globalListenerAdded = true;
-        }
-    }
-    onAfterRendering() {
-        if (this._reopen) {
-            this._reopen = false;
-            this._initiateOpening();
-        }
-    }
-    /**
-     * Shows the component.
-     * @public
-     */
-    show() {
-        if (this.open) {
-            // If the Toast is already opened, we set the _reopen flag to true, in
-            // order to trigger re-rendering after an animation frame
-            // in the onAfterRendering hook.
-            // This is needed for properly resetting the opacity transition.
-            this._reopen = true;
-            this.open = false;
-        }
-        else {
-            this._initiateOpening();
         }
     }
     _onfocusin() {
@@ -157,6 +135,7 @@ let Toast = class Toast extends UI5Element {
         this.open = false;
         this.focusable = false;
         this.focused = false;
+        this.fireEvent("after-close");
     }
     _onmouseover() {
         this.hover = true;
@@ -172,6 +151,24 @@ let Toast = class Toast extends UI5Element {
     }
     get _tabindex() {
         return this.focused ? "0" : "-1";
+    }
+    onEnterDOM() {
+        this.addEventListener("focusin", this._onfocusinFn);
+        this.addEventListener("focusout", this._onfocusoutFn);
+        this.addEventListener("keydown", this._onkeydownFn);
+        this.addEventListener("mouseover", this._onmouseoverFn);
+        this.addEventListener("mouseleave", this._onmouseleaveFn);
+        this.addEventListener("transitionend", this._ontransitionendFn);
+        this.addEventListener("transitioncancel", this._ontransitionendFn);
+    }
+    onExitDOM() {
+        this.removeEventListener("focusin", this._onfocusinFn);
+        this.removeEventListener("focusout", this._onfocusoutFn);
+        this.removeEventListener("keydown", this._onkeydownFn);
+        this.removeEventListener("mouseover", this._onmouseoverFn);
+        this.removeEventListener("mouseleave", this._onmouseleaveFn);
+        this.removeEventListener("transitionend", this._ontransitionendFn);
+        this.removeEventListener("transitioncancel", this._ontransitionendFn);
     }
 };
 __decorate([
@@ -202,6 +199,13 @@ Toast = __decorate([
         styles: ToastCss,
         template: ToastTemplate,
     })
+    /**
+     * Fired after the component is auto closed.
+     * @public
+     * @since 2.0.0
+     */
+    ,
+    event("after-close")
 ], Toast);
 Toast.define();
 export default Toast;

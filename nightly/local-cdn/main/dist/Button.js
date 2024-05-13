@@ -17,14 +17,14 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { isPhone, isTablet, isCombi, isDesktop, isSafari, } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isSafari, } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
-import "./types/HasPopup.js";
+import IconMode from "./types/IconMode.js";
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
@@ -86,7 +86,9 @@ let Button = Button_1 = class Button extends UI5Element {
         };
     }
     onEnterDOM() {
-        this._isTouch = (isPhone() || isTablet()) && !isCombi();
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
     }
     async onBeforeRendering() {
         const formSupport = getFeature("FormSupport");
@@ -117,7 +119,7 @@ let Button = Button_1 = class Button extends UI5Element {
         }
     }
     _onmousedown(e) {
-        if (this.nonInteractive || this._isTouch) {
+        if (this.nonInteractive) {
             return;
         }
         markEvent(e, "button");
@@ -159,18 +161,12 @@ let Button = Button_1 = class Button extends UI5Element {
         if (this.active) {
             this._setActiveState(false);
         }
-        if (isDesktop()) {
-            this.focused = false;
-        }
     }
     _onfocusin(e) {
         if (this.nonInteractive) {
             return;
         }
         markEvent(e, "button");
-        if (isDesktop()) {
-            this.focused = true;
-        }
     }
     _setActiveState(active) {
         const eventPrevented = !this.fireEvent("_active-state-change", null, true);
@@ -180,16 +176,16 @@ let Button = Button_1 = class Button extends UI5Element {
         this.active = active;
     }
     get _hasPopup() {
-        return this.accessibilityAttributes.hasPopup?.toLowerCase();
+        return this.accessibilityAttributes.hasPopup;
     }
     get hasButtonType() {
         return this.design !== ButtonDesign.Default && this.design !== ButtonDesign.Transparent;
     }
-    get iconRole() {
+    get iconMode() {
         if (!this.icon) {
             return "";
         }
-        return "presentation";
+        return IconMode.Decorative;
     }
     get isIconOnly() {
         return !willShowContent(this.text);
@@ -271,9 +267,6 @@ __decorate([
 ], Button.prototype, "iconOnly", void 0);
 __decorate([
     property({ type: Boolean })
-], Button.prototype, "focused", void 0);
-__decorate([
-    property({ type: Boolean })
 ], Button.prototype, "hasIcon", void 0);
 __decorate([
     property({ type: Boolean })
@@ -301,6 +294,7 @@ Button = Button_1 = __decorate([
         template: ButtonTemplate,
         styles: buttonCss,
         dependencies: [Icon],
+        shadowRootOptions: { delegatesFocus: true },
     })
     /**
      * Fired when the component is activated either with a

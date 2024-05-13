@@ -37,5 +37,9 @@ declare class ToggleSpinButton extends ToggleButton {
      * Override of the handler in order to prevent button toggle functionality
      */
     _onclick(): void;
+    /**
+     * Override
+     */
+    get buttonAccessibleRole(): string;
 }
 export default ToggleSpinButton;

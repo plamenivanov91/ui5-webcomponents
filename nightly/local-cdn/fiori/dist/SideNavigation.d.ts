@@ -5,6 +5,7 @@ import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
@@ -78,7 +79,7 @@ declare class SideNavigation extends UI5Element {
      *
      * @public
      */
-    items: Array<SideNavigationItem | SideNavigationGroup>;
+    items: Array<SideNavigationItemBase>;
     /**
      * Defines the fixed items at the bottom of the `ui5-side-navigation`. Use the `ui5-side-navigation-item` component
      * for the fixed items, and optionally the `ui5-side-navigation-sub-item` component to provide second-level items inside them.
@@ -87,7 +88,7 @@ declare class SideNavigation extends UI5Element {
      *
      * @public
      */
-    fixedItems: Array<SideNavigationItem | SideNavigationGroup>;
+    fixedItems: Array<SideNavigationItemBase>;
     /**
      * Defines the header of the `ui5-side-navigation`.
      *
@@ -114,23 +115,23 @@ declare class SideNavigation extends UI5Element {
     constructor();
     _handleResizeBound: () => void;
     onBeforeRendering(): void;
-    _onAfterPopoverOpen(): Promise<void>;
-    _onBeforePopoverOpen(): Promise<void>;
-    _onBeforePopoverClose(): Promise<void>;
-    _onBeforeMenuOpen(): Promise<void>;
-    _onBeforeMenuClose(): Promise<void>;
+    _onAfterPopoverOpen(): void;
+    _onBeforePopoverOpen(): void;
+    _onBeforePopoverClose(): void;
+    _onBeforeMenuOpen(): void;
+    _onBeforeMenuClose(): void;
     get accSideNavigationPopoverHiddenText(): string;
     get ariaRoleDescNavigationList(): string;
     get overflowAccessibleName(): string;
-    handlePopupItemClick(e: KeyboardEvent | PointerEvent): Promise<void>;
-    handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>): Promise<void>;
-    getOverflowPopover(): Promise<NavigationMenu>;
-    getPicker(): Promise<ResponsivePopover>;
-    openPicker(opener: HTMLElement): Promise<void>;
-    openOverflowMenu(opener: HTMLElement): Promise<void>;
-    closePicker(): Promise<void>;
-    closeMenu(): Promise<void>;
-    getPickerTree(): Promise<SideNavigation>;
+    handlePopupItemClick(e: KeyboardEvent | PointerEvent): void;
+    handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>): void;
+    getOverflowPopover(): NavigationMenu;
+    getPicker(): ResponsivePopover;
+    openPicker(opener: HTMLElement): void;
+    openOverflowMenu(opener: HTMLElement): void;
+    closePicker(): void;
+    closeMenu(): void;
+    getPickerTree(): SideNavigation;
     get hasHeader(): boolean;
     get showHeader(): boolean;
     get hasFixedItems(): boolean;

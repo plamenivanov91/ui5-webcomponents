@@ -18,7 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
-import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
+import BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import { BREADCRUMB_ITEM_POS, BREADCRUMBS_ARIA_LABEL, BREADCRUMBS_OVERFLOW_ARIA_LABEL, BREADCRUMBS_CANCEL_BUTTON, } from "./generated/i18n/i18n-defaults.js";
 import Link from "./Link.js";
@@ -30,7 +30,6 @@ import Button from "./Button.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
-import BreadcrumbsPopoverTemplate from "./generated/templates/BreadcrumbsPopoverTemplate.lit.js";
 // Styles
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
 import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js";
@@ -177,7 +176,7 @@ let Breadcrumbs = Breadcrumbs_1 = class Breadcrumbs extends UI5Element {
         this._overflowSize = overflowSize;
         // if overflow was emptied while picker was open => close redundant popup
         if (this._isOverflowEmpty && this._isPickerOpen) {
-            this.responsivePopover.close();
+            this.responsivePopover.open = false;
         }
         // if the last focused link has done into the overflow =>
         // ensure the first visible link is focusable
@@ -216,15 +215,14 @@ let Breadcrumbs = Breadcrumbs_1 = class Breadcrumbs extends UI5Element {
         const listItem = e.detail.selectedItems[0], items = this._getItems(), item = items.find(x => `${x._id}-li` === listItem.id);
         if (this.fireEvent("item-click", { item }, true)) {
             window.open(item.href, item.target || "_self", "noopener,noreferrer");
-            this.responsivePopover.close();
+            this.responsivePopover.open = false;
         }
     }
-    async _respPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector("[ui5-responsive-popover]");
+    _respPopover() {
+        return this.shadowRoot.querySelector("[ui5-responsive-popover]");
     }
-    async _toggleRespPopover() {
-        this.responsivePopover = await this._respPopover();
+    _toggleRespPopover() {
+        this.responsivePopover = this._respPopover();
         if (this._isPickerOpen) {
             this._closeRespPopover();
         }
@@ -233,11 +231,14 @@ let Breadcrumbs = Breadcrumbs_1 = class Breadcrumbs extends UI5Element {
         }
     }
     _closeRespPopover() {
-        this.responsivePopover && this.responsivePopover.close();
+        if (this.responsivePopover) {
+            this.responsivePopover.open = false;
+        }
     }
-    async _openRespPopover() {
-        this.responsivePopover = await this._respPopover();
-        this.responsivePopover.showAt(this._dropdownArrowLink);
+    _openRespPopover() {
+        this.responsivePopover = this._respPopover();
+        this.responsivePopover.opener = this._dropdownArrowLink;
+        this.responsivePopover.open = true;
     }
     _isItemVisible(item) {
         return !item.hidden && this._hasVisibleContent(item);
@@ -326,14 +327,13 @@ let Breadcrumbs = Breadcrumbs_1 = class Breadcrumbs extends UI5Element {
     get _isOverflowEmpty() {
         return this._overflowItemsData.length === 0;
     }
-    get _ariaHasPopup() {
-        if (!this._isOverflowEmpty) {
-            return "listbox";
-        }
-        return undefined;
+    get linkAccessibilityAttributes() {
+        return {
+            hasPopup: this._isOverflowEmpty ? undefined : "listbox",
+        };
     }
     get _isPickerOpen() {
-        return !!this.responsivePopover && this.responsivePopover.opened;
+        return !!this.responsivePopover && this.responsivePopover.open;
     }
     get _accessibleNameText() {
         return Breadcrumbs_1.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
@@ -352,8 +352,8 @@ __decorate([
     property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
 ], Breadcrumbs.prototype, "design", void 0);
 __decorate([
-    property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
-], Breadcrumbs.prototype, "separatorStyle", void 0);
+    property({ type: BreadcrumbsSeparator, defaultValue: BreadcrumbsSeparator.Slash })
+], Breadcrumbs.prototype, "separators", void 0);
 __decorate([
     property({ validator: Integer, noAttribute: true, defaultValue: 0 })
 ], Breadcrumbs.prototype, "_overflowSize", void 0);
@@ -366,9 +366,7 @@ Breadcrumbs = Breadcrumbs_1 = __decorate([
         languageAware: true,
         renderer: litRender,
         template: BreadcrumbsTemplate,
-        staticAreaTemplate: BreadcrumbsPopoverTemplate,
-        styles: breadcrumbsCss,
-        staticAreaStyles: breadcrumbsPopoverCss,
+        styles: [breadcrumbsCss, breadcrumbsPopoverCss],
         dependencies: [
             BreadcrumbsItem,
             Link,

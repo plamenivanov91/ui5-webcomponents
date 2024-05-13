@@ -29,6 +29,7 @@ import { NOTIFICATION_LIST_ITEM_TXT, NOTIFICATION_LIST_ITEM_READ, NOTIFICATION_L
 import NotificationListItemTemplate from "./generated/templates/NotificationListItemTemplate.lit.js";
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
+import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 /**
  * @class
  *
@@ -245,7 +246,10 @@ NotificationListItem = NotificationListItem_1 = __decorate([
     customElement({
         tag: "ui5-li-notification",
         languageAware: true,
-        styles: NotificationListItemCss,
+        styles: [
+            NotificationListItemCss,
+            NotificationOverflowActionsPopoverCss,
+        ],
         template: NotificationListItemTemplate,
         dependencies: [
             Button,

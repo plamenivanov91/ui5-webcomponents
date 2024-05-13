@@ -44,6 +44,7 @@ declare class MonthPicker extends CalendarPart implements ICalendarPicker {
     get roleDescription(): string;
     onBeforeRendering(): void;
     onAfterRendering(): void;
+    get rowSize(): 2 | 3;
     _buildMonths(): void;
     _getDisplayedSecondaryMonthText(timestamp: number): {
         text: any;

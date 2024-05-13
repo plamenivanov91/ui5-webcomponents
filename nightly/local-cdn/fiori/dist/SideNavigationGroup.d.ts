@@ -50,6 +50,9 @@ declare class SideNavigationGroup extends SideNavigationItemBase {
     _onclick: () => void;
     _onfocusin: (e: FocusEvent) => void;
     _toggle(): void;
+    get isSideNavigationGroup(): boolean;
     static onDefine(): Promise<void>;
 }
+declare const isInstanceOfSideNavigationGroup: (object: any) => object is SideNavigationGroup;
 export default SideNavigationGroup;
+export { isInstanceOfSideNavigationGroup };

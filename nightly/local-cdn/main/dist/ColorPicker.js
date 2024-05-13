@@ -62,7 +62,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
             y: 256 - PICKER_POINTER_WIDTH,
         };
         // Default main color is red
-        this._mainColor = {
+        this._mainValue = {
             r: 255,
             g: 0,
             b: 0,
@@ -72,9 +72,9 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
         this.mouseIn = false;
     }
     onBeforeRendering() {
-        // we have the color & _mainColor properties here
-        this._color = getRGBColor(this.color);
-        const tempColor = `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, 1)`;
+        // we have the color & ._mainValue properties here
+        this._value = getRGBColor(this.value);
+        const tempColor = `rgba(${this._value.r}, ${this._value.g}, ${this._value.b}, 1)`;
         this._setHex();
         this._setValues();
         this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
@@ -132,7 +132,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
     _handleAlphaInput(e) {
         const aphaInputValue = e.target.value;
         this._alpha = parseFloat(aphaInputValue);
-        this._setColor(this._color);
+        this._setColor(this._value);
     }
     _handleHueInput(e) {
         this.selectedHue = e.target.value;
@@ -178,57 +178,57 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
         let tempColor;
         switch (target.id) {
             case "red":
-                tempColor = { ...this._color, r: targetValue };
+                tempColor = { ...this._value, r: targetValue };
                 break;
             case "green":
-                tempColor = { ...this._color, g: targetValue };
+                tempColor = { ...this._value, g: targetValue };
                 break;
             case "blue":
-                tempColor = { ...this._color, b: targetValue };
+                tempColor = { ...this._value, b: targetValue };
                 break;
             default:
-                tempColor = { ...this._color };
+                tempColor = { ...this._value };
         }
         this._setColor(tempColor);
     }
     _setMainColor(hueValue) {
         if (hueValue <= 255) {
-            this._mainColor = {
+            this._mainValue = {
                 r: 255,
                 g: hueValue,
                 b: 0,
             };
         }
         else if (hueValue <= 510) {
-            this._mainColor = {
+            this._mainValue = {
                 r: 255 - (hueValue - 255),
                 g: 255,
                 b: 0,
             };
         }
         else if (hueValue <= 765) {
-            this._mainColor = {
+            this._mainValue = {
                 r: 0,
                 g: 255,
                 b: hueValue - 510,
             };
         }
         else if (hueValue <= 1020) {
-            this._mainColor = {
+            this._mainValue = {
                 r: 0,
                 g: 765 - (hueValue - 255),
                 b: 255,
             };
         }
         else if (hueValue <= 1275) {
-            this._mainColor = {
+            this._mainValue = {
                 r: hueValue - 1020,
                 g: 0,
                 b: 255,
             };
         }
         else {
-            this._mainColor = {
+            this._mainValue = {
                 r: 255,
                 g: 0,
                 b: 1275 - (hueValue - 255),
@@ -277,7 +277,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
         };
     }
     _setColor(color = { r: 0, g: 0, b: 0 }) {
-        this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
+        this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
         this._wrongHEX = !this.isValidRGBColor(color);
         this.fireEvent("change");
     }
@@ -285,7 +285,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
         return color.r >= 0 && color.r <= 255 && color.g >= 0 && color.g <= 255 && color.b >= 0 && color.b <= 255;
     }
     _setHex() {
-        let red = this._color.r.toString(16), green = this._color.g.toString(16), blue = this._color.b.toString(16);
+        let red = this._value.r.toString(16), green = this._value.g.toString(16), blue = this._value.b.toString(16);
         if (red.length === 1) {
             red = `0${red}`;
         }
@@ -298,7 +298,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
         this.hex = red + green + blue;
     }
     _setValues() {
-        const hslColours = RGBToHSL(this._color);
+        const hslColours = RGBToHSL(this._value);
         this._selectedCoordinates = {
             x: ((Math.round(hslColours.l * 100) * 2.56)) - PICKER_POINTER_WIDTH,
             y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
@@ -345,30 +345,30 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
     get styles() {
         return {
             mainColor: {
-                "background-color": `rgb(${this._mainColor.r}, ${this._mainColor.g}, ${this._mainColor.b})`,
+                "background-color": `rgb(${this._mainValue.r}, ${this._mainValue.g}, ${this._mainValue.b})`,
             },
             circle: {
                 left: `${this._selectedCoordinates.x}px`,
                 top: `${this._selectedCoordinates.y}px`,
             },
             colorSpan: {
-                "background-color": `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, ${this._alpha})`,
+                "background-color": `rgba(${this._value.r}, ${this._value.g}, ${this._value.b}, ${this._alpha})`,
             },
         };
     }
 };
 __decorate([
     property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)" })
-], ColorPicker.prototype, "color", void 0);
+], ColorPicker.prototype, "value", void 0);
 __decorate([
     property({ defaultValue: "ffffff", noAttribute: true })
 ], ColorPicker.prototype, "hex", void 0);
 __decorate([
     property({ type: Object })
-], ColorPicker.prototype, "_mainColor", void 0);
+], ColorPicker.prototype, "_mainValue", void 0);
 __decorate([
     property({ type: Object })
-], ColorPicker.prototype, "_color", void 0);
+], ColorPicker.prototype, "_value", void 0);
 __decorate([
     property({ type: Object })
 ], ColorPicker.prototype, "_selectedCoordinates", void 0);

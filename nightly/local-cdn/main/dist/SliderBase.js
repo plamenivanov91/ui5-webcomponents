@@ -86,7 +86,7 @@ class SliderBase extends UI5Element {
             HIDDEN: "hidden",
         };
     }
-    static get render() {
+    static get renderer() {
         return litRender;
     }
     static get styles() {

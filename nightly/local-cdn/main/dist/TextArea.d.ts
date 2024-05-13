@@ -3,6 +3,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Popover from "./Popover.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -24,7 +25,7 @@ type ExceededText = {
  *
  * ### Overview
  *
- * The `ui5-textarea` component is used to enter multiple lines of text.
+ * The `ui5-textarea` component is used to enter multiple rows of text.
  *
  * When empty, it can hold a placeholder similar to a `ui5-input`.
  * You can define the rows of the `ui5-textarea` and also determine specific behavior when handling long texts.
@@ -88,7 +89,7 @@ declare class TextArea extends UI5Element implements IFormElement {
      */
     valueState: `${ValueState}`;
     /**
-     * Defines the number of visible text lines for the component.
+     * Defines the number of visible text rows for the component.
      *
      * **Notes:**
      *
@@ -124,11 +125,11 @@ declare class TextArea extends UI5Element implements IFormElement {
      */
     growing: boolean;
     /**
-     * Defines the maximum number of lines that the component can grow.
+     * Defines the maximum number of rows that the component can grow.
      * @default 0
      * @public
      */
-    growingMaxLines: number;
+    growingMaxRows: number;
     /**
      * Determines the name with which the component will be submitted in an HTML form.
      *
@@ -221,9 +222,9 @@ declare class TextArea extends UI5Element implements IFormElement {
     _onResize(): void;
     _setCSSParams(): void;
     toggleValueStateMessage(toggle: boolean): void;
-    openPopover(): Promise<void>;
-    closePopover(): Promise<void>;
-    _getPopover(): Promise<Popover>;
+    openPopover(): void;
+    closePopover(): void;
+    _getPopover(): Popover;
     _tokenizeText(value: string): {
         text: string;
         last: boolean;
@@ -265,22 +266,22 @@ declare class TextArea extends UI5Element implements IFormElement {
     get hasCustomValueState(): boolean;
     get hasValueState(): boolean;
     get valueStateMessageText(): Node[];
-    get _valueStatePopoverHorizontalAlign(): "Left" | "Right";
+    get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}`;
     /**
      * This method is relevant for sap_horizon theme only
      */
     get _valueStateMessageIcon(): string;
     get valueStateTextMappings(): {
-        Success: string;
+        Positive: string;
         Information: string;
-        Error: string;
-        Warning: string;
+        Negative: string;
+        Critical: string;
     };
     get valueStateTypeMappings(): {
-        Success: string;
+        Positive: string;
         Information: string;
-        Error: string;
-        Warning: string;
+        Negative: string;
+        Critical: string;
     };
 }
 export default TextArea;

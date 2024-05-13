@@ -36,9 +36,9 @@ const STEP_SIZE = 16;
  * Defines the icons corresponding to the dialog's state.
  */
 const ICON_PER_STATE = {
-    [ValueState.Error]: "error",
-    [ValueState.Warning]: "alert",
-    [ValueState.Success]: "sys-enter-2",
+    [ValueState.Negative]: "error",
+    [ValueState.Critical]: "alert",
+    [ValueState.Positive]: "sys-enter-2",
     [ValueState.Information]: "information",
 };
 /**
@@ -128,20 +128,8 @@ let Dialog = Dialog_1 = class Dialog extends Popup {
     static _isHeader(element) {
         return element.classList.contains("ui5-popup-header-root") || element.getAttribute("slot") === "header";
     }
-    /**
-     * Shows the dialog.
-     * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
-     * @public
-     * @returns Resolves when the dialog is open
-     */
-    async show(preventInitialFocus = false) {
-        await super._open(preventInitialFocus);
-    }
     get isModal() {
         return true;
-    }
-    get shouldHideBackdrop() {
-        return false;
     }
     get _ariaLabelledBy() {
         let ariaLabelledById;
@@ -164,9 +152,6 @@ let Dialog = Dialog_1 = class Dialog extends Popup {
     }
     get ariaDescribedByHeaderTextDraggableAndResizable() {
         return Dialog_1.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE);
-    }
-    get _displayProp() {
-        return "flex";
     }
     /**
      * Determines if the header should be shown.
@@ -205,7 +190,7 @@ let Dialog = Dialog_1 = class Dialog extends Popup {
         if (this.accessibleRole === PopupAccessibleRole.None) {
             return undefined;
         }
-        if (this.state === ValueState.Error || this.state === ValueState.Warning) {
+        if (this.state === ValueState.Negative || this.state === ValueState.Critical) {
             return PopupAccessibleRole.AlertDialog.toLowerCase();
         }
         return this.accessibleRole.toLowerCase();
@@ -219,15 +204,6 @@ let Dialog = Dialog_1 = class Dialog extends Popup {
         this._isRTL = this.effectiveDir === "rtl";
         this.onPhone = isPhone();
         this.onDesktop = isDesktop();
-    }
-    onAfterRendering() {
-        super.onAfterRendering();
-        if (!this.isOpen() && this.open) {
-            this.show();
-        }
-        else if (this.isOpen() && !this.open) {
-            this.close();
-        }
     }
     onEnterDOM() {
         super.onEnterDOM();
@@ -478,6 +454,7 @@ Dialog = Dialog_1 = __decorate([
         tag: "ui5-dialog",
         template: DialogTemplate,
         styles: [
+            Popup.styles,
             browserScrollbarCSS,
             PopupsCommonCss,
             dialogCSS,

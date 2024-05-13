@@ -12,7 +12,7 @@ type TimePickerComponentIndexMap = {
 };
 type TimeSelectionPeriodProperties = {
     label: string;
-    pressed: boolean;
+    selected: boolean;
 };
 type TimeSelectionChangeEventDetail = {
     value: string | undefined;
@@ -122,8 +122,8 @@ declare class TimePickerInternals extends UI5Element {
     get _hasMinutesComponent(): boolean;
     get _hasSecondsComponent(): boolean;
     get _hasPeriodsComponent(): boolean;
-    get dateValue(): Date;
-    get validDateValue(): Date;
+    get dateValue(): Date | import("sap/ui/core/date/UI5Date").default;
+    get validDateValue(): Date | import("sap/ui/core/date/UI5Date").default;
     get periodsArray(): string[];
     get _hours(): string;
     get _minutes(): string;

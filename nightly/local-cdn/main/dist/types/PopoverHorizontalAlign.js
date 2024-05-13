@@ -10,15 +10,15 @@ var PopoverHorizontalAlign;
      */
     PopoverHorizontalAlign["Center"] = "Center";
     /**
-     * Popover is aligned with the left side of the target. When direction is RTL, it is right aligned.
+     * Popover is aligned with the start of the target.
      * @public
      */
-    PopoverHorizontalAlign["Left"] = "Left";
+    PopoverHorizontalAlign["Start"] = "Start";
     /**
-     * Popover is aligned with the right side of the target. When direction is RTL, it is left aligned.
+     * Popover is aligned with the end of the target.
      * @public
      */
-    PopoverHorizontalAlign["Right"] = "Right";
+    PopoverHorizontalAlign["End"] = "End";
     /**
      * Popover is stretched.
      * @public

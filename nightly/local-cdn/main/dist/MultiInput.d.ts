@@ -3,7 +3,7 @@ import Input from "./Input.js";
 import Tokenizer from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
-import type { InputSuggestionItemSelectEventDetail as MultiInputSuggestionItemSelectEventDetail, InputSuggestionItemPreviewEventDetail as MultiInputSuggestionItemPreviewEventDetail } from "./Input.js";
+import type { InputSelectionChangeEventDetail as MultiInputSelectionChangeEventDetail } from "./Input.js";
 interface IToken extends HTMLElement, ITabbable {
     text: string;
     readonly: boolean;
@@ -22,7 +22,8 @@ type MultiInputTokenDeleteEventDetail = {
  * Fiori Guidelines say that user should create tokens when:
  *
  * - Type a value in the input and press enter or focus out the input field (`change` event is fired)
- * - Select a value from the suggestion list (`suggestion-item-select` event is fired)
+ * - Move between suggestion items (`selection-change` event is fired)
+ * - Clicking on a suggestion item (`selection-change` event is fired if the clicked item is different than the current value. Also `change` event is fired )
  *
  * ### ES6 Module Import
  *
@@ -41,12 +42,6 @@ declare class MultiInput extends Input {
      */
     showValueHelpIcon: boolean;
     /**
-     * Indicates whether the tokenizer is expanded or collapsed(shows the n more label)
-     * @default false
-     * @private
-     */
-    expandedTokenizer: boolean;
-    /**
      * Indicates whether the tokenizer has tokens
      * @default false
      * @private
@@ -61,7 +56,6 @@ declare class MultiInput extends Input {
     _valueHelpIconPressed: boolean;
     constructor();
     valueHelpPress(): void;
-    showMorePress(): void;
     tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>): void;
     valueHelpMouseDown(e: MouseEvent): void;
     _tokenizerFocusOut(e: FocusEvent): void;
@@ -75,11 +69,13 @@ declare class MultiInput extends Input {
     /**
      * @override
      */
-    _onfocusin(e: FocusEvent): Promise<void>;
+    _onfocusin(e: FocusEvent): void;
     lastItemDeleted(): void;
     onBeforeRendering(): void;
+    onAfterRendering(): void;
     get iconsCount(): number;
     get tokenizer(): Tokenizer;
+    get tokenizerExpanded(): boolean;
     get _tokensCountText(): string | undefined;
     get _tokensCountTextId(): string;
     /**
@@ -103,6 +99,7 @@ declare class MultiInput extends Input {
     };
     get ariaRoleDescription(): string;
     get morePopoverOpener(): HTMLElement;
+    get shouldDisplayOnlyValueStateMessage(): boolean;
 }
 export default MultiInput;
-export type { IToken, MultiInputTokenDeleteEventDetail, MultiInputSuggestionItemSelectEventDetail, MultiInputSuggestionItemPreviewEventDetail, };
+export type { IToken, MultiInputTokenDeleteEventDetail, MultiInputSelectionChangeEventDetail, };

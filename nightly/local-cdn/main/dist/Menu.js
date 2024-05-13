@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var Menu_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -25,10 +26,11 @@ import MenuListItem from "./MenuListItem.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
-import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
+import "./types/PopoverPlacement.js";
+import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import { MENU_BACK_BUTTON_ARIA_LABEL, MENU_CLOSE_BUTTON_ARIA_LABEL, } from "./generated/i18n/i18n-defaults.js";
 // Styles
-import staticAreaMenuCss from "./generated/themes/Menu.css.js";
+import menuCss from "./generated/themes/Menu.css.js";
 const MENU_OPEN_DELAY = 300;
 const MENU_CLOSE_DELAY = 400;
 /**
@@ -76,8 +78,8 @@ let Menu = Menu_1 = class Menu extends UI5Element {
     get isRtl() {
         return this.effectiveDir === "rtl";
     }
-    get placementType() {
-        const placement = this.isRtl ? "Left" : "Right";
+    get placement() {
+        const placement = this.isRtl ? "Start" : "End";
         return this._isSubMenu ? placement : "Bottom";
     }
     get verticalAlign() {
@@ -93,7 +95,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         return isPhone();
     }
     get isSubMenuOpened() {
-        return this._parentMenuItem && this._popover?.isOpen();
+        return this._parentMenuItem && this._popover?.open;
     }
     get menuHeaderTextPhone() {
         return this._parentMenuItem ? this._parentMenuItem.text : this.headerText;
@@ -107,14 +109,14 @@ let Menu = Menu_1 = class Menu extends UI5Element {
             item.item._siblingsWithIcon = itemsWithIcon;
             const subMenu = item.item._subMenu;
             const menuItem = item.item;
-            if (subMenu && subMenu.busy) {
+            if (subMenu && subMenu.loading) {
                 subMenu.innerHTML = "";
                 const fragment = this._clonedItemsFragment(menuItem);
                 subMenu.appendChild(fragment);
             }
             if (subMenu) {
-                subMenu.busy = item.item.busy;
-                subMenu.busyDelay = item.item.busyDelay;
+                subMenu.loading = item.item.loading;
+                subMenu.loadingDelay = item.item.loadingDelay;
             }
         });
     }
@@ -142,22 +144,27 @@ let Menu = Menu_1 = class Menu extends UI5Element {
             this._parentMenuItem = undefined;
             this._opener = undefined;
         }
-        const busyWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.busy;
+        const loadingWithoutItems = !this._parentMenuItem?.items.length && this._parentMenuItem?.loading;
         const popover = await this._createPopover();
         popover.initialFocus = `${this._id}-menu-item-0`;
-        popover.showAt(opener, busyWithoutItems);
+        popover.preventInitialFocus = !!loadingWithoutItems;
+        popover.opener = opener;
+        popover.open = true;
     }
     /**
      * Closes the Menu.
      * @public
      */
     close() {
-        this._popover?.close(false, false, true);
+        if (this._popover) {
+            this._popover.preventFocusRestore = true;
+            this._popover.open = false;
+        }
     }
     async _createPopover() {
         if (!this._popover) {
-            const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-            this._popover = staticAreaItemDomRef.querySelector("[ui5-responsive-popover]");
+            await renderFinished();
+            this._popover = this.shadowRoot.querySelector("[ui5-responsive-popover]");
         }
         return this._popover;
     }
@@ -191,11 +198,11 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         subMenu.setAttribute("id", `submenu-${opener.id}`);
         subMenu._parentMenuItem = item;
         subMenu._opener = opener;
-        subMenu.busy = item.busy;
-        subMenu.busyDelay = item.busyDelay;
+        subMenu.loading = item.loading;
+        subMenu.loadingDelay = item.loadingDelay;
         const fragment = this._clonedItemsFragment(item);
         subMenu.appendChild(fragment);
-        this.staticAreaItem.shadowRoot.querySelector(".ui5-menu-submenus").appendChild(subMenu);
+        this.shadowRoot.querySelector(".ui5-menu-submenus").appendChild(subMenu);
         item._subMenu = subMenu;
     }
     _clonedItemsFragment(item) {
@@ -211,7 +218,8 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         mainMenu?.fireEvent("before-open", {
             item,
         }, false, false);
-        item._subMenu.showAt(opener);
+        item._subMenu.opener = opener;
+        item._subMenu.open = true;
         item._preventSubMenuClose = true;
         this._openedSubMenuItem = item;
         this._subMenuOpenerId = opener.id;
@@ -231,7 +239,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         if (subMenu) {
             const parentItem = subMenu._parentMenuItem;
             if (forceClose || !parentItem._preventSubMenuClose) {
-                subMenu.close();
+                subMenu.open = false;
                 if (keyboard) {
                     subMenu._opener?.focus();
                 }
@@ -287,7 +295,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
             this._startOpenTimeout(item, opener);
         }
     }
-    _busyMouseOver() {
+    _loadingMouseOver() {
         if (this._parentMenuItem) {
             this._parentMenuItem._preventSubMenuClose = true;
         }
@@ -333,7 +341,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
                     "text": item.text,
                 }, true, false);
                 if (!prevented) {
-                    this._popover.close();
+                    this._popover.open = false;
                 }
             }
             else {
@@ -351,7 +359,8 @@ let Menu = Menu_1 = class Menu extends UI5Element {
                         parentMenu = openerMenuItem.parentElement;
                         openerMenuItem = parentMenu._parentMenuItem;
                     } while (parentMenu._parentMenuItem);
-                    mainMenu._popover.close();
+                    mainMenu._popover.preventFocusRestore = false;
+                    mainMenu._popover.open = false;
                 }
             }
         }
@@ -378,7 +387,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
     }
     _afterPopoverOpen() {
         this.open = true;
-        this.fireEvent("after-open", {}, false, false);
+        this.fireEvent("open", {}, false, false);
     }
     _beforePopoverClose(e) {
         const prevented = !this.fireEvent("before-close", { escPressed: e.detail.escPressed }, true, false);
@@ -394,7 +403,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
     }
     _afterPopoverClose() {
         this.open = false;
-        this.fireEvent("after-close", {}, false, false);
+        this.fireEvent("close", {}, false, false);
     }
 };
 __decorate([
@@ -405,10 +414,10 @@ __decorate([
 ], Menu.prototype, "open", void 0);
 __decorate([
     property({ type: Boolean })
-], Menu.prototype, "busy", void 0);
+], Menu.prototype, "loading", void 0);
 __decorate([
     property({ validator: Integer, defaultValue: 1000 })
-], Menu.prototype, "busyDelay", void 0);
+], Menu.prototype, "loadingDelay", void 0);
 __decorate([
     property({ validator: DOMReference, defaultValue: "" })
 ], Menu.prototype, "opener", void 0);
@@ -440,8 +449,8 @@ Menu = Menu_1 = __decorate([
     customElement({
         tag: "ui5-menu",
         renderer: litRender,
-        staticAreaStyles: staticAreaMenuCss,
-        staticAreaTemplate: staticAreaMenuTemplate,
+        styles: menuCss,
+        template: menuTemplate,
         dependencies: [
             ResponsivePopover,
             Button,
@@ -505,7 +514,7 @@ Menu = Menu_1 = __decorate([
      * @since 1.10.0
      */
     ,
-    event("after-open")
+    event("open")
     /**
      * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. **This event does not bubble.**
      * @public
@@ -530,7 +539,7 @@ Menu = Menu_1 = __decorate([
      * @since 1.10.0
      */
     ,
-    event("after-close")
+    event("close")
     /**
      * Fired when a menu item receives focus.
      *

@@ -1,6 +1,6 @@
 import CustomListItem from "./CustomListItem.js";
 import ListItemType from "./types/ListItemType.js";
-import type { AccessibilityAttributes } from "./ListItem.js";
+import type { ListItemAccessibilityAttributes as SelectMenuOptionAccessibilityAttributes } from "./ListItem.js";
 import type { IButton } from "./Button.js";
 import type { IOption } from "./Select.js";
 /**
@@ -58,7 +58,7 @@ declare class SelectMenuOption extends CustomListItem implements IOption {
      * @public
      * @deprecated
      */
-    accessibilityAttributes: AccessibilityAttributes;
+    accessibilityAttributes: SelectMenuOptionAccessibilityAttributes;
     /**
      * **Note:** The property is inherited and not supported. If set, it won't take any effect.
      * @default false
@@ -91,3 +91,4 @@ declare class SelectMenuOption extends CustomListItem implements IOption {
     };
 }
 export default SelectMenuOption;
+export type { SelectMenuOptionAccessibilityAttributes, };

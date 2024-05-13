@@ -1,3 +1,4 @@
+/// <reference types="openui5" />
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import DateComponentBase from "./DateComponentBase.js";
 /**
@@ -24,7 +25,7 @@ declare class CalendarPart extends DateComponentBase {
      * @protected
      */
     get _timestamp(): number;
-    get _localDate(): Date;
+    get _localDate(): Date | import("sap/ui/core/date/UI5Date").default;
     /**
      * Returns a CalendarDate instance, representing the _timestamp getter - this date is central to all components' rendering logic
      * @protected

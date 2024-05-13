@@ -10,16 +10,10 @@ const effectiveSvg = (strings, ...values) => {
     const fn = litStatic ? litStatic.svg : svg;
     return fn(strings, ...values);
 };
-const litRender = (templateResult, container, styleStrOrHrefsArr, forStaticArea, options) => {
+const litRender = (templateResult, container, options) => {
     const openUI5Enablement = getFeature("OpenUI5Enablement");
-    if (openUI5Enablement && !forStaticArea) {
+    if (openUI5Enablement) {
         templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host, templateResult);
-    }
-    if (typeof styleStrOrHrefsArr === "string") {
-        templateResult = effectiveHtml `<style>${styleStrOrHrefsArr}</style>${templateResult}`;
-    }
-    else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
-        templateResult = effectiveHtml `${styleStrOrHrefsArr.map(href => effectiveHtml `<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
     }
     render(templateResult, container, options);
 };

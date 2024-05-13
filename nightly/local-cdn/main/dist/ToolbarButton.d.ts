@@ -1,10 +1,9 @@
-import type { AccessibilityAttributes as ButtonAccessibilityAttributes } from "./Button.js";
+import type { ButtonAccessibilityAttributes as ToolbarAccessibilityAttributes } from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ToolbarItem from "./ToolbarItem.js";
 import type { IEventOptions } from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
 import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
-type AccessibilityAttributes = ButtonAccessibilityAttributes;
 /**
  * @class
  *
@@ -71,25 +70,23 @@ declare class ToolbarButton extends ToolbarItem {
      */
     accessibleNameRef: string;
     /**
-     * An object of strings that defines several additional accessibility attribute values
-     * for customization depending on the use case.
+     * Defines the additional accessibility attributes that will be applied to the component.
      *
-     * It supports the following fields:
+     * The following fields are supported:
      *
-     * - `expanded`: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
-     * 	- `true`
-     * 	- `false`
-     * - `hasPopup`: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
-     * 	- `Dialog`
-     * 	- `Grid`
-     * 	- `ListBox`
-     * 	- `Menu`
-     * 	- `Tree`
-     * - `controls`: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.
+     * - **expanded**: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed.
+     * Accepts the following string values: `true` or `false`
+     *
+     * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
+     * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
+     *
+     * - **controls**: Identifies the element (or elements) whose contents or presence are controlled by the button element.
+     * Accepts a lowercase string value.
+     *
      * @default {}
      * @public
      */
-    accessibilityAttributes: AccessibilityAttributes;
+    accessibilityAttributes: ToolbarAccessibilityAttributes;
     /**
      * Button text
      * @public
@@ -104,7 +101,6 @@ declare class ToolbarButton extends ToolbarItem {
      * @public
      */
     width?: string;
-    static get staticAreaStyles(): import("@ui5/webcomponents-base/dist/types.js").StyleData;
     get styles(): {
         width: string | undefined;
         display: string;
@@ -115,4 +111,4 @@ declare class ToolbarButton extends ToolbarItem {
     get subscribedEvents(): Map<string, IEventOptions>;
 }
 export default ToolbarButton;
-export type { AccessibilityAttributes, };
+export type { ToolbarAccessibilityAttributes, };

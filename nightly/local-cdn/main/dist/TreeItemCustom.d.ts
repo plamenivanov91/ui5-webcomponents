@@ -30,6 +30,8 @@ declare class TreeItemCustom extends TreeItemBase {
      * @public
      */
     content: Array<HTMLElement>;
+    _onkeydown(e: KeyboardEvent): Promise<void>;
+    _onkeyup(e: KeyboardEvent): void;
     /**
      * @override
      */

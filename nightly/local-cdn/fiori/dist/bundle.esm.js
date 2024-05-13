@@ -8,7 +8,6 @@ import "./features/CoPilotAnimation.js";
 // FIORI illustrations
 import "./illustrations/AllIllustrations.js";
 // FIORI components
-import "./Bar.js";
 import "./BarcodeScannerDialog.js";
 import "./DynamicSideContent.js";
 import "./FilterItem.js";

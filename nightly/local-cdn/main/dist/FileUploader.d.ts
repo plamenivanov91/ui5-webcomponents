@@ -132,6 +132,8 @@ declare class FileUploader extends UI5Element implements IFormElement {
     _onclick(e: MouseEvent): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
+    _ondrag(e: DragEvent): void;
+    _ondrop(e: DragEvent): void;
     _onfocusin(): void;
     _onfocusout(): void;
     /**
@@ -147,9 +149,9 @@ declare class FileUploader extends UI5Element implements IFormElement {
     _updateValue(files: FileList | null): void;
     _setFormValue(): void;
     toggleValueStatePopover(open: boolean): void;
-    openValueStatePopover(): Promise<void>;
-    closeValueStatePopover(): Promise<void>;
-    _getPopover(): Promise<Popover>;
+    openValueStatePopover(): void;
+    closeValueStatePopover(): void;
+    _getPopover(): Popover;
     /**
      * in case when the component is not placed in the DOM, return empty FileList, like native input would do
      * @private

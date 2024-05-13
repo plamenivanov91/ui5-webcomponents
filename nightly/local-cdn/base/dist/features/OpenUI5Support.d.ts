@@ -30,7 +30,5 @@ declare class OpenUI5Support {
     static _listenForThemeChange(): void;
     static attachListeners(): void;
     static cssVariablesLoaded(): boolean | undefined;
-    static getNextZIndex(): number | undefined;
-    static setInitialZIndex(): void;
 }
 export default OpenUI5Support;

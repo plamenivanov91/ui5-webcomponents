@@ -26,6 +26,9 @@ let ComboBoxGroupItem = class ComboBoxGroupItem extends UI5Element {
     get isGroupItem() {
         return true;
     }
+    get stableDomRef() {
+        return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+    }
 };
 __decorate([
     property()

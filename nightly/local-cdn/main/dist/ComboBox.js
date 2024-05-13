@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var ComboBox_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -32,7 +33,6 @@ import * as Filters from "./Filters.js";
 import { VALUE_STATE_SUCCESS, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_INFORMATION, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, INPUT_SUGGESTIONS_TITLE, SELECT_OPTIONS, LIST_ITEM_POSITION, LIST_ITEM_GROUP_HEADER, INPUT_CLEAR_ICON_ACC_NAME, } from "./generated/i18n/i18n-defaults.js";
 // Templates
 import ComboBoxTemplate from "./generated/templates/ComboBoxTemplate.lit.js";
-import ComboBoxPopoverTemplate from "./generated/templates/ComboBoxPopoverTemplate.lit.js";
 // Styles
 import ComboBoxCss from "./generated/themes/ComboBox.css.js";
 import ComboBoxPopoverCss from "./generated/themes/ComboBoxPopover.css.js";
@@ -48,7 +48,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import ComboBoxGroupItem from "./ComboBoxGroupItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import Input from "./Input.js";
@@ -56,9 +56,9 @@ import SuggestionItem from "./SuggestionItem.js";
 const SKIP_ITEMS_SIZE = 10;
 var ValueStateIconMapping;
 (function (ValueStateIconMapping) {
-    ValueStateIconMapping["Error"] = "error";
-    ValueStateIconMapping["Warning"] = "alert";
-    ValueStateIconMapping["Success"] = "sys-enter-2";
+    ValueStateIconMapping["Negative"] = "error";
+    ValueStateIconMapping["Critical"] = "alert";
+    ValueStateIconMapping["Positive"] = "sys-enter-2";
     ValueStateIconMapping["Information"] = "information";
 })(ValueStateIconMapping || (ValueStateIconMapping = {}));
 /**
@@ -113,7 +113,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         this._selectedItemText = "";
         this._userTypedValue = "";
     }
-    onBeforeRendering() {
+    async onBeforeRendering() {
         const popover = this.valueStatePopover;
         this.FormSupport = getFeature("FormSupport");
         this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
@@ -124,12 +124,16 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
             const items = this._filterItems(this.filterValue);
             this._filteredItems = items.length ? items : this.items;
         }
-        if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
-            popover?.close();
+        if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length && popover) {
+            popover.open = false;
         }
         this._selectMatchingItem();
         this._initialRendering = false;
         this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
+        const suggestionsPopover = await this._getPicker();
+        this.items.forEach(item => {
+            item._getRealDomRef = () => suggestionsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+        });
     }
     get iconsCount() {
         const slottedIconsCount = this.icon?.length || 0;
@@ -140,7 +144,8 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     async onAfterRendering() {
         const picker = await this._getPicker();
         if ((await this.shouldClosePopover()) && !isPhone()) {
-            picker.close(false, false, true);
+            picker.preventFocusRestore = true;
+            picker.open = false;
             this._clearFocus();
             this._itemFocused = false;
         }
@@ -153,7 +158,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     }
     async shouldClosePopover() {
         const popover = await this._getPicker();
-        return popover.opened && !this.focused && !this._itemFocused && !this._isValueStateFocused;
+        return popover.open && !this.focused && !this._itemFocused && !this._isValueStateFocused;
     }
     _focusin(e) {
         this.focused = true;
@@ -173,7 +178,8 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
             e.stopImmediatePropagation();
             return;
         }
-        if (!(this.shadowRoot.contains(toBeFocused)) && (this.staticAreaItem !== e.relatedTarget)) {
+        const popover = this.shadowRoot.querySelector("[ui5-responsive-popover]");
+        if (!(this.getDomRef().contains(toBeFocused)) && (popover !== e.relatedTarget)) {
             this.focused = false;
             !isPhone() && this._closeRespPopover(e);
         }
@@ -197,7 +203,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     }
     async _toggleRespPopover() {
         const picker = await this._getPicker();
-        if (picker.opened) {
+        if (picker.open) {
             this._closeRespPopover();
         }
         else {
@@ -218,14 +224,21 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         }
     }
     async openValueStatePopover() {
-        (await this._getValueStatePopover())?.showAt(this);
+        const valueStatePopover = await this._getValueStatePopover();
+        if (valueStatePopover) {
+            valueStatePopover.opener = this;
+            valueStatePopover.open = true;
+        }
     }
     async closeValueStatePopover() {
-        (await this._getValueStatePopover())?.close();
+        const valueStatePopover = await this._getValueStatePopover();
+        if (valueStatePopover) {
+            valueStatePopover.open = false;
+        }
     }
     async _getValueStatePopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        const popover = staticAreaItem.querySelector(".ui5-valuestatemessage-popover");
+        await renderFinished();
+        const popover = this.shadowRoot.querySelector(".ui5-valuestatemessage-popover");
         // backward compatibility
         // rework all methods to work with async getters
         this.valueStatePopover = popover;
@@ -374,7 +387,6 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
             });
         }
         this.fireEvent("input");
-        this._fireChangeEvent();
     }
     _handleArrowDown(e, indexOfItem) {
         const isOpen = this.open;
@@ -461,7 +473,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
                 return item.focused;
             });
             this._fireChangeEvent();
-            if (picker?.opened && !focusedItem?.isGroupItem) {
+            if (picker?.open && !focusedItem?.isGroupItem) {
                 this._closeRespPopover();
                 this.focused = true;
                 this.inner.setSelectionRange(this.value.length, this.value.length);
@@ -519,10 +531,15 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         }
         this._isValueStateFocused = false;
         this._clearFocus();
-        picker?.close();
+        if (picker) {
+            picker.preventFocusRestore = false;
+            picker.open = false;
+        }
     }
     async _openRespPopover() {
-        (await this._getPicker()).showAt(this, true);
+        const picker = await this._getPicker();
+        picker.opener = this;
+        picker.open = true;
     }
     _filterItems(str) {
         const itemsToFilter = this.items.filter(item => !item.isGroupItem);
@@ -672,8 +689,8 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         return isPhone() ? this.responsivePopover.querySelector("[ui5-input]").shadowRoot.querySelector("input") : this.shadowRoot.querySelector("[inner-input]");
     }
     async _getPicker() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        const picker = staticAreaItem.querySelector("[ui5-responsive-popover]");
+        await renderFinished();
+        const picker = this.shadowRoot.querySelector("[ui5-responsive-popover]");
         // backward compatibility
         // rework all methods to work with async getters
         this.responsivePopover = picker;
@@ -683,7 +700,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         return this.valueState !== ValueState.None;
     }
     get hasValueStateText() {
-        return this.hasValueState && this.valueState !== ValueState.Success;
+        return this.hasValueState && this.valueState !== ValueState.Positive;
     }
     get ariaValueStateHiddenText() {
         if (!this.hasValueState) {
@@ -709,18 +726,18 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     }
     get valueStateTextMappings() {
         return {
-            [ValueState.Success]: ComboBox_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
-            [ValueState.Error]: ComboBox_1.i18nBundle.getText(VALUE_STATE_ERROR),
-            [ValueState.Warning]: ComboBox_1.i18nBundle.getText(VALUE_STATE_WARNING),
+            [ValueState.Positive]: ComboBox_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
+            [ValueState.Negative]: ComboBox_1.i18nBundle.getText(VALUE_STATE_ERROR),
+            [ValueState.Critical]: ComboBox_1.i18nBundle.getText(VALUE_STATE_WARNING),
             [ValueState.Information]: ComboBox_1.i18nBundle.getText(VALUE_STATE_INFORMATION),
         };
     }
     get valueStateTypeMappings() {
         return {
-            [ValueState.Success]: ComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+            [ValueState.Positive]: ComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
             [ValueState.Information]: ComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-            [ValueState.Error]: ComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-            [ValueState.Warning]: ComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+            [ValueState.Negative]: ComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+            [ValueState.Critical]: ComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
         };
     }
     get shouldOpenValueStateMessagePopover() {
@@ -731,7 +748,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         return !this.valueStateMessage.length && this.hasValueStateText;
     }
     get _valueStatePopoverHorizontalAlign() {
-        return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Left : PopoverHorizontalAlign.Right;
+        return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Start : PopoverHorizontalAlign.End;
     }
     /**
      * This method is relevant for sap_horizon theme only
@@ -740,7 +757,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         return this.valueState !== ValueState.None ? ValueStateIconMapping[this.valueState] : "";
     }
     get open() {
-        return this?.responsivePopover?.opened || false;
+        return this?.responsivePopover?.open || false;
     }
     get _isPhone() {
         return isPhone();
@@ -771,6 +788,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
                 "min-width": `${this.offsetWidth || 0}px`,
                 "max-width": (this.offsetWidth / remSizeInPx) > 40 ? `${this.offsetWidth}px` : "40rem",
             },
+            popoverValueStateMessage: {},
         };
     }
     get classes() {
@@ -783,9 +801,9 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
             popoverValueState: {
                 "ui5-valuestatemessage-header": true,
                 "ui5-valuestatemessage-root": true,
-                "ui5-valuestatemessage--success": this.valueState === ValueState.Success,
-                "ui5-valuestatemessage--error": this.valueState === ValueState.Error,
-                "ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
+                "ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+                "ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+                "ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
                 "ui5-valuestatemessage--information": this.valueState === ValueState.Information,
             },
         };
@@ -862,15 +880,14 @@ ComboBox = ComboBox_1 = __decorate([
         tag: "ui5-combobox",
         languageAware: true,
         renderer: litRender,
-        styles: ComboBoxCss,
-        staticAreaStyles: [
+        styles: [
+            ComboBoxCss,
             ResponsivePopoverCommonCss,
             ValueStateMessageCss,
             ComboBoxPopoverCss,
             SuggestionsCss,
         ],
         template: ComboBoxTemplate,
-        staticAreaTemplate: ComboBoxPopoverTemplate,
         dependencies: [
             ComboBoxItem,
             Icon,
@@ -879,7 +896,7 @@ ComboBox = ComboBox_1 = __decorate([
             BusyIndicator,
             Button,
             StandardListItem,
-            GroupHeaderListItem,
+            ListItemGroupHeader,
             Popover,
             ComboBoxGroupItem,
             Input,

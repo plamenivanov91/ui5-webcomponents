@@ -9,7 +9,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
 import Popover from "./Popover.js";
@@ -44,51 +43,41 @@ let ResponsivePopover = ResponsivePopover_1 = class ResponsivePopover extends Po
     constructor() {
         super();
     }
-    /**
-     * Shows popover on desktop and dialog on mobile.
-     * @param opener the element that the popover is shown at
-     * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
-     * @public
-     * @returns Resolves when the responsive popover is open
-     */
-    async showAt(opener, preventInitialFocus = false) {
+    async openPopup() {
         if (!isPhone()) {
-            await super.showAt(opener, preventInitialFocus);
+            await super.openPopup();
+        }
+        else {
+            await this._dialog.openPopup();
+        }
+    }
+    _show() {
+        if (!isPhone()) {
+            super._show();
         }
         else {
             this.style.display = "contents";
-            const nextZIndex = getNextZIndex();
-            if (!nextZIndex) {
-                return;
-            }
-            this.style.zIndex = nextZIndex.toString();
-            await this._dialog.show(preventInitialFocus);
         }
     }
     /**
      * Closes the popover/dialog.
-     * @public
+     * @override
      */
-    close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
+    closePopup(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
         if (!isPhone()) {
-            super.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+            super.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
         }
         else {
-            this._dialog.close(escPressed, preventRegistryUpdate, preventFocusRestore);
+            this._dialog?.closePopup(escPressed, preventRegistryUpdate, preventFocusRestore);
         }
     }
     toggle(opener) {
-        if (this.isOpen()) {
-            return this.close();
+        if (this.open) {
+            this.closePopup();
+            return;
         }
-        this.showAt(opener);
-    }
-    /**
-     * Tells if the responsive popover is open.
-     * @public
-     */
-    isOpen() {
-        return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();
+        this.opener = opener;
+        this.open = true;
     }
     get classes() {
         const allClasses = super.classes;
@@ -117,13 +106,13 @@ let ResponsivePopover = ResponsivePopover_1 = class ResponsivePopover extends Po
         return ResponsivePopover_1.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
     }
     _beforeDialogOpen(e) {
+        this._opened = true;
         this.open = true;
-        this.opened = true;
         this._propagateDialogEvent(e);
     }
     _afterDialogClose(e) {
+        this._opened = false;
         this.open = false;
-        this.opened = false;
         this._propagateDialogEvent(e);
     }
     _propagateDialogEvent(e) {

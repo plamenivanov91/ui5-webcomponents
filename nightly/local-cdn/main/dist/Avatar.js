@@ -185,10 +185,11 @@ let Avatar = Avatar_1 = class Avatar extends UI5Element {
         this.fireEvent("click");
     }
     _getAriaHasPopup() {
-        if (!this._interactive || this.ariaHaspopup === "") {
+        const ariaHaspopup = this.accessibilityAttributes.hasPopup;
+        if (!this._interactive || !ariaHaspopup) {
             return;
         }
-        return this.ariaHaspopup;
+        return ariaHaspopup;
     }
 };
 __decorate([
@@ -225,8 +226,8 @@ __decorate([
     property()
 ], Avatar.prototype, "accessibleName", void 0);
 __decorate([
-    property()
-], Avatar.prototype, "ariaHaspopup", void 0);
+    property({ type: Object })
+], Avatar.prototype, "accessibilityAttributes", void 0);
 __decorate([
     property({ noAttribute: true })
 ], Avatar.prototype, "forcedTabIndex", void 0);

@@ -159,6 +159,7 @@ declare class RadioButton extends UI5Element implements IFormElement {
     constructor();
     static onDefine(): Promise<void>;
     onBeforeRendering(): void;
+    onEnterDOM(): void;
     onExitDOM(): void;
     syncGroup(forceRemove?: boolean): void;
     _enableFormSupport(): void;

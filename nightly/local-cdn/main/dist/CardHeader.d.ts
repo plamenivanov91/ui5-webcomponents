@@ -1,12 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ICardHeader } from "./Card.js";
 /**
  * @class
  * ### Overview
  *
  * The `ui5-card-header` is a component, meant to be used as a header of the `ui5-card` component.
- * It displays valuable information, that can be defined with several properties, such as: `titleText`, `subtitleText`, `status`
+ * It displays valuable information, that can be defined with several properties, such as: `titleText`, `subtitleText`, `additionalText`
  * and two slots: `avatar` and `action`.
  *
  * ### Keyboard handling
@@ -16,16 +15,15 @@ import type { ICardHeader } from "./Card.js";
  *
  * `import "@ui5/webcomponents/dist/CardHeader";`
  * @constructor
- * @implements {ICardHeader}
  * @extends UI5Element
  * @public
  * @since 1.0.0-rc.15
  * @csspart root - Used to style the root DOM element of the CardHeader
  * @csspart title - Used to style the title of the CardHeader
  * @csspart subtitle - Used to style the subtitle of the CardHeader
- * @csspart status - Used to style the status of the CardHeader
+ * @csspart additional-text - Used to style the additional text of the CardHeader
  */
-declare class CardHeader extends UI5Element implements ICardHeader {
+declare class CardHeader extends UI5Element {
     /**
      * Defines the title text.
      * @default ""
@@ -39,11 +37,11 @@ declare class CardHeader extends UI5Element implements ICardHeader {
     */
     subtitleText: string;
     /**
-     * Defines the status text.
+     * Defines the additional text.
      * @default ""
      * @public
     */
-    status: string;
+    additionalText: string;
     /**
      * Defines if the component would be interactive,
      * e.g gets hover effect, gets focus outline and `click` event is fired, when pressed.
@@ -71,6 +69,7 @@ declare class CardHeader extends UI5Element implements ICardHeader {
     */
     action: Array<HTMLElement>;
     static i18nBundle: I18nBundle;
+    onEnterDOM(): void;
     get classes(): {
         root: {
             "ui5-card-header": boolean;
@@ -94,4 +93,3 @@ declare class CardHeader extends UI5Element implements ICardHeader {
     _keyup(e: KeyboardEvent): void;
 }
 export default CardHeader;
-export type { ICardHeader, };

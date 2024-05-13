@@ -1,15 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-/**
- * Interface for components that may be slotted inside `ui5-card` as header
- * @public
- */
-interface ICardHeader extends HTMLElement {
-    subtitleText: string;
-    titleText: string;
-    status: string;
-    interactive: boolean;
-}
+import type CardHeader from "./CardHeader.js";
 /**
  * @class
  * ### Overview
@@ -23,7 +14,7 @@ interface ICardHeader extends HTMLElement {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/dist/Card";`
+ * `import "@ui5/webcomponents/dist/Card.js";`
  *
  * `import "@ui5/webcomponents/dist/CardHeader.js";` (for `ui5-card-header`)
  * @constructor
@@ -61,7 +52,7 @@ declare class Card extends UI5Element {
      * @since 1.0.0-rc.15
      * @public
     */
-    header: Array<ICardHeader>;
+    header: Array<CardHeader>;
     static i18nBundle: I18nBundle;
     get classes(): {
         root: {
@@ -76,4 +67,3 @@ declare class Card extends UI5Element {
     static onDefine(): Promise<void>;
 }
 export default Card;
-export type { ICardHeader, };

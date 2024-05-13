@@ -19,13 +19,12 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter, isDown, isUp, isTabNext, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit.js";
-import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import Button from "./Button.js";
 import { COLORPALETTE_CONTAINER_LABEL, COLOR_PALETTE_MORE_COLORS_TEXT, COLOR_PALETTE_DEFAULT_COLOR_TEXT, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
-import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
+import ColorPaletteDialogCss from "./generated/themes/ColorPaletteDialog.css.js";
 /**
  * @class
  *
@@ -55,6 +54,7 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
     }
     constructor() {
         super();
+        this.moreColorsFeature = {};
         this._itemNavigation = new ItemNavigation(this, {
             getItemsCallback: () => this.displayedColors,
             rowSize: this.rowSize,
@@ -251,18 +251,18 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
     get firstFocusableElement() {
         return this.colorPaletteNavigationElements[0];
     }
-    async _chooseCustomColor() {
-        const colorPicker = await this.getColorPicker();
-        this._setColor(colorPicker.color);
+    _chooseCustomColor() {
+        const colorPicker = this.getColorPicker();
+        this._setColor(colorPicker.value);
         this._closeDialog();
     }
-    async _closeDialog() {
-        const dialog = await this._getDialog();
-        dialog.close();
+    _closeDialog() {
+        const dialog = this._getDialog();
+        dialog.open = false;
     }
-    async _openMoreColorsDialog() {
-        const dialog = await this._getDialog();
-        dialog.show();
+    _openMoreColorsDialog() {
+        const dialog = this._getDialog();
+        dialog.open = true;
     }
     _onDefaultColorClick() {
         if (this.defaultColor) {
@@ -336,12 +336,11 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
             },
         };
     }
-    async _getDialog() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector("[ui5-dialog]");
+    _getDialog() {
+        return this.shadowRoot.querySelector("[ui5-dialog]");
     }
-    async getColorPicker() {
-        const dialog = await this._getDialog();
+    getColorPicker() {
+        const dialog = this._getDialog();
         return dialog.content[0].querySelector("[ui5-color-picker]");
     }
 };
@@ -379,9 +378,7 @@ ColorPalette = ColorPalette_1 = __decorate([
         tag: "ui5-color-palette",
         renderer: litRender,
         template: ColorPaletteTemplate,
-        staticAreaTemplate: ColorPaletteDialogTemplate,
-        styles: ColorPaletteCss,
-        staticAreaStyles: ColorPaletteStaticAreaCss,
+        styles: [ColorPaletteCss, ColorPaletteDialogCss],
         get dependencies() {
             const colorPaletteMoreColors = getFeature("ColorPaletteMoreColors");
             return [ColorPaletteItem, Button].concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);

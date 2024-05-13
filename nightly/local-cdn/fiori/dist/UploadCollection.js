@@ -15,7 +15,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
-import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/Tent.js";
@@ -24,6 +23,7 @@ import "@ui5/webcomponents-icons/dist/document.js";
 import { UPLOADCOLLECTION_NO_DATA_TEXT, UPLOADCOLLECTION_NO_DATA_DESCRIPTION, UPLOADCOLLECTION_DRAG_FILE_INDICATOR, UPLOADCOLLECTION_DROP_FILE_INDICATOR, UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION, } from "./generated/i18n/i18n-defaults.js";
 import { attachBodyDnDHandler, detachBodyDnDHandler, draggingFiles, } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
+import UploadCollectionSelectionMode from "./types/UploadCollectionSelectionMode.js";
 // Template
 import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemplate.lit.js";
 // Styles
@@ -151,8 +151,8 @@ let UploadCollection = UploadCollection_1 = class UploadCollection extends UI5El
     }
 };
 __decorate([
-    property({ type: ListMode, defaultValue: ListMode.None })
-], UploadCollection.prototype, "mode", void 0);
+    property({ type: UploadCollectionSelectionMode, defaultValue: UploadCollectionSelectionMode.None })
+], UploadCollection.prototype, "selectionMode", void 0);
 __decorate([
     property()
 ], UploadCollection.prototype, "noDataDescription", void 0);
@@ -215,7 +215,7 @@ UploadCollection = UploadCollection_1 = __decorate([
     })
     /**
      * Fired when selection is changed by user interaction
-     * in `SingleSelect` and `MultiSelect` modes.
+     * in `Single` and `Multiple` modes.
      * @param {Array} selectedItems An array of the selected items.
      * @public
      */

@@ -18,11 +18,11 @@ import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/get
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { isPageUp, isPageDown, isPageUpShift, isPageDownShift, isPageUpShiftCtrl, isPageDownShiftCtrl, isShow, isF4, isEnter, isTabNext, isTabPrevious, isF6Next, isF6Previous, } from "@ui5/webcomponents-base/dist/Keys.js";
+import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import HasPopup from "./types/HasPopup.js";
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
@@ -32,8 +32,8 @@ import Calendar from "./Calendar.js";
 import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
+import IconMode from "./types/IconMode.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
-import DatePickerPopoverTemplate from "./generated/templates/DatePickerPopoverTemplate.lit.js";
 // default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 // Styles
@@ -125,13 +125,16 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
      * @protected
      */
     onResponsivePopoverAfterClose() {
-        this._isPickerOpen = false;
+        this.open = false;
         if (isPhone()) {
             this.blur(); // close device's keyboard and prevent further typing
         }
         else {
             this._getInput()?.focus();
         }
+    }
+    onResponsivePopoverBeforeOpen() {
+        this._calendarCurrentPicker = this.firstPicker;
     }
     onBeforeRendering() {
         this.FormSupport = getFeature("FormSupport");
@@ -184,7 +187,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     _onkeydown(e) {
         if (isShow(e)) {
             e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
-            if (this.isOpen()) {
+            if (this.open) {
                 if (!isF4(e)) {
                     this._toggleAndFocusInput();
                 }
@@ -193,10 +196,11 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
                 this._toggleAndFocusInput();
             }
         }
-        if ((this._getInput().isEqualNode(e.target) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
-            this.closePicker();
+        const target = e.target;
+        if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+            this._togglePicker();
         }
-        if (this.isOpen()) {
+        if (this.open) {
             return;
         }
         if (isEnter(e)) {
@@ -272,15 +276,11 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     _updateValueState() {
         const valid = this._checkValueValidity(this.value);
         const previousValueState = this.valueState;
-        this.valueState = valid ? ValueState.None : ValueState.Error;
+        this.valueState = valid ? ValueState.None : ValueState.Negative;
         const eventPrevented = !this.fireEvent("value-state-change", { valueState: this.valueState, valid }, true);
         if (eventPrevented) {
             this.valueState = previousValueState;
         }
-    }
-    _toggleAndFocusInput() {
-        this.togglePicker();
-        this._getInput().focus();
     }
     _getInput() {
         return this.shadowRoot.querySelector("[ui5-input]");
@@ -317,7 +317,8 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     }
     _click(e) {
         if (isPhone()) {
-            this.responsivePopover.showAt(this);
+            this.responsivePopover.opener = this;
+            this.responsivePopover.open = true;
             e.preventDefault(); // prevent immediate selection of any item
         }
     }
@@ -382,7 +383,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     get accInfo() {
         return {
             "ariaRoledescription": this.dateAriaDescription,
-            "ariaHasPopup": HasPopup.Grid.toLowerCase(),
+            "ariaHasPopup": AriaHasPopup.Grid.toLowerCase(),
             "ariaRequired": this.required,
             "ariaLabel": getEffectiveAriaLabelText(this),
         };
@@ -421,12 +422,11 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
      * Defines whether the value help icon is hidden
      * @private
      */
-    get _ariaHidden() {
-        return isDesktop();
+    get _iconMode() {
+        return isDesktop() ? IconMode.Decorative : IconMode.Interactive;
     }
-    async _respPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector("[ui5-responsive-popover]");
+    _respPopover() {
+        return this.shadowRoot.querySelector("[ui5-responsive-popover]");
     }
     _canOpenPicker() {
         return !this.disabled && !this.readonly;
@@ -451,9 +451,9 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
      */
     onSelectedDatesChange(e) {
         e.preventDefault();
-        const newValue = e.detail.values && e.detail.values[0];
+        const newValue = e.detail.selectedValues && e.detail.selectedValues[0];
         this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-        this.closePicker();
+        this._togglePicker();
     }
     /**
      * The user clicked the "month" button in the header
@@ -477,39 +477,12 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     formatValue(date) {
         return this.getFormat().format(date);
     }
-    /**
-     * Closes the picker.
-     * @public
-     */
-    closePicker() {
-        this.responsivePopover.close();
+    _togglePicker() {
+        this.open = !this.open;
     }
-    /**
-     * Opens the picker.
-     * @public
-     * @returns Resolves when the picker is open
-     */
-    async openPicker() {
-        this._isPickerOpen = true;
-        this._calendarCurrentPicker = this.firstPicker;
-        this.responsivePopover = await this._respPopover();
-        this.responsivePopover.showAt(this);
-    }
-    togglePicker() {
-        if (this.isOpen()) {
-            this.closePicker();
-        }
-        else if (this._canOpenPicker()) {
-            this.openPicker();
-        }
-    }
-    /**
-     * Checks if the picker is open.
-     * @public
-     * @returns true if the picker is open, false otherwise
-     */
-    isOpen() {
-        return !!this._isPickerOpen;
+    _toggleAndFocusInput() {
+        this._togglePicker();
+        this._getInput().focus();
     }
     /**
      * Currently selected date represented as a Local JavaScript Date instance.
@@ -558,14 +531,14 @@ __decorate([
     property({ type: Boolean })
 ], DatePicker.prototype, "hideWeekNumbers", void 0);
 __decorate([
+    property({ type: Boolean })
+], DatePicker.prototype, "open", void 0);
+__decorate([
     property()
 ], DatePicker.prototype, "accessibleName", void 0);
 __decorate([
     property({ defaultValue: "" })
 ], DatePicker.prototype, "accessibleNameRef", void 0);
-__decorate([
-    property({ type: Boolean, noAttribute: true })
-], DatePicker.prototype, "_isPickerOpen", void 0);
 __decorate([
     property({ type: Object })
 ], DatePicker.prototype, "_respPopoverConfig", void 0);
@@ -583,9 +556,8 @@ DatePicker = DatePicker_1 = __decorate([
         tag: "ui5-date-picker",
         languageAware: true,
         template: DatePickerTemplate,
-        staticAreaTemplate: DatePickerPopoverTemplate,
-        styles: datePickerCss,
-        staticAreaStyles: [
+        styles: [
+            datePickerCss,
             ResponsivePopoverCommonCss,
             datePickerPopoverCss,
         ],

@@ -70,5 +70,8 @@ declare class SideNavigationSelectableItemBase extends SideNavigationItemBase {
     _onclick(e: PointerEvent): void;
     _onfocusin(e: FocusEvent): void;
     _activate(e: KeyboardEvent | PointerEvent): void;
+    get isSideNavigationSelectableItemBase(): boolean;
 }
+declare const isInstanceOfSideNavigationSelectableItemBase: (object: any) => object is SideNavigationSelectableItemBase;
 export default SideNavigationSelectableItemBase;
+export { isInstanceOfSideNavigationSelectableItemBase };

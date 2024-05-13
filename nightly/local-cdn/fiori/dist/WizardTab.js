@@ -59,7 +59,6 @@ let WizardTab = class WizardTab extends UI5Element {
             "ariaPosinset": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaPosinset,
             "ariaLabel": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaLabel,
             "ariaCurrent": this.selected ? "true" : undefined,
-            "ariaDisabled": this.disabled ? "true" : undefined,
         };
     }
 };

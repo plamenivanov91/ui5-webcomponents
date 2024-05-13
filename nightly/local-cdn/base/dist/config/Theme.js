@@ -3,7 +3,7 @@ import { reRenderAllUI5Elements } from "../Render.js";
 import applyTheme from "../theming/applyTheme.js";
 import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
 import { DEFAULT_THEME, SUPPORTED_THEMES } from "../generated/AssetParameters.js";
-import { isBooted } from "../Boot.js";
+import { boot, isBooted } from "../Boot.js";
 let curTheme;
 /**
  * Returns the current theme.
@@ -55,7 +55,7 @@ const isTheme = (theme) => {
     return currentTheme === theme || currentTheme === `${theme}_exp`;
 };
 /**
- * Returns if the currently set theme is part of legacy theme families ("sap_belize" or "sap_fiori_3").
+ * Returns if the currently set theme is part of legacy theme families ("sap_fiori_3").
  * **Note**: in addition, the method checks the base theme of a custom theme, built via the ThemeDesigner.
  *
  * @private
@@ -68,6 +68,10 @@ const isLegacyThemeFamily = () => {
     }
     return !currentTheme.startsWith("sap_horizon");
 };
+const isLegacyThemeFamilyAsync = async () => {
+    await boot();
+    return isLegacyThemeFamily();
+};
 const isKnownTheme = (theme) => SUPPORTED_THEMES.includes(theme);
-export { getTheme, setTheme, isTheme, isLegacyThemeFamily, getDefaultTheme, };
+export { getTheme, setTheme, isTheme, isLegacyThemeFamily, isLegacyThemeFamilyAsync, getDefaultTheme, };
 //# sourceMappingURL=Theme.js.map

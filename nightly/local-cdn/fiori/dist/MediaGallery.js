@@ -338,7 +338,6 @@ MediaGallery = MediaGallery_1 = __decorate([
         renderer: litRender,
         styles: [MediaGalleryCss],
         template: MediaGalleryTemplate,
-        staticAreaTemplate: MediaGalleryTemplate,
         dependencies: [
             MediaGalleryItem,
             Button,

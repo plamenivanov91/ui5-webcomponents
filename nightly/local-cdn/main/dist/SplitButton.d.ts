@@ -18,7 +18,6 @@ import Button from "./Button.js";
  * `ui5-split-button` consists two separate buttons:
  *
  * - for the first one (default action) you can define some `text` or an `icon`, or both.
- * Also, it is possible to define different icon for active state of this button - `activeIcon`.
  * - the second one (arrow action) contains only `slim-arrow-down` icon.
  *
  * You can choose a `design` from a set of predefined types (the same as for ui5-button) that offer
@@ -61,12 +60,6 @@ declare class SplitButton extends UI5Element {
      */
     icon: string;
     /**
-     * Defines the icon to be displayed in active state as graphical element within the component.
-     * @default ""
-     * @public
-     */
-    activeIcon: string;
-    /**
      * Defines whether the arrow button should have the active state styles or not.
      * @default false
      * @public
@@ -94,17 +87,6 @@ declare class SplitButton extends UI5Element {
      */
     accessibleName?: string;
     /**
-     * Indicates if the elements is on focus
-     * @default false
-     * @private
-     */
-    focused: boolean;
-    /**
-     * Accessibility-related properties for inner elements of the Split Button
-     * @private
-     */
-    _splitButtonAccInfo: Record<string, boolean>;
-    /**
      * Defines the tabIndex of the component.
      * @default "0"
      * @private
@@ -129,12 +111,6 @@ declare class SplitButton extends UI5Element {
      */
     _textButtonActive: boolean;
     /**
-     * Defines the icon of the text button
-     * @default ""
-     * @private
-     */
-    _textButtonIcon: string;
-    /**
      * Defines the state of the internal Button used for the Arrow button of the SplitButton.
      * @default false
      * @private
@@ -148,7 +124,7 @@ declare class SplitButton extends UI5Element {
      */
     text: Array<Node>;
     _textButtonPress: {
-        handleEvent: () => void;
+        handleEvent: (e: MouseEvent) => void;
         passive: boolean;
     };
     _isDefaultActionPressed: boolean;
@@ -156,16 +132,11 @@ declare class SplitButton extends UI5Element {
     static i18nBundle: I18nBundle;
     static onDefine(): Promise<void>;
     constructor();
-    /**
-     * Function that makes sure the focus is properly managed.
-     * @private
-     */
-    _manageFocus(button?: Button | SplitButton): void;
     onBeforeRendering(): void;
     _handleMouseClick(e: MouseEvent): void;
     _onFocusOut(e: FocusEvent): void;
     _onFocusIn(e: FocusEvent): void;
-    _textButtonFocusIn(e?: FocusEvent): void;
+    _onInnerButtonFocusIn(e: FocusEvent): void;
     _onKeyDown(e: KeyboardEvent): void;
     _onKeyUp(e: KeyboardEvent): void;
     _fireClick(e?: Event): void;
@@ -173,7 +144,7 @@ declare class SplitButton extends UI5Element {
     _textButtonRelease(): void;
     _arrowButtonPress(e: MouseEvent): void;
     _arrowButtonRelease(e: MouseEvent): void;
-    _setTabIndexValue(): void;
+    _setTabIndexValue(innerButtonPressed?: boolean): void;
     _onArrowButtonActiveStateChange(e: CustomEvent): void;
     /**
      * Checks if the pressed key is an arrow key.
@@ -212,8 +183,6 @@ declare class SplitButton extends UI5Element {
     get textButton(): Button | null | undefined;
     get arrowButton(): Button | null | undefined;
     get accessibilityInfo(): {
-        ariaExpanded: boolean;
-        ariaHaspopup: boolean;
         description: string;
         keyboardHint: string;
     };

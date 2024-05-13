@@ -38,7 +38,7 @@ declare class ColorPicker extends UI5Element {
      * @default "rgba(255, 255, 255, 1)"
      * @public
      */
-    color: string;
+    value: string;
     /**
      * Defines the HEX code of the currently selected color
      *
@@ -50,12 +50,12 @@ declare class ColorPicker extends UI5Element {
      * Defines the current main color which is selected via the hue slider and is shown in the main color square.
      * @private
      */
-    _mainColor: ColorRGB;
+    _mainValue: ColorRGB;
     /**
      * Defines the currenty selected color from the main color section.
      * @private
      */
-    _color: ColorRGB;
+    _value: ColorRGB;
     /**
      * @private
      */

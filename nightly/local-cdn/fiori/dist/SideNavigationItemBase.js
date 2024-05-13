@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
 /**
  * @class
  * Base class for the items that are accepted by the `ui5-side-navigation` component.
@@ -17,8 +18,13 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @since 1.19.0
  */
 class SideNavigationItemBase extends UI5Element {
+    onEnterDOM() {
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
+    }
     get _tooltip() {
-        return this.title || undefined;
+        return this.tooltip || undefined;
     }
     get classesArray() {
         const classes = [];
@@ -54,6 +60,9 @@ class SideNavigationItemBase extends UI5Element {
         }
         return element?.slot === "fixedItems";
     }
+    get isSideNavigationItemBase() {
+        return true;
+    }
 }
 __decorate([
     property()
@@ -63,7 +72,7 @@ __decorate([
 ], SideNavigationItemBase.prototype, "disabled", void 0);
 __decorate([
     property()
-], SideNavigationItemBase.prototype, "title", void 0);
+], SideNavigationItemBase.prototype, "tooltip", void 0);
 __decorate([
     property({ defaultValue: "-1", noAttribute: true })
 ], SideNavigationItemBase.prototype, "forcedTabIndex", void 0);
@@ -73,5 +82,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], SideNavigationItemBase.prototype, "inPopover", void 0);
+const isInstanceOfSideNavigationItemBase = (object) => {
+    return "isSideNavigationItemBase" in object;
+};
 export default SideNavigationItemBase;
+export { isInstanceOfSideNavigationItemBase };
 //# sourceMappingURL=SideNavigationItemBase.js.map

@@ -32,7 +32,6 @@ import WizardTab from "./WizardTab.js";
 import WizardStep from "./WizardStep.js";
 // Template and Styles
 import WizardTemplate from "./generated/templates/WizardTemplate.lit.js";
-import WizardPopoverTemplate from "./generated/templates/WizardPopoverTemplate.lit.js";
 import WizardCss from "./generated/themes/Wizard.css.js";
 import WizardPopoverCss from "./generated/themes/WizardPopover.css.js";
 const MIN_STEP_WIDTH_NO_TITLE = 64;
@@ -409,7 +408,7 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
         const iStepNumber = this.stepsInHeaderDOM.indexOf(selectedStep);
         return selectedStep.getAttribute(EXPANDED_STEP) === "false" && selectedStep.getAttribute(AFTER_EXPANDED_STEP) === "true" && (iStepNumber + 1 < this.steps.length);
     }
-    async _showPopover(oDomTarget, isAtStart) {
+    _showPopover(oDomTarget, isAtStart) {
         const tabs = Array.from(this.stepsInHeaderDOM);
         this._groupedTabs = [];
         const iFromStep = isAtStart ? 0 : this.stepsInHeaderDOM.indexOf(oDomTarget);
@@ -417,10 +416,11 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
         for (let i = iFromStep; i <= iToStep; i++) {
             this._groupedTabs.push(tabs[i]);
         }
-        const responsivePopover = await this._respPopover();
-        responsivePopover.showAt(oDomTarget);
+        const responsivePopover = this._respPopover();
+        responsivePopover.opener = oDomTarget;
+        responsivePopover.open = true;
     }
-    async _onGroupedTabClick(e) {
+    _onGroupedTabClick(e) {
         const eTarget = e.target;
         if (this._isGroupAtStart(eTarget)) {
             return this._showPopover(eTarget, true);
@@ -436,17 +436,18 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
         const stepToSelect = this.slottedSteps[Number(stepRefId) - 1];
         const selectedStep = this.selectedStep;
         const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
-        this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
+        this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, false);
         this._closeRespPopover();
         tabs[newlySelectedIndex].focus();
     }
-    async _closeRespPopover() {
-        const responsivePopover = await this._respPopover();
-        responsivePopover && responsivePopover.close();
+    _closeRespPopover() {
+        const responsivePopover = this._respPopover();
+        if (responsivePopover) {
+            responsivePopover.open = false;
+        }
     }
-    async _respPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector(`.ui5-wizard-responsive-popover`);
+    _respPopover() {
+        return this.shadowRoot.querySelector(`.ui5-wizard-responsive-popover`);
     }
     /**
      * Called upon `onScroll`.
@@ -464,7 +465,7 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
         // If the calculated index is in range,
         // change selection and fire "step-change".
         if (!stepToSelect.disabled && newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
-            this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, false);
+            this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, true);
             this.selectionRequestedByScroll = true;
         }
     }
@@ -495,7 +496,7 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
         }
         if (bExpanded || (!bExpanded && (newlySelectedIndex === 0 || newlySelectedIndex === this.steps.length - 1))) {
             // Change selection and fire "step-change".
-            this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, true);
+            this.switchSelectionFromOldToNewStep(selectedStep, stepToSelect, newlySelectedIndex, false);
         }
     }
     getContentHeight() {
@@ -735,10 +736,10 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
      * @param selectedStep the old step
      * @param stepToSelect the step to be selected
      * @param stepToSelectIndex the index of the newly selected step
-     * @param changeWithClick the selection changed due to user click in the step navigation
+     * @param withScroll the selection changed due to user scrolling
      * @private
      */
-    switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, changeWithClick) {
+    switchSelectionFromOldToNewStep(selectedStep, stepToSelect, stepToSelectIndex, withScroll) {
         if (selectedStep && stepToSelect) {
             // keep the selection if next step is disabled
             if (!stepToSelect.disabled) {
@@ -748,7 +749,7 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
             this.fireEvent("step-change", {
                 step: stepToSelect,
                 previousStep: selectedStep,
-                changeWithClick,
+                withScroll,
             });
             this.selectedStepIndex = stepToSelectIndex;
         }
@@ -802,10 +803,9 @@ Wizard = Wizard_1 = __decorate([
         styles: [
             browserScrollbarCSS,
             WizardCss,
+            WizardPopoverCss,
         ],
-        staticAreaStyles: WizardPopoverCss,
         template: WizardTemplate,
-        staticAreaTemplate: WizardPopoverTemplate,
         dependencies: [
             WizardTab,
             WizardStep,
@@ -818,7 +818,7 @@ Wizard = Wizard_1 = __decorate([
      * or by clicking on the steps within the component header.
      * @param {WizardStep} step The new step.
      * @param {WizardStep} previousStep The previous step.
-     * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
+     * @param {boolean} withScroll true when the event occurs due to user scrolling.
      * @public
      */
     ,
@@ -835,7 +835,7 @@ Wizard = Wizard_1 = __decorate([
             /**
             * @public
             */
-            changeWithClick: { type: Boolean },
+            withScroll: { type: Boolean },
         },
     })
 ], Wizard);

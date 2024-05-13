@@ -102,7 +102,7 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
         return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
     }
     get belowGroupClassName() {
-        if (this.previousElementSibling instanceof SideNavigationGroup_1) {
+        if (isInstanceOfSideNavigationGroup(this.previousElementSibling)) {
             return "ui5-sn-item-group-below-group";
         }
         return "";
@@ -112,6 +112,9 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
     }
     _toggle() {
         this.expanded = !this.expanded;
+    }
+    get isSideNavigationGroup() {
+        return true;
     }
     static async onDefine() {
         [SideNavigationGroup_1.i18nBundle] = await Promise.all([
@@ -138,5 +141,9 @@ SideNavigationGroup = SideNavigationGroup_1 = __decorate([
     })
 ], SideNavigationGroup);
 SideNavigationGroup.define();
+const isInstanceOfSideNavigationGroup = (object) => {
+    return "isSideNavigationGroup" in object;
+};
 export default SideNavigationGroup;
+export { isInstanceOfSideNavigationGroup };
 //# sourceMappingURL=SideNavigationGroup.js.map

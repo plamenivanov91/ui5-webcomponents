@@ -20,7 +20,7 @@ type PopupBeforeCloseEventDetail = {
  * 1. The Popup class handles modality:
  *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
  *  - Derivatives may call the "blockPageScrolling" and "unblockPageScrolling" static methods to temporarily remove scrollbars on the html element
- *  - Derivatives may call the "open" and "close" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
+ *  - Derivatives may call the "openPopup" and "closePopup" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
  *
  *  2. Provides blocking layer (relevant for modal popups only):
  *   - It is in the static area
@@ -55,19 +55,6 @@ declare abstract class Popup extends UI5Element {
     */
     preventFocusRestore: boolean;
     /**
-     * Indicates if the element is open
-     * @public
-     * @default false
-     * @since 1.2.0
-     */
-    open: boolean;
-    /**
-     * Indicates if the element is already open
-     * @private
-     * @default false
-     */
-    opened: boolean;
-    /**
      * Defines the accessible name of the component.
      * @default undefined
      * @public
@@ -94,10 +81,12 @@ declare abstract class Popup extends UI5Element {
      */
     mediaRange: string;
     /**
-     * @private
+     * Indicates whether initial focus should be prevented.
+     * @public
+     * @default false
+     * @since 2.0
      */
-    _disableInitialFocus: boolean;
-    _blockLayerHidden: boolean;
+    preventInitialFocus: boolean;
     /**
      * Indicates if the element is the top modal popup
      *
@@ -113,14 +102,22 @@ declare abstract class Popup extends UI5Element {
     content: Array<HTMLElement>;
     _resizeHandler: ResizeObserverCallback;
     _shouldFocusRoot?: boolean;
-    _zIndex?: number;
     _focusedElementBeforeOpen?: HTMLElement | null;
+    _opened: boolean;
+    _open: boolean;
     constructor();
-    onBeforeRendering(): void;
     onAfterRendering(): void;
     onEnterDOM(): void;
     onExitDOM(): void;
-    get _displayProp(): string;
+    /**
+     * Indicates if the element is open
+     * @public
+     * @default false
+     * @since 1.2.0
+     */
+    set open(value: boolean);
+    get open(): boolean;
+    openPopup(): Promise<void>;
     _resize(): void;
     /**
      * Prevents the user from interacting with the content under the block layer
@@ -152,7 +149,8 @@ declare abstract class Popup extends UI5Element {
      */
     forwardToLast(): Promise<void>;
     /**
-     * Use this method to focus the element denoted by "initialFocus", if provided, or the first focusable element otherwise.
+     * Use this method to focus the element denoted by "initialFocus", if provided,
+     * or the first focusable element otherwise.
      * @protected
      */
     applyInitialFocus(): Promise<void>;
@@ -163,17 +161,7 @@ declare abstract class Popup extends UI5Element {
      * @returns Promise that resolves when the focus is applied
      */
     applyFocus(): Promise<void>;
-    /**
-     * Tells if the component is opened
-     * @public
-     */
-    isOpen(): boolean;
     isFocusWithin(): boolean;
-    /**
-     * Shows the block layer (for modal popups only) and sets the correct z-index for the purpose of popup stacking
-     * @protected
-     */
-    _open(preventInitialFocus: boolean): Promise<void>;
     _updateMediaRange(): void;
     /**
      * Adds the popup to the "opened popups registry"
@@ -182,9 +170,8 @@ declare abstract class Popup extends UI5Element {
     _addOpenedPopup(): void;
     /**
      * Closes the popup.
-     * @public
      */
-    close(escPressed?: boolean, preventRegistryUpdate?: boolean, preventFocusRestore?: boolean): void;
+    closePopup(escPressed?: boolean, preventRegistryUpdate?: boolean, preventFocusRestore?: boolean): void;
     /**
      * Removes the popup from the "opened popups registry"
      * @protected
@@ -211,11 +198,6 @@ declare abstract class Popup extends UI5Element {
      */
     abstract get isModal(): boolean;
     /**
-     * Implement this getter with relevant logic in order to hide the block layer (f.e. based on a public property)
-     * @protected
-     */
-    abstract get shouldHideBackdrop(): boolean;
-    /**
      * Return the ID of an element in the shadow DOM that is going to label this popup
      * @protected
      */
@@ -232,9 +214,6 @@ declare abstract class Popup extends UI5Element {
     get styles(): {
         root: {};
         content: {};
-        blockLayer: {
-            zIndex: string | number;
-        };
     };
     get classes(): ClassMap;
 }

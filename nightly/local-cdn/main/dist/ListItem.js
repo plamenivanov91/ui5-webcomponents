@@ -7,7 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var ListItem_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isDelete, isF2, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -16,15 +17,15 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import HighlightTypes from "./types/HighlightTypes.js";
 import ListItemType from "./types/ListItemType.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
 import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX, ARIA_LABEL_LIST_ITEM_RADIO_BUTTON, LIST_ITEM_SELECTED, LIST_ITEM_NOT_SELECTED, } from "./generated/i18n/i18n-defaults.js";
+import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
-import HasPopup from "./types/HasPopup.js";
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 /**
@@ -58,7 +59,7 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         };
     }
     onBeforeRendering() {
-        this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._mode !== ListMode.Delete);
+        this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
     }
     onEnterDOM() {
         document.addEventListener("mouseup", this.deactivate);
@@ -70,7 +71,7 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         document.removeEventListener("keyup", this.deactivateByKey);
         document.removeEventListener("touchend", this.deactivate);
     }
-    _onkeydown(e) {
+    async _onkeydown(e) {
         super._onkeydown(e);
         const itemActive = this.type === ListItemType.Active, itemNavigated = this.typeNavigation;
         if (isSpace(e)) {
@@ -81,6 +82,15 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         }
         if (isEnter(e)) {
             this.fireItemPress(e);
+        }
+        if (isF2(e)) {
+            const focusDomRef = this.getFocusDomRef();
+            if (this.focused) {
+                (await getFirstFocusableElement(focusDomRef))?.focus(); // start content editing
+            }
+            else {
+                focusDomRef.focus(); // stop content editing
+            }
         }
     }
     _onkeyup(e) {
@@ -169,25 +179,25 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         return this.type === ListItemType.Inactive || this.type === ListItemType.Detail;
     }
     get placeSelectionElementBefore() {
-        return this._mode === ListMode.MultiSelect
-            || this._mode === ListMode.SingleSelectBegin;
+        return this._selectionMode === ListSelectionMode.Multiple
+            || this._selectionMode === ListSelectionMode.SingleStart;
     }
     get placeSelectionElementAfter() {
         return !this.placeSelectionElementBefore
-            && (this._mode === ListMode.SingleSelectEnd || this._mode === ListMode.Delete);
+            && (this._selectionMode === ListSelectionMode.SingleEnd || this._selectionMode === ListSelectionMode.Delete);
     }
     get modeSingleSelect() {
         return [
-            ListMode.SingleSelectBegin,
-            ListMode.SingleSelectEnd,
-            ListMode.SingleSelect,
-        ].includes(this._mode);
+            ListSelectionMode.SingleStart,
+            ListSelectionMode.SingleEnd,
+            ListSelectionMode.Single,
+        ].includes(this._selectionMode);
     }
-    get modeMultiSelect() {
-        return this._mode === ListMode.MultiSelect;
+    get modeMultiple() {
+        return this._selectionMode === ListSelectionMode.Multiple;
     }
     get modeDelete() {
-        return this._mode === ListMode.Delete;
+        return this._selectionMode === ListSelectionMode.Delete;
     }
     /**
      * Used in UploadCollectionItem
@@ -208,10 +218,13 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         return this.type === ListItemType.Active;
     }
     get _ariaSelected() {
-        if (this.modeMultiSelect || this.modeSingleSelect) {
+        if (this.modeMultiple || this.modeSingleSelect) {
             return this.selected;
         }
         return undefined;
+    }
+    get listItemAccessibleRole() {
+        return this.accessibleRole.toLowerCase();
     }
     get ariaSelectedText() {
         let ariaSelectedText;
@@ -240,16 +253,16 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
     }
     get _accInfo() {
         return {
-            role: this.accessibleRole || this.role,
+            role: this.listItemAccessibleRole,
             ariaExpanded: undefined,
             ariaLevel: undefined,
             ariaLabel: ListItem_1.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
             ariaLabelRadioButton: ListItem_1.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
             ariaSelectedText: this.ariaSelectedText,
-            ariaHaspopup: this.ariaHaspopup?.toLowerCase() || undefined,
+            ariaHaspopup: this.accessibilityAttributes.hasPopup,
             setsize: this.accessibilityAttributes.ariaSetsize,
             posinset: this.accessibilityAttributes.ariaPosinset,
-            tooltip: this.tooltip || this.title,
+            tooltip: this.tooltip,
         };
     }
     get _hasHighlightColor() {
@@ -281,29 +294,17 @@ __decorate([
     property({ type: Boolean })
 ], ListItem.prototype, "active", void 0);
 __decorate([
-    property()
-], ListItem.prototype, "title", void 0);
-__decorate([
     property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
 ], ListItem.prototype, "highlight", void 0);
 __decorate([
     property({ type: Boolean })
 ], ListItem.prototype, "actionable", void 0);
 __decorate([
-    property({ defaultValue: "listitem" })
-], ListItem.prototype, "role", void 0);
-__decorate([
-    property({ defaultValue: undefined, noAttribute: true })
-], ListItem.prototype, "accessibleRoleDescription", void 0);
-__decorate([
-    property()
+    property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })
 ], ListItem.prototype, "accessibleRole", void 0);
 __decorate([
-    property({ type: ListMode, defaultValue: ListMode.None })
-], ListItem.prototype, "_mode", void 0);
-__decorate([
-    property({ type: HasPopup, noAttribute: true })
-], ListItem.prototype, "ariaHaspopup", void 0);
+    property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
+], ListItem.prototype, "_selectionMode", void 0);
 __decorate([
     slot()
 ], ListItem.prototype, "deleteButton", void 0);

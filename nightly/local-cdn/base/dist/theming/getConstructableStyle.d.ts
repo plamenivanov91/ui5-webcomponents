@@ -5,5 +5,5 @@ import UI5Element from "../UI5Element.js";
  * @param ElementClass
  * @returns {*}
  */
-declare const getConstructableStyle: (ElementClass: typeof UI5Element, forStaticArea?: boolean) => CSSStyleSheet[];
+declare const getConstructableStyle: (ElementClass: typeof UI5Element) => CSSStyleSheet[];
 export default getConstructableStyle;

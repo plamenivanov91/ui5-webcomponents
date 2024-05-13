@@ -12,17 +12,11 @@ const internals = {
         }
         return "ontouchstart" in window || navigator.maxTouchPoints > 0;
     },
-    get ie() {
-        if (isSSR) {
-            return false;
-        }
-        return /(msie|trident)/i.test(internals.userAgent);
-    },
     get chrome() {
         if (isSSR) {
             return false;
         }
-        return !internals.ie && /(Chrome|CriOS)/.test(internals.userAgent);
+        return /(Chrome|CriOS)/.test(internals.userAgent);
     },
     get firefox() {
         if (isSSR) {
@@ -34,13 +28,13 @@ const internals = {
         if (isSSR) {
             return false;
         }
-        return !internals.ie && !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
+        return !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
     },
     get webkit() {
         if (isSSR) {
             return false;
         }
-        return !internals.ie && /webkit/.test(internals.userAgent);
+        return /webkit/.test(internals.userAgent);
     },
     get windows() {
         if (isSSR) {
@@ -138,10 +132,9 @@ const detectTablet = () => {
         tablet = (Math.min(window.screen.width / densityFactor, window.screen.height / densityFactor) >= 600);
         return;
     }
-    tablet = (internals.ie && internals.userAgent.indexOf("Touch") !== -1) || (internals.android && !internals.androidPhone);
+    tablet = internals.userAgent.indexOf("Touch") !== -1 || (internals.android && !internals.androidPhone);
 };
 const supportsTouch = () => internals.touch;
-const isIE = () => internals.ie;
 const isSafari = () => internals.safari;
 const isChrome = () => internals.chrome;
 const isFirefox = () => internals.firefox;
@@ -171,5 +164,5 @@ const isMac = () => {
 const isAndroid = () => {
     return internals.android || internals.androidPhone;
 };
-export { supportsTouch, isIE, isSafari, isChrome, isFirefox, isPhone, isTablet, isDesktop, isCombi, isIOS, isAndroid, isMac, };
+export { supportsTouch, isSafari, isChrome, isFirefox, isPhone, isTablet, isDesktop, isCombi, isIOS, isAndroid, isMac, };
 //# sourceMappingURL=Device.js.map

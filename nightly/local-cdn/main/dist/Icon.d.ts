@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import IconDesign from "./types/IconDesign.js";
+import IconMode from "./types/IconMode.js";
 /**
  * Interface for components that represent an icon, usable in numerous higher-order components
  * @public
@@ -65,7 +66,7 @@ interface IIcon extends HTMLElement {
  *
  * ### Keyboard Handling
  *
- * - [Space] / [Enter] or [Return] - Fires the `click` event if the `interactive` property is set to true.
+ * - [Space] / [Enter] or [Return] - Fires the `click` event if the `mode` property is set to `Interactive`.
  * - [Shift] - If [Space] / [Enter] or [Return] is pressed, pressing [Shift] releases the ui5-icon without triggering the click event.
  *
  * ### ES6 Module Import
@@ -85,13 +86,6 @@ declare class Icon extends UI5Element implements IIcon {
      * @since 1.9.2
      */
     design: `${IconDesign}`;
-    /**
-     * Defines if the icon is interactive (focusable and pressable)
-     * @default false
-     * @public
-     * @since 1.0.0-rc.8
-     */
-    interactive: boolean;
     /**
      * Defines the unique identifier (icon name) of the component.
      *
@@ -137,19 +131,12 @@ declare class Icon extends UI5Element implements IIcon {
      */
     showTooltip: boolean;
     /**
-     * Defines the accessibility role of the component.
-     * @default ""
+     * Defines the mode of the component.
+     * @default "Image"
      * @public
-     * @since 1.1.0
+     * @since 2.0.0
      */
-    accessibleRole: string;
-    /**
-     * Defines the ARIA hidden state of the component.
-     * Note: If the role is presentation the default value of aria-hidden will be true.
-     * @private
-     * @since 1.0.0-rc.15
-     */
-    ariaHidden: string;
+    mode: `${IconMode}`;
     /**
      * @private
      */
@@ -158,10 +145,6 @@ declare class Icon extends UI5Element implements IIcon {
      * @private
      */
     accData?: I18nText;
-    /**
-     * @private
-     */
-    focused: boolean;
     /**
     * @private
     */
@@ -174,20 +157,16 @@ declare class Icon extends UI5Element implements IIcon {
     packageName?: string;
     viewBox?: string;
     customSvg?: object;
-    _onfocusout?: ((event: FocusEvent) => void);
-    _onfocusin?: ((event: FocusEvent) => void);
-    _onFocusInHandler(): void;
-    _onFocusOutHandler(): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
     /**
     * Enforce "ltr" direction, based on the icons collection metadata.
     */
     get _dir(): "ltr" | undefined;
-    get effectiveAriaHidden(): string | true | undefined;
+    get effectiveAriaHidden(): "true" | undefined;
     get _tabIndex(): "0" | undefined;
-    get isDecorative(): boolean;
-    get effectiveAccessibleRole(): string;
+    get effectiveAccessibleRole(): "button" | "presentation" | "img";
+    onEnterDOM(): void;
     onBeforeRendering(): Promise<void>;
     get hasIconTooltip(): string | false | undefined;
 }

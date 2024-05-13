@@ -1,19 +1,26 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { ITab } from "./TabContainer.js";
+import type { TabContainerStripInfo, TabContainerOverflowInfo, ITab } from "./TabContainer.js";
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
 import TabSeparatorInOverflowTemplate from "./generated/templates/TabSeparatorInOverflowTemplate.lit.js";
+import type CustomListItem from "./CustomListItem.js";
+interface TabSeparatorInStrip extends HTMLElement {
+    realTabReference: TabSeparator;
+}
+interface TabSeparatorInOverflow extends CustomListItem {
+    realTabReference: TabSeparator;
+}
 /**
  * @class
  * The `ui5-tab-separator` represents a vertical line to separate tabs inside a `ui5-tabcontainer`.
  * @constructor
  * @extends UI5Element
- * @abstract
  * @implements {ITab}
+ * @abstract
  * @public
  */
 declare class TabSeparator extends UI5Element implements ITab {
-    realTabReference: TabSeparator;
-    getElementInStrip?: () => ITab | null;
+    _forcedStyleInOverflow?: Record<string, any>;
+    _getElementInStrip?: () => HTMLElement | undefined;
     static get stripTemplate(): typeof TabSeparatorInStripTemplate;
     static get overflowTemplate(): typeof TabSeparatorInOverflowTemplate;
     get classes(): {
@@ -22,15 +29,18 @@ declare class TabSeparator extends UI5Element implements ITab {
         };
     };
     get isSeparator(): boolean;
+    receiveStripInfo({ getElementInStrip }: TabContainerStripInfo): void;
+    receiveOverflowInfo({ style }: TabContainerOverflowInfo): void;
     /**
      * Returns the DOM reference of the separator that is placed in the header.
      *
-     * **Note:** Tabs and separators, placed in the `subTabs` slot of other tabs are not shown in the header. Calling this method on such tabs or separators will return `null`.
+     * **Note:** Separators, placed in the `items` slot of other tabs are not shown in the header. Calling this method on such separators will return `undefined`.
      * @public
      */
-    getTabInStripDomRef(): ITab | null;
+    getDomRefInStrip(): HTMLElement | undefined;
     get stableDomRef(): string;
     get stripPresentation(): object;
     get overflowPresentation(): object;
 }
 export default TabSeparator;
+export type { TabSeparatorInStrip, TabSeparatorInOverflow, };

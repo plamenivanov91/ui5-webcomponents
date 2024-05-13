@@ -46,7 +46,7 @@ let DropIndicator = class DropIndicator extends UI5Element {
             return;
         }
         const { left, width, right, top, bottom, height, } = this.targetReference.getBoundingClientRect();
-        const { top: containerTop, } = this.ownerReference.getBoundingClientRect();
+        const { top: containerTop, height: containerHeight, } = this.ownerReference.getBoundingClientRect();
         const style = {
             display: "",
             [this._positionProperty]: "",
@@ -54,17 +54,19 @@ let DropIndicator = class DropIndicator extends UI5Element {
             height: "",
         };
         let position = 0;
+        let isLast = false;
+        let isFirst = false;
         if (this.orientation === Orientation.Vertical) {
             switch (this.placement) {
                 case MovePlacement.Before:
-                    position = left - this._needle.offsetWidth / 2;
+                    position = left;
                     break;
                 case MovePlacement.On:
                     style.width = `${width}px`;
                     position = left;
                     break;
                 case MovePlacement.After:
-                    position = right - this._needle.offsetWidth / 2;
+                    position = right;
                     break;
             }
             style.height = `${height}px`;
@@ -84,8 +86,16 @@ let DropIndicator = class DropIndicator extends UI5Element {
             }
             style.width = `${width}px`;
             position -= containerTop;
+            if (position <= 0) {
+                isFirst = true;
+            }
+            if (position >= containerHeight) {
+                isLast = true;
+            }
         }
         style[this._positionProperty] = `${position}px`;
+        this.toggleAttribute("first", isFirst);
+        this.toggleAttribute("last", isLast);
         Object.assign(this.style, style);
     }
     get classes() {
@@ -95,9 +105,6 @@ let DropIndicator = class DropIndicator extends UI5Element {
                 "ui5-di-needle": this.placement !== MovePlacement.On,
             },
         };
-    }
-    get _needle() {
-        return this.shadowRoot.querySelector(".ui5-di-needle");
     }
 };
 __decorate([

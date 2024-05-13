@@ -176,7 +176,7 @@ let DateRangePicker = DateRangePicker_1 = class DateRangePicker extends DatePick
      */
     onSelectedDatesChange(event) {
         event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
-        const values = event.detail.values;
+        const values = event.detail.selectedValues;
         if (values.length === 0) {
             return;
         }
@@ -184,9 +184,9 @@ let DateRangePicker = DateRangePicker_1 = class DateRangePicker extends DatePick
             this._tempValue = values[0];
             return;
         }
-        const newValue = this._buildValue(event.detail.dates[0], event.detail.dates[1]); // the value will be normalized so we don't need to order them here
+        const newValue = this._buildValue(event.detail.selectedDates[0], event.detail.selectedDates[1]); // the value will be normalized so we don't need to order them here
         this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
-        this.closePicker();
+        this._togglePicker();
     }
     /**
      * @override

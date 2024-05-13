@@ -93,7 +93,6 @@ declare class WizardTab extends UI5Element implements ITabbable {
         ariaPosinset: string | undefined;
         ariaLabel: string | undefined;
         ariaCurrent: string | undefined;
-        ariaDisabled: string | undefined;
     };
 }
 export default WizardTab;

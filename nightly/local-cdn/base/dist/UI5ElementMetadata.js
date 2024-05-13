@@ -203,6 +203,9 @@ class UI5ElementMetadata {
     isThemeAware() {
         return !!this.metadata.themeAware;
     }
+    getShadowRootOptions() {
+        return this.metadata.shadowRootOptions || {};
+    }
     /**
      * Matches a changed entity (property/slot) with the given name against the "invalidateOnChildChange" configuration
      * and determines whether this should cause and invalidation

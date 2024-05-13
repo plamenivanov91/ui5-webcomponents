@@ -16,7 +16,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
-import "./types/HasPopup.js";
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
 import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
@@ -106,7 +105,7 @@ let Link = Link_1 = class Link extends UI5Element {
         return this.accessibleRole.toLowerCase();
     }
     get _hasPopup() {
-        return this.accessibilityAttributes.hasPopup?.toLowerCase();
+        return this.accessibilityAttributes.hasPopup;
     }
     static async onDefine() {
         Link_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -159,7 +158,7 @@ __decorate([
 ], Link.prototype, "disabled", void 0);
 __decorate([
     property()
-], Link.prototype, "title", void 0);
+], Link.prototype, "tooltip", void 0);
 __decorate([
     property()
 ], Link.prototype, "href", void 0);

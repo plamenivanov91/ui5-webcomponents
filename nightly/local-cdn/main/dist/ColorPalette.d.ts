@@ -91,7 +91,7 @@ declare class ColorPalette extends UI5Element {
     _itemNavigation: ItemNavigation;
     _itemNavigationRecentColors: ItemNavigation;
     _recentColors: Array<string>;
-    moreColorsFeature?: ColorPaletteMoreColors;
+    moreColorsFeature: ColorPaletteMoreColors | Record<string, any>;
     static i18nBundle: I18nBundle;
     static onDefine(): Promise<void>;
     constructor();
@@ -110,9 +110,9 @@ declare class ColorPalette extends UI5Element {
     focusFirstDisplayColorElement(): void;
     focusFirstFocusableElement(): void;
     get firstFocusableElement(): ColorPaletteNavigationItem;
-    _chooseCustomColor(): Promise<void>;
-    _closeDialog(): Promise<void>;
-    _openMoreColorsDialog(): Promise<void>;
+    _chooseCustomColor(): void;
+    _closeDialog(): void;
+    _openMoreColorsDialog(): void;
     _onDefaultColorClick(): void;
     /**
      * Returns the selected color.
@@ -122,7 +122,7 @@ declare class ColorPalette extends UI5Element {
     get colorContainerLabel(): string;
     get colorPaletteMoreColorsText(): string;
     get colorPaletteDefaultColorText(): string;
-    get _showMoreColors(): false | ColorPaletteMoreColors | undefined;
+    get _showMoreColors(): false | ColorPaletteMoreColors | Record<string, any>;
     get rowSize(): number;
     get hasRecentColors(): string | false;
     get recentColors(): string[];
@@ -134,8 +134,8 @@ declare class ColorPalette extends UI5Element {
             "ui5-cp-root-phone": boolean;
         };
     };
-    _getDialog(): Promise<Dialog>;
-    getColorPicker(): Promise<ColorPicker>;
+    _getDialog(): Dialog;
+    getColorPicker(): ColorPicker;
 }
 export default ColorPalette;
 export type { ColorPaletteItemClickEventDetail, IColorPaletteItem, };

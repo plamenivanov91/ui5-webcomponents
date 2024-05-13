@@ -61,7 +61,7 @@ let TreeItemBase = TreeItemBase_1 = class TreeItemBase extends ListItem {
         return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
     }
     get _ariaLabel() {
-        return this.accessibleRoleDescription ? undefined : TreeItemBase_1.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+        return TreeItemBase_1.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
     }
     get _accInfo() {
         const accInfoSettings = {
@@ -73,7 +73,7 @@ let TreeItemBase = TreeItemBase_1 = class TreeItemBase extends ListItem {
             ariaSelectedText: this.ariaSelectedText,
             listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
             ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
-            ariaHaspopup: this.ariaHaspopup?.toLowerCase() || undefined,
+            ariaHaspopup: this.accessibilityAttributes.hasPopup,
         };
         return { ...super._accInfo, ...accInfoSettings };
     }
@@ -96,8 +96,8 @@ let TreeItemBase = TreeItemBase_1 = class TreeItemBase extends ListItem {
         e.stopPropagation();
         this.fireEvent("toggle", { item: this });
     }
-    _onkeydown(e) {
-        super._onkeydown(e);
+    async _onkeydown(e) {
+        await super._onkeydown(e);
         if (!this._fixed && this.showToggleButton && isRight(e)) {
             if (!this.expanded) {
                 this.fireEvent("toggle", { item: this });

@@ -1,3 +1,5 @@
+import type AriaHasPopup from "./types/AriaHasPopup.js";
+import type AriaRole from "./types/AriaRole.js";
 type PromiseResolve = (value: void | PromiseLike<void>) => void;
 type Timeout = ReturnType<typeof setTimeout>;
 type Interval = ReturnType<typeof setInterval>;
@@ -16,8 +18,10 @@ type PassiveEventListenerObject = EventListenerObject & {
     passive: boolean;
 };
 type LowercaseString<T> = T extends string ? Lowercase<T> : never;
+type ARIARoles = LowercaseString<AriaRole>;
+type ARIAHasPopup = LowercaseString<AriaHasPopup>;
 type AccessibilityInfo = {
-    role?: LowercaseString<string>;
+    role?: ARIARoles;
     type?: LowercaseString<string>;
     description?: string;
     disabled?: boolean;
@@ -25,4 +29,13 @@ type AccessibilityInfo = {
     required?: boolean;
     children?: Array<HTMLElement>;
 };
-export type { AccessibilityInfo, PromiseResolve, Timeout, Interval, StyleData, StyleDataCSP, ComponentStylesData, ClassMap, ClassMapValue, PassiveEventListenerObject, };
+type AccessibilityAttributes = {
+    ariaSetsize?: number;
+    ariaPosinset?: number;
+    controls?: LowercaseString<string>;
+    expanded?: "true" | "false" | boolean;
+    hasPopup?: ARIAHasPopup;
+    name?: string;
+    role?: ARIARoles;
+};
+export type { AccessibilityInfo, AccessibilityAttributes, PromiseResolve, Timeout, Interval, StyleData, StyleDataCSP, ComponentStylesData, ClassMap, ClassMapValue, PassiveEventListenerObject, };

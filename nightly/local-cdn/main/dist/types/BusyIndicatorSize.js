@@ -8,17 +8,17 @@ var BusyIndicatorSize;
      * small size
      * @public
      */
-    BusyIndicatorSize["Small"] = "Small";
+    BusyIndicatorSize["S"] = "S";
     /**
      * medium size
      * @public
      */
-    BusyIndicatorSize["Medium"] = "Medium";
+    BusyIndicatorSize["M"] = "M";
     /**
      * large size
      * @public
      */
-    BusyIndicatorSize["Large"] = "Large";
+    BusyIndicatorSize["L"] = "L";
 })(BusyIndicatorSize || (BusyIndicatorSize = {}));
 export default BusyIndicatorSize;
 //# sourceMappingURL=BusyIndicatorSize.js.map

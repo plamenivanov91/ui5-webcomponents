@@ -65,9 +65,8 @@ const boot = async () => {
  * @param { string } theme
  */
 const onThemeRegistered = (theme) => {
-    const currentTheme = getTheme();
-    if (booted && theme === currentTheme) {
-        applyTheme(currentTheme);
+    if (booted && theme === getTheme()) { // getTheme should only be called if "booted" is true
+        applyTheme(getTheme());
     }
 };
 export { boot, attachBoot, isBooted, };

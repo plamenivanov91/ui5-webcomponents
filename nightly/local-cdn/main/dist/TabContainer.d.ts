@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { StyleData } from "@ui5/webcomponents-base/dist/types.js";
+import type { AccessibilityAttributes, StyleData } from "@ui5/webcomponents-base/dist/types.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
@@ -9,47 +9,30 @@ import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import Button from "./Button.js";
 import DropIndicator from "./DropIndicator.js";
 import type Tab from "./Tab.js";
+import type { TabInStrip, TabInOverflow } from "./Tab.js";
+import type { TabSeparatorInOverflow, TabSeparatorInStrip } from "./TabSeparator.js";
 import type { ListItemClickEventDetail, ListMoveEventDetail } from "./List.js";
-import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
-import SemanticColor from "./types/SemanticColor.js";
-import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
 import TabLayout from "./types/TabLayout.js";
-import TabsOverflowMode from "./types/TabsOverflowMode.js";
+import OverflowMode from "./types/OverflowMode.js";
 import type { IButton } from "./Button.js";
-/**
- * Interface for components that may be slotted inside `ui5-tabcontainer` as items
- * @public
- */
-interface ITab extends UI5Element {
-    isSeparator: boolean;
-    getTabInStripDomRef: () => ITab | null;
-    additionalText?: string;
-    design?: `${SemanticColor}`;
-    disabled?: boolean;
-    icon?: string;
-    isSingleClickArea?: boolean;
-    requiresExpandButton?: boolean;
-    selected?: boolean;
-    subTabs?: Array<ITab>;
-    tabs?: Array<ITab>;
-    text?: string;
-    hasOwnContent?: boolean;
-    forcedLevel?: number;
-    forcedSelected?: boolean;
-    getElementInStrip?: () => ITab | null;
+type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | TabInStrip;
+type TabContainerStripInfo = {
+    getElementInStrip: () => HTMLElement | undefined;
     isInline?: boolean;
-    forcedMixedMode?: boolean;
-    forcedPosinset?: number;
-    forcedSetsize?: number;
-    realTabReference: ITab;
+    mixedMode?: boolean;
+    posinset?: number;
+    setsize?: number;
     isTopLevelTab?: boolean;
-    forcedStyle?: Record<string, any>;
-}
-type TabContainerPopoverOwner = "start-overflow" | "end-overflow" | Tab;
+};
+type TabContainerOverflowInfo = {
+    getElementInOverflow: () => HTMLElement | undefined;
+    style: Record<string, any>;
+};
 type TabContainerTabSelectEventDetail = {
-    tab: ITab;
+    tab: Tab;
     tabIndex: number;
 };
 type TabContainerMoveEventDetail = {
@@ -61,8 +44,18 @@ type TabContainerMoveEventDetail = {
         placement: `${MovePlacement}`;
     };
 };
-interface TabContainerTabInOverflow extends CustomListItem {
-    realTabReference: Tab;
+/**
+ * Interface for components that may be slotted inside `ui5-tabcontainer` as items
+ *
+ * **Note:** Use directly `ui5-tab` or `ui5-tab-seprator`. Implementing the interface does not guarantee that the class can work as a tab.
+ * @public
+ */
+interface ITab extends UI5Element {
+    isSeparator: boolean;
+    receiveStripInfo: (arg0: TabContainerStripInfo) => void;
+    receiveOverflowInfo: (arg0: TabContainerOverflowInfo) => void;
+    getDomRefInStrip: () => HTMLElement | undefined;
+    items?: Array<ITab>;
 }
 /**
  * @class
@@ -107,29 +100,11 @@ interface TabContainerTabInOverflow extends CustomListItem {
  */
 declare class TabContainer extends UI5Element {
     /**
-     * Defines whether the tabs are in a fixed state that is not
-     * expandable/collapsible by user interaction.
-     * @default false
-     * @public
-     */
-    fixed: boolean;
-    /**
      * Defines whether the tab content is collapsed.
      * @default false
      * @public
      */
     collapsed: boolean;
-    /**
-     * Defines whether the overflow select list is displayed.
-     *
-     * The overflow select list represents a list, where all tabs are displayed
-     * so that it's easier for the user to select a specific tab.
-     * @default false
-     * @public
-     * @deprecated Since the introduction of TabsOverflowMode, overflows will always be visible if there is not enough space for all tabs,
-     * all hidden tabs are moved to a select list in the respective overflows and are accessible via the `overflowButton` and / or `startOverflowButton` slots.
-     */
-    showOverflow: boolean;
     /**
      * Defines the alignment of the content and the `additionalText` of a tab.
      *
@@ -151,21 +126,21 @@ declare class TabContainer extends UI5Element {
      * @since 1.1.0
      * @public
      */
-    tabsOverflowMode: `${TabsOverflowMode}`;
+    overflowMode: `${OverflowMode}`;
     /**
      * Sets the background color of the Tab Container's header as `Solid`, `Transparent`, or `Translucent`.
      * @default "Solid"
      * @since 1.10.0
      * @public
      */
-    headerBackgroundDesign: `${TabContainerBackgroundDesign}`;
+    headerBackgroundDesign: `${BackgroundDesign}`;
     /**
      * Sets the background color of the Tab Container's content as `Solid`, `Transparent`, or `Translucent`.
      * @default "Solid"
      * @since 1.10.0
      * @public
      */
-    contentBackgroundDesign: `${TabContainerBackgroundDesign}`;
+    contentBackgroundDesign: `${BackgroundDesign}`;
     /**
      * Defines the placement of the tab strip relative to the actual tabs' content.
      *
@@ -216,9 +191,7 @@ declare class TabContainer extends UI5Element {
     _hasScheduledPopoverOpen: boolean;
     _handleResizeBound: () => void;
     _setDraggedElement?: SetDraggedElementFunction;
-    _setDraggedElementInStaticArea?: SetDraggedElementFunction;
     static registerTabStyles(styles: StyleData): void;
-    static registerStaticAreaTabStyles(styles: StyleData): void;
     static i18nBundle: I18nBundle;
     constructor();
     onBeforeRendering(): void;
@@ -227,9 +200,9 @@ declare class TabContainer extends UI5Element {
     onExitDOM(): void;
     _handleResize(): void;
     _updateMediaRange(width: number): void;
-    _setItemsPrivateProperties(items: Array<ITab>): void;
+    _sendStripPresentationInfos(items: Array<ITab>): void;
     _onHeaderFocusin(e: FocusEvent): void;
-    _onHeaderDragStart(e: DragEvent): void;
+    _onDragStart(e: DragEvent): void;
     _onHeaderDragEnter(e: DragEvent): void;
     _onHeaderDragOver(e: DragEvent, isLongDragOver: boolean): void;
     _onHeaderDrop(e: DragEvent): void;
@@ -239,8 +212,9 @@ declare class TabContainer extends UI5Element {
     _onTabStripClick(e: Event): Promise<void>;
     _onTabExpandButtonClick(e: Event): Promise<void>;
     _setPopoverInitialFocus(): void;
-    _getSelectedTabInOverflow(): TabContainerTabInOverflow;
-    _getFirstFocusableItemInOverflow(): TabContainerTabInOverflow;
+    _getSelectedTabInOverflow(): TabInOverflow;
+    _getFirstFocusableItemInOverflow(): TabInOverflow;
+    _findTabInOverflow(realTab: ITab): TabSeparatorInOverflow | TabInOverflow | undefined;
     _onTabStripKeyDown(e: KeyboardEvent): void;
     _onTabStripKeyUp(e: KeyboardEvent): void;
     _onHeaderItemSelect(tab: HTMLElement): void;
@@ -253,11 +227,8 @@ declare class TabContainer extends UI5Element {
      * @default []
      */
     get allItems(): Array<ITab>;
-    _setIndentLevels(items: Array<ITab>, level?: number): void;
     _flatten(items: Array<ITab>): ITab[];
     _onItemSelect(selectedTabId: string): void;
-    toggleAnimated(selectedTab: Tab, previousTab: Tab): Promise<void>;
-    toggle(selectedTab: Tab, previousTab: Tab): void;
     /**
      * Fires the `tab-select` event and changes the internal reference for the currently selected tab.
      * If the event is prevented, the current tab is not changed.
@@ -270,27 +241,27 @@ declare class TabContainer extends UI5Element {
     slideContentDown(element: HTMLElement): Promise<void | Error>;
     slideContentUp(element: HTMLElement): Promise<void | Error>;
     _onOverflowClick(e: Event): Promise<void>;
-    _addStyleIndent(itemsFlat: Array<ITab>): void;
+    _sendOverflowPresentationInfos(items: Array<ITab>): void;
     _onOverflowKeyDown(e: KeyboardEvent): Promise<void>;
     _setItemsForStrip(): void;
     _getRootTab(tab: Tab): Tab;
-    _updateEndOverflow(itemsDomRefs: Array<ITab>): void;
-    _updateStartAndEndOverflow(itemsDomRefs: Array<ITab>): void;
-    _hasStartOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: {
+    _updateEndOverflow(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>): void;
+    _updateStartAndEndOverflow(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>): void;
+    _hasStartOverflow(containerWidth: number, itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, selectedItemIndexAndWidth: {
         width: number;
         index: number;
     }): boolean;
-    _hasEndOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: {
+    _hasEndOverflow(containerWidth: number, itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, selectedItemIndexAndWidth: {
         width: number;
         index: number;
     }): boolean;
     _getItemWidth(itemDomRef: HTMLElement): number;
-    _getSelectedItemIndexAndWidth(itemsDomRefs: Array<ITab>, selectedTabDomRef: ITab): {
+    _getSelectedItemIndexAndWidth(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, selectedTabDomRef: TabInStrip): {
         index: number;
         width: number;
     };
-    _findFirstVisibleItem(itemsDomRefs: Array<ITab>, containerWidth: number, selectedItemWidth: number, startIndex?: number): number;
-    _findLastVisibleItem(itemsDomRefs: Array<ITab>, containerWidth: number, selectedItemWidth: number, startIndex?: number): number;
+    _findFirstVisibleItem(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, containerWidth: number, selectedItemWidth: number, startIndex?: number): number;
+    _findLastVisibleItem(itemsDomRefs: Array<TabInStrip | TabSeparatorInStrip>, containerWidth: number, selectedItemWidth: number, startIndex?: number): number;
     get isModeStartAndEnd(): boolean;
     _updateOverflowCounters(): void;
     _getFocusableRefs(): IButton[];
@@ -301,7 +272,7 @@ declare class TabContainer extends UI5Element {
     _setPopoverItems(items: Array<ITab>): void;
     _togglePopover(opener: HTMLElement, setInitialFocus?: boolean): Promise<void>;
     _showPopoverAt(opener: HTMLElement, setInitialFocus?: boolean, preventInitialFocus?: boolean): Promise<void>;
-    get hasSubTabs(): boolean;
+    get hasItems(): boolean;
     _getTabStrip(): HTMLElement;
     _getStartOverflow(): HTMLElement;
     _getEndOverflow(): HTMLElement;
@@ -343,9 +314,9 @@ declare class TabContainer extends UI5Element {
     get overflowButtonText(): string;
     get popoverCancelButtonText(): string;
     get accInvisibleText(): string;
+    get overflowBtnAccessibilityAttributes(): Pick<AccessibilityAttributes, "hasPopup">;
     get tablistAriaDescribedById(): string | undefined;
-    get shouldAnimate(): boolean;
     static onDefine(): Promise<void>;
 }
 export default TabContainer;
-export type { ITab, TabContainerTabSelectEventDetail, TabContainerMoveEventDetail, };
+export type { TabContainerTabSelectEventDetail, TabContainerMoveEventDetail, TabContainerStripInfo, TabContainerOverflowInfo, ITab, };

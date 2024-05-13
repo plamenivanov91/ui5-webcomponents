@@ -79,7 +79,6 @@ declare class Toolbar extends UI5Element {
     itemsWidthMeasured: boolean;
     ITEMS_WIDTH_MAP: Map<string, number>;
     static get styles(): (string | import("@ui5/webcomponents-base/dist/types.js").StyleDataCSP | import("@ui5/webcomponents-base/dist/types.js").ComponentStylesData[])[];
-    static get staticAreaStyles(): (string | import("@ui5/webcomponents-base/dist/types.js").StyleDataCSP | import("@ui5/webcomponents-base/dist/types.js").ComponentStylesData[])[];
     static get dependencies(): (typeof UI5Element)[];
     static onDefine(): Promise<void>;
     constructor();
@@ -154,11 +153,11 @@ declare class Toolbar extends UI5Element {
      * Returns if the overflow popup is open.
      * @public
      */
-    isOverflowOpen(): Promise<boolean>;
-    openOverflow(): Promise<void>;
-    closeOverflow(): Promise<void>;
+    isOverflowOpen(): boolean;
+    openOverflow(): void;
+    closeOverflow(): void;
     toggleOverflow(): void;
-    getOverflowPopover(): Promise<Popover | null>;
+    getOverflowPopover(): Popover | null;
     /**
      * Layout management
      */
@@ -178,8 +177,8 @@ declare class Toolbar extends UI5Element {
     /**
      * Private members
      */
-    attachListeners(): Promise<void>;
-    detachListeners(): Promise<void>;
+    attachListeners(): void;
+    detachListeners(): void;
     onToolbarItemChange(): void;
     getItemsInfo(items: Array<ToolbarItem>): ({
         toolbarTemplate: object;

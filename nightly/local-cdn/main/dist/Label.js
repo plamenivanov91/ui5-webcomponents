@@ -67,7 +67,7 @@ __decorate([
     property({ type: Boolean })
 ], Label.prototype, "required", void 0);
 __decorate([
-    property({ type: WrappingType, defaultValue: WrappingType.None })
+    property({ type: WrappingType, defaultValue: WrappingType.Normal })
 ], Label.prototype, "wrappingType", void 0);
 Label = Label_1 = __decorate([
     customElement({

@@ -12,6 +12,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import BusyIndicatorTextPlacement from "./types/BusyIndicatorTextPlacement.js";
 import Label from "./Label.js";
@@ -71,6 +72,9 @@ let BusyIndicator = BusyIndicator_1 = class BusyIndicator extends UI5Element {
         this.addEventListener("keyup", this._preventEventHandler, {
             capture: true,
         });
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
     }
     onExitDOM() {
         if (this._busyTimeoutId) {
@@ -151,7 +155,7 @@ __decorate([
     property()
 ], BusyIndicator.prototype, "text", void 0);
 __decorate([
-    property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium })
+    property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.M })
 ], BusyIndicator.prototype, "size", void 0);
 __decorate([
     property({ type: Boolean })

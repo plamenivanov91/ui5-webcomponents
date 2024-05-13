@@ -20,10 +20,8 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
         _doNotSyncAttributes: Set<string>;
         _state: import("../UI5ElementMetadata.js").State;
         _getRealDomRef?: (() => HTMLElement) | undefined;
-        staticAreaItem?: import("../StaticAreaItem.js").default | undefined;
         readonly _id: string;
         render(): object;
-        renderStatic(): object;
         connectedCallback(): Promise<void>;
         disconnectedCallback(): void;
         onBeforeRendering(): void;
@@ -72,7 +70,6 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
         readonly isUI5Element: boolean;
         readonly classes: import("../types.js").ClassMap;
         readonly accessibilityInfo: import("../types.js").AccessibilityInfo;
-        getStaticAreaItemDomRef(): Promise<ShadowRoot | null>;
         accessKey: string;
         readonly accessKeyLabel: string;
         autocapitalize: string;
@@ -399,17 +396,13 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
         blur(): void;
     };
     template?: import("../renderer/executeTemplate.js").TemplateFunction | undefined;
-    staticAreaTemplate?: import("../renderer/executeTemplate.js").TemplateFunction | undefined;
     _metadata: import("../UI5ElementMetadata.js").default;
-    render: import("../UI5Element.js").Renderer;
-    renderer?: import("../UI5Element.js").Renderer | undefined;
+    renderer: import("../UI5Element.js").Renderer;
     readonly observedAttributes: string[];
     _needsShadowDOM(): boolean;
-    _needsStaticArea(): boolean;
     _generateAccessors(): void;
     metadata: import("../UI5ElementMetadata.js").Metadata;
     styles: import("../types.js").ComponentStylesData;
-    readonly staticAreaStyles: import("../types.js").ComponentStylesData;
     readonly dependencies: (typeof UI5Element)[];
     getUniqueDependencies(this: typeof UI5Element): (typeof UI5Element)[];
     whenDependenciesDefined(): Promise<(typeof UI5Element)[]>;

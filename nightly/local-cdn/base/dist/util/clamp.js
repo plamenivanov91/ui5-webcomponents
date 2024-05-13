@@ -6,7 +6,8 @@
  * @returns {number}
  */
 const clamp = (val, min, max) => {
-    return Math.min(Math.max(val, min), max);
+    // handles case when max < min
+    return Math.min(Math.max(val, min), Math.max(min, max));
 };
 export default clamp;
 //# sourceMappingURL=clamp.js.map

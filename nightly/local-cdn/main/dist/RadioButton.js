@@ -83,6 +83,11 @@ let RadioButton = RadioButton_1 = class RadioButton extends UI5Element {
         this.syncGroup();
         this._enableFormSupport();
     }
+    onEnterDOM() {
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
+    }
     onExitDOM() {
         this.syncGroup(true);
     }
@@ -219,11 +224,11 @@ let RadioButton = RadioButton_1 = class RadioButton extends UI5Element {
     }
     get valueStateText() {
         switch (this.valueState) {
-            case ValueState.Error:
+            case ValueState.Negative:
                 return RadioButton_1.i18nBundle.getText(VALUE_STATE_ERROR);
-            case ValueState.Warning:
+            case ValueState.Critical:
                 return RadioButton_1.i18nBundle.getText(VALUE_STATE_WARNING);
-            case ValueState.Success:
+            case ValueState.Positive:
                 return RadioButton_1.i18nBundle.getText(VALUE_STATE_SUCCESS);
             case ValueState.Information:
                 return RadioButton_1.i18nBundle.getText(VALUE_STATE_INFORMATION);

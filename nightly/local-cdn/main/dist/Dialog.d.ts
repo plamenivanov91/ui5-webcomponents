@@ -117,7 +117,7 @@ declare class Dialog extends Popup {
     /**
      * Defines the state of the `Dialog`.
      *
-     * **Note:** If `"Error"` and `"Warning"` state is set, it will change the
+     * **Note:** If `"Negative"` and `"Critical"` states is set, it will change the
      * accessibility role to "alertdialog", if the accessibleRole property is set to `"Dialog"`.
      * @default "None"
      * @public
@@ -172,22 +172,13 @@ declare class Dialog extends Popup {
     constructor();
     static onDefine(): Promise<void>;
     static _isHeader(element: HTMLElement): boolean;
-    /**
-     * Shows the dialog.
-     * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
-     * @public
-     * @returns Resolves when the dialog is open
-     */
-    show(preventInitialFocus?: boolean): Promise<void>;
     get isModal(): boolean;
-    get shouldHideBackdrop(): boolean;
     get _ariaLabelledBy(): string | undefined;
     get ariaRoleDescriptionHeaderText(): string | undefined;
     get effectiveAriaDescribedBy(): string | undefined;
     get ariaDescribedByHeaderTextResizable(): string;
     get ariaDescribedByHeaderTextDraggable(): string;
     get ariaDescribedByHeaderTextDraggableAndResizable(): string;
-    get _displayProp(): string;
     /**
      * Determines if the header should be shown.
      */
@@ -201,7 +192,6 @@ declare class Dialog extends Popup {
     get _role(): string | undefined;
     _show(): void;
     onBeforeRendering(): void;
-    onAfterRendering(): void;
     onEnterDOM(): void;
     onExitDOM(): void;
     /**

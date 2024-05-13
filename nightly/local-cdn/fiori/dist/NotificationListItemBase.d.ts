@@ -106,9 +106,9 @@ declare class NotificationListItemBase extends ListItemBase {
     _onCustomActionClick(e: MouseEvent): void;
     _onkeydown(e: KeyboardEvent): void;
     getActionByID(id: string): NotificationAction | undefined;
-    openOverflow(): Promise<void>;
-    closeOverflow(): Promise<void>;
-    getOverflowPopover(): Promise<Popover>;
+    openOverflow(): void;
+    closeOverflow(): void;
+    getOverflowPopover(): Popover;
     static onDefine(): Promise<void>;
 }
 export default NotificationListItemBase;

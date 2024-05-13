@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import "./illustrations/BeforeSearch.js";
@@ -78,12 +77,12 @@ declare class IllustratedMessage extends UI5Element {
     * Determines which illustration breakpoint variant is used.
     *
     * As `IllustratedMessage` adapts itself around the `Illustration`, the other
-    * elements of the component are displayed differently on the different breakpoints/illustration sizes.
+    * elements of the component are displayed differently on the different breakpoints/illustration designs.
     * @default "Auto"
     * @public
     * @since 1.5.0
     */
-    size: `${IllustrationMessageSize}`;
+    design: `${IllustrationMessageSize}`;
     /**
     * Defines the subtitle of the component.
     *
@@ -110,38 +109,27 @@ declare class IllustratedMessage extends UI5Element {
     */
     accessibleNameRef: string;
     /**
-    * Defines the semantic level of the title.
-    *
-    * **Note:** Used for accessibility purposes only.
-    *
-    * **Note:** Doesn't take effect when `title` slot is being used.
-    * @default "H2"
-    * @public
-    * @since 1.20.0
-    */
-    titleLevel: `${TitleLevel}`;
-    /**
-    * Illustration breakpoint variant for the <code>Dot</code> size.
+    * Illustration breakpoint variant for the <code>Dot</code> design.
     *
     * @private
     * @since 1.24.0
     */
     dotSvg: string;
     /**
-    * Illustration breakpoint variant for the <code>Spot</code> size.
+    * Illustration breakpoint variant for the <code>Spot</code> design.
     *
     * @private
     * @since 1.9.0
     */
     spotSvg: string;
     /**
-    * Illustration breakpoint variant for the `Scene` size.
+    * Illustration breakpoint variant for the `Scene` design.
     * @private
     * @since 1.9.0
     */
     sceneSvg: string;
     /**
-    * Illustration breakpoint variant for the `Dialog` size.
+    * Illustration breakpoint variant for the `Dialog` design.
     * @private
     * @since 1.9.0
     */

@@ -31,8 +31,7 @@ import PageCss from "./generated/themes/Page.css.js";
  * The content occupies the main part of the page. Only the content area is scrollable by default.
  * This can be prevented by setting  `enableScrolling` to `false`.
  * #### Footer
- * The footer is optional and occupies the fixed bottom part of the page. Alternatively, the footer can be floating above the bottom part of the content.
- * This is enabled with the `floatingFooter` property.
+ * The footer is optional and occupies the part above the bottom part of the content. Alternatively, the footer can be fixed at the bottom of the page by enabling the `fixedFooter` property.
  *
  * **Note:** `ui5-page` occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
  * that there is enough space for the `ui5-page` to be rendered.
@@ -62,10 +61,10 @@ let Page = class Page extends UI5Element {
         this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
     }
     get _contentBottom() {
-        return !this.floatingFooter && !this.hideFooter ? "2.75rem" : "0";
+        return this.fixedFooter && !this.hideFooter ? "2.75rem" : "0";
     }
     get _contentPaddingBottom() {
-        return this.floatingFooter && !this.hideFooter ? "3.5rem" : "0";
+        return !this.fixedFooter && !this.hideFooter ? "3.5rem" : "0";
     }
     get _contentTop() {
         return this.header.length ? "2.75rem" : "0rem";
@@ -86,10 +85,10 @@ __decorate([
 ], Page.prototype, "backgroundDesign", void 0);
 __decorate([
     property({ type: Boolean })
-], Page.prototype, "disableScrolling", void 0);
+], Page.prototype, "noScrolling", void 0);
 __decorate([
     property({ type: Boolean })
-], Page.prototype, "floatingFooter", void 0);
+], Page.prototype, "fixedFooter", void 0);
 __decorate([
     property({ type: Boolean })
 ], Page.prototype, "hideFooter", void 0);
@@ -100,7 +99,7 @@ __decorate([
     slot()
 ], Page.prototype, "header", void 0);
 __decorate([
-    slot({ type: HTMLElement, "default": true })
+    slot({ type: Node, "default": true })
 ], Page.prototype, "content", void 0);
 __decorate([
     slot()

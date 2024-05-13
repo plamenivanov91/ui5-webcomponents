@@ -23,7 +23,7 @@ import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationM
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { CAROUSEL_OF_TEXT, CAROUSEL_DOT_TEXT, CAROUSEL_PREVIOUS_ARROW_TEXT, CAROUSEL_NEXT_ARROW_TEXT, } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
-import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
+import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
 import BackgroundDesign from "./types/BackgroundDesign.js";
 import BorderDesign from "./types/BorderDesign.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
@@ -42,7 +42,7 @@ import CarouselCss from "./generated/themes/Carousel.css.js";
  *
  * There are several ways to perform navigation:
  *
- * - on desktop - the user can navigate using the navigation arrows or with keyboard shorcuts.
+ * - on desktop - the user can navigate using the navigation arrows or with keyboard shortcuts.
  * - on mobile - the user can use swipe gestures.
  *
  * ### Usage
@@ -108,6 +108,9 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
     }
     onEnterDOM() {
         ResizeHandler.register(this, this._onResizeBound);
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
     }
     onExitDOM() {
         ResizeHandler.deregister(this, this._onResizeBound);
@@ -294,16 +297,35 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         });
     }
     get effectiveItemsPerPage() {
+        const itemsPerPageArray = this.itemsPerPage.split(" ");
+        let itemsPerPageSizeS = 1, itemsPerPageSizeM = 1, itemsPerPageSizeL = 1, itemsPerPageSizeXL = 1;
+        itemsPerPageArray.forEach(element => {
+            if (element.startsWith("S")) {
+                itemsPerPageSizeS = Number(element.slice(1)) || 1;
+            }
+            else if (element.startsWith("M")) {
+                itemsPerPageSizeM = Number(element.slice(1)) || 1;
+            }
+            else if (element.startsWith("L")) {
+                itemsPerPageSizeL = Number(element.slice(1)) || 1;
+            }
+            else if (element.startsWith("XL")) {
+                itemsPerPageSizeXL = Number(element.slice(2)) || 1;
+            }
+        });
         if (!this._width) {
-            return this.itemsPerPageL;
+            return itemsPerPageSizeL;
         }
-        if (this._width <= 640) {
-            return this.itemsPerPageS;
+        if (this._width < 600) {
+            return itemsPerPageSizeS;
         }
-        if (this._width <= 1024) {
-            return this.itemsPerPageM;
+        if (this._width >= 600 && this._width < 1024) {
+            return itemsPerPageSizeM;
         }
-        return this.itemsPerPageL;
+        if (this._width >= 1024 && this._width < 1440) {
+            return itemsPerPageSizeL;
+        }
+        return itemsPerPageSizeXL;
     }
     isItemInViewport(index) {
         return index >= this._selectedIndex && index <= this._selectedIndex + this.effectiveItemsPerPage - 1;
@@ -368,7 +390,7 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         return items > this.effectiveItemsPerPage ? items - this.effectiveItemsPerPage + 1 : 1;
     }
     get isPageTypeDots() {
-        if (this.pageIndicatorStyle === CarouselPageIndicatorStyle.Numeric) {
+        if (this.pageIndicatorType === CarouselPageIndicatorType.Numeric) {
             return false;
         }
         return this.pagesCount < Carousel_1.pageTypeLimit;
@@ -450,14 +472,8 @@ __decorate([
     property({ type: Boolean })
 ], Carousel.prototype, "cyclic", void 0);
 __decorate([
-    property({ validator: Integer, defaultValue: 1 })
-], Carousel.prototype, "itemsPerPageS", void 0);
-__decorate([
-    property({ validator: Integer, defaultValue: 1 })
-], Carousel.prototype, "itemsPerPageM", void 0);
-__decorate([
-    property({ validator: Integer, defaultValue: 1 })
-], Carousel.prototype, "itemsPerPageL", void 0);
+    property({ type: String, defaultValue: "S1 M1 L1 XL1" })
+], Carousel.prototype, "itemsPerPage", void 0);
 __decorate([
     property({ type: Boolean })
 ], Carousel.prototype, "hideNavigationArrows", void 0);
@@ -465,8 +481,8 @@ __decorate([
     property({ type: Boolean })
 ], Carousel.prototype, "hidePageIndicator", void 0);
 __decorate([
-    property({ type: CarouselPageIndicatorStyle, defaultValue: CarouselPageIndicatorStyle.Default })
-], Carousel.prototype, "pageIndicatorStyle", void 0);
+    property({ type: CarouselPageIndicatorType, defaultValue: CarouselPageIndicatorType.Default })
+], Carousel.prototype, "pageIndicatorType", void 0);
 __decorate([
     property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Translucent })
 ], Carousel.prototype, "backgroundDesign", void 0);
@@ -510,7 +526,7 @@ Carousel = Carousel_1 = __decorate([
     /**
      * Fired whenever the page changes due to user interaction,
      * when the user clicks on the navigation arrows or while resizing,
-     * based on the `items-per-page-l`, `items-per-page-m` and `items-per-page-s` properties.
+     * based on the `items-per-page` property.
      * @param {Integer} selectedIndex the current selected index
      * @public
      * @since 1.0.0-rc.7

@@ -20,6 +20,8 @@ import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import type { IIcon } from "./Icon.js";
 import type ListItemType from "./types/ListItemType.js";
+import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
+import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "./List.js";
 /**
  * Interface for components that represent a suggestion item, usable in `ui5-input`
  * @public
@@ -57,12 +59,9 @@ declare enum INPUT_ACTIONS {
 type InputEventDetail = {
     inputType: string;
 };
-type InputSuggestionItemSelectEventDetail = {
-    item: IInputSuggestionItem;
-};
-type InputSuggestionItemPreviewEventDetail = {
-    item: IInputSuggestionItem;
-    targetRef: SuggestionListItem;
+type InputSelectionChangeEventDetail = {
+    item: IInputSuggestionItem | null;
+    targetRef: SuggestionListItem | null;
 };
 type InputSuggestionScrollEventDetail = {
     scrollTop: number;
@@ -93,8 +92,8 @@ type InputSuggestionScrollEventDetail = {
  *
  * - [Escape] - Closes the suggestion list, if open. If closed or not enabled, cancels changes and reverts to the value which the Input field had when it got the focus.
  * - [Enter] or [Return] - If suggestion list is open takes over the current matching item and closes it. If value state or group header is focused, does nothing.
- * - [Down] - Focuses the next matching item in the suggestion list.
- * - [Up] - Focuses the previous matching item in the suggestion list.
+ * - [Down] - Focuses the next matching item in the suggestion list. Selection-change event is fired.
+ * - [Up] - Focuses the previous matching item in the suggestion list. Selection-change event is fired.
  * - [Home] - If focus is in the text input, moves caret before the first character. If focus is in the list, highlights the first item and updates the input accordingly.
  * - [End] - If focus is in the text input, moves caret after the last character. If focus is in the list, highlights the last item and updates the input accordingly.
  * - [Page Up] - If focus is in the list, moves highlight up by page size (10 items by default). If focus is in the input, does nothing.
@@ -260,6 +259,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
     focused: boolean;
     openOnMobile: boolean;
     open: boolean;
+    valueStateOpen: boolean;
     /**
      * Determines whether to manually show the suggestions popover
      * @private
@@ -274,7 +274,6 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
     _nativeInputAttributes: NativeInputAttributes;
     _inputWidth?: number;
     _listWidth?: number;
-    _isPopoverOpen: boolean;
     _inputIconFocused: boolean;
     /**
      * Constantly updated value of texts collected from the associated labels
@@ -330,8 +329,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
     valueStateMessage: Array<HTMLElement>;
     hasSuggestionItemSelected: boolean;
     valueBeforeItemSelection: string;
-    valueBeforeItemPreview: string;
-    suggestionSelectionCancelled: boolean;
+    valueBeforeSelectionStart: string;
     previousValue: string;
     firstRendering: boolean;
     typedInValue: string;
@@ -349,13 +347,13 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
     _clearIconClicked?: boolean;
     _focusedAfterClear: boolean;
     _performTextSelection?: boolean;
-    _previewItem?: SuggestionListItem;
+    _isLatestValueFromSuggestions: boolean;
     static i18nBundle: I18nBundle;
     constructor();
     onEnterDOM(): void;
     onExitDOM(): void;
     onBeforeRendering(): void;
-    onAfterRendering(): Promise<void>;
+    onAfterRendering(): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
     _handleUp(e: KeyboardEvent): void;
@@ -368,7 +366,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
     _handleHome(e: KeyboardEvent): void;
     _handleEnd(e: KeyboardEvent): void;
     _handleEscape(): void;
-    _onfocusin(e: FocusEvent): Promise<void>;
+    _onfocusin(e: FocusEvent): void;
     /**
      * Called on "focusin" of the native input HTML Element.
      * **Note:** implemented in MultiInput, but used in the Input template.
@@ -387,16 +385,19 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
     _handleTypeAhead(item: IInputSuggestionItem): void;
     _handleResize(): void;
     _updateAssociatedLabelsTexts(): void;
-    _closeRespPopover(): void;
-    _afterOpenPopover(): Promise<void>;
-    _afterClosePopover(): void;
-    /**
-     * Checks if the value state popover is open.
-     */
-    isValueStateOpened(): boolean;
-    openPopover(): Promise<void>;
-    closePopover(): Promise<void>;
-    _getPopover(): Promise<Popover>;
+    _closePicker(): void;
+    _afterOpenPicker(): void;
+    _afterClosePicker(): void;
+    _handleSuggestionItemPress(e: CustomEvent<ListItemClickEventDetail>): void;
+    _handleSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>): void;
+    _handleItemMouseOver(e: MouseEvent): void;
+    _handleItemMouseOut(e: MouseEvent): void;
+    _handlePickerAfterOpen(): void;
+    _handlePickerAfterClose(): void;
+    openValueStatePopover(): void;
+    closeValueStatePopover(): void;
+    _handleValueStatePopoverAfterClose(): void;
+    _getValueStatePopover(): Popover;
     /**
      * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
      * @public
@@ -404,22 +405,15 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
      */
     openPicker(): void;
     enableSuggestions(): void;
-    selectSuggestion(item: IInputSuggestionItem, keyboardUsed: boolean): void;
-    previewSuggestion(item: SuggestionListItem): void;
+    acceptSuggestion(item: IInputSuggestionItem, keyboardUsed: boolean): void;
     /**
-     * Updates the input value on item preview.
-     * @param item The item that is on preview
+     * Updates the input value on item select.
+     * @param item The item that is on select
      */
-    updateValueOnPreview(item: SuggestionListItem): void;
-    /**
-     * The suggestion item on preview.
-     * @default null
-     * @public
-     */
-    get previewItem(): IInputSuggestionItem | null;
-    fireEventByAction(action: INPUT_ACTIONS, e: InputEvent): Promise<void>;
-    getInputValue(): Promise<string>;
-    getInputDOMRef(): Promise<HTMLInputElement | Input | null>;
+    updateValueOnSelect(item: SuggestionListItem): void;
+    fireEventByAction(action: INPUT_ACTIONS, e: InputEvent): void;
+    getInputValue(): string;
+    getInputDOMRef(): HTMLInputElement | Input | null;
     getInputDOMRefSync(): HTMLInputElement | null;
     /**
      * Returns a reference to the native input element
@@ -427,40 +421,40 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
      */
     get nativeInput(): HTMLInputElement | null;
     get nativeInputWidth(): number;
-    getLabelableElementId(): string;
     getSuggestionByListItem(item: SuggestionListItem): IInputSuggestionItem;
     /**
      * Returns if the suggestions popover is scrollable.
      * The method returns `Promise` that resolves to true,
      * if the popup is scrollable and false otherwise.
      */
-    isSuggestionsScrollable(): Promise<boolean>;
-    getInputId(): string;
+    isSuggestionsScrollable(): boolean | Promise<boolean>;
     onItemMouseOver(e: MouseEvent): void;
     onItemMouseOut(e: MouseEvent): void;
     onItemMouseDown(e: MouseEvent): void;
-    onItemSelected(item: SuggestionItem, keyboardUsed: boolean): void;
-    onItemPreviewed(item: SuggestionListItem): void;
+    onItemSelected(suggestionItem: SuggestionItem, listItem: SuggestionListItem | null, keyboardUsed: boolean): void;
+    onItemSelect(item: SuggestionListItem): void;
     get valueStateTypeMappings(): {
-        Success: string;
+        Positive: string;
         Information: string;
-        Error: string;
-        Warning: string;
+        Negative: string;
+        Critical: string;
     };
     valueStateTextMappings(): {
-        Success: string;
+        Positive: string;
         Information: string;
-        Error: string;
-        Warning: string;
+        Negative: string;
+        Critical: string;
     };
     announceSelectedItem(): void;
+    fireSelectionChange(item: IInputSuggestionItem | null, targetRef: SuggestionListItem | null, isValueFromSuggestions: boolean): void;
+    fireResetSelectionChange(): void;
     get _readonly(): boolean;
     get _headerTitleText(): string;
     get clearIconAccessibleName(): string;
     get inputType(): string;
     get isTypeNumber(): boolean;
-    get suggestionsTextId(): string;
-    get valueStateTextId(): string;
+    get suggestionsTextId(): "" | "suggestionsText";
+    get valueStateTextId(): "" | "valueStateDesc";
     get accInfo(): {
         input: {
             ariaRoledescription: string | undefined;
@@ -501,7 +495,6 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
         };
     };
     get suggestionSeparators(): string;
-    get valueStateMessageText(): Node[];
     get shouldDisplayOnlyValueStateMessage(): boolean;
     get shouldDisplayDefaultValueStateMessage(): boolean;
     get hasValueState(): boolean;
@@ -521,7 +514,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
      * This method is relevant for sap_horizon theme only
      */
     get _valueStateInputIcon(): string;
-    get _valueStatePopoverHorizontalAlign(): "Left" | "Right";
+    get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}`;
     /**
      * This method is relevant for sap_horizon theme only
      */
@@ -544,4 +537,4 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormElem
     static onDefine(): Promise<void>;
 }
 export default Input;
-export type { IInputSuggestionItem, InputSuggestionScrollEventDetail, InputSuggestionItemSelectEventDetail, InputSuggestionItemPreviewEventDetail, InputEventDetail, };
+export type { IInputSuggestionItem, InputSuggestionScrollEventDetail, InputSelectionChangeEventDetail, InputEventDetail, };

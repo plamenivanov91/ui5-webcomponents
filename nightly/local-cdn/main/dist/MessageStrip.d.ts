@@ -12,13 +12,9 @@ declare enum DesignClassesMapping {
     Information = "ui5-message-strip-root--info",
     Positive = "ui5-message-strip-root--positive",
     Negative = "ui5-message-strip-root--negative",
-    Warning = "ui5-message-strip-root--warning"
-}
-declare enum IconMapping {
-    Information = "information",
-    Positive = "sys-enter-2",
-    Negative = "error",
-    Warning = "alert"
+    Critical = "ui5-message-strip-root--critical",
+    ColorSet1 = "ui5-message-strip-root--color-set-1",
+    ColorSet2 = "ui5-message-strip-root--color-set-2"
 }
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 /**
@@ -27,7 +23,7 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * ### Overview
  *
  * The `ui5-message-strip` component enables the embedding of app-related messages.
- * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Warning and Negative.
+ * It displays 4 designs of messages, each with corresponding semantic color and icon: Information, Positive, Critical and Negative.
  * Each message can have a Close button, so that it can be removed from the UI, if needed.
  *
  * ### Usage
@@ -64,8 +60,21 @@ declare class MessageStrip extends UI5Element {
      */
     design: `${MessageStripDesign}`;
     /**
+     * Defines the color scheme of the component.
+     * There are 10 predefined schemes.
+     * To use one you can set a number from `"1"` to `"10"`. The `colorScheme` `"1"` will be set by default.
+     *
+     * @default "1"
+     * @public
+     * @since 2.0.0
+     */
+    colorScheme: string;
+    /**
      * Defines whether the MessageStrip will show an icon in the beginning.
      * You can directly provide an icon with the `icon` slot. Otherwise, the default icon for the type will be used.
+     *
+     *  * **Note:** If <code>MessageStripDesign.ColorSet1</code> or <code>MessageStripDesign.ColorSet2</code> value is set to the <code>design</code> property, default icon will not be presented.
+     *
      * @default false
      * @public
      * @since 1.0.0-rc.15
@@ -96,7 +105,7 @@ declare class MessageStrip extends UI5Element {
     get _closableText(): string;
     get classes(): ClassMap;
     get iconProvided(): boolean;
-    get standardIconName(): IconMapping;
+    get standardIconName(): "error" | "alert" | "sys-enter-2" | "information" | null;
     get designClasses(): DesignClassesMapping;
 }
 export default MessageStrip;

@@ -32,20 +32,20 @@ declare class Token extends UI5Element implements IToken {
      */
     text: string;
     /**
-     * Defines whether the component is read-only.
-     *
-     * **Note:** A read-only component can not be deleted or selected,
-     * but still provides visual feedback upon user interaction.
-     * @default false
-     * @public
-     */
-    readonly: boolean;
-    /**
      * Defines whether the component is selected or not.
      * @default false
      * @public
      */
     selected: boolean;
+    /**
+     * Defines whether the component is read-only.
+     *
+     * **Note:** A read-only component can not be deleted or selected,
+     * but still provides visual feedback upon user interaction.
+     * @default false
+     * @private
+     */
+    readonly: boolean;
     /**
      * Set by the tokenizer when a token is in the "more" area (overflowing)
      * @default false
@@ -86,9 +86,9 @@ declare class Token extends UI5Element implements IToken {
     _keydown(e: KeyboardEvent): void;
     onBeforeRendering(): void;
     get tokenDeletableText(): string;
-    get iconURI(): "sys-cancel" | "decline";
     get textDom(): Element | null | undefined;
     get isTruncatable(): boolean;
+    get ariaDescription(): string;
     static onDefine(): Promise<void>;
 }
 export default Token;

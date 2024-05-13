@@ -77,11 +77,6 @@ declare class ProductSwitchItem extends UI5Element implements IProductSwitchItem
      */
     private active;
     /**
-     * Indicates whether the element is focused.
-     * @private
-     */
-    private focused;
-    /**
      * Used to set the selected state of the component. Only one selected in a sequence.
      * **Note:** Set by the `ProductSwitch`
      */

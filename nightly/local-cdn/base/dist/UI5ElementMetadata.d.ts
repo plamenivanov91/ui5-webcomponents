@@ -31,6 +31,7 @@ type Metadata = {
     fastNavigation?: boolean;
     themeAware?: boolean;
     languageAware?: boolean;
+    shadowRootOptions?: Partial<ShadowRootInit>;
 };
 type State = Record<string, PropertyValue | Array<SlotValue>>;
 /**
@@ -129,6 +130,7 @@ declare class UI5ElementMetadata {
      * Determines whether this UI5 Element has any theme dependant carachteristics.
      */
     isThemeAware(): boolean;
+    getShadowRootOptions(): Partial<ShadowRootInit>;
     /**
      * Matches a changed entity (property/slot) with the given name against the "invalidateOnChildChange" configuration
      * and determines whether this should cause and invalidation

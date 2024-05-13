@@ -13,7 +13,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { isShow, isDown, isUp, isSpace, isSpaceCtrl, isSpaceShift, isRight, isHome, isEnd, isTabNext, isTabPrevious, isUpShift, isDownShift, isLeftCtrl, isRightCtrl, isUpCtrl, isDownCtrl, isHomeCtrl, isEndCtrl, isCtrlA, isDeleteShift, isInsertShift, isInsertCtrl, isBackSpace, isDelete, isEscape, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isShow, isDown, isUp, isSpace, isSpaceCtrl, isSpaceShift, isRight, isHome, isEnd, isTabNext, isTabPrevious, isUpShift, isDownShift, isLeftCtrl, isRightCtrl, isUpCtrl, isDownCtrl, isHomeCtrl, isEndCtrl, isCtrlA, isInsertShift, isBackSpace, isDelete, isEscape, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -29,10 +29,10 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import MultiComboBoxItem from "./MultiComboBoxItem.js";
+import MultiComboBoxItem, { isInstanceOfMultiComboBoxItem } from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
-import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
+import ListItemGroupHeader from "./ListItemGroupHeader.js";
+import Tokenizer from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -45,7 +45,6 @@ import Button from "./Button.js";
 import { VALUE_STATE_SUCCESS, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_INFORMATION, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, INPUT_SUGGESTIONS_TITLE, SELECT_OPTIONS, SHOW_SELECTED_BUTTON, MULTICOMBOBOX_DIALOG_OK_BUTTON, VALUE_STATE_ERROR_ALREADY_SELECTED, MCB_SELECTED_ITEMS, INPUT_CLEAR_ICON_ACC_NAME, } from "./generated/i18n/i18n-defaults.js";
 // Templates
 import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.lit.js";
-import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 // Styles
 import multiCbxStyles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
@@ -55,6 +54,7 @@ import MultiComboBoxPopover from "./generated/themes/MultiComboBoxPopover.css.js
 import ComboBoxFilter from "./types/ComboBoxFilter.js";
 import CheckBox from "./CheckBox.js";
 import "./Input.js";
+import "./types/PopoverHorizontalAlign.js";
 /**
  * @class
  *
@@ -101,6 +101,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     constructor() {
         super();
         this._filteredItems = [];
+        this.selectedItems = [];
         this._previouslySelectedItems = [];
         this.selectedValues = [];
         this._itemsBeforeOpen = [];
@@ -123,10 +124,13 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         this._inputWidth = this.offsetWidth;
     }
     _handleMobileInput(e) {
+        if (!this._getRespPopover().open) {
+            return;
+        }
         const target = e.target;
         const value = target.value;
-        if (!this.allowCustomValues && !this._filterItems(value).length) {
-            this._dialogInputValueState = ValueState.Error;
+        if (!this.noValidation && !this._filterItems(value).length) {
+            this._dialogInputValueState = ValueState.Negative;
         }
         else {
             this._dialogInputValueState = this.valueState;
@@ -142,7 +146,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             this.fireEvent("change");
         }
     }
-    async _mobileInputChange(e) {
+    _mobileInputChange(e) {
         this._inputChange.call(this);
         const { value } = e.target;
         const matchingItem = this.items.find(item => item.text === value);
@@ -153,18 +157,19 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         const changePrevented = this.fireSelectionChange();
         if (!changePrevented) {
             matchingItem.selected = !initiallySelected;
-            (await this._getResponsivePopover()).close();
+            this._getResponsivePopover().preventFocusRestore = false;
+            this._getResponsivePopover().open = false;
             this.value = "";
         }
     }
     _togglePopover() {
-        this._tokenizer.closeMorePopover();
-        this.allItemsPopover?.toggle(this);
+        this._tokenizer.open = false;
+        this._getRespPopover().toggle(this);
     }
     togglePopoverByDropdownIcon() {
         this._shouldFilterItems = false;
-        this.allItemsPopover?.toggle(this);
-        this._tokenizer.closeMorePopover();
+        this._getRespPopover().toggle(this);
+        this._tokenizer.open = false;
     }
     _showFilteredItems() {
         this.filterSelected = true;
@@ -210,11 +215,11 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             }
         }
         this._effectiveValueState = this.valueState;
-        if (!filteredItems.length && value && !this.allowCustomValues) {
+        if (!filteredItems.length && value && !this.noValidation) {
             const newValue = this.valueBeforeAutoComplete || this._inputLastValue;
             input.value = newValue;
             this.value = newValue;
-            this.valueState = ValueState.Error;
+            this.valueState = ValueState.Negative;
             this._shouldAutocomplete = false;
             this._resetValueState(oldValueState);
             return;
@@ -224,10 +229,11 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         this._filteredItems = filteredItems;
         if (!isPhone()) {
             if (filteredItems.length === 0) {
-                this.allItemsPopover?.close();
+                this._getRespPopover().open = false;
             }
             else {
-                this.allItemsPopover?.showAt(this);
+                this._getRespPopover().opener = this;
+                this._getRespPopover().open = true;
             }
         }
         this.fireEvent("input");
@@ -266,10 +272,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         const lastTokenBeingDeleted = tokensCount - 1 === 0 && this._deleting;
         const allTokensAreBeingDeleted = selectedTokens === tokensCount && this._deleting;
         const relatedTarget = e.relatedTarget;
-        const isFocusingPopover = this.staticAreaItem === relatedTarget;
-        const isFocusingInput = this._inputDom === relatedTarget;
-        const isFocusingMorePopover = e.relatedTarget === this._tokenizer.staticAreaItem;
-        if (!relatedTarget?.hasAttribute("ui5-token") && !isFocusingPopover && !isFocusingInput && !isFocusingMorePopover) {
+        if (!this.shadowRoot?.contains(relatedTarget)) {
             this._tokenizer.tokens.forEach(token => {
                 token.selected = false;
             });
@@ -287,6 +290,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     _tokenizerFocusIn() {
         this._tokenizerFocused = true;
         this.focused = false;
+        this._tokenizer.scrollToEnd();
     }
     _onkeydown(e) {
         const isArrowDownCtrl = isDownCtrl(e);
@@ -305,7 +309,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         }
         // CTRL + Arrow Down navigation is performed by the ItemNavigation module of the List,
         // here we only implement the text selection of the selected item
-        if (isArrowDownCtrl && !this.allItemsPopover?.opened) {
+        if (isArrowDownCtrl && !this._getRespPopover().open) {
             setTimeout(() => this._inputDom.setSelectionRange(0, this._inputDom.value.length), 0);
         }
         if (isLeftCtrl(e) || isRightCtrl(e)) {
@@ -423,7 +427,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         if (isAutoCompleted) {
             this.value = this.valueBeforeAutoComplete;
         }
-        if (!this.allowCustomValues || (!this.open && this.allowCustomValues)) {
+        if (!this.noValidation || (!this.open && this.noValidation)) {
             this.value = this._lastValue;
         }
     }
@@ -444,7 +448,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         }
     }
     _handleTab() {
-        this.allItemsPopover?.close();
+        this._getRespPopover().open = false;
     }
     _handleSelectAll() {
         const filteredItems = this._filteredItems;
@@ -469,7 +473,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         e.preventDefault();
         if (isArrowDown || isDownCtrl(e)) {
             if (this.showSelectAll && !isSelectAllFocused) {
-                return (await this._getResponsivePopover()).querySelector(".ui5-mcb-select-all-checkbox").focus();
+                return this._getResponsivePopover().querySelector(".ui5-mcb-select-all-checkbox").focus();
             }
             this._handleArrowDown();
         }
@@ -502,11 +506,11 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             }
         }
     }
-    async _onItemKeydown(e) {
+    _onItemKeydown(e) {
         const isFirstItem = this.list?.items[0] === e.target;
         const isArrowUp = isUp(e) || isUpCtrl(e);
         if (this.hasValueStateMessage && !this.valueStateHeader) {
-            await this._setValueStateHeader();
+            this._setValueStateHeader();
         }
         if (isTabNext(e) || isTabPrevious(e)) {
             this._onItemTab();
@@ -542,7 +546,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         }
         if (isFirstItem && isArrowUp) {
             if (this.showSelectAll) {
-                (await this._getResponsivePopover()).querySelector(".ui5-mcb-select-all-checkbox").focus();
+                this._getResponsivePopover().querySelector(".ui5-mcb-select-all-checkbox").focus();
             }
             else if (this.valueStateHeader) {
                 this.valueStateHeader.focus();
@@ -565,15 +569,15 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     }
     _onItemTab() {
         this._inputDom.focus();
-        this.allItemsPopover?.close();
+        this._getRespPopover().open = false;
     }
-    async _handleArrowNavigation(e, isDownControl) {
+    _handleArrowNavigation(e, isDownControl) {
         const isArrowDown = isDownControl || isDown(e);
         const hasSuggestions = this.items.length;
-        const isOpen = this.allItemsPopover?.opened;
+        const isOpen = this._getRespPopover().open;
         e.preventDefault();
         if (this.hasValueStateMessage && !this.valueStateHeader) {
-            await this._setValueStateHeader();
+            this._setValueStateHeader();
         }
         if (isArrowDown && isOpen) {
             if (this.valueStateHeader) {
@@ -582,7 +586,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                 return;
             }
             if (this.showSelectAll) {
-                (await this._getResponsivePopover()).querySelector(".ui5-mcb-select-all-checkbox").focus();
+                this._getResponsivePopover().querySelector(".ui5-mcb-select-all-checkbox").focus();
                 return;
             }
         }
@@ -594,8 +598,8 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         }
     }
     async _handleArrowDown() {
-        const isOpen = this.allItemsPopover?.opened;
-        const firstListItem = this.list?.items[0];
+        const isOpen = this._getRespPopover().open;
+        const firstListItem = this.list?.listItems[0];
         if (isOpen) {
             firstListItem && this.list?._itemNavigation.setCurrentItem(firstListItem);
             this.value = this.valueBeforeAutoComplete || this.value;
@@ -690,7 +694,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                 if (this._validationTimeout) {
                     return;
                 }
-                this.valueState = ValueState.Error;
+                this.valueState = ValueState.Negative;
                 this._performingSelectionTwice = true;
                 this._resetValueState(oldValueState, () => {
                     this._performingSelectionTwice = false;
@@ -706,19 +710,19 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                 }
             }
             innerInput.setSelectionRange(matchingItem.text.length, matchingItem.text.length);
-            this.allItemsPopover?.close();
+            this._getRespPopover().open = false;
         }
     }
     _resetValueState(valueState, callback) {
         this._validationTimeout = setTimeout(() => {
             this._effectiveValueState = this.valueState;
+            this._dialogInputValueState = valueState;
             this.valueState = valueState;
             this._validationTimeout = null;
             callback && callback();
         }, 2000);
     }
     _onTokenizerKeydown(e) {
-        const isCtrl = !!(e.metaKey || e.ctrlKey);
         if (isRight(e)) {
             const lastTokenIndex = this._tokenizer.tokens.length - this._tokenizer.overflownTokens.length - 1;
             if (e.target === this._tokenizer.tokens[lastTokenIndex]) {
@@ -726,20 +730,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                     this._inputDom.focus();
                 }, 0);
             }
-        }
-        if ((isCtrl && ["c", "x"].includes(e.key.toLowerCase())) || isDeleteShift(e) || isInsertCtrl(e)) {
-            e.preventDefault();
-            const isCut = e.key.toLowerCase() === "x" || isDeleteShift(e);
-            const selectedTokens = this._tokenizer.tokens.filter(token => token.selected);
-            if (isCut) {
-                const cutResult = this._tokenizer._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
-                selectedTokens.forEach(token => {
-                    this._tokenizer.deleteToken(token);
-                });
-                this.focus();
-                return cutResult;
-            }
-            return this._tokenizer._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
         }
         if (isInsertShift(e)) {
             this._handleInsertPaste(e);
@@ -753,10 +743,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         if (isShow(e) && !this.readonly && !this.disabled) {
             this._preventTokenizerToggle = true;
             this._handleShow(e);
-        }
-        if (isCtrl && e.key.toLowerCase() === "i" && this._tokenizer.tokens.length > 0) {
-            e.preventDefault();
-            this._togglePopover();
         }
     }
     _filterItems(str) {
@@ -788,7 +774,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             this._itemToFocus?.focus();
         }
         else {
-            this.allItemsPopover?.focus();
+            this._getRespPopover().focus();
         }
         this._previouslySelectedItems = this._getSelectedItems();
         this._isOpenedByKeyboard = false;
@@ -808,7 +794,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             this._previouslySelectedItems = this._getSelectedItems();
         }
         // sync list items and cb items
-        this.syncItems(e.target.items);
+        this.syncItems(e.target.listItems);
         // don't call selection change right after selection as user can cancel it on phone
         if (!isPhone()) {
             changePrevented = this.fireSelectionChange();
@@ -823,7 +809,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             this.filterSelected = false;
         }
         if (!e.detail.selectionComponentPressed && !isSpace(castedEvent) && !isSpaceCtrl(castedEvent)) {
-            this.allItemsPopover?.close();
+            this._getRespPopover().open = false;
             this.value = "";
             // if the item (not checkbox) is clicked, call the selection change
             if (isPhone()) {
@@ -854,34 +840,34 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         this.fireEvent("value-changed");
         return changePrevented;
     }
-    async _getRespPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        this.allItemsPopover = staticAreaItem.querySelector(`.ui5-multi-combobox-all-items-responsive-popover`);
+    _getRespPopover() {
+        return this.shadowRoot.querySelector(`.ui5-multi-combobox-all-items-responsive-popover`);
     }
     async _getList() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        this.list = staticAreaItem.querySelector(".ui5-multi-combobox-all-items-list");
+        await renderFinished();
+        this.list = this.shadowRoot.querySelector(".ui5-multi-combobox-all-items-list");
         return this.list;
     }
     _click() {
         if (isPhone() && !this.readonly && !this._showMorePressed && !this._deleting) {
-            this.allItemsPopover?.showAt(this);
+            this._getRespPopover().opener = this;
+            this._getRespPopover().open = true;
         }
         this._showMorePressed = false;
     }
-    async handleBeforeTokenizerPopoverOpen() {
+    handleBeforeTokenizerPopoverOpen() {
         const tokens = this._tokenizer.tokens;
         const hasTruncatedToken = tokens.length === 1 && tokens[0].isTruncatable;
-        const popover = (await this._getResponsivePopover());
-        if (hasTruncatedToken) {
-            popover?.close(false, false, true);
+        const popover = this._getResponsivePopover();
+        if (hasTruncatedToken && popover) {
+            popover.preventFocusRestore = true;
+            popover.open = false;
         }
     }
     _afterClosePicker() {
         // close device's keyboard and prevent further typing
         if (isPhone()) {
             this._dialogInputValueState = this.valueState;
-            this.blur();
         }
         this._toggle();
         this._iconPressed = false;
@@ -952,7 +938,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             this._filteredItems = this.items;
         }
         this.items.forEach(item => {
-            item._getRealDomRef = () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+            item._getRealDomRef = () => this._getRespPopover().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
         });
         this.tokenizerAvailable = this._getSelectedItems().length > 0;
         this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
@@ -961,7 +947,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         }
         // Typehead causes issues on Android devices, so we disable it for now
         // If there is already a selection the autocomplete has already been performed
-        if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars) {
+        if (this._shouldAutocomplete && !isAndroid()) {
             const item = this._getFirstMatchingItem(value);
             // Keep the original typed in text intact
             this.valueBeforeAutoComplete = value;
@@ -975,13 +961,20 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         }
     }
     async onAfterRendering() {
-        await this._getRespPopover();
+        this._getRespPopover();
         await this._getList();
         this.toggle(this.shouldDisplayOnlyValueStateMessage);
         this.storeResponsivePopoverWidth();
         this._deleting = false;
         // force resize of the tokenizer on invalidation
         this._tokenizer._handleResize();
+        this._tokenizer.preventInitialFocus = true;
+        if (this._getRespPopover()?.open) {
+            this._tokenizer.expanded = true;
+        }
+        if (this._tokenizer.expanded && this.hasAttribute("focused")) {
+            this._tokenizer.scrollToEnd();
+        }
     }
     get _isPhone() {
         return isPhone();
@@ -1015,7 +1008,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     }
     handleCancel() {
         this._itemsBeforeOpen.forEach(item => {
-            if (item.ref instanceof MultiComboBoxItem) {
+            if (isInstanceOfMultiComboBoxItem(item.ref)) {
                 item.ref.selected = item.selected;
             }
         });
@@ -1029,13 +1022,17 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                 this._revertSelection();
             }
         }
-        if (!this.allowCustomValues) {
+        if (!this.noValidation) {
             this.value = "";
         }
         this._togglePopover();
     }
-    async openPopover() {
-        (await this._getPopover())?.showAt(this);
+    openPopover() {
+        const popover = this._getPopover();
+        if (popover) {
+            popover.opener = this;
+            popover.open = true;
+        }
     }
     _forwardFocusToInner() {
         this._innerInput.focus();
@@ -1047,28 +1044,29 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         }
         return this;
     }
-    async closePopover() {
-        (await this._getPopover())?.close();
+    closePopover() {
+        if (this._getPopover()) {
+            this._getPopover().open = false;
+        }
     }
-    async _getPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return (staticAreaItem.querySelector("[ui5-popover]"));
+    _getPopover() {
+        return this.shadowRoot.querySelector("[ui5-popover]");
     }
-    async _getResponsivePopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector("[ui5-responsive-popover]");
+    _getResponsivePopover() {
+        return this.shadowRoot.querySelector("[ui5-responsive-popover]");
     }
-    async _setValueStateHeader() {
-        const responsivePopover = await this._getResponsivePopover();
+    _setValueStateHeader() {
+        const responsivePopover = this._getResponsivePopover();
         this.valueStateHeader = responsivePopover.querySelector("div.ui5-responsive-popover-header.ui5-valuestatemessage-root");
     }
     get _tokenizer() {
         return this.shadowRoot.querySelector("[ui5-tokenizer]");
     }
     inputFocusIn(e) {
-        if (!isPhone() || this.readonly) {
+        if (!isPhone()) {
             this.focused = true;
             this._tokenizer.expanded = true;
+            this._tokenizer.scrollToEnd();
         }
         else {
             this._innerInput.blur();
@@ -1083,14 +1081,17 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         this.valueBeforeAutoComplete = "";
     }
     inputFocusOut(e) {
-        if (!this.shadowRoot.contains(e.relatedTarget) && !this._deleting && !this._clearingValue) {
+        const responsivePopover = this._getResponsivePopover();
+        const popover = this._getPopover();
+        const focusIsGoingInPopover = [responsivePopover, popover].some(popup => popup?.contains(e.relatedTarget));
+        if ((!this.shadowRoot.contains(e.relatedTarget) || focusIsGoingInPopover) && !this._deleting && !this._clearingValue) {
             this.focused = false;
             if (this._lastValue !== this.value) {
                 this._inputChange();
             }
             this._tokenizer.expanded = this.open;
             // remove the value if user focus out the input and focus is not going in the popover
-            if (!isPhone() && !this.allowCustomValues && (this.staticAreaItem !== e.relatedTarget)) {
+            if (!isPhone() && !this.noValidation && !focusIsGoingInPopover) {
                 this.value = "";
             }
         }
@@ -1102,7 +1103,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         return !isPhone() && (this.focused || this._tokenizerFocused);
     }
     get selectedItemsListMode() {
-        return this.readonly ? "None" : "MultiSelect";
+        return this.readonly ? "None" : "Multiple";
     }
     get _listItemsType() {
         return this.readonly ? "Inactive" : "Active";
@@ -1112,7 +1113,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     }
     get hasValueStateMessage() {
         const valueState = isPhone() ? this._dialogInputValueState : this.valueState;
-        return this.hasValueState && valueState !== ValueState.Success;
+        return this.hasValueState && valueState !== ValueState.Positive;
     }
     get ariaValueStateHiddenText() {
         if (!this.hasValueState) {
@@ -1155,9 +1156,9 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             return "";
         }
         return {
-            [ValueState.Error]: "error",
-            [ValueState.Warning]: "alert",
-            [ValueState.Success]: "sys-enter-2",
+            [ValueState.Negative]: "error",
+            [ValueState.Critical]: "alert",
+            [ValueState.Positive]: "sys-enter-2",
             [ValueState.Information]: "information",
         }[valueState];
     }
@@ -1184,24 +1185,24 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     }
     get valueStateTypeMappings() {
         return {
-            [ValueState.Success]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+            [ValueState.Positive]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
             [ValueState.Information]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-            [ValueState.Error]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-            [ValueState.Warning]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+            [ValueState.Negative]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+            [ValueState.Critical]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
         };
     }
     get valueStateTextMappings() {
         return {
-            [ValueState.Success]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
-            [ValueState.Error]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_ERROR),
-            [ValueState.Warning]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_WARNING),
+            [ValueState.Positive]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
+            [ValueState.Negative]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_ERROR),
+            [ValueState.Critical]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_WARNING),
             [ValueState.Information]: MultiComboBox_1.i18nBundle.getText(VALUE_STATE_INFORMATION),
         };
     }
     get _innerInput() {
         if (isPhone()) {
-            if (this.allItemsPopover?.opened) {
-                return this.allItemsPopover.querySelector("ui5-input").shadowRoot.querySelector("input");
+            if (this._getRespPopover()?.open) {
+                return this._getRespPopover().querySelector("[ui5-input]").shadowRoot.querySelector("input");
             }
         }
         return this._inputDom;
@@ -1219,7 +1220,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         return MultiComboBox_1.i18nBundle.getText(MULTICOMBOBOX_DIALOG_OK_BUTTON);
     }
     get _tokenizerExpanded() {
-        if (isPhone() || this.readonly) {
+        if (isPhone()) {
             return false;
         }
         if (this._preventTokenizerToggle) {
@@ -1230,7 +1231,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         return shouldBeExpanded;
     }
     get _valueStatePopoverHorizontalAlign() {
-        return this.effectiveDir !== "rtl" ? "Left" : "Right";
+        return this.effectiveDir !== "rtl" ? "Start" : "End";
     }
     get iconsCount() {
         const slottedIconsCount = this.icon?.length || 0;
@@ -1257,9 +1258,9 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             popoverValueState: {
                 "ui5-valuestatemessage-root": true,
                 "ui5-valuestatemessage-header": true,
-                "ui5-valuestatemessage--success": (this.valueState === ValueState.Success) || (this._dialogInputValueState === ValueState.Success),
-                "ui5-valuestatemessage--error": (this.valueState === ValueState.Error) || (this._dialogInputValueState === ValueState.Error),
-                "ui5-valuestatemessage--warning": (this.valueState === ValueState.Warning) || (this._dialogInputValueState === ValueState.Warning),
+                "ui5-valuestatemessage--success": (this.valueState === ValueState.Positive) || (this._dialogInputValueState === ValueState.Positive),
+                "ui5-valuestatemessage--error": (this.valueState === ValueState.Negative) || (this._dialogInputValueState === ValueState.Negative),
+                "ui5-valuestatemessage--warning": (this.valueState === ValueState.Critical) || (this._dialogInputValueState === ValueState.Critical),
                 "ui5-valuestatemessage--information": (this.valueState === ValueState.Information) || (this._dialogInputValueState === ValueState.Information),
             },
         };
@@ -1295,7 +1296,7 @@ __decorate([
 ], MultiComboBox.prototype, "placeholder", void 0);
 __decorate([
     property({ type: Boolean })
-], MultiComboBox.prototype, "allowCustomValues", void 0);
+], MultiComboBox.prototype, "noValidation", void 0);
 __decorate([
     property({ type: Boolean })
 ], MultiComboBox.prototype, "disabled", void 0);
@@ -1386,9 +1387,13 @@ MultiComboBox = MultiComboBox_1 = __decorate([
         languageAware: true,
         renderer: litRender,
         template: MultiComboBoxTemplate,
-        staticAreaTemplate: MultiComboBoxPopoverTemplate,
-        styles: multiCbxStyles,
-        staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, MultiComboBoxPopover],
+        styles: [
+            multiCbxStyles,
+            ResponsivePopoverCommonCss,
+            ValueStateMessageCss,
+            SuggestionsCss,
+            MultiComboBoxPopover,
+        ],
         dependencies: [
             MultiComboBoxItem,
             MultiComboBoxGroupItem,
@@ -1399,7 +1404,7 @@ MultiComboBox = MultiComboBox_1 = __decorate([
             Popover,
             List,
             StandardListItem,
-            GroupHeaderListItem,
+            ListItemGroupHeader,
             ToggleButton,
             Button,
             CheckBox,

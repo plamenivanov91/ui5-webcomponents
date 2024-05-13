@@ -52,17 +52,17 @@ let ProgressIndicator = ProgressIndicator_1 = class ProgressIndicator extends UI
     }
     valueStateTextMappings() {
         return {
-            "Error": ProgressIndicator_1.i18nBundle.getText(VALUE_STATE_ERROR),
-            "Warning": ProgressIndicator_1.i18nBundle.getText(VALUE_STATE_WARNING),
-            "Success": ProgressIndicator_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
+            "Negative": ProgressIndicator_1.i18nBundle.getText(VALUE_STATE_ERROR),
+            "Critical": ProgressIndicator_1.i18nBundle.getText(VALUE_STATE_WARNING),
+            "Positive": ProgressIndicator_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
             "Information": ProgressIndicator_1.i18nBundle.getText(VALUE_STATE_INFORMATION),
         };
     }
     valueStateIconMappings() {
         return {
-            "Error": "status-negative",
-            "Warning": "status-critical",
-            "Success": "status-positive",
+            "Negative": "status-negative",
+            "Critical": "status-critical",
+            "Positive": "status-positive",
             "Information": "information",
         };
     }
@@ -108,9 +108,6 @@ let ProgressIndicator = ProgressIndicator_1 = class ProgressIndicator extends UI
     get valueStateIcon() {
         return this.valueStateIconMappings()[this.valueState];
     }
-    get _ariaDisabled() {
-        return this.disabled || undefined;
-    }
     static async onDefine() {
         ProgressIndicator_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
     }
@@ -118,9 +115,6 @@ let ProgressIndicator = ProgressIndicator_1 = class ProgressIndicator extends UI
 __decorate([
     property()
 ], ProgressIndicator.prototype, "accessibleName", void 0);
-__decorate([
-    property({ type: Boolean })
-], ProgressIndicator.prototype, "disabled", void 0);
 __decorate([
     property({ type: Boolean })
 ], ProgressIndicator.prototype, "hideValue", void 0);

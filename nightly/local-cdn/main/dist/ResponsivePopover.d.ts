@@ -47,25 +47,14 @@ declare class ResponsivePopover extends Popover {
     _hideCloseButton: boolean;
     static i18nBundle: I18nBundle;
     constructor();
-    /**
-     * Shows popover on desktop and dialog on mobile.
-     * @param opener the element that the popover is shown at
-     * @param [preventInitialFocus=false] Prevents applying the focus inside the popup
-     * @public
-     * @returns Resolves when the responsive popover is open
-     */
-    showAt(opener: HTMLElement, preventInitialFocus?: boolean): Promise<void>;
+    openPopup(): Promise<void>;
+    _show(): void;
     /**
      * Closes the popover/dialog.
-     * @public
+     * @override
      */
-    close(escPressed?: boolean, preventRegistryUpdate?: boolean, preventFocusRestore?: boolean): void;
+    closePopup(escPressed?: boolean, preventRegistryUpdate?: boolean, preventFocusRestore?: boolean): void;
     toggle(opener: HTMLElement): void;
-    /**
-     * Tells if the responsive popover is open.
-     * @public
-     */
-    isOpen(): boolean;
     get classes(): import("@ui5/webcomponents-base/dist/types.js").ClassMap;
     get _dialog(): Dialog;
     get contentDOM(): HTMLElement;

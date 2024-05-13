@@ -17,8 +17,8 @@ import ComboBoxItem from "./ComboBoxItem.js";
  * @public
  */
 let MultiComboBoxItem = class MultiComboBoxItem extends ComboBoxItem {
-    get stableDomRef() {
-        return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+    get isMultiComboBoxItem() {
+        return true;
     }
 };
 __decorate([
@@ -27,6 +27,10 @@ __decorate([
 MultiComboBoxItem = __decorate([
     customElement("ui5-mcb-item")
 ], MultiComboBoxItem);
+const isInstanceOfMultiComboBoxItem = (object) => {
+    return "isMultiComboBoxItem" in object;
+};
 MultiComboBoxItem.define();
 export default MultiComboBoxItem;
+export { isInstanceOfMultiComboBoxItem };
 //# sourceMappingURL=MultiComboBoxItem.js.map

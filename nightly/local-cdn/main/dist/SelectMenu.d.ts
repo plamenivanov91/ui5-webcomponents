@@ -65,7 +65,7 @@ declare class SelectMenu extends UI5Element {
     /**
      * Closes the dropdown.
      */
-    close(escPressed?: boolean, preventRegistryUpdate?: boolean, preventFocusRestore?: boolean): void;
+    close(preventFocusRestore?: boolean): void;
     onBeforeRendering(): void;
     _syncSelection(): void;
     _onOptionClick(e: CustomEvent): void;

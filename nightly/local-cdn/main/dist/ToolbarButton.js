@@ -31,9 +31,6 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * @since 1.17.0
  */
 let ToolbarButton = class ToolbarButton extends ToolbarItem {
-    static get staticAreaStyles() {
-        return ToolbarButtonPopoverCss;
-    }
     get styles() {
         return {
             width: this.width,
@@ -89,6 +86,7 @@ ToolbarButton = __decorate([
     customElement({
         tag: "ui5-toolbar-button",
         dependencies: [Button],
+        styles: ToolbarButtonPopoverCss,
     })
     /**
      * Fired when the component is activated either with a

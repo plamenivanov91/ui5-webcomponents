@@ -12,10 +12,10 @@ import { isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
 import Menu from "./Menu.js";
 import "./StandardListItem.js";
 import "./MenuItem.js";
-import staticAreaMenuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
+import menuTemplate from "./generated/templates/NavigationMenuTemplate.lit.js";
 // Styles
-import staticAreaNavigationMenuCss from "./generated/themes/NavigationMenu.css.js";
-import staticAreaMenuCss from "./generated/themes/Menu.css.js";
+import navigationMenuCss from "./generated/themes/NavigationMenu.css.js";
+import menuCss from "./generated/themes/Menu.css.js";
 import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
@@ -86,7 +86,7 @@ let NavigationMenu = NavigationMenu_1 = class NavigationMenu extends Menu {
                 parentMenu = openerMenuItem.parentElement;
                 openerMenuItem = parentMenu._parentMenuItem;
             } while (parentMenu._parentMenuItem);
-            mainMenu._popover.close();
+            mainMenu._popover.open = false;
         }
         this._prepareSubMenu(item, opener);
     }
@@ -101,8 +101,8 @@ NavigationMenu = NavigationMenu_1 = __decorate([
     customElement({
         tag: "ui5-navigation-menu",
         renderer: litRender,
-        staticAreaStyles: [staticAreaMenuCss, staticAreaNavigationMenuCss],
-        staticAreaTemplate: staticAreaMenuTemplate,
+        styles: [menuCss, navigationMenuCss],
+        template: menuTemplate,
     })
 ], NavigationMenu);
 NavigationMenu.define();

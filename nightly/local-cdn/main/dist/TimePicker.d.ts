@@ -1,5 +1,19 @@
-import TimePickerBase from "./TimePickerBase.js";
-import type { TimePickerBaseChangeEventDetail as TimePickerChangeEventDetail, TimePickerBaseInputEventDetail as TimePickerInputEventDetail } from "./TimePickerBase.js";
+/// <reference types="openui5" />
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
+import "@ui5/webcomponents-icons/dist/time-entry-request.js";
+import Popover from "./Popover.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import Input from "./Input.js";
+import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
+type TimePickerChangeInputEventDetail = {
+    value: string;
+    valid: boolean;
+};
+type TimePickerChangeEventDetail = TimePickerChangeInputEventDetail;
+type TimePickerInputEventDetail = TimePickerChangeInputEventDetail;
 /**
  * @class
  *
@@ -58,11 +72,37 @@ import type { TimePickerBaseChangeEventDetail as TimePickerChangeEventDetail, Ti
  *
  * `import "@ui5/webcomponents/dist/TimePicker.js";`
  * @constructor
- * @extends TimePickerBase
+ * @extends UI5Element
  * @public
  * @since 1.0.0-rc.6
  */
-declare class TimePicker extends TimePickerBase {
+declare class TimePicker extends UI5Element {
+    /**
+     * Defines a formatted time value.
+     * @default undefined
+     * @formEvents change input
+     * @formProperty
+     * @public
+     */
+    value?: string;
+    /**
+     * Defines the value state of the component.
+     * @default "None"
+     * @public
+     */
+    valueState: `${ValueState}`;
+    /**
+     * Defines the disabled state of the comonent.
+     * @default false
+     * @public
+     */
+    disabled: boolean;
+    /**
+     * Defines the readonly state of the comonent.
+     * @default false
+     * @public
+     */
+    readonly: boolean;
     /**
      * Defines a short hint, intended to aid the user with data entry when the
      * component has no value.
@@ -84,21 +124,139 @@ declare class TimePicker extends TimePickerBase {
      * @public
      */
     formatPattern: string;
+    _isPickerOpen: boolean;
+    _isInputsPopoverOpen: boolean;
+    /**
+     * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
+     *
+     * **Note:** If not specified, a default text (in the respective language) will be displayed.
+     *
+     * **Note:** The `valueStateMessage` would be displayed,
+     * when the `ui5-time-picker` is in `Information`, `Warning` or `Error` value state.
+     * @since 1.0.0-rc.8
+     * @public
+     */
+    valueStateMessage: Array<HTMLElement>;
+    tempValue?: string;
+    static i18nBundle: I18nBundle;
+    static onDefine(): Promise<void>;
     onBeforeRendering(): void;
-    get _formatPattern(): string;
-    get _displayFormat(): string;
-    get _placeholder(): string;
+    get dateAriaDescription(): string;
+    get accInfo(): {
+        ariaRoledescription: string;
+        ariaHasPopup: string;
+    };
     /**
      * Currently selected time represented as JavaScript Date instance
      * @public
      * @default null
      */
     get dateValue(): Date | Date[] | null;
-    get accInfo(): {
-        ariaRoledescription: string;
-        ariaHasPopup: string;
-    };
-    get dateAriaDescription(): string;
+    /**
+     * @protected
+     */
+    get _placeholder(): string;
+    /**
+     * @protected
+     */
+    get _formatPattern(): string;
+    get _displayFormat(): string;
+    get _effectiveValue(): string | undefined;
+    get _timeSelectionValue(): string | undefined;
+    get _isPhone(): boolean;
+    onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>): void;
+    /**
+     * Opens the picker.
+     * @public
+     * @returns Resolves when the picker is open
+     */
+    openPicker(): void;
+    /**
+     * Closes the picker
+     * @public
+     * @returns Resolves when the picker is closed
+     */
+    closePicker(): void;
+    togglePicker(): void;
+    /**
+     * Checks if the picker is open
+     * @public
+     */
+    isOpen(): boolean;
+    submitPickers(): void;
+    onResponsivePopoverAfterClose(): void;
+    onResponsivePopoverAfterOpen(): void;
+    /**
+     * Opens the Inputs popover.
+     * @private
+     * @returns Resolves when the Inputs popover is open
+     */
+    openInputsPopover(): void;
+    /**
+     * Closes the Inputs popover
+     * @private
+     * @returns Resolves when the Inputs popover is closed
+     */
+    closeInputsPopover(): void;
+    toggleInputsPopover(): void;
+    /**
+     * Checks if the inputs popover is open
+     * @private
+     */
+    isInputsPopoverOpen(): boolean;
+    submitInputsPopover(): void;
+    onInputsPopoverAfterOpen(): void;
+    onInputsPopoverAfterClose(): void;
+    _handleInputClick(evt: MouseEvent): void;
+    _updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<string>): void;
+    _updateValueState(): void;
+    _handleInputChange(e: CustomEvent): void;
+    _handleInputLiveChange(e: CustomEvent): void;
+    _canOpenPicker(): boolean;
+    _canOpenInputsPopover(): boolean;
+    _getPopover(): ResponsivePopover;
+    _getInputsPopover(): Popover;
+    _getInput(): Input;
+    _getInputField(): HTMLInputElement | Input | null;
+    _onkeydown(e: KeyboardEvent): void;
+    get _isPattern(): boolean;
+    getFormat(): import("sap/ui/core/format/DateFormat").default;
+    /**
+     * Formats a Java Script date object into a string representing a locale date and time
+     * according to the `formatPattern` property of the TimePicker instance
+     * @param date A Java Script date object to be formatted as string
+     * @public
+     * @returns formatted value
+     */
+    formatValue(date: Date): string;
+    /**
+     * Checks if a value is valid against the current `formatPattern` value.
+     *
+     * **Note:** an empty string is considered as valid value.
+     * @param value The value to be tested against the current date format
+     * @public
+     */
+    isValid(value: string | undefined): boolean;
+    normalizeValue(value: string): string;
+    _modifyValueBy(amount: number, unit: string): void;
+    /**
+     * The listener for this event can't be passive as it calls preventDefault()
+     * @param e Wheel Event
+     * @private
+     */
+    _handleWheel(e: WheelEvent): void;
+    /**
+     * Hides mobile device keyboard by temporary setting the input to readonly state.
+     */
+    _hideMobileKeyboard(): void;
+    _onfocusin(evt: FocusEvent): void;
+    _oninput(evt: CustomEvent): void;
+    get submitButtonLabel(): string;
+    get cancelButtonLabel(): string;
+    /**
+     * @protected
+     */
+    get openIconName(): string;
 }
 export default TimePicker;
-export type { TimePickerChangeEventDetail, TimePickerInputEventDetail, };
+export type { TimeSelectionChangeEventDetail, TimePickerChangeEventDetail, TimePickerInputEventDetail, };

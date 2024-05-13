@@ -8,8 +8,7 @@ import SuggestionItem from "../SuggestionItem.js";
 import SuggestionGroupItem from "../SuggestionGroupItem.js";
 import Button from "../Button.js";
 import Icon from "../Icon.js";
-import Popover from "../Popover.js";
-import GroupHeaderListItem from "../GroupHeaderListItem.js";
+import ListItemGroupHeader from "../ListItemGroupHeader.js";
 import SuggestionListItem from "../SuggestionListItem.js";
 import type ListItemType from "../types/ListItemType.js";
 import type { IInputSuggestionItem } from "../Input.js";
@@ -24,8 +23,8 @@ interface SuggestionComponent extends UI5Element {
     open: boolean;
     onItemMouseOver: (e: MouseEvent) => void;
     onItemMouseOut: (e: MouseEvent) => void;
-    onItemSelected: (pressedItem: SuggestionItem, keyboardUsed: boolean) => void;
-    onItemPreviewed: (item: SuggestionListItem) => void;
+    onItemSelected: (pressedItem: SuggestionItem, listItem: SuggestionListItem | null, keyboardUsed: boolean) => void;
+    onItemSelect: (item: SuggestionListItem) => void;
 }
 type InputSuggestion = {
     text: string;
@@ -58,7 +57,6 @@ declare class Suggestions {
     highlight: boolean;
     selectedItemIndex: number;
     accInfo?: SuggestionsAccInfo;
-    responsivePopover?: ResponsivePopover;
     _scrollContainer?: HTMLElement;
     _handledPress?: boolean;
     attachedAfterOpened?: boolean;
@@ -82,18 +80,15 @@ declare class Suggestions {
     toggle(bToggle: boolean, options: {
         preventFocusRestore: boolean;
     }): void;
-    _isScrollable(): Promise<boolean>;
+    _isScrollable(): boolean;
     open(): void;
-    close(preventFocusRestore?: boolean): Promise<void>;
+    close(preventFocusRestore?: boolean): void;
     updateSelectedItemPosition(pos: number): void;
     onItemMouseOver(e: MouseEvent): void;
     onItemMouseOut(e: MouseEvent): void;
     onItemSelected(selectedItem: SuggestionListItem | null, keyboardUsed: boolean): void;
-    onItemPreviewed(item: SuggestionListItem): void;
+    onItemSelect(item: SuggestionListItem): void;
     onItemPress(e: CustomEvent<ListItemClickEventDetail | ListSelectionChangeEventDetail>): void;
-    _beforeOpen(): void;
-    _attachItemsListeners(): Promise<void>;
-    _attachPopupListeners(): void;
     _onOpen(): void;
     _onClose(): void;
     _applyFocus(): void;
@@ -107,15 +102,15 @@ declare class Suggestions {
     _deselectItems(): void;
     _clearItemFocus(): void;
     _isItemIntoView(item: SuggestionListItem): boolean;
-    _scrollItemIntoView(item: SuggestionListItem): Promise<void>;
-    _getScrollContainer(): Promise<HTMLElement>;
+    _scrollItemIntoView(item: SuggestionListItem): void;
+    _getScrollContainer(): HTMLElement;
     _getItems(): Array<SuggestionListItem>;
     _getNonGroupItems(): Array<SuggestionListItem>;
     _getComponent(): SuggestionComponent;
-    _getList(): Promise<List>;
-    _getListWidth(): Promise<number>;
+    _getList(): List;
+    _getListWidth(): number;
     _getRealItems(): SuggestionItem[];
-    _getSuggestionPopover(): Promise<ResponsivePopover>;
+    _getPicker(): ResponsivePopover;
     get itemSelectionAnnounce(): string;
     getRowText(suggestion: IInputSuggestionItem): string;
     getRowDesc(suggestion: IInputSuggestionItem): string;
@@ -127,7 +122,7 @@ declare class Suggestions {
     _focusValueState(): void;
     _clearValueStateFocus(): void;
     _clearSelectedSuggestionAndAccInfo(): void;
-    static get dependencies(): (typeof Button | typeof Icon | typeof Popover | typeof List | typeof SuggestionListItem | typeof GroupHeaderListItem | typeof SuggestionGroupItem)[];
+    static get dependencies(): (typeof Button | typeof Icon | typeof ListItemGroupHeader | typeof List | typeof SuggestionListItem | typeof SuggestionGroupItem)[];
     static init(): Promise<void>;
 }
 export default Suggestions;

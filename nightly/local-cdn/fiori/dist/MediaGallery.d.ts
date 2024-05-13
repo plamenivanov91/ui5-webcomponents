@@ -16,7 +16,6 @@ import MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign
 interface IMediaGalleryItem extends HTMLElement, ITabbable {
     selected: boolean;
     disabled: boolean;
-    focused: boolean;
     displayedContent: HTMLElement | null;
     layout: `${MediaGalleryItemLayout}`;
 }

@@ -15,6 +15,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isEnter, isSpace, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import Button from "./Button.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
@@ -243,6 +244,9 @@ let AvatarGroup = AvatarGroup_1 = class AvatarGroup extends UI5Element {
         this._prepareAvatars();
     }
     onEnterDOM() {
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
         ResizeHandler.register(this, this._onResizeHandler);
     }
     onExitDOM() {
@@ -387,18 +391,15 @@ let AvatarGroup = AvatarGroup_1 = class AvatarGroup extends UI5Element {
         }
     }
     _getAriaHasPopup() {
-        if (this.ariaHaspopup === "") {
-            return;
-        }
-        return this.ariaHaspopup;
+        return this.accessibilityAttributes.hasPopup;
     }
 };
 __decorate([
     property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
 ], AvatarGroup.prototype, "type", void 0);
 __decorate([
-    property()
-], AvatarGroup.prototype, "ariaHaspopup", void 0);
+    property({ type: Object })
+], AvatarGroup.prototype, "accessibilityAttributes", void 0);
 __decorate([
     property({ noAttribute: true })
 ], AvatarGroup.prototype, "_overflowButtonText", void 0);

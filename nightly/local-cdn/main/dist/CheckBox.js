@@ -89,6 +89,11 @@ let CheckBox = CheckBox_1 = class CheckBox extends UI5Element {
     onBeforeRendering() {
         this._enableFormSupport();
     }
+    onEnterDOM() {
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
+    }
     _enableFormSupport() {
         const formSupport = getFeature("FormSupport");
         if (formSupport) {
@@ -164,9 +169,9 @@ let CheckBox = CheckBox_1 = class CheckBox extends UI5Element {
     }
     valueStateTextMappings() {
         return {
-            "Error": CheckBox_1.i18nBundle.getText(VALUE_STATE_ERROR),
-            "Warning": CheckBox_1.i18nBundle.getText(VALUE_STATE_WARNING),
-            "Success": CheckBox_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
+            "Negative": CheckBox_1.i18nBundle.getText(VALUE_STATE_ERROR),
+            "Critical": CheckBox_1.i18nBundle.getText(VALUE_STATE_WARNING),
+            "Positive": CheckBox_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
         };
     }
     get ariaLabelText() {

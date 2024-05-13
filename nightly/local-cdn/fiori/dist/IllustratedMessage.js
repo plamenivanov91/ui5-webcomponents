@@ -14,7 +14,6 @@ import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
-import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
@@ -130,7 +129,7 @@ let IllustratedMessage = IllustratedMessage_1 = class IllustratedMessage extends
         this.sceneSvg = illustrationData.sceneSvg;
         this.illustrationTitle = IllustratedMessage_1.i18nBundle.getText(illustrationData.title);
         this.illustrationSubtitle = IllustratedMessage_1.i18nBundle.getText(illustrationData.subtitle);
-        if (this.size !== IllustrationMessageSize.Auto) {
+        if (this.design !== IllustrationMessageSize.Auto) {
             this._handleCustomSize();
         }
     }
@@ -141,7 +140,7 @@ let IllustratedMessage = IllustratedMessage_1 = class IllustratedMessage extends
         ResizeHandler.deregister(this, this._handleResize);
     }
     handleResize() {
-        if (this.size !== IllustrationMessageSize.Auto) {
+        if (this.design !== IllustrationMessageSize.Auto) {
             this._adjustHeightToFitContainer();
             return;
         }
@@ -150,18 +149,18 @@ let IllustratedMessage = IllustratedMessage_1 = class IllustratedMessage extends
     }
     _applyMedia(heightChange) {
         const currOffsetWidth = this.offsetWidth, currOffsetHeight = this.offsetHeight;
-        const size = heightChange ? currOffsetHeight : currOffsetWidth, oBreakpounts = heightChange ? IllustratedMessage_1.BREAKPOINTS_HEIGHT : IllustratedMessage_1.BREAKPOINTS;
+        const design = heightChange ? currOffsetHeight : currOffsetWidth, oBreakpounts = heightChange ? IllustratedMessage_1.BREAKPOINTS_HEIGHT : IllustratedMessage_1.BREAKPOINTS;
         let newMedia = "";
-        if (size <= oBreakpounts.BASE) {
+        if (design <= oBreakpounts.BASE) {
             newMedia = IllustratedMessage_1.MEDIA.BASE;
         }
-        else if (size <= oBreakpounts.DOT) {
+        else if (design <= oBreakpounts.DOT) {
             newMedia = IllustratedMessage_1.MEDIA.DOT;
         }
-        else if (size <= oBreakpounts.SPOT) {
+        else if (design <= oBreakpounts.SPOT) {
             newMedia = IllustratedMessage_1.MEDIA.SPOT;
         }
-        else if (size <= oBreakpounts.DIALOG) {
+        else if (design <= oBreakpounts.DIALOG) {
             newMedia = IllustratedMessage_1.MEDIA.DIALOG;
         }
         else {
@@ -211,7 +210,7 @@ let IllustratedMessage = IllustratedMessage_1 = class IllustratedMessage extends
      * @since 1.5.0
      */
     _handleCustomSize() {
-        switch (this.size) {
+        switch (this.design) {
             case IllustrationMessageSize.Base:
                 this.media = IllustratedMessage_1.MEDIA.BASE;
                 return;
@@ -276,7 +275,7 @@ __decorate([
 ], IllustratedMessage.prototype, "name", void 0);
 __decorate([
     property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
-], IllustratedMessage.prototype, "size", void 0);
+], IllustratedMessage.prototype, "design", void 0);
 __decorate([
     property()
 ], IllustratedMessage.prototype, "subtitleText", void 0);
@@ -286,9 +285,6 @@ __decorate([
 __decorate([
     property({ defaultValue: "" })
 ], IllustratedMessage.prototype, "accessibleNameRef", void 0);
-__decorate([
-    property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-], IllustratedMessage.prototype, "titleLevel", void 0);
 __decorate([
     property({ noAttribute: true })
 ], IllustratedMessage.prototype, "dotSvg", void 0);

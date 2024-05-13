@@ -175,6 +175,7 @@ declare class CheckBox extends UI5Element implements IFormElement {
     _deactivate: () => void;
     constructor();
     onBeforeRendering(): void;
+    onEnterDOM(): void;
     _enableFormSupport(): void;
     _onclick(): void;
     _onmousedown(): void;
@@ -185,9 +186,9 @@ declare class CheckBox extends UI5Element implements IFormElement {
     toggle(): this;
     canToggle(): boolean;
     valueStateTextMappings(): {
-        Error: string;
-        Warning: string;
-        Success: string;
+        Negative: string;
+        Critical: string;
+        Positive: string;
     };
     get ariaLabelText(): string | undefined;
     get classes(): {

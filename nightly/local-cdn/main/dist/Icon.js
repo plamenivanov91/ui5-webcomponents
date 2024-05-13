@@ -11,14 +11,15 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
 import IconDesign from "./types/IconDesign.js";
+import IconMode from "./types/IconMode.js";
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
-const PRESENTATION_ROLE = "presentation";
 /**
  * @class
  * ### Overview
@@ -77,7 +78,7 @@ const PRESENTATION_ROLE = "presentation";
  *
  * ### Keyboard Handling
  *
- * - [Space] / [Enter] or [Return] - Fires the `click` event if the `interactive` property is set to true.
+ * - [Space] / [Enter] or [Return] - Fires the `click` event if the `mode` property is set to `Interactive`.
  * - [Shift] - If [Space] / [Enter] or [Return] is pressed, pressing [Shift] releases the ui5-icon without triggering the click event.
  *
  * ### ES6 Module Import
@@ -90,16 +91,8 @@ const PRESENTATION_ROLE = "presentation";
  * @public
  */
 let Icon = class Icon extends UI5Element {
-    _onFocusInHandler() {
-        if (this.interactive) {
-            this.focused = true;
-        }
-    }
-    _onFocusOutHandler() {
-        this.focused = false;
-    }
     _onkeydown(e) {
-        if (!this.interactive) {
+        if (this.mode !== IconMode.Interactive) {
             return;
         }
         if (isEnter(e)) {
@@ -110,7 +103,7 @@ let Icon = class Icon extends UI5Element {
         }
     }
     _onkeyup(e) {
-        if (this.interactive && isSpace(e)) {
+        if (this.mode === IconMode.Interactive && isSpace(e)) {
             this.fireEvent("click");
         }
     }
@@ -121,28 +114,25 @@ let Icon = class Icon extends UI5Element {
         return this.ltr ? "ltr" : undefined;
     }
     get effectiveAriaHidden() {
-        if (this.ariaHidden === "") {
-            if (this.isDecorative) {
-                return true;
-            }
-            return;
-        }
-        return this.ariaHidden;
+        return this.mode === IconMode.Decorative ? "true" : undefined;
     }
     get _tabIndex() {
-        return this.interactive ? "0" : undefined;
-    }
-    get isDecorative() {
-        return this.effectiveAccessibleRole === PRESENTATION_ROLE;
+        return this.mode === IconMode.Interactive ? "0" : undefined;
     }
     get effectiveAccessibleRole() {
-        if (this.accessibleRole) {
-            return this.accessibleRole;
+        switch (this.mode) {
+            case IconMode.Interactive:
+                return "button";
+            case IconMode.Decorative:
+                return "presentation";
+            default:
+                return "img";
         }
-        if (this.interactive) {
-            return "button";
+    }
+    onEnterDOM() {
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
         }
-        return this.effectiveAccessibleName ? "img" : PRESENTATION_ROLE;
     }
     async onBeforeRendering() {
         const name = this.name;
@@ -175,8 +165,6 @@ let Icon = class Icon extends UI5Element {
         this.accData = iconData.accData;
         this.ltr = iconData.ltr;
         this.packageName = iconData.packageName;
-        this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
-        this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
         if (this.accessibleName) {
             this.effectiveAccessibleName = this.accessibleName;
         }
@@ -196,9 +184,6 @@ __decorate([
     property({ type: IconDesign, defaultValue: IconDesign.Default })
 ], Icon.prototype, "design", void 0);
 __decorate([
-    property({ type: Boolean })
-], Icon.prototype, "interactive", void 0);
-__decorate([
     property()
 ], Icon.prototype, "name", void 0);
 __decorate([
@@ -208,20 +193,14 @@ __decorate([
     property({ type: Boolean })
 ], Icon.prototype, "showTooltip", void 0);
 __decorate([
-    property()
-], Icon.prototype, "accessibleRole", void 0);
-__decorate([
-    property()
-], Icon.prototype, "ariaHidden", void 0);
+    property({ type: IconMode, defaultValue: IconMode.Image })
+], Icon.prototype, "mode", void 0);
 __decorate([
     property({ multiple: true })
 ], Icon.prototype, "pathData", void 0);
 __decorate([
     property({ type: Object, defaultValue: undefined, noAttribute: true })
 ], Icon.prototype, "accData", void 0);
-__decorate([
-    property({ type: Boolean })
-], Icon.prototype, "focused", void 0);
 __decorate([
     property({ type: Boolean })
 ], Icon.prototype, "invalid", void 0);

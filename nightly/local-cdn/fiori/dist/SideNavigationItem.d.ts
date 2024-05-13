@@ -74,5 +74,8 @@ declare class SideNavigationItem extends SideNavigationSelectableItemBase {
     _onfocusout: () => void;
     _onmouseenter: () => void;
     _onmouseleave: () => void;
+    get isSideNavigationItem(): boolean;
 }
+declare const isInstanceOfSideNavigationItem: (object: any) => object is SideNavigationItem;
 export default SideNavigationItem;
+export { isInstanceOfSideNavigationItem };

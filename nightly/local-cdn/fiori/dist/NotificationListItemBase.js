@@ -21,10 +21,6 @@ import "@ui5/webcomponents-icons/dist/message-success.js";
 import "@ui5/webcomponents-icons/dist/message-error.js";
 import "@ui5/webcomponents-icons/dist/message-warning.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
-// Templates
-import NotificationOverflowActionsPopoverTemplate from "./generated/templates/NotificationOverflowActionsPopoverTemplate.lit.js";
-// Styles
-import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 /**
  * Defines the icons corresponding to the notification's priority.
  */
@@ -111,17 +107,17 @@ let NotificationListItemBase = NotificationListItemBase_1 = class NotificationLi
     getActionByID(id) {
         return this.actions.find(action => action._id === id);
     }
-    async openOverflow() {
-        const overflowPopover = await this.getOverflowPopover();
-        overflowPopover.showAt(this.overflowButtonDOM);
+    openOverflow() {
+        const overflowPopover = this.getOverflowPopover();
+        overflowPopover.opener = this.overflowButtonDOM;
+        overflowPopover.open = true;
     }
-    async closeOverflow() {
-        const overflowPopover = await this.getOverflowPopover();
-        overflowPopover.close();
+    closeOverflow() {
+        const overflowPopover = this.getOverflowPopover();
+        overflowPopover.open = false;
     }
-    async getOverflowPopover() {
-        const staticAreaItem = await this.getStaticAreaItemDomRef();
-        return staticAreaItem.querySelector(".ui5-notification-overflow-popover");
+    getOverflowPopover() {
+        return this.shadowRoot.querySelector(".ui5-notification-overflow-popover");
     }
     static async onDefine() {
         NotificationListItemBase_1.i18nFioriBundle = await getI18nBundle("@ui5/webcomponents-fiori");
@@ -149,10 +145,7 @@ __decorate([
     slot()
 ], NotificationListItemBase.prototype, "actions", void 0);
 NotificationListItemBase = NotificationListItemBase_1 = __decorate([
-    customElement({
-        staticAreaStyles: NotificationOverflowActionsPopoverCss,
-        staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
-    })
+    customElement()
     /**
      * Fired when the `Close` button is pressed.
      * @param {HTMLElement} item the closed item.

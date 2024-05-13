@@ -1,7 +1,7 @@
 import DatePicker from "./DatePicker.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import type { DatePickerChangeEventDetail as DateRangePickerChangeEventDetail, DatePickerInputEventDetail as DateRangePickerInputEventDetail } from "./DatePicker.js";
-import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 /**
  * @class
  *
@@ -120,7 +120,7 @@ declare class DateRangePicker extends DatePicker {
     /**
      * @override
      */
-    onSelectedDatesChange(event: CustomEvent<CalendarSelectedDatesChangeEventDetail>): void;
+    onSelectedDatesChange(event: CustomEvent<CalendarSelectionChangeEventDetail>): void;
     /**
      * @override
      */

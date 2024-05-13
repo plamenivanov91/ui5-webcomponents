@@ -181,7 +181,7 @@ declare class StepInput extends UI5Element implements IFormElement {
     get _decIconClickable(): boolean;
     get _incIconClickable(): boolean;
     get _isFocused(): boolean;
-    get _valuePrecisioned(): string;
+    get _displayValue(): string;
     get accInfo(): {
         ariaRequired: boolean;
         ariaLabel: string | undefined;
@@ -193,6 +193,7 @@ declare class StepInput extends UI5Element implements IFormElement {
     };
     onBeforeRendering(): void;
     get input(): Input;
+    get innerInput(): HTMLInputElement;
     get inputOuter(): Element;
     _onButtonFocusOut(): void;
     _onInputFocusIn(): void;
@@ -212,7 +213,11 @@ declare class StepInput extends UI5Element implements IFormElement {
     _modifyValue(modifier: number, fireChangeEvent?: boolean): void;
     _incValue(e: CustomEvent): void;
     _decValue(e: CustomEvent): void;
+    get _isValueWithCorrectPrecision(): boolean;
     _onInputChange(): void;
+    _setDefaultInputValueIfNeeded(): void;
+    _isValueChanged(inputValue: number): boolean;
+    _updateValueAndValidate(inputValue: number): void;
     _onfocusin(): void;
     _onfocusout(): void;
     _onkeydown(e: KeyboardEvent): void;

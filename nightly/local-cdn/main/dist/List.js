@@ -27,8 +27,9 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
-import ListMode from "./types/ListMode.js";
+import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
+import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
 import ListSeparators from "./types/ListSeparators.js";
@@ -42,6 +43,7 @@ import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import { LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE, ARIA_LABEL_LIST_MULTISELECTABLE, ARIA_LABEL_LIST_DELETABLE, } from "./generated/i18n/i18n-defaults.js";
 import "./CheckBox.js";
 import "./RadioButton.js";
+import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 const PAGE_UP_DOWN_SIZE = 10;
 /**
@@ -56,11 +58,11 @@ const PAGE_UP_DOWN_SIZE = 10;
  *
  * - `ui5-li`
  * - `ui5-li-custom`
- * - `ui5-li-groupheader`
+ * - `ui5-li-group`
  *
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
- * `SingleSelect`, `MultiSelect` and `Delete`.
+ * `Single`, `Multiple` and `Delete`.
  *
  * Additionally, the `ui5-list` provides header, footer, and customization for the list item separators.
  *
@@ -76,10 +78,10 @@ const PAGE_UP_DOWN_SIZE = 10;
  * - [End] - Navigates to the last item
  *
  * The user can use the following keyboard shortcuts to perform actions (such as select, delete),
- * when the `mode` property is in use:
+ * when the `selectionMode` property is in use:
  *
- * - [Space] - Select an item (if `type` is 'Active') when `mode` is selection
- * - [Delete] - Delete an item if `mode` property is `Delete`
+ * - [Space] - Select an item (if `type` is 'Active') when `selectionMode` is selection
+ * - [Delete] - Delete an item if `selectionMode` property is `Delete`
  *
  * #### Fast Navigation
  * This component provides a build in fast navigation group which can be used via [F6] / [Shift] + [F6] / [Ctrl] + [Alt/Option] / [Down] or [Ctrl] + [Alt/Option] + [Up].
@@ -94,7 +96,7 @@ const PAGE_UP_DOWN_SIZE = 10;
  *
  * `import "@ui5/webcomponents/dist/CustomListItem.js";` (for `ui5-li-custom`)
  *
- * `import "@ui5/webcomponents/dist/GroupHeaderListItem.js";` (for `ui5-li-groupheader`)
+ * `import "@ui5/webcomponents/dist/ListItemGroup.js";` (for `ui5-li-group`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -122,6 +124,19 @@ let List = List_1 = class List extends UI5Element {
         // Indicates the List bottom most part has been detected by the IntersectionObserver
         // for the first time.
         this.initialIntersection = true;
+        this.onItemFocusedBound = this.onItemFocused.bind(this);
+        this.onForwardAfterBound = this.onForwardAfter.bind(this);
+        this.onForwardBeforeBound = this.onForwardBefore.bind(this);
+        this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+    }
+    /**
+     * Returns an array containing the list item instances without the groups in a flat structure.
+     * @default []
+     * @since 2.0.0
+     * @public
+     */
+    get listItems() {
+        return this.getItems();
     }
     onEnterDOM() {
         DragRegistry.subscribe(this);
@@ -133,9 +148,11 @@ let List = List_1 = class List extends UI5Element {
         DragRegistry.unsubscribe(this);
     }
     onBeforeRendering() {
+        this.detachGroupHeaderEvents();
         this.prepareListItems();
     }
     onAfterRendering() {
+        this.attachGroupHeaderEvents();
         if (this.growsOnScroll) {
             this.observeListEnd();
         }
@@ -146,6 +163,28 @@ let List = List_1 = class List extends UI5Element {
             this.checkListInViewport();
             this.attachForResize();
         }
+    }
+    attachGroupHeaderEvents() {
+        // events fired by the group headers are not bubbling through the shadow
+        // dom of the groups because of capture: false of the custom events
+        this.getItems().forEach(item => {
+            if (item.hasAttribute("ui5-li-group-header")) {
+                item.addEventListener("ui5-_focused", this.onItemFocusedBound);
+                item.addEventListener("ui5-_forward-after", this.onForwardAfterBound);
+                item.addEventListener("ui5-_forward-before", this.onForwardBeforeBound);
+                item.addEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound);
+            }
+        });
+    }
+    detachGroupHeaderEvents() {
+        this.getItems().forEach(item => {
+            if (item.hasAttribute("ui5-li-group-header")) {
+                item.removeEventListener("ui5-_focused", this.onItemFocusedBound);
+                item.removeEventListener("ui5-_forward-after", this.onForwardAfterBound);
+                item.removeEventListener("ui5-_forward-before", this.onForwardBeforeBound);
+                item.removeEventListener("ui5-_tabindex-change", this.onItemTabIndexChangeBound);
+            }
+        });
     }
     attachForResize() {
         if (!this.resizeListenerAttached) {
@@ -175,25 +214,25 @@ let List = List_1 = class List extends UI5Element {
         return !this.hasData && this.noDataText;
     }
     get isDelete() {
-        return this.mode === ListMode.Delete;
+        return this.selectionMode === ListSelectionMode.Delete;
     }
     get isSingleSelect() {
         return [
-            ListMode.SingleSelect,
-            ListMode.SingleSelectBegin,
-            ListMode.SingleSelectEnd,
-            ListMode.SingleSelectAuto,
-        ].includes(this.mode);
+            ListSelectionMode.Single,
+            ListSelectionMode.SingleStart,
+            ListSelectionMode.SingleEnd,
+            ListSelectionMode.SingleAuto,
+        ].includes(this.selectionMode);
     }
-    get isMultiSelect() {
-        return this.mode === ListMode.MultiSelect;
+    get isMultiple() {
+        return this.selectionMode === ListSelectionMode.Multiple;
     }
     get ariaLabelledBy() {
         if (this.accessibleNameRef || this.accessibleName) {
             return undefined;
         }
         const ids = [];
-        if (this.isMultiSelect || this.isSingleSelect || this.isDelete) {
+        if (this.isMultiple || this.isSingleSelect || this.isDelete) {
             ids.push(this.modeLabelID);
         }
         if (this.shouldRenderH1) {
@@ -206,7 +245,7 @@ let List = List_1 = class List extends UI5Element {
     }
     get ariaLabelModeText() {
         if (this.hasData) {
-            if (this.isMultiSelect) {
+            if (this.isMultiple) {
                 return List_1.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
             }
             if (this.isSingleSelect) {
@@ -230,7 +269,7 @@ let List = List_1 = class List extends UI5Element {
     get _growingButtonText() {
         return this.growingButtonText || List_1.i18nBundle.getText(LOAD_MORE_TEXT);
     }
-    get busyIndPosition() {
+    get loadingIndPosition() {
         if (!this.grows) {
             return "absolute";
         }
@@ -238,10 +277,13 @@ let List = List_1 = class List extends UI5Element {
     }
     get styles() {
         return {
-            busyInd: {
-                position: this.busyIndPosition,
+            loadingInd: {
+                position: this.loadingIndPosition,
             },
         };
+    }
+    get listAccessibleRole() {
+        return this.accessibleRole.toLowerCase();
     }
     get classes() {
         return {
@@ -258,7 +300,7 @@ let List = List_1 = class List extends UI5Element {
             const showBottomBorder = this.separators === ListSeparators.All
                 || (this.separators === ListSeparators.Inner && !isLastChild);
             if (item.hasConfigurableMode) {
-                item._mode = this.mode;
+                item._selectionMode = this.selectionMode;
             }
             item.hasBorder = showBottomBorder;
         });
@@ -295,8 +337,8 @@ let List = List_1 = class List extends UI5Element {
         const previouslySelectedItems = this.getSelectedItems();
         let selectionChange = false;
         this._selectionRequested = true;
-        if (this.mode !== ListMode.None && this[`handle${this.mode}`]) {
-            selectionChange = this[`handle${this.mode}`](e.detail.item, !!e.detail.selected);
+        if (this.selectionMode !== ListSelectionMode.None && this[`handle${this.selectionMode}`]) {
+            selectionChange = this[`handle${this.selectionMode}`](e.detail.item, !!e.detail.selected);
         }
         if (selectionChange) {
             const changePrevented = !this.fireEvent("selection-change", {
@@ -311,7 +353,7 @@ let List = List_1 = class List extends UI5Element {
             }
         }
     }
-    handleSingleSelect(item) {
+    handleSingle(item) {
         if (item.selected) {
             return false;
         }
@@ -319,16 +361,16 @@ let List = List_1 = class List extends UI5Element {
         item.selected = true;
         return true;
     }
-    handleSingleSelectBegin(item) {
-        return this.handleSingleSelect(item);
+    handleSingleStart(item) {
+        return this.handleSingle(item);
     }
-    handleSingleSelectEnd(item) {
-        return this.handleSingleSelect(item);
+    handleSingleEnd(item) {
+        return this.handleSingle(item);
     }
-    handleSingleSelectAuto(item) {
-        return this.handleSingleSelect(item);
+    handleSingleAuto(item) {
+        return this.handleSingle(item);
     }
-    handleMultiSelect(item, selected) {
+    handleMultiple(item, selected) {
         item.selected = selected;
         return true;
     }
@@ -346,7 +388,19 @@ let List = List_1 = class List extends UI5Element {
         return this.getItems().filter(item => item._focusable);
     }
     getItems() {
-        return this.getSlottedNodes("items");
+        // drill down when we see ui5-li-group and get the items
+        const items = [];
+        const slottedItems = this.getSlottedNodes("items");
+        slottedItems.forEach(item => {
+            if (isInstanceOfListItemGroup(item)) {
+                const groupItems = [item.groupHeaderItem, ...item.items].filter(Boolean);
+                items.push(...groupItems);
+            }
+            else {
+                items.push(item);
+            }
+        });
+        return items;
     }
     getItemsForProcessing() {
         return this.getItems();
@@ -550,7 +604,7 @@ let List = List_1 = class List extends UI5Element {
         e.stopPropagation();
         this._itemNavigation.setCurrentItem(target);
         this.fireEvent("item-focused", { item: target });
-        if (this.mode === ListMode.SingleSelectAuto) {
+        if (this.selectionMode === ListSelectionMode.SingleAuto) {
             const detail = {
                 item: target,
                 selectionComponentPressed: false,
@@ -565,7 +619,7 @@ let List = List_1 = class List extends UI5Element {
         if (!this.fireEvent("item-click", { item: pressedItem }, true)) {
             return;
         }
-        if (!this._selectionRequested && this.mode !== ListMode.Delete) {
+        if (!this._selectionRequested && this.selectionMode !== ListSelectionMode.Delete) {
             this._selectionRequested = true;
             const detail = {
                 item: pressedItem,
@@ -719,8 +773,8 @@ __decorate([
     property({ type: Boolean })
 ], List.prototype, "indent", void 0);
 __decorate([
-    property({ type: ListMode, defaultValue: ListMode.None })
-], List.prototype, "mode", void 0);
+    property({ type: ListSelectionMode, defaultValue: ListSelectionMode.None })
+], List.prototype, "selectionMode", void 0);
 __decorate([
     property()
 ], List.prototype, "noDataText", void 0);
@@ -735,10 +789,10 @@ __decorate([
 ], List.prototype, "growingButtonText", void 0);
 __decorate([
     property({ type: Boolean })
-], List.prototype, "busy", void 0);
+], List.prototype, "loading", void 0);
 __decorate([
     property({ validator: Integer, defaultValue: 1000 })
-], List.prototype, "busyDelay", void 0);
+], List.prototype, "loadingDelay", void 0);
 __decorate([
     property()
 ], List.prototype, "accessibleName", void 0);
@@ -746,11 +800,8 @@ __decorate([
     property({ defaultValue: "" })
 ], List.prototype, "accessibleNameRef", void 0);
 __decorate([
-    property({ defaultValue: "list" })
+    property({ type: ListAccessibleRole, defaultValue: ListAccessibleRole.List })
 ], List.prototype, "accessibleRole", void 0);
-__decorate([
-    property({ defaultValue: undefined, noAttribute: true })
-], List.prototype, "accessibleRoleDescription", void 0);
 __decorate([
     property({ type: Boolean })
 ], List.prototype, "_inViewport", void 0);
@@ -770,7 +821,7 @@ List = List_1 = __decorate([
         renderer: litRender,
         template: ListTemplate,
         styles: [browserScrollbarCSS, listCss],
-        dependencies: [BusyIndicator, DropIndicator],
+        dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
     })
     /**
      * Fired when an item is activated, unless the item's `type` property
@@ -827,7 +878,7 @@ List = List_1 = __decorate([
      * Fired when the Delete button of any item is pressed.
      *
      * **Note:** A Delete button is displayed on each item,
-     * when the component `mode` property is set to `Delete`.
+     * when the component `selectionMode` property is set to `Delete`.
      * @param {HTMLElement} item the deleted item.
      * @public
      */
@@ -842,7 +893,7 @@ List = List_1 = __decorate([
     })
     /**
      * Fired when selection is changed by user interaction
-     * in `SingleSelect`, `SingleSelectBegin`, `SingleSelectEnd` and `MultiSelect` modes.
+     * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` selection modes.
      * @allowPreventDefault
      * @param {Array<ListItemBase>} selectedItems An array of the selected items.
      * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.

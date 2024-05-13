@@ -1,4 +1,4 @@
-import type UI5Element from "../../UI5Element";
+import type UI5Element from "../../UI5Element.js";
 declare const setDraggedElement: (element: HTMLElement | null) => void;
 type SetDraggedElementFunction = typeof setDraggedElement;
 declare const DragRegistry: {

@@ -2,9 +2,6 @@
 import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
 const loadThemeProperties = async (themeName) => {
     switch (themeName) {
-        case "sap_belize": return (await import(/* webpackChunkName: "ui5-webcomponents-fiori-sap-belize-parameters-bundle" */ "../assets/themes/sap_belize/parameters-bundle.css.json")).default;
-        case "sap_belize_hcb": return (await import(/* webpackChunkName: "ui5-webcomponents-fiori-sap-belize_hcb-parameters-bundle" */ "../assets/themes/sap_belize_hcb/parameters-bundle.css.json")).default;
-        case "sap_belize_hcw": return (await import(/* webpackChunkName: "ui5-webcomponents-fiori-sap-belize_hcw-parameters-bundle" */ "../assets/themes/sap_belize_hcw/parameters-bundle.css.json")).default;
         case "sap_fiori_3": return (await import(/* webpackChunkName: "ui5-webcomponents-fiori-sap-fiori_3-parameters-bundle" */ "../assets/themes/sap_fiori_3/parameters-bundle.css.json")).default;
         case "sap_fiori_3_dark": return (await import(/* webpackChunkName: "ui5-webcomponents-fiori-sap-fiori_3_dark-parameters-bundle" */ "../assets/themes/sap_fiori_3_dark/parameters-bundle.css.json")).default;
         case "sap_fiori_3_hcb": return (await import(/* webpackChunkName: "ui5-webcomponents-fiori-sap-fiori_3_hcb-parameters-bundle" */ "../assets/themes/sap_fiori_3_hcb/parameters-bundle.css.json")).default;
@@ -23,10 +20,10 @@ const loadThemeProperties = async (themeName) => {
 const loadAndCheck = async (themeName) => {
     const data = await loadThemeProperties(themeName);
     if (typeof data === "string" && data.endsWith(".json")) {
-        throw new Error(`[themes] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build or use 'import ".../Assets-static.js"'. Check the "Assets" documentation for more information.`);
+        throw new Error(`[themes] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build. Check the "Assets" documentation for more information.`);
     }
     return data;
 };
-["sap_belize", "sap_belize_hcb", "sap_belize_hcw", "sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_dark_exp", "sap_horizon_exp", "sap_horizon_hcb", "sap_horizon_hcb_exp", "sap_horizon_hcw", "sap_horizon_hcw_exp"]
+["sap_fiori_3", "sap_fiori_3_dark", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_dark_exp", "sap_horizon_exp", "sap_horizon_hcb", "sap_horizon_hcb_exp", "sap_horizon_hcw", "sap_horizon_hcw_exp"]
     .forEach(themeName => registerThemePropertiesLoader("@ui5/webcomponents-fiori", themeName, loadAndCheck));
 //# sourceMappingURL=Themes.js.map

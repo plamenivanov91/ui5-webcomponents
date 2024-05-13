@@ -34,13 +34,13 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
  */
 let MenuItem = class MenuItem extends UI5Element {
     get hasSubmenu() {
-        return !!(this.items.length || this.busy);
+        return !!(this.items.length || this.loading);
     }
     get hasDummyIcon() {
         return this._siblingsWithIcon && !this.icon;
     }
     get subMenuOpened() {
-        return !!this._subMenu?._popover?.isOpen();
+        return !!this._subMenu?._popover?.open;
     }
     get _additionalText() {
         return this.hasSubmenu ? "" : this.additionalText;
@@ -66,10 +66,10 @@ __decorate([
 ], MenuItem.prototype, "disabled", void 0);
 __decorate([
     property({ type: Boolean })
-], MenuItem.prototype, "busy", void 0);
+], MenuItem.prototype, "loading", void 0);
 __decorate([
     property({ validator: Integer, defaultValue: 1000 })
-], MenuItem.prototype, "busyDelay", void 0);
+], MenuItem.prototype, "loadingDelay", void 0);
 __decorate([
     property()
 ], MenuItem.prototype, "accessibleName", void 0);
