@@ -40,9 +40,9 @@ Basic.args = {
     headerText: "Both expandable and expanded",
     default: `
 	<ui5-title level="H1"> I am a heading! </ui5-title>
-	<ui5-label wrapping-type="Normal">Short text.</ui5-label>
+	<ui5-label>Short text.</ui5-label>
 	<br/>
-	<ui5-label wrapping-type="Normal">Another text.</ui5-label>
+	<ui5-label>Another text.</ui5-label>
 	<p class="content-color">Aute ullamco officia fugiat culpa do tempor tempor aute excepteur magna.
 		Quis velit adipisicing excepteur do eu duis elit. Sunt ea pariatur nulla est laborum proident sunt labore
 		commodo Lorem laboris nisi Lorem.
@@ -54,7 +54,7 @@ Fixed.args = {
     accessibleRole: PanelAccessibleRole.Complementary,
     fixed: true,
     default: `
-	<ui5-list mode="SingleSelectBegin">
+	<ui5-list selection-mode="SingleStart">
 		<ui5-li key="country1">Argentina</ui5-li>
 		<ui5-li key="country2">Bulgaria</ui5-li>
 		<ui5-li key="country3">China</ui5-li>
@@ -136,7 +136,7 @@ CustomHeader.args = {
 		</div>
 	</div>`,
     default: `
-	<ui5-list mode="MultiSelect">
+	<ui5-list selection-mode="Multiple">
 		<ui5-li key="country1">Argentina</ui5-li>
 		<ui5-li key="country2">Bulgaria</ui5-li>
 		<ui5-li key="country3">China</ui5-li>

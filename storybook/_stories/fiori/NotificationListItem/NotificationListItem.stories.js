@@ -181,8 +181,8 @@ InShellBar.decorators = [
 	notifications-count="4"
 ></ui5-shellbar>
 <ui5-popover
-	placement-type="Bottom"
-	horizontal-align="Right"
+	placement="Bottom"
+	horizontal-align="End"
 	id="popover-with-notifications"
 >
 	${wrapInList(story)}
@@ -194,7 +194,8 @@ InShellBar.decorators = [
 
 	shellbar.addEventListener("notifications-click", e => {
 		event.preventDefault();
-		notificationsPopover.showAt(e.detail.targetRef);
+		notificationsPopover.opener = e.detail.targetRef;
+		notificationsPopover.open = true;
 	});
 </script>`;
     },

@@ -30,18 +30,19 @@ WithShellBar.decorators = [
             show-co-pilot=""
         >
         </ui5-shellbar>
-        <ui5-popover id="productswitch-popover" placement-type="Bottom">
+        <ui5-popover id="productswitch-popover" placement="Bottom">
             ${story()}
         </ui5-popover>
         <script>
             var shellBar = document.getElementById("shellbar");
             var popover = document.getElementById("productswitch-popover");
             shellbar.addEventListener("product-switch-click", (event) => {
-                if (popover.opened) {
-                    popover.close();
+                if (popover.open) {
+                    popover.open = false;
                 } else {
                     event.preventDefault();
-                    popover.showAt(event.detail.targetRef);
+                    popover.opener = event.detail.targetRef;
+					popover.open = true;
                 }
             });
         </script>

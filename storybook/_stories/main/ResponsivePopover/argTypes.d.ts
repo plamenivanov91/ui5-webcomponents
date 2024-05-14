@@ -1,5 +1,5 @@
 declare const _default: {
-    placementType: {
+    placement: {
         control: string;
         options: string[];
     };
@@ -42,65 +42,6 @@ declare const _default: {
         table: {
             type: {
                 summary: string;
-            };
-        };
-    };
-    showAt: {
-        description: string;
-        table: {
-            category: string;
-        };
-        UI5CustomData: {
-            parameters: ({
-                name: string;
-                type: {
-                    text: string;
-                };
-                description: string;
-                _ui5privacy: string;
-                default?: undefined;
-                optional?: undefined;
-            } | {
-                name: string;
-                default: string;
-                description: string;
-                optional: boolean;
-                _ui5privacy: string;
-                type: {
-                    text: string;
-                };
-            })[];
-            returnValue: {
-                type: {
-                    text: string;
-                };
-                description: string;
-            };
-        };
-    };
-    close: {
-        description: string;
-        table: {
-            category: string;
-        };
-        UI5CustomData: {
-            returnValue: {
-                type: {
-                    text: string;
-                };
-            };
-        };
-    };
-    isOpen: {
-        description: string;
-        table: {
-            category: string;
-        };
-        UI5CustomData: {
-            returnValue: {
-                type: {
-                    text: string;
-                };
             };
         };
     };

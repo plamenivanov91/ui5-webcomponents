@@ -1,18 +1,18 @@
 export default {
-    "dateValue": {
-        "control": {
-            "type": false
-        }
-    },
     "valueState": {
         "control": "select",
         "options": [
             "None",
-            "Success",
-            "Warning",
-            "Error",
+            "Positive",
+            "Critical",
+            "Negative",
             "Information"
         ]
+    },
+    "dateValue": {
+        "control": {
+            "type": false
+        }
     },
     "valueStateMessage": {
         "control": {
@@ -32,7 +32,7 @@ export default {
         "UI5CustomData": {
             "returnValue": {
                 "type": {
-                    "text": "Promise<void>"
+                    "text": "void"
                 },
                 "description": "Resolves when the picker is open"
             }
@@ -46,7 +46,7 @@ export default {
         "UI5CustomData": {
             "returnValue": {
                 "type": {
-                    "text": "Promise<void>"
+                    "text": "void"
                 },
                 "description": "Resolves when the picker is closed"
             }

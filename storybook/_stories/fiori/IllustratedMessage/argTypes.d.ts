@@ -1,9 +1,5 @@
 declare const _default: {
-    size: {
-        control: string;
-        options: string[];
-    };
-    titleLevel: {
+    design: {
         control: string;
         options: string[];
     };

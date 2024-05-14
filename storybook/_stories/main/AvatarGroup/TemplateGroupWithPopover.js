@@ -7,7 +7,7 @@ export default () => {
             header-text="My people"
             class="peoplePopover"
             style="width: 400px"
-            placement-type="Bottom"
+            placement="Bottom"
         >
             <div
                 class="placeholder"
@@ -82,8 +82,9 @@ export default () => {
                         html += \`</ui5-avatar></div>\`;
                     });
                     placeholder.innerHTML = html;
-                    peoplePopover.close();
-                    peoplePopover.showAt(targetRef);
+					peoplePopover.open = false;
+					peoplePopover.opener = targetRef;
+					peoplePopover.open = true;
                 }
                 avatarGroup.addEventListener("click", function (event) {
                     onAvatarGroupClick(event.detail.targetRef);

@@ -1,5 +1,5 @@
 declare const _default: {
-    mode: {
+    selectionMode: {
         control: string;
         options: string[];
     };
@@ -10,6 +10,15 @@ declare const _default: {
     growing: {
         control: string;
         options: string[];
+    };
+    accessibleRole: {
+        control: string;
+        options: string[];
+    };
+    listItems: {
+        control: {
+            type: boolean;
+        };
     };
     default: {
         control: {

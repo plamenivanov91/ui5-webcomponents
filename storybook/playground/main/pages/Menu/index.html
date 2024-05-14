@@ -10,7 +10,7 @@
 
 
 	
-  <script type="module" crossorigin src="../../../../assets/bundle.esm-cfed33a5.js"></script>
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-eec89407.js"></script>
   <link rel="stylesheet" href="../../../../assets/Menu-00d26ad0.css">
 </head>
 
@@ -19,7 +19,7 @@
 	<ui5-menu id="menu" header-text="My ui5-menu">
 		<ui5-menu-item text="New File(selection prevented)" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" tooltip="Select a file - prevent default" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
-		<ui5-menu-item text="Open" icon="open-folder" starts-section busy-delay="100" busy>
+		<ui5-menu-item text="Open" icon="open-folder" starts-section loading-delay="100" loading>
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
 				<ui5-menu-item text="Open from C"></ui5-menu-item>
 				<ui5-menu-item text="Open from D"></ui5-menu-item>
@@ -35,7 +35,7 @@
 			</ui5-menu-item>
 			<ui5-menu-item text="Save on Cloud" icon="upload-to-cloud"></ui5-menu-item>
 		</ui5-menu-item>
-		<ui5-menu-item text="Close" additional-text="Ctrl+W" busy-delay="100" busy></ui5-menu-item>
+		<ui5-menu-item text="Close" additional-text="Ctrl+W" loading-delay="100" loading></ui5-menu-item>
 		<ui5-menu-item text="Preferences" icon="action-settings" starts-section disabled></ui5-menu-item>
 		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
 	</ui5-menu>
@@ -72,7 +72,7 @@
 		<ui5-menu-item text="Exit" icon="journey-arrive"></ui5-menu-item>
 	</ui5-menu>
 
-	<ui5-popover id="detailsPopover">
+	<ui5-popover id="detailsPopover" prevent-initial-focus>
 			<div>
 				<ui5-label for="detailsLink">For more information:</ui5-label>
 			</div>
@@ -81,7 +81,7 @@
 
 	<script>
 		btnOpen.accessibilityAttributes = {
-			hasPopup: "Menu",
+			hasPopup: "menu",
 		};
 
 		btnOpen.addEventListener("click", function() {
@@ -106,8 +106,8 @@
 			const item = event.detail.item;
 			if (item && item.text === "Open" && !fetched) {
 				setTimeout(function() {
-					item.removeAttribute("busy");
-					item.removeAttribute("busy-delay");
+					item.removeAttribute("loading");
+					item.removeAttribute("loading-delay");
 					let oneNode = document.createElement("ui5-menu-item");
 					oneNode.setAttribute("text", "Open from Amazon Cloud");
 					let twoNode = document.createElement("ui5-menu-item");
@@ -132,11 +132,11 @@
 			eventLogger.value = "* [before-open]" + (preventBeforeOpen.checked ? "[prevented]" : "") + " ";
 		});
 
-		menu.addEventListener("ui5-after-open", function() {
+		menu.addEventListener("ui5-open", function() {
 			shouldOpenDetailsPopover = true;
 			var opener = menu.opener.id ? menu.opener.id : menu.opener;
 			openerInput.value = opener;
-			eventLogger.value += "* [after-open] ";
+			eventLogger.value += "* [open] ";
 		});
 
 		menu.addEventListener("ui5-before-close", function(event) {
@@ -144,11 +144,11 @@
 			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Escape]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + " ";
 		});
 
-		menu.addEventListener("ui5-after-close", function() {
+		menu.addEventListener("ui5-close", function() {
 			shouldOpenDetailsPopover = false;
 			openerInput.value = "";
 			btnToggleOpen.pressed = false;
-			eventLogger.value += "* [after-close]";
+			eventLogger.value += "* [close]";
 		});
 
 		direction.addEventListener("ui5-change", function() {
@@ -157,7 +157,7 @@
 		});
 
 		btnOpen2.accessibilityAttributes = {
-			hasPopup: "Menu",
+			hasPopup: "menu",
 		};
 
 		btnOpen2.addEventListener("click", function() {
@@ -170,30 +170,32 @@
 			shouldOpenDetailsPopover = false;
 		});
 
-		detailsPopover.addEventListener("ui5-after-close", function() {
+		detailsPopover.addEventListener("ui5-close", function() {
 			shouldOpenDetailsPopover = true;
 		});
 
-		menu2.addEventListener("ui5-after-open", function() {
+		menu2.addEventListener("ui5-open", function() {
 			shouldOpenDetailsPopover = true;
 		});
 
-		menu2.addEventListener("ui5-after-close", function() {
+		menu2.addEventListener("ui5-close", function() {
 			shouldOpenDetailsPopover = false;
 		});
 
 		menu2.addEventListener("ui5-item-focus", function(event) {
 			const item = event.detail.item;
 			const opener = event.detail.ref;
-			
-			if (detailsPopover.isOpen()) {
-				detailsPopover.close(false, false, true);
+
+			if (detailsPopover.open) {
+				detailsPopover.preventFocusRestore = true;
+				detailsPopover.open = false;
 			}
-			
+
 			if (item.disabled && shouldOpenDetailsPopover) {
 				const link = detailsPopover.querySelector("#detailsLink");
 				link.textContent = item.text;
-				detailsPopover.showAt(opener, true)
+				detailsPopover.opener = opener;
+				detailsPopover.open = true;
 				link.focus();
 			}
 		});

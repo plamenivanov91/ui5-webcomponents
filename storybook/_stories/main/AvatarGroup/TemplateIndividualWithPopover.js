@@ -7,7 +7,7 @@ export default () => {
             header-text="Person Card"
             class="personPopover"
             style="width: 300px"
-            placement-type="Bottom"
+            placement="Bottom"
             prevent-focus-restore=""
         >
             <div class="avatar-slot" style="display: inline-block;">
@@ -22,7 +22,7 @@ export default () => {
             header-text="My people"
             class="peoplePopover"
             style="width: 400px"
-            placement-type="Bottom"
+            placement="Bottom"
         >
             <div
                 class="placeholder"
@@ -102,7 +102,8 @@ export default () => {
                         popAvatar.appendChild(avatarRef.image[i].cloneNode());
                     }
                     popAvatar.icon = avatarRef.icon;
-                    personPopover.showAt(avatarRef);
+                    personPopover.opener = avatarRef;
+					personPopover.open = true;
                 }
                 function onButtonClicked(targetRef) {
                     const hiddenItems = avatarGroup.hiddenItems;
@@ -122,8 +123,9 @@ export default () => {
                         html += \`</ui5-avatar></div>\`;
                     });
                     placeholder.innerHTML = html;
-                    peoplePopover.close();
-                    peoplePopover.showAt(targetRef);
+					peoplePopover.open = false;
+					peoplePopover.opener = targetRef;
+					peoplePopover.open = true;
                 }
                 avatarGroup.addEventListener("click", function (event) {
                     if (event.detail.overflowButtonClicked) {

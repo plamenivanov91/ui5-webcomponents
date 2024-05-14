@@ -1,5 +1,5 @@
 export default {
-    "size": {
+    "design": {
         "control": "select",
         "options": [
             "Auto",
@@ -8,17 +8,6 @@ export default {
             "Spot",
             "Dialog",
             "Scene"
-        ]
-    },
-    "titleLevel": {
-        "control": "select",
-        "options": [
-            "H1",
-            "H2",
-            "H3",
-            "H4",
-            "H5",
-            "H6"
         ]
     },
     "title": {
