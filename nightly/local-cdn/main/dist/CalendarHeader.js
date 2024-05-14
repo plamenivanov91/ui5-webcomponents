@@ -53,37 +53,37 @@ let CalendarHeader = CalendarHeader_1 = class CalendarHeader extends UI5Element 
         e.preventDefault();
     }
     onMonthButtonClick(e) {
-        this.fireEvent("show-month-press", e);
+        this.fireEvent("show-month-view", e);
     }
     onMonthButtonKeyDown(e) {
         if (isSpace(e)) {
             e.preventDefault();
         }
         if (isEnter(e)) {
-            this.fireEvent("show-month-press", e);
+            this.fireEvent("show-month-view", e);
         }
     }
     onMonthButtonKeyUp(e) {
         if (isSpace(e)) {
             e.preventDefault();
-            this.fireEvent("show-month-press", e);
+            this.fireEvent("show-month-view", e);
         }
     }
     onYearButtonClick(e) {
-        this.fireEvent("show-year-press", e);
+        this.fireEvent("show-year-view", e);
     }
     onYearButtonKeyDown(e) {
         if (isSpace(e)) {
             e.preventDefault();
         }
         if (isEnter(e)) {
-            this.fireEvent("show-year-press", e);
+            this.fireEvent("show-year-view", e);
         }
     }
     onYearButtonKeyUp(e) {
         if (isSpace(e)) {
             e.preventDefault();
-            this.fireEvent("show-year-press", e);
+            this.fireEvent("show-year-view", e);
         }
     }
     get hasSecondaryCalendarType() {
@@ -152,8 +152,8 @@ CalendarHeader = CalendarHeader_1 = __decorate([
     }),
     event("next-press"),
     event("previous-press"),
-    event("show-month-press"),
-    event("show-year-press")
+    event("show-month-view"),
+    event("show-year-view")
 ], CalendarHeader);
 CalendarHeader.define();
 export default CalendarHeader;

@@ -40,6 +40,6 @@ declare class ToggleSpinButton extends ToggleButton {
     /**
      * Override
      */
-    get buttonAccessibleRole(): string;
+    get effectiveAccRole(): string;
 }
 export default ToggleSpinButton;

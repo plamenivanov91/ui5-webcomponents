@@ -91,6 +91,8 @@ declare class DateRangePicker extends DatePicker {
      * @default null
      */
     get endDateValue(): Date | null;
+    get startValue(): string;
+    get endValue(): string;
     /**
      * @override
      */

@@ -143,7 +143,7 @@ declare class Button extends UI5Element implements IFormElement, IButton {
     /**
      * Describes the accessibility role of the button.
      *
-     * **Note:** Use link role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
+     * **Note:** Use <code>ButtonAccessibleRole.Link</code> role only with a press handler, which performs a navigation. In all other scenarios the default button semantics are recommended.
      *
      * @default "Button"
      * @public
@@ -217,7 +217,7 @@ declare class Button extends UI5Element implements IFormElement, IButton {
     get isIconOnly(): boolean;
     static typeTextMappings(): Record<string, I18nText>;
     get buttonTypeText(): string;
-    get buttonAccessibleRole(): string;
+    get effectiveAccRole(): string;
     get tabIndexValue(): string;
     get showIconTooltip(): boolean;
     get ariaLabelText(): string | undefined;

@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { ICalendarSelectedDates } from "./Calendar.js";
 /**
  * @class
  *
@@ -10,7 +11,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  * @abstract
  * @public
  */
-declare class CalendarDate extends UI5Element {
+declare class CalendarDate extends UI5Element implements ICalendarSelectedDates {
     /**
      * The date formatted according to the `formatPattern` property
      * of the `ui5-calendar` that hosts the component.

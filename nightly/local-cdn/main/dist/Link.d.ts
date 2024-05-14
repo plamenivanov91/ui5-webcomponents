@@ -5,6 +5,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
+import LinkAccessibleRole from "./types/LinkAccessibleRole.js";
 type LinkClickEventDetail = {
     altKey: boolean;
     ctrlKey: boolean;
@@ -123,12 +124,12 @@ declare class Link extends UI5Element implements ITabbable {
     /**
      * Defines the ARIA role of the component.
      *
-     * **Note:** Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
+     * **Note:** Use the <code>LinkAccessibleRole.Button</code> role in cases when navigation is not expected to occur and the href property is not defined.
      * @default "link"
      * @public
      * @since 1.9.0
      */
-    accessibleRole: string;
+    accessibleRole: `${LinkAccessibleRole}`;
     /**
      * Defines the additional accessibility attributes that will be applied to the component.
      * The following fields are supported:

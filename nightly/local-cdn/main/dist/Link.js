@@ -16,6 +16,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
+import LinkAccessibleRole from "./types/LinkAccessibleRole.js";
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
 import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
@@ -178,7 +179,7 @@ __decorate([
     property()
 ], Link.prototype, "accessibleNameRef", void 0);
 __decorate([
-    property({ defaultValue: "link" })
+    property({ type: LinkAccessibleRole, defaultValue: LinkAccessibleRole.Link })
 ], Link.prototype, "accessibleRole", void 0);
 __decorate([
     property({ type: Object })

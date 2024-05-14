@@ -200,7 +200,7 @@ let Button = Button_1 = class Button extends UI5Element {
     get buttonTypeText() {
         return Button_1.i18nBundle.getText(Button_1.typeTextMappings()[this.design]);
     }
-    get buttonAccessibleRole() {
+    get effectiveAccRole() {
         return this.accessibleRole.toLowerCase();
     }
     get tabIndexValue() {

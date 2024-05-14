@@ -1,5 +1,5 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
-import CalendarDate from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import type { DayPickerChangeEventDetail } from "./DayPicker.js";
 import type { MonthPickerChangeEventDetail } from "./MonthPicker.js";
@@ -19,6 +19,11 @@ interface ICalendarPicker {
     _autoFocus?: boolean;
     _firstYear?: number;
     _lastYear?: number;
+}
+interface ICalendarSelectedDates extends UI5Element {
+    value?: string;
+    startValue?: string;
+    endValue?: string;
 }
 type CalendarSelectionChangeEventDetail = {
     selectedValues: Array<string>;
@@ -170,7 +175,7 @@ declare class Calendar extends CalendarPart {
      * for this calendar as instances of `ui5-date`.
      * @public
      */
-    dates: Array<CalendarDate>;
+    dates: Array<ICalendarSelectedDates>;
     /**
      * Defines the special dates, visually emphasized in the calendar.
      * @public
@@ -182,11 +187,11 @@ declare class Calendar extends CalendarPart {
      * @private
      */
     _selectedItemType: `${CalendarLegendItemType}`;
+    constructor();
     /**
      * @private
      */
     get _selectedDatesTimestamps(): Array<number>;
-    constructor();
     /**
      * @private
      */
@@ -247,7 +252,7 @@ declare class Calendar extends CalendarPart {
      */
     get selectedDates(): Array<number>;
     /**
-     * Creates instances of `ui5-date` inside this `ui5-calendar` with values, equal to the provided UTC timestamps
+     * Creates instances of `ui5-date` or `ui5-date-range` inside this `ui5-calendar` with values, equal to the provided UTC timestamps
      * @protected
      * @deprecated
      * @param selectedDates Array of UTC timestamps
@@ -255,4 +260,4 @@ declare class Calendar extends CalendarPart {
     set selectedDates(selectedDates: Array<number>);
 }
 export default Calendar;
-export type { ICalendarPicker, CalendarSelectionChangeEventDetail, SpecialCalendarDateT, };
+export type { ICalendarPicker, ICalendarSelectedDates, CalendarSelectionChangeEventDetail, SpecialCalendarDateT, };
