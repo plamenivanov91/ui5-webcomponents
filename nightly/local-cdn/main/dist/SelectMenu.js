@@ -126,10 +126,10 @@ let SelectMenu = class SelectMenu extends UI5Element {
         this.fireEvent("before-open");
     }
     _onAfterOpen() {
-        this.fireEvent("after-open");
+        this.fireEvent("open");
     }
     _onAfterClose() {
-        this.fireEvent("after-close");
+        this.fireEvent("close");
     }
     _onCloseBtnClick() {
         this.close();
@@ -224,8 +224,8 @@ SelectMenu = __decorate([
         },
     }),
     event("before-open"),
-    event("after-open"),
-    event("after-close"),
+    event("open"),
+    event("close"),
     event("menu-change", {
         detail: {
             text: { type: String },

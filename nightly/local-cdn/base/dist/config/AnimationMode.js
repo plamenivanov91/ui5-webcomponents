@@ -18,7 +18,8 @@ const getAnimationMode = () => {
  * @param { AnimationMode } animationMode
  */
 const setAnimationMode = (animationMode) => {
-    if (animationMode in AnimationMode) {
+    const options = Object.values(AnimationMode);
+    if (options.includes(animationMode)) {
         curAnimationMode = animationMode;
     }
 };

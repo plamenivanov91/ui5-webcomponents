@@ -16,7 +16,9 @@ import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import executeTemplate from "./renderer/executeTemplate.js";
+import executeTemplate, { getTagsToScope } from "./renderer/executeTemplate.js";
+import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+const DEV_MODE = true;
 let autoId = 0;
 const elementTimeouts = new Map();
 const uniqueDependenciesCache = new Map();
@@ -106,6 +108,27 @@ class UI5Element extends HTMLElement {
      * @private
      */
     async connectedCallback() {
+        if (DEV_MODE) {
+            const rootNode = this.getRootNode();
+            // when an element is connected, check if it exists in the `dependencies` of the parent
+            if (rootNode instanceof ShadowRoot && instanceOfUI5Element(rootNode.host)) {
+                const klass = rootNode.host.constructor;
+                const hasDependency = getTagsToScope(rootNode.host).includes(this.constructor.getMetadata().getPureTag());
+                if (!hasDependency) {
+                    // eslint-disable-next-line no-console
+                    console.error(`[UI5-FWK] ${this.constructor.getMetadata().getTag()} not found in dependencies of ${klass.getMetadata().getTag()}`);
+                }
+            }
+        }
+        if (DEV_MODE) {
+            const props = this.constructor.getMetadata().getProperties();
+            for (const [prop, propData] of Object.entries(props)) { // eslint-disable-line
+                if (Object.hasOwn(this, prop)) {
+                    // eslint-disable-next-line no-console
+                    console.error(`[UI5-FWK] ${this.constructor.getMetadata().getTag()} has a property [${prop}] that is shadowed by the instance. Updates to this property will not invalidate the component. Possible reason is TS target ES2022 or TS useDefineForClassFields`);
+                }
+            }
+        }
         const ctor = this.constructor;
         this.setAttribute(ctor.getMetadata().getPureTag(), "");
         if (ctor.getMetadata().supportsF6FastNavigation()) {
@@ -291,6 +314,9 @@ class UI5Element extends HTMLElement {
                     reason: "children",
                 });
                 invalidated = true;
+                if (ctor.getMetadata().isFormAssociated()) {
+                    setFormValue(this);
+                }
             }
         }
         // If none of the slots had an invalidation due to changes to immediate children,
@@ -391,6 +417,16 @@ class UI5Element extends HTMLElement {
             }
             this[nameInCamelCase] = newPropertyValue;
         }
+    }
+    formAssociatedCallback() {
+        const ctor = this.constructor;
+        if (!ctor.getMetadata().isFormAssociated()) {
+            return;
+        }
+        attachFormElementInternals(this);
+    }
+    static get formAssociated() {
+        return this.getMetadata().isFormAssociated();
     }
     /**
      * @private
@@ -847,6 +883,9 @@ class UI5Element extends HTMLElement {
                             newValue: value,
                             oldValue: oldState,
                         });
+                        if (ctor.getMetadata().isFormAssociated()) {
+                            setFormValue(this);
+                        }
                         this._updateAttribute(prop, value);
                     }
                 },
@@ -952,6 +991,10 @@ class UI5Element extends HTMLElement {
         this._metadata = new UI5ElementMetadata(mergedMetadata);
         return this._metadata;
     }
+    get validity() { return this._internals?.validity; }
+    get validationMessage() { return this._internals?.validationMessage; }
+    checkValidity() { return this._internals?.checkValidity(); }
+    reportValidity() { return this._internals?.reportValidity(); }
 }
 /**
  * Returns the metadata object for this UI5 Web Component Class

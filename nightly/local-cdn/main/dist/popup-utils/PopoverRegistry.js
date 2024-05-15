@@ -1,4 +1,5 @@
 import { isClickInRect } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { instanceOfPopover } from "../Popover.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
 let updateInterval;
@@ -10,7 +11,7 @@ const repositionPopovers = () => {
     });
 };
 const closePopoversIfLostFocus = () => {
-    if (document.activeElement.tagName === "IFRAME") {
+    if (getActiveElement().tagName === "IFRAME") {
         getRegistry().reverse().forEach(popup => popup.instance.closePopup(false, false, true));
     }
 };

@@ -13,7 +13,7 @@ const customElement = (tagNameOrComponentSettings = {}) => {
             target.metadata.tag = tagNameOrComponentSettings;
             return;
         }
-        const { tag, languageAware, themeAware, fastNavigation, shadowRootOptions, } = tagNameOrComponentSettings;
+        const { tag, languageAware, themeAware, fastNavigation, formAssociated, shadowRootOptions, } = tagNameOrComponentSettings;
         target.metadata.tag = tag;
         if (languageAware) {
             target.metadata.languageAware = languageAware;
@@ -24,13 +24,16 @@ const customElement = (tagNameOrComponentSettings = {}) => {
         if (fastNavigation) {
             target.metadata.fastNavigation = fastNavigation;
         }
+        if (formAssociated) {
+            target.metadata.formAssociated = formAssociated;
+        }
         if (shadowRootOptions) {
             target.metadata.shadowRootOptions = shadowRootOptions;
         }
         ["renderer", "template", "styles", "dependencies"].forEach((customElementEntity) => {
             const customElementEntityValue = tagNameOrComponentSettings[customElementEntity];
             customElementEntityValue && Object.defineProperty(target, customElementEntity, {
-                get: () => customElementEntityValue,
+                get: () => tagNameOrComponentSettings[customElementEntity],
             });
         });
     };

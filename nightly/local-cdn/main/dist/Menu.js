@@ -26,6 +26,7 @@ import MenuListItem from "./MenuListItem.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
+import MenuItem from "./MenuItem.js";
 import "./types/PopoverPlacement.js";
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import { MENU_BACK_BUTTON_ARIA_LABEL, MENU_CLOSE_BUTTON_ARIA_LABEL, } from "./generated/i18n/i18n-defaults.js";
@@ -456,6 +457,7 @@ Menu = Menu_1 = __decorate([
             Button,
             List,
             StandardListItem,
+            MenuItem,
             MenuListItem,
             Icon,
             BusyIndicator,

@@ -27,6 +27,7 @@ import List from "./List.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
+import Icon from "./Icon.js";
 import StandardListItem from "./StandardListItem.js";
 import "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
@@ -752,6 +753,7 @@ Tokenizer = Tokenizer_1 = __decorate([
             StandardListItem,
             Title,
             Button,
+            Icon,
         ],
     })
     /**

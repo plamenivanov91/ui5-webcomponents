@@ -13,6 +13,7 @@ import TimePickerInternals from "./TimePickerInternals.js";
 import TimePickerClock from "./TimePickerClock.js";
 import ToggleSpinButton from "./ToggleSpinButton.js";
 import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 // Template
 import TimeSelectionClocksTemplate from "./generated/templates/TimeSelectionClocksTemplate.lit.js";
 // Styles
@@ -427,6 +428,7 @@ TimeSelectionClocks = __decorate([
             TimePickerClock,
             ToggleSpinButton,
             SegmentedButton,
+            SegmentedButtonItem,
         ],
     })
 ], TimeSelectionClocks);

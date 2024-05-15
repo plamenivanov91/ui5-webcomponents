@@ -135,7 +135,7 @@ let Toast = class Toast extends UI5Element {
         this.open = false;
         this.focusable = false;
         this.focused = false;
-        this.fireEvent("after-close");
+        this.fireEvent("close");
     }
     _onmouseover() {
         this.hover = true;
@@ -205,7 +205,7 @@ Toast = __decorate([
      * @since 2.0.0
      */
     ,
-    event("after-close")
+    event("close")
 ], Toast);
 Toast.define();
 export default Toast;

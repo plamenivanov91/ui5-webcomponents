@@ -27,4 +27,5 @@ const getTagsToScope = (component) => {
     return tagsToScope;
 };
 export default executeTemplate;
+export { getTagsToScope };
 //# sourceMappingURL=executeTemplate.js.map

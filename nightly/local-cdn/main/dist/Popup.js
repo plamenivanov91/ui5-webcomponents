@@ -12,7 +12,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import { isChrome, isSafari, isDesktop, isPhone, } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -72,6 +72,10 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         this._getRealDomRef = () => {
             return this.shadowRoot.querySelector("[root-element]");
         };
+    }
+    onBeforeRendering() {
+        this.onPhone = isPhone();
+        this.onDesktop = isDesktop();
     }
     onAfterRendering() {
         renderFinished().then(() => {
@@ -410,6 +414,12 @@ __decorate([
 __decorate([
     slot({ type: HTMLElement, "default": true })
 ], Popup.prototype, "content", void 0);
+__decorate([
+    property({ type: Boolean })
+], Popup.prototype, "onPhone", void 0);
+__decorate([
+    property({ type: Boolean })
+], Popup.prototype, "onDesktop", void 0);
 __decorate([
     property({ type: Boolean })
 ], Popup.prototype, "open", null);

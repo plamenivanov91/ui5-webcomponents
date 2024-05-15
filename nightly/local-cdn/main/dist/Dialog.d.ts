@@ -124,14 +124,6 @@ declare class Dialog extends Popup {
      * @since 1.0.0-rc.15
      */
     state: `${ValueState}`;
-    /**
-     * @private
-     */
-    onPhone: boolean;
-    /**
-     * @private
-     */
-    onDesktop: boolean;
     _screenResizeHandler: () => void;
     _dragMouseMoveHandler: (e: MouseEvent) => void;
     _dragMouseUpHandler: (e: MouseEvent) => void;

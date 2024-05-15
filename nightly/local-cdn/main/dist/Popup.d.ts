@@ -100,12 +100,21 @@ declare abstract class Popup extends UI5Element {
      * @public
      */
     content: Array<HTMLElement>;
+    /**
+     * @private
+     */
+    onPhone: boolean;
+    /**
+     * @private
+     */
+    onDesktop: boolean;
     _resizeHandler: ResizeObserverCallback;
     _shouldFocusRoot?: boolean;
     _focusedElementBeforeOpen?: HTMLElement | null;
     _opened: boolean;
     _open: boolean;
     constructor();
+    onBeforeRendering(): void;
     onAfterRendering(): void;
     onEnterDOM(): void;
     onExitDOM(): void;

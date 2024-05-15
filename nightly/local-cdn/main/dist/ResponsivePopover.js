@@ -55,9 +55,6 @@ let ResponsivePopover = ResponsivePopover_1 = class ResponsivePopover extends Po
         if (!isPhone()) {
             super._show();
         }
-        else {
-            this.style.display = "contents";
-        }
     }
     /**
      * Closes the popover/dialog.

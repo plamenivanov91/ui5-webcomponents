@@ -1,5 +1,7 @@
-commit 051f0ff2bde952063060e12ca37487bb2ca3fa8a
-Author: plamenivanov91 <plamen.ivanov01@sap.com>
-Date:   Tue May 14 12:08:41 2024 +0300
+commit 70dc2a628c8cf49291d3d19054bda03b3a4f1caf
+Author: Nikoleta Ivanova <31706628+nikoletavnv@users.noreply.github.com>
+Date:   Wed May 15 15:14:09 2024 +0300
 
-    Merge remote-tracking branch 'upstream/main'
+    fix(ui5-multiinput): restore and adjust unit tests (#8933)
+    
+    fix(ui5-multiinput): restore deleted tests
