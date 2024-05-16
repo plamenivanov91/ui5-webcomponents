@@ -187,6 +187,64 @@ export default {
                 }
             ]
         }
+    },
+    "move-over": {
+        "description": "Fired when a movable list item is moved over a potential drop target during a dragging operation.\n\nIf the new position is valid, prevent the default action of the event using `preventDefault()`.",
+        "control": {
+            "type": false
+        },
+        "table": {
+            "category": "events"
+        },
+        "UI5CustomData": {
+            "parameters": [
+                {
+                    "type": {
+                        "text": "object"
+                    },
+                    "name": "source",
+                    "_ui5privacy": "public",
+                    "description": "Contains information about the moved element under `element` property."
+                },
+                {
+                    "type": {
+                        "text": "object"
+                    },
+                    "name": "destination",
+                    "_ui5privacy": "public",
+                    "description": "Contains information about the destination of the moved element. Has `element` and `placement` properties."
+                }
+            ]
+        }
+    },
+    "move": {
+        "description": "Fired when a movable list item is dropped onto a drop target.\n\n**Note:** `move` event is fired only if there was a preceding `move-over` with prevented default action.",
+        "control": {
+            "type": false
+        },
+        "table": {
+            "category": "events"
+        },
+        "UI5CustomData": {
+            "parameters": [
+                {
+                    "type": {
+                        "text": "object"
+                    },
+                    "name": "source",
+                    "_ui5privacy": "public",
+                    "description": "Contains information about the moved element under `element` property."
+                },
+                {
+                    "type": {
+                        "text": "object"
+                    },
+                    "name": "destination",
+                    "_ui5privacy": "public",
+                    "description": "Contains information about the destination of the moved element. Has `element` and `placement` properties."
+                }
+            ]
+        }
     }
 };
 export const componentInfo = {

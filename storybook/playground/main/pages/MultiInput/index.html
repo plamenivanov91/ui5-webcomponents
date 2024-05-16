@@ -13,7 +13,7 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src="../../../../assets/bundle.esm-91ca0f7b.js"></script>
+  <script type="module" crossorigin src="../../../../assets/bundle.esm-e9a78555.js"></script>
   <link rel="stylesheet" href="../../../../assets/MultiInput-715aafd5.css">
 </head>
 
@@ -424,6 +424,14 @@
 			});
 
 			document.getElementById("dialog").open = true;
+		});
+
+		document.getElementById("suggestion-token").addEventListener("ui5-change", function (event) {
+			var text = event.target.value;
+
+			addTokenToMI(createTokenFromText(text), "suggestion-token");
+
+			event.target.value = "";
 		});
 
 		document.getElementById("basic-overflow-and-icon").addEventListener("ui5-value-help-trigger", function (event) {

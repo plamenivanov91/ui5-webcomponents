@@ -48,7 +48,7 @@ OpeningMenu.decorators = [
 		}
 	});
 	
-	menu.addEventListener("after-close", function() {
+	menu.addEventListener("close", function() {
 		splitBtn.activeArrowButton = false;
 	});
 	</script>`;
