@@ -43,6 +43,13 @@ declare class TreeItemBase extends ListItem {
      */
     expanded: boolean;
     /**
+     * Defines whether the item is movable.
+     * @default false
+     * @public
+     * @since 2.0.0
+     */
+    movable: boolean;
+    /**
     * Defines whether the selection of a tree node is displayed as partially selected.
     *
     * **Note:** The indeterminate state can be set only programmatically and can’t be achieved by user

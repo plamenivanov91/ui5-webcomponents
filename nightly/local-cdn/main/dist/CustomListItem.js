@@ -51,6 +51,9 @@ let CustomListItem = class CustomListItem extends ListItem {
     }
 };
 __decorate([
+    property({ type: Boolean })
+], CustomListItem.prototype, "movable", void 0);
+__decorate([
     property()
 ], CustomListItem.prototype, "accessibleName", void 0);
 CustomListItem = __decorate([

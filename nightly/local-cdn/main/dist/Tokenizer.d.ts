@@ -55,8 +55,8 @@ declare enum ClipboardDataOperation {
  *
  * @constructor
  * @extends sap.ui.webc.base.UI5Element
- * @since 2.0
  * @public
+ * @since 2.0.0
  */
 declare class Tokenizer extends UI5Element {
     /**

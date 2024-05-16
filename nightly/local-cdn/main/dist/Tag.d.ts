@@ -78,7 +78,7 @@ declare class Tag extends UI5Element {
      * Defines predefined size of the component.
      * @default "S"
      * @public
-     * @since 2.0
+     * @since 2.0.0
      */
     size: `${TagSize}`;
     /**

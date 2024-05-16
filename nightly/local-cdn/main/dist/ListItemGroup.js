@@ -29,7 +29,7 @@ import ListItemGroupHeader from "./ListItemGroupHeader.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @since 2.0
+ * @since 2.0.0
  */
 let ListItemGroup = class ListItemGroup extends UI5Element {
     get groupHeaderItem() {

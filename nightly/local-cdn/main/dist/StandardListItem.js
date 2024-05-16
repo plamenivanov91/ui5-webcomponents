@@ -76,6 +76,9 @@ __decorate([
     property({ type: ValueState, defaultValue: ValueState.None })
 ], StandardListItem.prototype, "additionalTextState", void 0);
 __decorate([
+    property({ type: Boolean })
+], StandardListItem.prototype, "movable", void 0);
+__decorate([
     property()
 ], StandardListItem.prototype, "accessibleName", void 0);
 __decorate([

@@ -139,6 +139,9 @@ __decorate([
 ], TreeItemBase.prototype, "expanded", void 0);
 __decorate([
     property({ type: Boolean })
+], TreeItemBase.prototype, "movable", void 0);
+__decorate([
+    property({ type: Boolean })
 ], TreeItemBase.prototype, "indeterminate", void 0);
 __decorate([
     property({ type: Boolean })
