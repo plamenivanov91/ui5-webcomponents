@@ -201,6 +201,9 @@ let Form = class Form extends UI5Element {
     get hasGroupItems() {
         return this.items.some((item) => item.isGroup);
     }
+    get hasHeader() {
+        return this.hasCustomHeader || !!this.headerText;
+    }
     get hasCustomHeader() {
         return !!this.header.length;
     }

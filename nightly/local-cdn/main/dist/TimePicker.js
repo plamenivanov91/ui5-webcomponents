@@ -34,7 +34,6 @@ import { TIMEPICKER_SUBMIT_BUTTON, TIMEPICKER_CANCEL_BUTTON, TIMEPICKER_INPUT_DE
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
-import PopoverCss from "./generated/themes/Popover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 /**
  * @class
@@ -512,7 +511,6 @@ TimePicker = TimePicker_1 = __decorate([
         styles: [
             TimePickerCss,
             ResponsivePopoverCommonCss,
-            PopoverCss,
             TimePickerPopoverCss,
         ],
         dependencies: [

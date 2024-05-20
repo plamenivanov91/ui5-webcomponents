@@ -35,6 +35,11 @@ declare class ListItemGroup extends UI5Element {
      */
     items: Array<ListItemBase>;
     /**
+     * Indicates whether the header is focused
+     * @private
+     */
+    focused: boolean;
+    /**
     * Defines the header of the component.
     *
     * **Note:** Using this slot, the default header text of group and the value of `headerText` property will be overwritten.

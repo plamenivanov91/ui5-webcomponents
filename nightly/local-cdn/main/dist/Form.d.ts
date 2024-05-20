@@ -184,6 +184,7 @@ declare class Form extends UI5Element {
     setGroupsColSpan(): void;
     getGroupsColSpan(cols: number, groups: number, index: number, group: IFormItem): number;
     get hasGroupItems(): boolean;
+    get hasHeader(): boolean;
     get hasCustomHeader(): boolean;
     get ariaLabelledByID(): string | undefined;
     get groupItemsInfo(): Array<GroupItemsInfo>;

@@ -59,6 +59,9 @@ __decorate([
     })
 ], ListItemGroup.prototype, "items", void 0);
 __decorate([
+    property({ type: Boolean })
+], ListItemGroup.prototype, "focused", void 0);
+__decorate([
     slot({ type: HTMLElement })
 ], ListItemGroup.prototype, "header", void 0);
 ListItemGroup = __decorate([

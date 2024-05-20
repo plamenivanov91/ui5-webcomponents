@@ -91,8 +91,9 @@ let Button = Button_1 = class Button extends UI5Element {
         }
     }
     async onBeforeRendering() {
-        this.iconOnly = this.isIconOnly;
         this.hasIcon = !!this.icon;
+        this.hasEndIcon = !!this.endIcon;
+        this.iconOnly = this.isIconOnly;
         this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
     }
     _onclick(e) {
@@ -179,6 +180,12 @@ let Button = Button_1 = class Button extends UI5Element {
         }
         return IconMode.Decorative;
     }
+    get endIconMode() {
+        if (!this.endIcon) {
+            return "";
+        }
+        return IconMode.Decorative;
+    }
     get isIconOnly() {
         return !willShowContent(this.text);
     }
@@ -228,8 +235,8 @@ __decorate([
     property()
 ], Button.prototype, "icon", void 0);
 __decorate([
-    property({ type: Boolean })
-], Button.prototype, "iconEnd", void 0);
+    property()
+], Button.prototype, "endIcon", void 0);
 __decorate([
     property({ type: Boolean })
 ], Button.prototype, "submits", void 0);
@@ -260,6 +267,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Button.prototype, "hasIcon", void 0);
+__decorate([
+    property({ type: Boolean })
+], Button.prototype, "hasEndIcon", void 0);
 __decorate([
     property({ type: Boolean })
 ], Button.prototype, "nonInteractive", void 0);

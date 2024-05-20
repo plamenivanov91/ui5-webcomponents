@@ -71,6 +71,11 @@ declare class SegmentedButtonItem extends UI5Element implements IButton, ISegmen
      */
     icon: string;
     /**
+     * Defines if the button has icon and no text.
+     * @private
+     */
+    iconOnly: boolean;
+    /**
      * Indicates if the element is focusable
      * @private
      */
@@ -104,8 +109,8 @@ declare class SegmentedButtonItem extends UI5Element implements IButton, ISegmen
     constructor();
     _onclick(): void;
     onEnterDOM(): void;
+    onBeforeRendering(): void;
     _onkeyup(e: KeyboardEvent): void;
-    get isIconOnly(): boolean;
     get tabIndexValue(): string;
     get ariaLabelText(): string | undefined;
     get showIconTooltip(): boolean;

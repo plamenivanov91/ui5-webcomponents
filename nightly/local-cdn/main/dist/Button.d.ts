@@ -73,11 +73,19 @@ declare class Button extends UI5Element implements IButton, IFormElement {
      */
     icon: string;
     /**
-     * Defines whether the icon should be displayed after the component text.
-     * @default false
+     * Defines the icon, displayed as graphical element within the component after the button text.
+     *
+     * **Note:** It is highly recommended to use `endIcon` property only together with `icon` and/or `text` properties.
+     * Usage of `endIcon` only should be avoided.
+     *
+     * The SAP-icons font provides numerous options.
+     *
+     * Example:
+     * See all the available icons within the [Icon Explorer](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html).
+     * @default ""
      * @public
      */
-    iconEnd: boolean;
+    endIcon: string;
     /**
      * When set to `true`, the component will
      * automatically submit the nearest HTML form element on `press`.
@@ -164,6 +172,11 @@ declare class Button extends UI5Element implements IButton, IFormElement {
      */
     hasIcon: boolean;
     /**
+     * Indicates if the elements has a slotted end icon
+     * @private
+     */
+    hasEndIcon: boolean;
+    /**
      * Indicates if the element is focusable
      * @private
      */
@@ -212,6 +225,7 @@ declare class Button extends UI5Element implements IButton, IFormElement {
     get _hasPopup(): ("dialog" | "grid" | "listbox" | "menu" | "tree") | undefined;
     get hasButtonType(): boolean;
     get iconMode(): "" | IconMode.Decorative;
+    get endIconMode(): "" | IconMode.Decorative;
     get isIconOnly(): boolean;
     static typeTextMappings(): Record<string, I18nText>;
     get buttonTypeText(): string;

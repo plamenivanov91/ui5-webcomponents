@@ -56,13 +56,13 @@ let SegmentedButtonItem = SegmentedButtonItem_1 = class SegmentedButtonItem exte
             this.setAttribute("desktop", "");
         }
     }
+    onBeforeRendering() {
+        this.iconOnly = !willShowContent(this.text);
+    }
     _onkeyup(e) {
         if (isSpaceShift(e)) {
             e.preventDefault();
         }
-    }
-    get isIconOnly() {
-        return !willShowContent(this.text);
     }
     get tabIndexValue() {
         const tabindex = this.getAttribute("tabindex");
@@ -75,7 +75,7 @@ let SegmentedButtonItem = SegmentedButtonItem_1 = class SegmentedButtonItem exte
         return getEffectiveAriaLabelText(this);
     }
     get showIconTooltip() {
-        return this.isIconOnly && !this.tooltip;
+        return this.iconOnly && !this.tooltip;
     }
     static async onDefine() {
         SegmentedButtonItem_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -99,6 +99,9 @@ __decorate([
 __decorate([
     property()
 ], SegmentedButtonItem.prototype, "icon", void 0);
+__decorate([
+    property({ type: Boolean })
+], SegmentedButtonItem.prototype, "iconOnly", void 0);
 __decorate([
     property({ type: Boolean })
 ], SegmentedButtonItem.prototype, "nonInteractive", void 0);
