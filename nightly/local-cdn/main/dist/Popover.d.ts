@@ -140,7 +140,7 @@ declare class Popover extends Popup {
      * @public
      */
     footer: Array<HTMLElement>;
-    _opener?: HTMLElement;
+    _opener?: HTMLElement | string;
     _openerRect?: DOMRect;
     _preventRepositionAndClose?: boolean;
     _top?: number;
@@ -157,8 +157,8 @@ declare class Popover extends Popup {
      * @default undefined
      * @since 1.2.0
      */
-    set opener(value: HTMLElement);
-    get opener(): HTMLElement | undefined;
+    set opener(value: HTMLElement | string);
+    get opener(): HTMLElement | string | undefined;
     openPopup(): Promise<void>;
     isOpenerClicked(e: MouseEvent): boolean;
     /**
@@ -171,6 +171,7 @@ declare class Popover extends Popup {
      * @private
      */
     _removeOpenedPopup(): void;
+    getOpenerHTMLElement(opener: HTMLElement | string | undefined): HTMLElement | null | undefined;
     shouldCloseDueToOverflow(placement: `${PopoverPlacement}`, openerRect: DOMRect): boolean;
     shouldCloseDueToNoOpener(openerRect: DOMRect): boolean;
     isOpenerOutsideViewport(openerRect: DOMRect): boolean;

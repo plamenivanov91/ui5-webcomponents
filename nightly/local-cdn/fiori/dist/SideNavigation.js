@@ -185,7 +185,7 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
         opener.classList.add("ui5-sn-item-active");
         const menu = this.getOverflowPopover();
         menu.opener = opener;
-        menu.showAt(opener);
+        menu.open = true;
     }
     closePicker() {
         const responsivePopover = this.getPicker();
@@ -193,7 +193,7 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
     }
     closeMenu() {
         const menu = this.getOverflowPopover();
-        menu.close();
+        menu.open = false;
     }
     getPickerTree() {
         const picker = this.getPicker();

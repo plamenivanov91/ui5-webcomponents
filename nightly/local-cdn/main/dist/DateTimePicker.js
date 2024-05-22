@@ -14,6 +14,7 @@ import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateB
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import Button from "./Button.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
@@ -286,6 +287,19 @@ let DateTimePicker = DateTimePicker_1 = class DateTimePicker extends DatePicker 
             selectedDate.setSeconds(selectedTime.getSeconds());
         }
         return selectedDate;
+    }
+    getFormat() {
+        return this._isPattern
+            ? DateFormat.getDateTimeInstance({
+                strictParsing: true,
+                pattern: this._formatPattern,
+                calendarType: this._primaryCalendarType,
+            })
+            : DateFormat.getDateTimeInstance({
+                strictParsing: true,
+                style: this._formatPattern,
+                calendarType: this._primaryCalendarType,
+            });
     }
     /**
      * @override

@@ -200,6 +200,7 @@ declare class Button extends UI5Element implements IButton, IFormElement {
      * @private
      */
     _isTouch: boolean;
+    _cancelAction: boolean;
     /**
      * Defines the text of the component.
      *

@@ -11,7 +11,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isEscape, isShift, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -135,12 +135,19 @@ let Button = Button_1 = class Button extends UI5Element {
         markEvent(e, "button");
     }
     _onkeydown(e) {
+        this._cancelAction = isShift(e) || isEscape(e);
         markEvent(e, "button");
         if (isSpace(e) || isEnter(e)) {
             this._setActiveState(true);
         }
+        else if (this._cancelAction) {
+            this._setActiveState(false);
+        }
     }
     _onkeyup(e) {
+        if (this._cancelAction) {
+            e.preventDefault();
+        }
         if (isSpace(e) || isEnter(e)) {
             if (this.active) {
                 this._setActiveState(false);
@@ -285,6 +292,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Button.prototype, "_isTouch", void 0);
+__decorate([
+    property({ type: Boolean, noAttribute: true })
+], Button.prototype, "_cancelAction", void 0);
 __decorate([
     slot({ type: Node, "default": true })
 ], Button.prototype, "text", void 0);

@@ -5,15 +5,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var NotificationListGroupItem_1;
-import { isSpace, isPlus, isMinus, isLeft, isRight, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isPlus, isMinus, isLeft, isRight, } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
+import NotificationListGroupList from "./NotificationListGroupList.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -69,9 +69,11 @@ import NotificationListGroupItemCss from "./generated/themes/NotificationListGro
  */
 let NotificationListGroupItem = NotificationListGroupItem_1 = class NotificationListGroupItem extends NotificationListItemBase {
     onBeforeRendering() {
+        super.onBeforeRendering();
         if (this.loading) {
             this.clearChildBusyIndicator();
         }
+        this.actionable = false;
     }
     /**
      * Clears child items loading state to show a single loading over the entire group,
@@ -107,10 +109,14 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
     get _ariaExpanded() {
         return !this.collapsed;
     }
+    get _pressable() {
+        return false;
+    }
     get groupCollapsedIcon() {
         return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
     }
     get groupCollapsedTooltip() {
+        // eslint-disable-next-line
         // ToDo: edit and add translation when spec is ready
         return this.collapsed ? "expand arrow" : "collapse arrow";
     }
@@ -125,15 +131,16 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
     _onHeaderToggleClick() {
         this.toggleCollapsed();
     }
-    _onkeydown(e) {
-        super._onkeydown(e);
+    async _onkeydown(e) {
+        await super._onkeydown(e);
+        if (!this.focused) {
+            return;
+        }
         const space = isSpace(e);
         const plus = isPlus(e);
         const minus = isMinus(e);
         const left = isLeft(e);
         const right = isRight(e);
-        const down = isDown(e);
-        const up = isUp(e);
         if (space) {
             this.toggleCollapsed();
         }
@@ -149,32 +156,9 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
                 this.toggleCollapsed();
             }
         }
-        if (down) {
-            const notificationItems = this.items;
-            const lastItemIndex = notificationItems.length - 1;
-            const isLastItem = e.target === notificationItems[lastItemIndex];
-            const groupsInList = this.parentElement?.children;
-            const indexOfCurrentGroup = groupsInList ? Array.from(groupsInList).findIndex(element => (element === this)) : -1;
-            // if the focus is on the header (whole group) move it to the first notification item
-            if (!this.collapsed && this.hasAttribute("focused") && notificationItems[0]) {
-                notificationItems[0].focus();
-            }
-            // if the focus is on the last item move it to the next group (if available)
-            if (!this.collapsed && isLastItem) {
-                // focus the next (sibling) group
-                if (groupsInList && groupsInList[indexOfCurrentGroup] && groupsInList[indexOfCurrentGroup + 1]) {
-                    // @ts-ignore
-                    groupsInList[indexOfCurrentGroup + 1].focus();
-                }
-            }
-        }
-        if (up) {
-            const notificationItems = this.items;
-            // if the focus is on the first notification item move it to the header (whole group)
-            if (!this.collapsed && e.target === notificationItems[0]) {
-                this.focus();
-            }
-        }
+    }
+    getHeaderDomRef() {
+        return this.getDomRef()?.querySelector(".ui5-nli-group-header");
     }
 };
 __decorate([
@@ -192,7 +176,7 @@ NotificationListGroupItem = NotificationListGroupItem_1 = __decorate([
         ],
         template: NotificationListGroupItemTemplate,
         dependencies: [
-            List,
+            NotificationListGroupList,
             Button,
             Icon,
             BusyIndicator,

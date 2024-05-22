@@ -1,6 +1,4 @@
-import type { ListItemClickEventDetail } from "./List.js";
 import Menu from "./Menu.js";
-import MenuItem from "./MenuItem.js";
 import NavigationMenuItem from "./NavigationMenuItem.js";
 /**
  * @class
@@ -30,10 +28,7 @@ declare class NavigationMenu extends Menu {
      * @public
      */
     items: Array<NavigationMenuItem>;
-    _isMenu(element: HTMLElement): boolean;
     _itemMouseOver(e: MouseEvent): void;
-    _clonedItemsFragment(item: MenuItem): DocumentFragment;
-    _itemClick(e: CustomEvent<ListItemClickEventDetail>): void;
     get accSideNavigationPopoverHiddenText(): string;
 }
 export default NavigationMenu;

@@ -26,6 +26,7 @@ import { DELETE, ARIA_LABEL_LIST_ITEM_CHECKBOX, ARIA_LABEL_LIST_ITEM_RADIO_BUTTO
 import ListItemAccessibleRole from "./types/ListItemAccessibleRole.js";
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
+import listItemAdditionalTextCss from "./generated/themes/ListItemAdditionalText.css.js";
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 /**
@@ -59,6 +60,7 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         };
     }
     onBeforeRendering() {
+        super.onBeforeRendering();
         this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._selectionMode !== ListSelectionMode.Delete);
     }
     onEnterDOM() {
@@ -74,14 +76,8 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
     async _onkeydown(e) {
         super._onkeydown(e);
         const itemActive = this.type === ListItemType.Active, itemNavigated = this.typeNavigation;
-        if (isSpace(e)) {
-            e.preventDefault();
-        }
         if ((isSpace(e) || isEnter(e)) && (itemActive || itemNavigated)) {
             this.activate();
-        }
-        if (isEnter(e)) {
-            this.fireItemPress(e);
         }
         if (isF2(e)) {
             const focusDomRef = this.getFocusDomRef();
@@ -94,11 +90,9 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         }
     }
     _onkeyup(e) {
+        super._onkeyup(e);
         if (isSpace(e) || isEnter(e)) {
             this.deactivate();
-        }
-        if (isSpace(e)) {
-            this.fireItemPress(e);
         }
         if (this.modeDelete && isDelete(e)) {
             this.onDelete();
@@ -122,12 +116,6 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
     _onfocusout() {
         super._onfocusout();
         this.deactivate();
-    }
-    _onclick(e) {
-        if (getEventMark(e) === "button") {
-            return;
-        }
-        this.fireItemPress(e);
     }
     _ondragstart(e) {
         if (e.target === this._listItem) {
@@ -167,13 +155,10 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         this.fireEvent("detail-click", { item: this, selected: this.selected });
     }
     fireItemPress(e) {
-        if (this.isInactive || this.disabled) {
+        if (this.isInactive) {
             return;
         }
-        if (isEnter(e)) {
-            e.preventDefault();
-        }
-        this.fireEvent("_press", { item: this, selected: this.selected, key: e.key });
+        super.fireItemPress(e);
     }
     get isInactive() {
         return this.type === ListItemType.Inactive || this.type === ListItemType.Detail;
@@ -297,9 +282,6 @@ __decorate([
     property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
 ], ListItem.prototype, "highlight", void 0);
 __decorate([
-    property({ type: Boolean })
-], ListItem.prototype, "actionable", void 0);
-__decorate([
     property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })
 ], ListItem.prototype, "accessibleRole", void 0);
 __decorate([
@@ -311,7 +293,11 @@ __decorate([
 ListItem = ListItem_1 = __decorate([
     customElement({
         languageAware: true,
-        styles: [ListItemBase.styles, styles],
+        styles: [
+            ListItemBase.styles,
+            listItemAdditionalTextCss,
+            styles,
+        ],
         dependencies: [
             Button,
             RadioButton,
@@ -324,7 +310,6 @@ ListItem = ListItem_1 = __decorate([
      */
     ,
     event("detail-click"),
-    event("_press"),
     event("_focused"),
     event("_selection-requested")
 ], ListItem);

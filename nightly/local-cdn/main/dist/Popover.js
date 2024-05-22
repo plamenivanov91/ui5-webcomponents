@@ -99,19 +99,7 @@ let Popover = Popover_1 = class Popover extends Popup {
         if (this._opened) {
             return;
         }
-        let opener;
-        if (this.opener instanceof HTMLElement) {
-            opener = this.opener;
-        }
-        else if (typeof this.opener === "string") {
-            const rootNode = this.getRootNode();
-            if (rootNode instanceof Document) {
-                opener = rootNode.getElementById(this.opener);
-            }
-            if (!opener) {
-                opener = document.getElementById(this.opener);
-            }
-        }
+        const opener = this.getOpenerHTMLElement(this.opener);
         if (!opener) {
             console.warn("Valid opener id is required. It must be defined before opening the popover."); // eslint-disable-line
             return;
@@ -120,7 +108,6 @@ let Popover = Popover_1 = class Popover extends Popup {
             this.fireEvent("close", {}, false, false);
             return;
         }
-        this._opener = opener;
         this._openerRect = opener.getBoundingClientRect();
         await super.openPopup();
     }
@@ -149,6 +136,16 @@ let Popover = Popover_1 = class Popover extends Popup {
     _removeOpenedPopup() {
         removeOpenedPopover(this);
     }
+    getOpenerHTMLElement(opener) {
+        if (opener === undefined || opener instanceof HTMLElement) {
+            return opener;
+        }
+        const rootNode = this.getRootNode();
+        if (rootNode instanceof Document) {
+            return rootNode.getElementById(opener);
+        }
+        return document.getElementById(opener);
+    }
     shouldCloseDueToOverflow(placement, openerRect) {
         const threshold = 32;
         const limits = {
@@ -157,7 +154,8 @@ let Popover = Popover_1 = class Popover extends Popup {
             "Top": openerRect.top,
             "Bottom": openerRect.bottom,
         };
-        const closedPopupParent = getClosedPopupParent(this._opener);
+        const opener = this.getOpenerHTMLElement(this.opener);
+        const closedPopupParent = getClosedPopupParent(opener);
         let overflowsBottom = false;
         let overflowsTop = false;
         if (closedPopupParent instanceof Popover_1) {
@@ -204,7 +202,7 @@ let Popover = Popover_1 = class Popover extends Popup {
         }
         if (this.open) {
             // update opener rect if it was changed during the popover being opened
-            this._openerRect = this._opener.getBoundingClientRect();
+            this._openerRect = this.getOpenerHTMLElement(this.opener).getBoundingClientRect();
         }
         if (this.shouldCloseDueToNoOpener(this._openerRect) && this.isFocusWithin() && this._oldPlacement) {
             // reuse the old placement as the opener is not available,

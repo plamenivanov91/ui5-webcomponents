@@ -10,7 +10,7 @@
 
 
 
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-7050a15d.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-7cafe8b5.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/NotificationListGroupItem-ea9e375c.css">
 </head>
 
@@ -20,9 +20,7 @@
 	</ui5-shellbar>
 	<ui5-button id="btnCompact">Toggle sapUiSizeCompact</ui5-button>
 
-	<!-- the list that we create to contain several NotificationGroups should have 
-		accessible-name="Notifications". All applications should do the same -->
-	<ui5-list id="notificationList" accessible-name="Notifications">
+	<ui5-notification-list id="notificationList">
 		<ui5-li-notification-group
 			show-close
 			show-counter
@@ -43,7 +41,7 @@
 				<span slot="footnotes">Office Notifications</span>
 				<span slot="footnotes">Category</span>
 				<span slot="footnotes">11:13</span>
-				
+
 				<ui5-notification-action icon="accept" text="Accept-deprecated" slot="actions"></ui5-notification-action>
 
 				<ui5-menu slot="menu">
@@ -182,14 +180,13 @@
 			</ui5-li-notification>
 
 		</ui5-li-notification-group>
-	</ui5-list>
+	</ui5-notification-list>
 
 	<ui5-title>ACC test</ui5-title>
 	<ui5-button design="Transparent" >Tab stop</ui5-button>
-	<!-- the list that we create to contain several NotificationGroups should have 
-	 accessible-name="Notifications". All applications should do the same -->
-	<ui5-list id="ACCtestGroup" accessible-name="Notifications">
-		
+
+	<ui5-notification-list id="ACCtestGroup">
+
 		<ui5-li-notification-group
 			show-close
 			show-counter
@@ -276,7 +273,7 @@
 				</ui5-menu>
 			</ui5-li-notification>
 		</ui5-li-notification-group>
-	</ui5-list>
+	</ui5-notification-list>
 	<ui5-button design="Transparent">Tab stop</ui5-button>
 
 	<br><br>
@@ -290,8 +287,8 @@
 			<ui5-button design="Transparent" icon="sort" tooltip="Sort" slot="endContent"></ui5-button>
 			<ui5-button design="Transparent" icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>
 		</ui5-bar>
-		<ui5-list id="notificationListTop" accessible-name="Notifications">
-			<ui5-li-notification-group				
+		<ui5-notification-list id="notificationListTop" accessible-name="Notifications">
+			<ui5-li-notification-group
 				title-text="Orders"
 			>
 				<ui5-li-notification
@@ -365,7 +362,7 @@
 					</ui5-menu>
 				</ui5-li-notification>
 			</ui5-li-notification-group>
-		</ui5-list>
+		</ui5-notification-list>
 	</ui5-popover>
 
 	<div class="notificationlistgroupitem3auto">

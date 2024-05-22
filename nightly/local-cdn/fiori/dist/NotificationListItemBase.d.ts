@@ -43,7 +43,8 @@ declare class NotificationListItemBase extends ListItemBase {
     /**
      * Event handlers
      */
-    _onkeydown(e: KeyboardEvent): void;
+    _onkeydown(e: KeyboardEvent): Promise<void>;
+    getHeaderDomRef(): HTMLElement | undefined;
     static onDefine(): Promise<void>;
 }
 export default NotificationListItemBase;

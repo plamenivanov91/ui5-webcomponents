@@ -11,7 +11,7 @@
 	</script>
 	
 	
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-7050a15d.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-7cafe8b5.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/SideNavigation-ffae42e2.css">
 </head>
 
@@ -19,8 +19,8 @@
 	<ui5-shellbar
 		primary-title="UI5 Web Components"
 		secondary-title="The Best Run SAP"
-		show-co-pilot
 	>
+		<ui5-toggle-button icon="sap-icon://da" slot="assistant"></ui5-toggle-button>
 		<ui5-button icon="menu" slot="startButton" id="startButton"></ui5-button>
 	</ui5-shellbar>
 
@@ -56,7 +56,6 @@
 				<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 			</ui5-side-navigation-item>
 			<ui5-side-navigation-item disabled id="item1" text="Home" icon="home" tooltip="Home tooltip"></ui5-side-navigation-item>
-			<ui5-side-navigation-item id="toggle" text="Toggle" icon="menu"></ui5-side-navigation-item>
 
 			<!-- Fixed Items -->
 			<ui5-side-navigation-item id="fixedItem1" slot="fixedItems" text="Useful Links" icon="chain-link" tooltip="Useful links tooltip">
@@ -99,12 +98,8 @@
 			sideNavigation.collapsed = !sideNavigation.collapsed;
 		});
 
-		document.getElementById("toggle").addEventListener("click", () => {
-			sideNavigation.collapsed = !sideNavigation.collapsed;
-		});
-
 		document.querySelectorAll("ui5-side-navigation-item").forEach(function (item) {
-			item.addEventListener("click", function (event) {
+			item.addEventListener("ui5-click", function (event) {
 				clickInput.value = ++clickCounter;
 			});
 		});

@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var NotificationListItem_1;
-import { isSpace, isEnter, isDelete, isF10Shift, isEnterShift, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isDelete, isF10Shift, isEnterShift, isUp, isDown, } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -271,13 +271,42 @@ let NotificationListItem = NotificationListItem_1 = class NotificationListItem e
         e.preventDefault();
         this._showMorePressed = !this._showMorePressed;
     }
-    _onkeydown(e) {
-        super._onkeydown(e);
+    async _onkeydown(e) {
+        await super._onkeydown(e);
         if (isEnter(e)) {
             this.fireItemPress(e);
         }
         if (isF10Shift(e)) {
             e.preventDefault();
+        }
+        this.focusSameItemOnNextRow(e);
+    }
+    focusSameItemOnNextRow(e) {
+        if (this.focused || (!isUp(e) && !isDown(e))) {
+            return;
+        }
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        const list = this.closest("[ui5-notification-list]");
+        if (!list) {
+            return;
+        }
+        const navItems = list.getEnabledItems();
+        const index = navItems.indexOf(this) + (isUp(e) ? -1 : 1);
+        const nextItem = navItems[index];
+        if (!nextItem) {
+            return;
+        }
+        const target = e.target;
+        if (!target) {
+            return;
+        }
+        const sameItemOnNextRow = nextItem.getHeaderDomRef().querySelector(`.${target.className}`);
+        if (sameItemOnNextRow && sameItemOnNextRow.offsetParent) {
+            sameItemOnNextRow.focus();
+        }
+        else {
+            nextItem.focus();
         }
     }
     _onkeyup(e) {
@@ -307,7 +336,8 @@ let NotificationListItem = NotificationListItem_1 = class NotificationListItem e
     }
     openMenu() {
         const menu = this.getMenu();
-        menu.showAt(this.menuButtonDOM);
+        menu.opener = this.menuButtonDOM;
+        menu.open = true;
     }
     getMenu() {
         const menu = this.querySelector("ui5-menu");

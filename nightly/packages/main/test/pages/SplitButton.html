@@ -12,7 +12,7 @@
 
 
 
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-dd70d962.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-097aab89.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/SplitButton-d2e2e966.css">
 </head>
 
@@ -110,13 +110,9 @@ const splitBtn = document.getElementById("splitBtnWithMenuDefaultActionDefaultAc
 const menu = document.getElementById("menu");
 
 splitBtn.addEventListener("ui5-arrow-click", function() {
-	if (menu.open) {
-		menu.close();
-		splitBtn.activeArrowButton = false;
-	} else {
-		menu.showAt(splitBtn);
-		splitBtn.activeArrowButton = true;
-	}
+	menu.opener = splitBtn; 
+	menu.open = !menu.open;
+	splitBtn.activeArrowButton = !splitBtn.activeArrowButton;
 });
 
 menu.addEventListener("close", function() {
@@ -134,9 +130,8 @@ menu.addEventListener("close", function() {
 
 
 	splitBtnWithMenuWithAssociatedLastAction.addEventListener("ui5-arrow-click", function() {
-		menuInSplitBtnAssociatedLastAction.open ? 
-			menuInSplitBtnAssociatedLastAction.close() :
-			menuInSplitBtnAssociatedLastAction.showAt(splitBtnWithMenuWithAssociatedLastAction)
+		menuInSplitBtnAssociatedLastAction.opener = splitBtnWithMenuWithAssociatedLastAction; 
+		menuInSplitBtnAssociatedLastAction.menuInSplitBtnAssociatedLastAction = !menu.open;
 	})
 
 	menuInSplitBtnAssociatedLastAction.addEventListener("ui5-item-click", function(event) {

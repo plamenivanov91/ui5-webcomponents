@@ -1,3 +1,4 @@
+/// <reference types="openui5" />
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
@@ -182,6 +183,7 @@ declare class DateTimePicker extends DatePicker implements IFormInputElement {
     _modifyDateValue(amount: number, unit: string, preserveDate: boolean): void;
     getPicker(): ResponsivePopover;
     getSelectedDateTime(): Date;
+    getFormat(): import("sap/ui/core/format/DateFormat").default;
     /**
      * @override
      */

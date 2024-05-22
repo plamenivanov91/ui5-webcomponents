@@ -33,7 +33,6 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
  */
 let TreeItemBase = TreeItemBase_1 = class TreeItemBase extends ListItem {
     onBeforeRendering() {
-        this.actionable = false;
         this.showToggleButton = this.requiresToggleButton;
     }
     get classes() {

@@ -3,8 +3,6 @@ import testAssets from "@ui5/webcomponents/dist/bundle.esm.js";
 import * as defaultFioriTexts from "./generated/i18n/i18n-defaults.js";
 // FIORI assets
 import "./Assets.js";
-// FIORI features
-import "./features/CoPilotAnimation.js";
 // FIORI illustrations
 import "./illustrations/AllIllustrations.js";
 // FIORI components
@@ -18,6 +16,7 @@ import "./MediaGallery.js";
 import "./MediaGalleryItem.js";
 import "./NotificationListGroupItem.js";
 import "./NotificationListItem.js";
+import "./NotificationList.js";
 import "./Page.js";
 import "./ProductSwitch.js";
 import "./ProductSwitchItem.js";

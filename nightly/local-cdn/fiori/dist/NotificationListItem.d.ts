@@ -181,7 +181,8 @@ declare class NotificationListItem extends NotificationListItemBase {
      */
     _onclick(e: MouseEvent): void;
     _onShowMoreClick(e: MouseEvent): void;
-    _onkeydown(e: KeyboardEvent): void;
+    _onkeydown(e: KeyboardEvent): Promise<void>;
+    focusSameItemOnNextRow(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
     _onBtnCloseClick(): void;
     _onBtnMenuClick(): void;

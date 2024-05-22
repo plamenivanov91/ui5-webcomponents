@@ -21,6 +21,7 @@ declare class ListItemGroupHeader extends ListItemBase {
     accessibleName: string;
     static i18nBundle: I18nBundle;
     get groupItem(): boolean;
+    get _pressable(): boolean;
     get groupHeaderText(): string;
     get ariaLabelText(): string;
     static onDefine(): Promise<void>;

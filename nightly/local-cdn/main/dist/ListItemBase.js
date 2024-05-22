@@ -10,8 +10,9 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isSpace, isTabNext, isTabPrevious, } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
 import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
@@ -25,6 +26,9 @@ import draggableElementStyles from "./generated/themes/DraggableElement.css.js";
  * @public
  */
 let ListItemBase = class ListItemBase extends UI5Element {
+    onBeforeRendering() {
+        this.actionable = true;
+    }
     _onfocusin(e) {
         this.fireEvent("_request-tabindex-change", e);
         if (e.target !== this.getFocusDomRef()) {
@@ -43,8 +47,33 @@ let ListItemBase = class ListItemBase extends UI5Element {
         if (isTabPrevious(e)) {
             return this._handleTabPrevious(e);
         }
+        if (isSpace(e)) {
+            e.preventDefault();
+        }
+        if (isEnter(e)) {
+            this.fireItemPress(e);
+        }
     }
-    _onkeyup(e) { } // eslint-disable-line
+    _onkeyup(e) {
+        if (isSpace(e)) {
+            this.fireItemPress(e);
+        }
+    }
+    _onclick(e) {
+        if (getEventMark(e) === "button") {
+            return;
+        }
+        this.fireItemPress(e);
+    }
+    fireItemPress(e) {
+        if (this.disabled || !this._pressable) {
+            return;
+        }
+        if (isEnter(e)) {
+            e.preventDefault();
+        }
+        this.fireEvent("_press", { item: this, selected: this.selected, key: e.key });
+    }
     _handleTabNext(e) {
         if (this.shouldForwardTabAfter()) {
             if (!this.fireEvent("_forward-after", {}, true)) {
@@ -86,6 +115,9 @@ let ListItemBase = class ListItemBase extends UI5Element {
     get _focusable() {
         return !this.disabled;
     }
+    get _pressable() {
+        return true;
+    }
     get hasConfigurableMode() {
         return false;
     }
@@ -117,12 +149,16 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], ListItemBase.prototype, "focused", void 0);
+__decorate([
+    property({ type: Boolean })
+], ListItemBase.prototype, "actionable", void 0);
 ListItemBase = __decorate([
     customElement({
         renderer: litRender,
         styles: [styles, draggableElementStyles],
     }),
     event("_request-tabindex-change"),
+    event("_press"),
     event("_focused"),
     event("_forward-after"),
     event("_forward-before")

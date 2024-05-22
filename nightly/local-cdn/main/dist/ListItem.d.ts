@@ -20,11 +20,6 @@ type SelectionRequestEventDetail = {
     selected?: boolean;
     key?: string;
 };
-type PressEventDetail = {
-    item: ListItem;
-    selected: boolean;
-    key: string;
-};
 type AccInfo = {
     role: string;
     ariaExpanded?: boolean;
@@ -106,11 +101,6 @@ declare abstract class ListItem extends ListItemBase {
      */
     highlight: `${HighlightTypes}`;
     /**
-     * Indicates if the list item is actionable, e.g has hover and pressed effects.
-     * @private
-    */
-    actionable: boolean;
-    /**
      * Used to define the role of the list item.
      * @private
      * @default "ListItem"
@@ -145,7 +135,6 @@ declare abstract class ListItem extends ListItemBase {
     _onmouseup(e: MouseEvent): void;
     _ontouchend(e: TouchEvent): void;
     _onfocusout(): void;
-    _onclick(e: MouseEvent): void;
     _ondragstart(e: DragEvent): void;
     _ondragend(e: DragEvent): void;
     onMultiSelectionComponentPress(e: MouseEvent): void;
@@ -183,4 +172,4 @@ declare abstract class ListItem extends ListItemBase {
     static onDefine(): Promise<void>;
 }
 export default ListItem;
-export type { IAccessibleListItem, SelectionRequestEventDetail, PressEventDetail, ListItemAccessibilityAttributes, };
+export type { IAccessibleListItem, SelectionRequestEventDetail, ListItemAccessibilityAttributes, };

@@ -1,5 +1,13 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type Menu from "./Menu.js";
+import ListItem from "./ListItem.js";
+import ResponsivePopover from "./ResponsivePopover.js";
+import PopoverPlacement from "./types/PopoverPlacement.js";
+import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
+type MenuBeforeOpenEventDetail = {
+    item?: MenuItem;
+};
+type MenuBeforeCloseEventDetail = {
+    escPressed: boolean;
+};
 /**
  * @class
  *
@@ -10,20 +18,20 @@ import type Menu from "./Menu.js";
  *
  * ### Usage
  *
- * `ui5-menu-item` is an abstract element, representing a node in a `ui5-menu`. The menu itself is rendered as a list,
- * and each `ui5-menu-item` is represented by a list item (`ui5-li`) in that list. Therefore, you should only use
+ * `ui5-menu-item` represents a node in a `ui5-menu`. The menu itself is rendered as a list,
+ * and each `ui5-menu-item` is represented by a list item in that list. Therefore, you should only use
  * `ui5-menu-item` directly in your apps. The `ui5-li` list item is internal for the list, and not intended for public use.
  *
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/MenuItem.js";`
  * @constructor
- * @extends UI5Element
- * @abstract
+ * @extends ListItem
  * @since 1.3.0
  * @public
  */
-declare class MenuItem extends UI5Element {
+declare class MenuItem extends ListItem {
+    static onDefine(): Promise<void>;
     /**
      * Defines the text of the tree item.
      * @default ""
@@ -95,30 +103,49 @@ declare class MenuItem extends UI5Element {
      */
     tooltip: string;
     /**
-     * Indicates whether any of the element siblings have children items.
-     */
-    _siblingsWithChildren: boolean;
-    /**
      * Indicates whether any of the element siblings have icon.
      */
     _siblingsWithIcon: boolean;
-    /**
-     * Defines whether the submenu closing must be prevented
-     */
-    _preventSubMenuClose: boolean;
-    /**
-     * Stores Menu object with submenu items
-     */
-    _subMenu?: Menu;
     /**
      * Defines the items of this component.
      * @public
      */
     items: Array<MenuItem>;
+    get placement(): `${PopoverPlacement}`;
+    get isRtl(): boolean;
     get hasSubmenu(): boolean;
-    get hasDummyIcon(): boolean;
-    get subMenuOpened(): boolean;
-    get _additionalText(): string;
+    get hasIcon(): boolean;
+    get isSubMenuOpen(): boolean;
     get ariaLabelledByText(): string;
+    get menuHeaderTextPhone(): string;
+    get isPhone(): boolean;
+    get labelBack(): string;
+    get labelClose(): string;
+    onBeforeRendering(): void;
+    get _focusable(): boolean;
+    get _accInfo(): {
+        role: string;
+        ariaHaspopup: "dialog" | "grid" | "listbox" | "menu" | "tree" | undefined;
+        ariaExpanded?: boolean | undefined;
+        ariaLevel?: number | undefined;
+        ariaLabel: string;
+        ariaLabelRadioButton: string;
+        ariaSelectedText?: string | undefined;
+        posinset?: number | undefined;
+        setsize?: number | undefined;
+        ariaSelected?: boolean | undefined;
+        ariaChecked?: boolean | undefined;
+        listItemAriaLabel?: string | undefined;
+        ariaOwns?: string | undefined;
+        tooltip?: string | undefined;
+    };
+    get _popover(): ResponsivePopover;
+    _closeAll(): void;
+    _close(): void;
+    _beforePopoverOpen(e: CustomEvent): void;
+    _afterPopoverOpen(): void;
+    _beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>): void;
+    _afterPopoverClose(): void;
 }
 export default MenuItem;
+export type { MenuBeforeCloseEventDetail, MenuBeforeOpenEventDetail, };

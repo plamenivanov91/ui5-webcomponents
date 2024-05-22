@@ -31,12 +31,12 @@ const boot = async () => {
         return bootPromise;
     }
     const bootExecutor = async (resolve) => {
+        registerCurrentRuntime();
         if (typeof document === "undefined") {
             resolve();
             return;
         }
         attachThemeRegistered(onThemeRegistered);
-        registerCurrentRuntime();
         const openUI5Support = getFeature("OpenUI5Support");
         const isOpenUI5Loaded = openUI5Support ? openUI5Support.isOpenUI5Detected() : false;
         const f6Navigation = getFeature("F6Navigation");

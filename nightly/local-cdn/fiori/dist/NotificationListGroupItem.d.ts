@@ -72,6 +72,7 @@ declare class NotificationListGroupItem extends NotificationListItemBase {
     get groupText(): string;
     get ariaLabelledBy(): string;
     get _ariaExpanded(): boolean;
+    get _pressable(): boolean;
     get groupCollapsedIcon(): "navigation-right-arrow" | "navigation-down-arrow";
     get groupCollapsedTooltip(): "expand arrow" | "collapse arrow";
     toggleCollapsed(): void;
@@ -80,7 +81,8 @@ declare class NotificationListGroupItem extends NotificationListItemBase {
      *
      */
     _onHeaderToggleClick(): void;
-    _onkeydown(e: KeyboardEvent): void;
+    _onkeydown(e: KeyboardEvent): Promise<void>;
+    getHeaderDomRef(): HTMLElement;
 }
 export default NotificationListGroupItem;
 export type { NotificationListGroupItemToggleEventDetail, };

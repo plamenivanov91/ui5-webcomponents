@@ -28,6 +28,9 @@ let ListItemGroupHeader = ListItemGroupHeader_1 = class ListItemGroupHeader exte
     get groupItem() {
         return true;
     }
+    get _pressable() {
+        return false;
+    }
     get groupHeaderText() {
         return ListItemGroupHeader_1.i18nBundle.getText(GROUP_HEADER_TEXT);
     }

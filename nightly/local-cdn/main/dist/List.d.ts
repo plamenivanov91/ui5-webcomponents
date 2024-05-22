@@ -8,8 +8,9 @@ import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import ListItemBase from "./ListItemBase.js";
+import type { ListItemBasePressEventDetail } from "./ListItemBase.js";
 import DropIndicator from "./DropIndicator.js";
-import type { SelectionRequestEventDetail, PressEventDetail } from "./ListItem.js";
+import type { SelectionRequestEventDetail } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
 import ListItemGroup from "./ListItemGroup.js";
 type ListItemFocusEventDetail = {
@@ -310,7 +311,7 @@ declare class List extends UI5Element {
     isForwardAfterElement(element: HTMLElement): boolean;
     onItemTabIndexChange(e: CustomEvent): void;
     onItemFocused(e: CustomEvent): void;
-    onItemPress(e: CustomEvent<PressEventDetail>): void;
+    onItemPress(e: CustomEvent<ListItemBasePressEventDetail>): void;
     onItemClose(e: CustomEvent<ListItemCloseEventDetail>): void;
     onItemToggle(e: CustomEvent<ListItemToggleEventDetail>): void;
     onForwardBefore(e: CustomEvent): void;

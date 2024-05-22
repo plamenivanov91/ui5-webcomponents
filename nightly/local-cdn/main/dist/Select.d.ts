@@ -12,24 +12,19 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import type { ListItemClickEventDetail } from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Popover from "./Popover.js";
-import type ListItemBase from "./ListItemBase.js";
-import type SelectMenu from "./SelectMenu.js";
-import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
+import ListItemBase from "./ListItemBase.js";
 /**
  * Interface for components that may be slotted inside `ui5-select` as options
  * @public
  */
-interface IOption extends UI5Element {
-    selected: boolean;
+type IOption = ListItemBase & {
     tooltip: string;
-    icon?: string | null;
+    icon?: string;
     value: string;
     additionalText?: string;
     focused?: boolean;
-    text?: Array<Node>;
-    stableDomRef: string;
-    displayText?: string;
-}
+    effectiveDisplayText: string;
+};
 type SelectChangeEventDetail = {
     selectedOption: IOption;
 };
@@ -52,15 +47,10 @@ type SelectLiveChangeEventDetail = {
  * The available options of the Select are defined by using the Option component.
  * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
  *
- * 2. With SelectMenu (`ui5-select-menu`) and SelectMenuOption (`ui5-select-menu-option`) web components:
+ * 2. With OptionCustom (`ui5-option-custom`) web component.
  *
- * The SelectMenu can be used as alternative to define the Select's dropdown
- * and can be used via the `menu` property of the Select to reference SelectMenu by its ID.
- * The component gives the possibility to customize the Select's dropdown
- * by slotting entirely custom options (via the SelectMenuOption component) and adding custom styles.
- *
- * **Note:** SelectMenu is a popover and placing it top-level in the HTML page is recommended,
- * because some page styles (for example transitions) can misplace the SelectMenu.
+ * Options with custom content are defined by using the OptionCustom component
+ * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
  *
  * ### Keyboard Handling
  * The `ui5-select` provides advanced keyboard handling.
@@ -75,7 +65,8 @@ type SelectLiveChangeEventDetail = {
  * ### ES6 Module Import
  * `import "@ui5/webcomponents/dist/Select";`
  *
- * `import "@ui5/webcomponents/dist/Option";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/IOption";` (comes with `ui5-select`)
+ * `import "@ui5/webcomponents/dist/OptionCustom";` (comes with `ui5-select`)
  * @constructor
  * @extends UI5Element
  * @public
@@ -83,18 +74,6 @@ type SelectLiveChangeEventDetail = {
  */
 declare class Select extends UI5Element implements IFormInputElement {
     static i18nBundle: I18nBundle;
-    /**
-     * Defines a reference (ID or DOM element) of component's menu of options
-     * as alternative to define the select's dropdown.
-     * When using this attribute in a declarative way, you must only use the `id` (as a string) of the element at which you want to show the menu.
-     * You can only set the `opener` attribute to a DOM Reference when using JavaScript.
-     *
-     * **Note:** Usage of `ui5-select-menu` is recommended.
-     * @default undefined
-     * @public
-     * @since 1.17.0
-     */
-    menu?: HTMLElement | string;
     /**
      * Defines whether the component is in disabled state.
      *
@@ -151,10 +130,6 @@ declare class Select extends UI5Element implements IFormInputElement {
     /**
      * @private
      */
-    _text?: string | null;
-    /**
-     * @private
-     */
     _iconPressed: boolean;
     /**
      * @private
@@ -168,20 +143,13 @@ declare class Select extends UI5Element implements IFormInputElement {
      * @private
      */
     focused: boolean;
-    /**
-     * @private
-     */
-    _selectedIndex: number;
-    _syncedOptions: Array<IOption>;
     _selectedIndexBeforeOpen: number;
     _escapePressed: boolean;
     _lastSelectedOption: IOption | null;
     _typedChars: string;
     _typingTimeoutID?: Timeout | number;
     responsivePopover: ResponsivePopover;
-    selectedItem?: string | null;
     valueStatePopover?: Popover;
-    selectMenu?: SelectMenu;
     /**
      * Defines the component options.
      *
@@ -209,7 +177,7 @@ declare class Select extends UI5Element implements IFormInputElement {
      * Defines the HTML element that will be displayed in the component input part,
      * representing the selected option.
      *
-     * **Note:** If not specified and `ui5-select-menu-option` is used,
+     * **Note:** If not specified and `ui5-option-custom` is used,
      * either the option's `display-text` or its textContent will be displayed.
      *
      * **Note:** If not specified and `ui5-option` is used,
@@ -218,13 +186,6 @@ declare class Select extends UI5Element implements IFormInputElement {
      * @since 1.17.0
     */
     label: Array<HTMLElement>;
-    _onMenuClick: (e: CustomEvent<SelectMenuOptionClick>) => void;
-    _onMenuClose: () => void;
-    _onMenuOpen: () => void;
-    _onMenuBeforeOpen: () => void;
-    _onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
-    _attachMenuListeners: (menu: HTMLElement) => void;
-    _detachMenuListeners: (menu: HTMLElement) => void;
     get formValidityMessage(): string;
     get formValidity(): ValidityStateFlags;
     formElementAnchor(): Promise<HTMLElement | undefined>;
@@ -232,6 +193,7 @@ declare class Select extends UI5Element implements IFormInputElement {
     constructor();
     onBeforeRendering(): void;
     onAfterRendering(): void;
+    _ensureSingleSelection(): void;
     _onfocusin(): void;
     _onfocusout(): void;
     get _isPickerOpen(): boolean;
@@ -253,25 +215,15 @@ declare class Select extends UI5Element implements IFormInputElement {
      */
     set value(newValue: string);
     get value(): string;
+    get _selectedIndex(): number;
     /**
      * Currently selected `ui5-option` element.
      * @public
      * @default undefined
      */
     get selectedOption(): IOption | undefined;
-    onMenuClick(e: CustomEvent<SelectMenuOptionClick>): void;
-    onMenuBeforeOpen(): void;
-    onMenuOpen(): void;
-    onMenuClose(): void;
-    onMenuChange(e: CustomEvent<SelectMenuChange>): void;
-    _toggleSelectMenu(): void;
-    onExitDOM(): void;
+    get text(): string | undefined;
     _toggleRespPopover(): void;
-    _attachRealDomRefs(): void;
-    _syncSelection(): void;
-    _getSelectMenu(): SelectMenu | undefined;
-    attachMenuListeners(menu: HTMLElement): void;
-    detachMenuListeners(menu: HTMLElement): void;
     _onkeydown(e: KeyboardEvent): void;
     _handleKeyboardNavigation(e: KeyboardEvent): void;
     _selectTypedItem(text: string): void;
@@ -279,7 +231,7 @@ declare class Select extends UI5Element implements IFormInputElement {
     _handleHomeKey(e: KeyboardEvent): void;
     _handleEndKey(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
-    _getSelectedItemIndex(item: ListItemBase): number;
+    _getItemIndex(item: IOption): number;
     _select(index: number): void;
     /**
      * The user clicked on an item from the list
@@ -300,8 +252,8 @@ declare class Select extends UI5Element implements IFormInputElement {
     _getPreviousOptionIndex(): number;
     _beforeOpen(): void;
     _afterOpen(): void;
+    _applyFocusToSelectedItem(): void;
     _afterClose(): void;
-    get selectOptions(): Array<IOption>;
     get hasCustomLabel(): boolean;
     _fireChangeEvent(selectedOption: IOption): void;
     get valueStateTextMappings(): {
@@ -365,9 +317,9 @@ declare class Select extends UI5Element implements IFormInputElement {
     openValueStatePopover(): void;
     closeValueStatePopover(): void;
     toggleValueStatePopover(open: boolean): void;
-    get selectedOptionIcon(): string | null | undefined;
+    get selectedOptionIcon(): string | undefined;
     _getPopover(): Popover | null;
     static onDefine(): Promise<void>;
 }
 export default Select;
-export type { SelectChangeEventDetail, SelectLiveChangeEventDetail, IOption, };
+export type { IOption, SelectChangeEventDetail, SelectLiveChangeEventDetail, };

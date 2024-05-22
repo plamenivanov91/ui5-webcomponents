@@ -13,17 +13,13 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import "@ui5/webcomponents-base/dist/types/AriaRole.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
-import "@ui5/webcomponents/dist/ToggleButton.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
@@ -37,10 +33,7 @@ import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
 // Styles
 import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
-// Icons
-import "@ui5/webcomponents-icons/dist/da.js";
-import "@ui5/webcomponents-icons/dist/da-2.js";
-import { SHELLBAR_LABEL, SHELLBAR_LOGO, SHELLBAR_COPILOT, SHELLBAR_NOTIFICATIONS, SHELLBAR_CANCEL, SHELLBAR_PROFILE, SHELLBAR_PRODUCTS, SHELLBAR_SEARCH, SHELLBAR_OVERFLOW, } from "./generated/i18n/i18n-defaults.js";
+import { SHELLBAR_LABEL, SHELLBAR_LOGO, SHELLBAR_NOTIFICATIONS, SHELLBAR_CANCEL, SHELLBAR_PROFILE, SHELLBAR_PRODUCTS, SHELLBAR_SEARCH, SHELLBAR_OVERFLOW, } from "./generated/i18n/i18n-defaults.js";
 const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 /**
  * @class
@@ -54,7 +47,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * You can use the following stable DOM refs for the `ui5-shellbar`:
  *
  * - logo
- * - copilot
  * - notifications
  * - overflow
  * - profile
@@ -76,12 +68,6 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.8.0
  */
 let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
-    static get CO_PILOT_ICON_PRESSED() {
-        return "sap-icon://da-2";
-    }
-    static get CO_PILOT_ICON_UNPRESSED() {
-        return "sap-icon://da";
-    }
     static get FIORI_3_BREAKPOINTS() {
         return [
             599,
@@ -106,7 +92,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         this._hiddenIcons = [];
         this._itemsInfo = [];
         this._isInitialRendering = true;
-        this._coPilotIcon = ShellBar_1.CO_PILOT_ICON_UNPRESSED;
         // marks if preventDefault() is called in item's press handler
         this._defaultItemPressPrevented = false;
         this.menuItemsObserver = new MutationObserver(() => {
@@ -128,11 +113,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
                 this._overflowActions();
             }, HANDLE_RESIZE_DEBOUNCE_RATE);
         };
-    }
-    _toggleCoPilotIcon(button) {
-        this._coPilotIcon = !this._coPilotPressed ? ShellBar_1.CO_PILOT_ICON_PRESSED : ShellBar_1.CO_PILOT_ICON_UNPRESSED;
-        button.icon = this._coPilotIcon;
-        this._coPilotPressed = !this._coPilotPressed;
     }
     _debounce(fn, delay) {
         clearTimeout(this._debounceInterval);
@@ -186,19 +166,7 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
             this._logoPress();
         }
     }
-    _fireCoPilotClick(e) {
-        this.fireEvent("co-pilot-click", {
-            targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
-        });
-        this._toggleCoPilotIcon(e.target);
-    }
-    _coPilotClick(e) {
-        this._fireCoPilotClick(e);
-    }
     onBeforeRendering() {
-        const animationsOn = getAnimationMode() === AnimationMode.Full;
-        const coPilotAnimation = getFeature("CoPilotAnimation");
-        this.coPilot = coPilotAnimation && animationsOn ? coPilotAnimation : { animated: false };
         this.withLogo = this.hasLogo;
         this._hiddenIcons = this._itemsInfo.filter(info => {
             const isHidden = (info.classes.indexOf("ui5-shellbar-hidden-button") !== -1);
@@ -391,15 +359,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         return this.shadowRoot.querySelector(`*[data-ui5-stable="logo"]`);
     }
     /**
-     * Returns the `copilot` DOM ref.
-     * @public
-     * @default null
-     * @since 1.0.0-rc.16
-     */
-    get copilotDomRef() {
-        return this.shadowRoot.querySelector(`*[data-ui5-stable="copilot"]`);
-    }
-    /**
      * Returns the `notifications` icon DOM ref.
      * @public
      * @default null
@@ -455,19 +414,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
             show: !!this.searchField.length,
         };
         const items = [
-            {
-                icon: this._coPilotIcon,
-                text: this._copilotText,
-                classes: `${this.showCoPilot ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
-                priority: 4,
-                domOrder: this.showCoPilot ? (++domOrder) : -1,
-                styles: {
-                    order: this.showCoPilot ? 1 : -10,
-                },
-                id: `${this.id}-item-coPilot`,
-                press: this._coPilotClick.bind(this),
-                show: !!this.showCoPilot,
-            },
             ...this.items.map((item) => {
                 item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
                 return {
@@ -607,10 +553,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
                 search: {
                     "ui5-shellbar-hidden-button": this.isIconHidden("search"),
                 },
-                copilot: {
-                    "ui5-shellbar-hidden-button": this.isIconHidden(this._coPilotIcon),
-                    "ui5-shellbar-coPilot-pressed": this._coPilotPressed,
-                },
                 overflow: {
                     "ui5-shellbar-hidden-button": this.isIconHidden("overflow"),
                 },
@@ -662,6 +604,9 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
     get popoverHorizontalAlign() {
         return this.effectiveDir === "rtl" ? "Start" : "End";
     }
+    get hasAssistant() {
+        return !!this.assistant.length;
+    }
     get hasSearchField() {
         return !!this.searchField.length;
     }
@@ -679,9 +624,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
     }
     get _logoText() {
         return this.accessibilityAttributes.logo?.name || ShellBar_1.i18nBundle.getText(SHELLBAR_LOGO);
-    }
-    get _copilotText() {
-        return ShellBar_1.i18nBundle.getText(SHELLBAR_COPILOT);
     }
     get _notificationsText() {
         return ShellBar_1.i18nBundle.getText(SHELLBAR_NOTIFICATIONS, this.notificationsCount);
@@ -771,9 +713,6 @@ __decorate([
 ], ShellBar.prototype, "showProductSwitch", void 0);
 __decorate([
     property({ type: Boolean })
-], ShellBar.prototype, "showCoPilot", void 0);
-__decorate([
-    property({ type: Boolean })
 ], ShellBar.prototype, "showSearchField", void 0);
 __decorate([
     property({ type: Object })
@@ -801,10 +740,10 @@ __decorate([
 ], ShellBar.prototype, "_fullWidthSearch", void 0);
 __decorate([
     property({ type: Boolean, noAttribute: true })
-], ShellBar.prototype, "_coPilotPressed", void 0);
-__decorate([
-    property({ type: Boolean, noAttribute: true })
 ], ShellBar.prototype, "_isXXLBreakpoint", void 0);
+__decorate([
+    slot()
+], ShellBar.prototype, "assistant", void 0);
 __decorate([
     slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
 ], ShellBar.prototype, "items", void 0);
@@ -897,21 +836,6 @@ ShellBar = ShellBar_1 = __decorate([
      */
     ,
     event("logo-click", {
-        detail: {
-            /**
-             * @public
-             */
-            targetRef: { type: HTMLElement },
-        },
-    })
-    /**
-     * Fired, when the co pilot is activated.
-     * @param {HTMLElement} targetRef dom ref of the activated element
-     * @since 0.10
-     * @public
-     */
-    ,
-    event("co-pilot-click", {
         detail: {
             /**
              * @public
