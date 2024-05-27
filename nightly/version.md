@@ -1,5 +1,5 @@
-commit da0d3eb8856280f485bc539e01b4537e5965b42b
-Author: ilhan orhan <ilhan.orhan007@gmail.com>
-Date:   Thu May 23 17:17:33 2024 +0300
+commit f6ea4a374b5e6d4ce6d2478648fc3d0796e54f5c
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Mon May 27 09:26:06 2024 +0300
 
-    chore: enable test assets for `ai` test pages (#9056)
+    docs(ui5-select): correct ES6 Module Import section (#9060)
