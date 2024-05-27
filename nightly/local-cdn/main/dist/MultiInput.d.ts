@@ -1,6 +1,7 @@
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import Input from "./Input.js";
+import Token from "./Token.js";
 import Tokenizer from "./Tokenizer.js";
 import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
@@ -12,7 +13,7 @@ interface IToken extends HTMLElement, ITabbable {
     isTruncatable: boolean;
 }
 type MultiInputTokenDeleteEventDetail = {
-    token: IToken;
+    tokens: Token[];
 };
 /**
  * @class
@@ -84,13 +85,12 @@ declare class MultiInput extends Input implements IFormInputElement {
      * @override
      */
     _onfocusin(e: FocusEvent): void;
-    lastItemDeleted(): void;
     onBeforeRendering(): void;
     onAfterRendering(): void;
     get iconsCount(): number;
     get tokenizer(): Tokenizer;
     get tokenizerExpanded(): boolean;
-    get _tokensCountText(): string | undefined;
+    get _tokensCountText(): string;
     get _tokensCountTextId(): string;
     /**
      * Returns the placeholder value when there are no tokens.

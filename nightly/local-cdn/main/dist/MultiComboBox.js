@@ -32,7 +32,7 @@ import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsF
 import MultiComboBoxItem, { isInstanceOfMultiComboBoxItem } from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
 import ListItemGroupHeader from "./ListItemGroupHeader.js";
-import Tokenizer from "./Tokenizer.js";
+import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
@@ -262,9 +262,11 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     }
     _tokenDelete(e) {
         this._previouslySelectedItems = this._getSelectedItems();
-        const token = e.detail.ref;
-        const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"));
-        deletingItem.selected = false;
+        const token = e.detail.tokens;
+        const deletingItems = this.items.filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
+        deletingItems.forEach(item => {
+            item.selected = false;
+        });
         this._deleting = true;
         this._preventTokenizerToggle = true;
         this.focus();
@@ -312,7 +314,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     _tokenizerFocusIn() {
         this._tokenizerFocused = true;
         this.focused = false;
-        this._tokenizer.scrollToEnd();
     }
     _onkeydown(e) {
         const isArrowDownCtrl = isDownCtrl(e);
@@ -1187,7 +1188,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         if (!this._tokenizer) {
             return;
         }
-        return this._tokenizer._tokensCountText();
+        return getTokensCountText(this._tokenizer.tokens.length);
     }
     get _tokensCountTextId() {
         return "ui5-multi-combobox-hiddenText-nMore";

@@ -17,7 +17,7 @@ import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
-import Tokenizer from "./Tokenizer.js";
+import Tokenizer, { getTokensCountText } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 /**
@@ -68,25 +68,18 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
         this.fireEvent("value-help-trigger");
     }
     tokenDelete(e) {
-        const focusedToken = e.detail.ref;
+        const deletedTokens = e.detail.tokens;
         const selectedTokens = this.tokens.filter(token => token.selected);
         const shouldFocusInput = this.tokens.length - 1 === 0 || this.tokens.length === selectedTokens.length;
         if (this._readonly) {
             return;
         }
-        if (focusedToken) {
-            this.fireEvent("token-delete", { token: focusedToken });
+        if (deletedTokens) {
+            this.fireEvent("token-delete", { tokens: deletedTokens });
             if (shouldFocusInput) {
                 this.focus();
             }
-            return;
         }
-        if (selectedTokens.indexOf(focusedToken) === -1) {
-            selectedTokens.push(focusedToken);
-        }
-        selectedTokens.forEach(token => {
-            this.fireEvent("token-delete", { token });
-        });
     }
     valueHelpMouseDown(e) {
         const target = e.target;
@@ -198,11 +191,6 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
             super._onfocusin(e);
         }
     }
-    lastItemDeleted() {
-        setTimeout(() => {
-            this.focus();
-        }, 0);
-    }
     onBeforeRendering() {
         super.onBeforeRendering();
         this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
@@ -228,10 +216,7 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
         return this.tokenizer && this.tokenizer.expanded;
     }
     get _tokensCountText() {
-        if (!this.tokenizer) {
-            return;
-        }
-        return this.tokenizer._tokensCountText();
+        return getTokensCountText(this.tokens.length);
     }
     get _tokensCountTextId() {
         return `hiddenText-nMore`;
@@ -279,7 +264,7 @@ __decorate([
     property()
 ], MultiInput.prototype, "name", void 0);
 __decorate([
-    slot({ type: HTMLElement })
+    slot({ type: HTMLElement, individualSlots: true })
 ], MultiInput.prototype, "tokens", void 0);
 MultiInput = MultiInput_1 = __decorate([
     customElement({
@@ -306,8 +291,8 @@ MultiInput = MultiInput_1 = __decorate([
     ,
     event("value-help-trigger")
     /**
-     * Fired when a token is about to be deleted.
-     * @param {HTMLElement} token deleted token.
+     * Fired when tokens are being deleted.
+     * @param {Array} tokens An array containing the deleted tokens.
      * @public
      */
     ,
@@ -316,7 +301,7 @@ MultiInput = MultiInput_1 = __decorate([
             /**
              * @public
              */
-            token: { type: HTMLElement },
+            tokens: { type: Array },
         },
     })
 ], MultiInput);

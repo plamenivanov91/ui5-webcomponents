@@ -72,6 +72,11 @@ declare class Token extends UI5Element implements IToken {
      */
     forcedTabIndex: string;
     /**
+     * Indicates whether the token is visible or not.
+     * @private
+     */
+    _isVisible: boolean;
+    /**
      * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
      * Accepts `ui5-icon`.
      * @public

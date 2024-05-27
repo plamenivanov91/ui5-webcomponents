@@ -4,15 +4,16 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResponsivePopover from "./ResponsivePopover.js";
+import List from "./List.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import Token from "./Token.js";
 import type { IToken } from "./MultiInput.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 type TokenizerTokenDeleteEventDetail = {
-    ref: Token;
+    tokens: Token[];
 };
 type TokenizerSelectionChangeEventDetail = {
-    selectedTokens: Token[];
+    tokens: Token[];
 };
 type TokenizerDialogButtonPressDetail = {
     confirm: boolean;
@@ -151,6 +152,7 @@ declare class Tokenizer extends UI5Element {
     _skipTabIndex: boolean;
     _previousToken: Token | null;
     _focusedElementBeforeOpen?: HTMLElement | null;
+    _deletedDialogItems: Token[];
     _handleResize(): void;
     constructor();
     onBeforeRendering(): void;
@@ -172,7 +174,7 @@ declare class Tokenizer extends UI5Element {
      * @param forwardFocusToPrevious Indicates whether the focus will be forwarded to previous or next token after deletion.
      */
     deleteToken(token: Token, forwardFocusToPrevious?: boolean): void;
-    itemDelete(e: CustomEvent): void;
+    itemDelete(e: CustomEvent): Promise<void>;
     handleBeforeClose(): void;
     handleBeforeOpen(): void;
     handleAfterClose(): void;
@@ -210,6 +212,7 @@ declare class Tokenizer extends UI5Element {
      * @protected
      */
     _scrollToToken(token: IToken): void;
+    _getList(): List;
     get _tokens(): Token[];
     get morePopoverOpener(): HTMLElement;
     get _nMoreText(): string | undefined;
@@ -230,7 +233,6 @@ declare class Tokenizer extends UI5Element {
             "min-width": string;
         };
     };
-    _tokensCountText(): string;
     /**
      * @protected
      */
@@ -238,6 +240,8 @@ declare class Tokenizer extends UI5Element {
     static onDefine(): Promise<void>;
     getPopover(): ResponsivePopover;
 }
+declare const getTokensCountText: (iTokenCount: number) => string;
 export default Tokenizer;
+export { getTokensCountText };
 export { ClipboardDataOperation };
 export type { TokenizerTokenDeleteEventDetail, TokenizerSelectionChangeEventDetail, TokenizerDialogButtonPressDetail };

@@ -119,6 +119,9 @@ __decorate([
     property({ defaultValue: "-1", noAttribute: true })
 ], Token.prototype, "forcedTabIndex", void 0);
 __decorate([
+    property({ type: Boolean, noAttribute: true })
+], Token.prototype, "_isVisible", void 0);
+__decorate([
     slot()
 ], Token.prototype, "closeIcon", void 0);
 Token = Token_1 = __decorate([
