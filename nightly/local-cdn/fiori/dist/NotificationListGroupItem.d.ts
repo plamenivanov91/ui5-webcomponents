@@ -66,7 +66,7 @@ declare class NotificationListGroupItem extends NotificationListItemBase {
      * instead of multiple BusyIndicator instances
      */
     clearChildBusyIndicator(): void;
-    get toggleBtnAccessibleName(): string;
+    get toggleIconAccessibleName(): string;
     get accInvisibleText(): string;
     get expandText(): string;
     get groupText(): string;
@@ -74,7 +74,6 @@ declare class NotificationListGroupItem extends NotificationListItemBase {
     get _ariaExpanded(): boolean;
     get _pressable(): boolean;
     get groupCollapsedIcon(): "navigation-right-arrow" | "navigation-down-arrow";
-    get groupCollapsedTooltip(): "expand arrow" | "collapse arrow";
     toggleCollapsed(): void;
     /**
      * Event handlers

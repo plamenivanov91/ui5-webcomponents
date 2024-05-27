@@ -13,6 +13,7 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
         _childChangeListeners: Map<string, (param: import("../UI5Element.js").ChangeInfo & {
             target: UI5Element;
         }) => void>;
+        _slotsAssignedNodes: WeakMap<HTMLSlotElement, Node[]>;
         _slotChangeListeners: Map<string, (this: HTMLSlotElement, ev: Event) => void>;
         _domRefReadyPromise: Promise<void> & {
             _deferredResolve?: import("../types.js").PromiseResolve | undefined;
@@ -50,7 +51,7 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
             target: UI5Element;
         }) => void;
         _getSlotChangeListener(slotName: string): (this: HTMLSlotElement, ev: Event) => void;
-        _attachSlotChange(child: HTMLSlotElement, slotName: string): void;
+        _attachSlotChange(slot: HTMLSlotElement, slotName: string, invalidateOnChildChange: boolean): void;
         _detachSlotChange(child: HTMLSlotElement, slotName: string): void;
         _onSlotChange(slotName: string): void;
         onInvalidation(changeInfo: import("../UI5Element.js").ChangeInfo): void;

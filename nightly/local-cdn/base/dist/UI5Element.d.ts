@@ -41,6 +41,7 @@ declare abstract class UI5Element extends HTMLElement {
     _inDOM: boolean;
     _fullyConnected: boolean;
     _childChangeListeners: Map<string, ChildChangeListener>;
+    _slotsAssignedNodes: WeakMap<HTMLSlotElement, Array<SlotValue>>;
     _slotChangeListeners: Map<string, SlotChangeListener>;
     _domRefReadyPromise: Promise<void> & {
         _deferredResolve?: PromiseResolve;
@@ -171,7 +172,7 @@ declare abstract class UI5Element extends HTMLElement {
     /**
      * @private
      */
-    _attachSlotChange(child: HTMLSlotElement, slotName: string): void;
+    _attachSlotChange(slot: HTMLSlotElement, slotName: string, invalidateOnChildChange: boolean): void;
     /**
      * @private
      */

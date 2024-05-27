@@ -15,6 +15,7 @@ import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUti
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import Popup from "./Popup.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
@@ -105,6 +106,8 @@ let Popover = Popover_1 = class Popover extends Popup {
             return;
         }
         if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
+            await renderFinished();
+            this.open = false;
             this.fireEvent("close", {}, false, false);
             return;
         }

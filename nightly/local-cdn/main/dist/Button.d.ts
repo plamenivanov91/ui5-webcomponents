@@ -231,7 +231,7 @@ declare class Button extends UI5Element implements IButton, IFormElement {
     static typeTextMappings(): Record<string, I18nText>;
     get buttonTypeText(): string;
     get effectiveAccRole(): string;
-    get tabIndexValue(): string;
+    get tabIndexValue(): string | undefined;
     get showIconTooltip(): boolean;
     get ariaLabelText(): string | undefined;
     get _isSubmit(): boolean;

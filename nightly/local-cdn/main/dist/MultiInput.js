@@ -122,9 +122,13 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
             this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens
             return this._focusFirstToken(e);
         }
-        if (isLeft(e) || isBackSpace(e)) {
+        if (isLeft(e)) {
             this._skipOpenSuggestions = true;
             return this._handleLeft(e);
+        }
+        if (isBackSpace(e)) {
+            this._skipOpenSuggestions = true;
+            return this._handleBackspace(e);
         }
         this._skipOpenSuggestions = false;
         if (isShow(e)) {
@@ -149,6 +153,19 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
         const lastToken = tokens.length && tokens[tokens.length - 1];
         // selectionStart property applies only to inputs of types text, search, URL, tel, and password
         if (((cursorPosition === null && !this.value) || cursorPosition === 0) && lastToken) {
+            e.preventDefault();
+            lastToken.focus();
+            this.tokenizer._itemNav.setCurrentItem(lastToken);
+        }
+    }
+    _handleBackspace(e) {
+        const cursorPosition = this.getDomRef().querySelector(`input`).selectionStart;
+        const selectionEnd = this.getDomRef().querySelector(`input`).selectionEnd;
+        const isValueSelected = cursorPosition === 0 && selectionEnd === this.value.length;
+        const tokens = this.tokens;
+        const lastToken = tokens.length && tokens[tokens.length - 1];
+        // selectionStart property applies only to inputs of types text, search, URL, tel, and password
+        if ((!this.value || (this.value && cursorPosition === 0 && !isValueSelected)) && lastToken) {
             e.preventDefault();
             lastToken.focus();
             this.tokenizer._itemNav.setCurrentItem(lastToken);

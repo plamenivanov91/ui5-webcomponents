@@ -62,8 +62,8 @@ __decorate([
     property()
 ], ToolbarButton.prototype, "icon", void 0);
 __decorate([
-    property({ type: Boolean })
-], ToolbarButton.prototype, "iconEnd", void 0);
+    property()
+], ToolbarButton.prototype, "endIcon", void 0);
 __decorate([
     property()
 ], ToolbarButton.prototype, "tooltip", void 0);

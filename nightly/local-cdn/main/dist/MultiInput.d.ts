@@ -77,6 +77,7 @@ declare class MultiInput extends Input implements IFormInputElement {
     _onkeydown(e: KeyboardEvent): void;
     _onTokenizerKeydown(e: KeyboardEvent): void;
     _handleLeft(e: KeyboardEvent): void;
+    _handleBackspace(e: KeyboardEvent): void;
     _focusFirstToken(e: KeyboardEvent): void;
     _onfocusout(e: FocusEvent): void;
     /**

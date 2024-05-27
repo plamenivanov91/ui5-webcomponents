@@ -210,6 +210,9 @@ let Button = Button_1 = class Button extends UI5Element {
         return this.accessibleRole.toLowerCase();
     }
     get tabIndexValue() {
+        if (this.disabled) {
+            return;
+        }
         const tabindex = this.getAttribute("tabindex");
         if (tabindex) {
             return tabindex;

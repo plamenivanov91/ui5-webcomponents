@@ -249,6 +249,7 @@ let Select = Select_1 = class Select extends UI5Element {
             this._changeSelectedItem(this._selectedIndex, nextIndex);
             if (currentIndex !== this._selectedIndex) {
                 this.itemSelectionAnnounce();
+                this._scrollSelectedItem();
             }
         }
     }

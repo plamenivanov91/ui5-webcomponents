@@ -19,7 +19,7 @@ import NotificationListItemBase from "./NotificationListItemBase.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 // Texts
-import { NOTIFICATION_LIST_GROUP_ITEM_TXT, NOTIFICATION_LIST_GROUP_COLLAPSED, NOTIFICATION_LIST_GROUP_EXPANDED, NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE, NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE, } from "./generated/i18n/i18n-defaults.js";
+import { NOTIFICATION_LIST_GROUP_ITEM_TXT, NOTIFICATION_LIST_GROUP_COLLAPSED, NOTIFICATION_LIST_GROUP_EXPANDED, NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE, NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE, } from "./generated/i18n/i18n-defaults.js";
 // Templates
 import NotificationListGroupItemTemplate from "./generated/templates/NotificationListGroupItemTemplate.lit.js";
 // Styles
@@ -84,11 +84,11 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
             item.loading = false;
         });
     }
-    get toggleBtnAccessibleName() {
+    get toggleIconAccessibleName() {
         if (this.collapsed) {
-            return NotificationListGroupItem_1.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
+            return NotificationListGroupItem_1.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE);
         }
-        return NotificationListGroupItem_1.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
+        return NotificationListGroupItem_1.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE);
     }
     get accInvisibleText() {
         return `${this.groupText} ${this.expandText}`;
@@ -114,11 +114,6 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
     }
     get groupCollapsedIcon() {
         return this.collapsed ? "navigation-right-arrow" : "navigation-down-arrow";
-    }
-    get groupCollapsedTooltip() {
-        // eslint-disable-next-line
-        // ToDo: edit and add translation when spec is ready
-        return this.collapsed ? "expand arrow" : "collapse arrow";
     }
     toggleCollapsed() {
         this.collapsed = !this.collapsed;
