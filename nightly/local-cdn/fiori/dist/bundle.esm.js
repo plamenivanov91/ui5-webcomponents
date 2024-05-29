@@ -7,6 +7,10 @@ import "./Assets.js";
 import "./illustrations/AllIllustrations.js";
 // FIORI components
 import "./BarcodeScannerDialog.js";
+import "./DynamicPage.js";
+import "./DynamicPageHeader.js";
+import "./DynamicPageTitle.js";
+import "./DynamicPageHeaderActions.js";
 import "./DynamicSideContent.js";
 import "./FilterItem.js";
 import "./FilterItemOption.js";

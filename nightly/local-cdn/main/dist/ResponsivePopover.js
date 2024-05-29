@@ -51,9 +51,9 @@ let ResponsivePopover = ResponsivePopover_1 = class ResponsivePopover extends Po
             this._dialog.open = true;
         }
     }
-    _show() {
+    async _show() {
         if (!isPhone()) {
-            super._show();
+            return super._show();
         }
     }
     /**

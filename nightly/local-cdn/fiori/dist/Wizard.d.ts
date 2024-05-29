@@ -355,7 +355,7 @@ declare class Wizard extends UI5Element {
      * Sorter method for sorting an array in ascending order.
      * @private
      */
-    sortAscending(a: number, b: number): 1 | 0 | -1;
+    sortAscending(a: number, b: number): 1 | -1 | 0;
 }
 export type { WizardStepChangeEventDetail, };
 export default Wizard;

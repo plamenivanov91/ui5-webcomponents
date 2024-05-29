@@ -6,6 +6,9 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 import ToolbarItem from "./ToolbarItem.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
+type ToolbarMinWidthChangeEventDetail = {
+    minWidth: number;
+};
 /**
  * @class
  *
@@ -75,6 +78,7 @@ declare class Toolbar extends UI5Element {
     _onInteract: EventListener;
     itemsToOverflow: Array<ToolbarItem>;
     itemsWidth: number;
+    minContentWidth: number;
     popoverOpen: boolean;
     itemsWidthMeasured: boolean;
     ITEMS_WIDTH_MAP: Map<string, number>;
@@ -190,3 +194,4 @@ declare class Toolbar extends UI5Element {
     getRegisteredToolbarItemByID(id: string): HTMLElement | null;
 }
 export default Toolbar;
+export type { ToolbarMinWidthChangeEventDetail, };

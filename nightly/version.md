@@ -1,23 +1,12 @@
-commit 3e2b32e9e34812e1258ec8dbcf3b23260b803bb6
-Author: Nikoleta Ivanova <31706628+nikoletavnv@users.noreply.github.com>
-Date:   Tue May 28 15:02:51 2024 +0300
+commit 3752ce701fe915fa0b02ba2b114c40bf3b7d9123
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Wed May 29 17:18:22 2024 +0300
 
-    refactor(ui5-input): replace openPicker method with public property open (#8950)
+    feat(ui5-dynamic-page): introduce new component (#7899)
     
-    * refactor(ui5-input): replace openPicker method with public property open
-    
-    BREAKING CHANGE: Remove openPicker method and replace it with public property open
-    
-    Before the ui5-input suggestions popover could be opened by calling `openPicker()` :
-    ```js
-    const input = document.getElementById("exampleID");
-    input.openPicker();
-    ```
-    
-    Now the suggestions popover is opened by setting the `open` property to true:
-    ```js
-    const input = document.getElementById("exampleID");
-    input.open = true;
-    ```
-    
-    * refactor(ui5-input): fix spacing in input.mobile.spec.js
+    Adds New `ui5-dynamic-page` component.
+    The component is a composition of the following subcomponents:
+    - DynamicPageTitle - holds the most top area of DynamicPage (breadcrumbs, actions, etc.)
+    - DynamicPageHeader - a container displayed between the title area and the content that allows generic content.
+    - content area with random elements
+    - footer area with random content

@@ -48,7 +48,7 @@ declare class ResponsivePopover extends Popover {
     static i18nBundle: I18nBundle;
     constructor();
     openPopup(): Promise<void>;
-    _show(): void;
+    _show(): Promise<void>;
     /**
      * Closes the popover/dialog.
      * @override

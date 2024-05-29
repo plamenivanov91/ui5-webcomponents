@@ -192,7 +192,7 @@ let Popover = Popover_1 = class Popover extends Popup {
     reposition() {
         this._show();
     }
-    _show() {
+    async _show() {
         super._show();
         if (!this._opened) {
             this._showOutsideViewport();
@@ -216,6 +216,7 @@ let Popover = Popover_1 = class Popover extends Popup {
             placement = this.calcPlacement(this._openerRect, popoverSize);
         }
         if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect)) {
+            await this._waitForDomRef();
             return this.closePopup();
         }
         this._oldPlacement = placement;

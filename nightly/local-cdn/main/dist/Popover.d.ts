@@ -180,7 +180,7 @@ declare class Popover extends Popup {
      */
     _resize(): void;
     reposition(): void;
-    _show(): void;
+    _show(): Promise<void>;
     /**
      * Adjust the desired top position to compensate for shift of the screen
      * caused by opened keyboard on iOS which affects all elements with position:fixed.

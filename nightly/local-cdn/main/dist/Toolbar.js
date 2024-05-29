@@ -80,6 +80,7 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
         super();
         this.itemsToOverflow = [];
         this.itemsWidth = 0;
+        this.minContentWidth = 0;
         this.popoverOpen = false;
         this.itemsWidthMeasured = false;
         this.ITEMS_WIDTH_MAP = new Map();
@@ -251,13 +252,23 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
         this.contentWidth = contentWidth;
     }
     storeItemsWidth() {
-        let totalWidth = 0;
+        let totalWidth = 0, minWidth = 0;
         this.items.forEach((item) => {
             const itemWidth = this.getItemWidth(item);
             totalWidth += itemWidth;
+            if (item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow) {
+                minWidth += itemWidth;
+            }
             this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
         });
+        if (minWidth !== this.minContentWidth) {
+            const spaceAroundContent = this.offsetWidth - this.getDomRef().offsetWidth;
+            this.fireEvent("_min-content-width-change", {
+                minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
+            });
+        }
         this.itemsWidth = totalWidth;
+        this.minContentWidth = minWidth;
     }
     distributeItems(overflowSpace = 0) {
         const movableItems = this.movableItems.reverse();
