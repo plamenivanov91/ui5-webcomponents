@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var NotificationList_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import "@ui5/webcomponents/dist/ListItemBase.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import NotificationListGroupItem from "./NotificationListGroupItem.js";
@@ -26,7 +27,9 @@ import { NOTIFICATION_LIST_ACCESSIBLE_NAME, } from "./generated/i18n/i18n-defaul
 let NotificationList = NotificationList_1 = class NotificationList extends List {
     constructor() {
         super();
+        this.navigationMode = NavigationMode.Auto;
         this.accessibleName = NotificationList_1.i18nFioriBundle.getText(NOTIFICATION_LIST_ACCESSIBLE_NAME);
+        this._itemNavigation._navigationMode = NavigationMode.Auto;
     }
     getEnabledItems() {
         const items = new Array();

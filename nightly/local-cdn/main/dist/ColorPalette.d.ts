@@ -14,6 +14,7 @@ import type ColorPicker from "./ColorPicker.js";
 interface IColorPaletteItem extends HTMLElement, ITabbable {
     value?: string;
     index?: number;
+    selected?: boolean;
 }
 type ColorPaletteNavigationItem = IColorPaletteItem | Button;
 type ColorPaletteItemClickEventDetail = {
@@ -92,6 +93,8 @@ declare class ColorPalette extends UI5Element {
     _itemNavigationRecentColors: ItemNavigation;
     _recentColors: Array<string>;
     moreColorsFeature: ColorPaletteMoreColors | Record<string, any>;
+    _currentlySelected?: ColorPaletteItem;
+    _shouldFocusRecentColors: boolean;
     static i18nBundle: I18nBundle;
     static onDefine(): Promise<void>;
     constructor();
@@ -99,11 +102,21 @@ declare class ColorPalette extends UI5Element {
     onAfterRendering(): void;
     selectColor(item: ColorPaletteItem): void;
     _setColor(color: string): void;
+    get effectiveColorItems(): IColorPaletteItem[];
+    /**
+     * Ensures that only one item is selected or only the last selected item remains active if more than one are explicitly set as 'selected'.
+     * @private
+     */
+    _ensureSingleSelectionOrDeselectAll(): void;
     _onclick(e: MouseEvent): void;
     _onkeyup(e: KeyboardEvent): void;
     _onkeydown(e: KeyboardEvent): void;
+    handleSelection(target: ColorPaletteItem): void;
+    _handleDefaultColorClick(e: KeyboardEvent): void;
+    _onDefaultColorKeyUp(e: KeyboardEvent): void;
     _onDefaultColorKeyDown(e: KeyboardEvent): void;
     _onMoreColorsKeyDown(e: KeyboardEvent): void;
+    _isUpOrDownNavigatableColorPaletteItem(e: KeyboardEvent): boolean | undefined;
     _onColorContainerKeyDown(e: KeyboardEvent): void;
     _onRecentColorsContainerKeyDown(e: KeyboardEvent): void;
     focusColorElement(element: ColorPaletteNavigationItem, itemNavigation: ItemNavigation): void;
@@ -111,9 +124,15 @@ declare class ColorPalette extends UI5Element {
     focusFirstFocusableElement(): void;
     get firstFocusableElement(): ColorPaletteNavigationItem;
     _chooseCustomColor(): void;
+    _addRecentColor(color: string): void;
     _closeDialog(): void;
     _openMoreColorsDialog(): void;
     _onDefaultColorClick(): void;
+    /**
+     * Returns the selected item.
+     */
+    get selectedItem(): IColorPaletteItem | undefined;
+    get allColorsInPalette(): IColorPaletteItem[];
     /**
      * Returns the selected color.
      */

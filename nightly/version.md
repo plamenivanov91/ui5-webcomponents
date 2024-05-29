@@ -1,23 +1,23 @@
-commit b6407fdbcd9c559094f60844111d16ea95858286
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Mon May 27 13:29:55 2024 +0300
+commit 3e2b32e9e34812e1258ec8dbcf3b23260b803bb6
+Author: Nikoleta Ivanova <31706628+nikoletavnv@users.noreply.github.com>
+Date:   Tue May 28 15:02:51 2024 +0300
 
-    refactor(ui5-tokenizer): refactor token-delete event (#9005)
+    refactor(ui5-input): replace openPicker method with public property open (#8950)
     
-    * fix(ui5-tokenizer): refactor token-delete event
+    * refactor(ui5-input): replace openPicker method with public property open
     
-    * fix(ui5-tokenizer): adjust MI samples
+    BREAKING CHANGE: Remove openPicker method and replace it with public property open
     
-    * fix(ui5-tokenizer): apply feedback
+    Before the ui5-input suggestions popover could be opened by calling `openPicker()` :
+    ```js
+    const input = document.getElementById("exampleID");
+    input.openPicker();
+    ```
     
-    * fix(ui5-tokenizer): apply feedback
+    Now the suggestions popover is opened by setting the `open` property to true:
+    ```js
+    const input = document.getElementById("exampleID");
+    input.open = true;
+    ```
     
-    * fix(ui5-tokenizer): improve code
-    
-    * fix(ui5-tokenizer): enable MultiInput dialog delete
-    
-    * chore: depend on own state instead of tokenizer state
-    
-    ---------
-    
-    Co-authored-by: Vladislav Tasev <vladislav.tasev@sap.com>
+    * refactor(ui5-input): fix spacing in input.mobile.spec.js

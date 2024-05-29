@@ -47,8 +47,8 @@ let ResponsivePopover = ResponsivePopover_1 = class ResponsivePopover extends Po
         if (!isPhone()) {
             await super.openPopup();
         }
-        else {
-            await this._dialog.openPopup();
+        else if (this._dialog) {
+            this._dialog.open = true;
         }
     }
     _show() {

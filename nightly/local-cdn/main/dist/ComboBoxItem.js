@@ -17,13 +17,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  * @public
  */
 let ComboBoxItem = class ComboBoxItem extends UI5Element {
-    /**
-     * Used to avoid tag name checks
-     * @protected
-     */
-    get isGroupItem() {
-        return false;
-    }
     get stableDomRef() {
         return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
     }
@@ -34,6 +27,9 @@ __decorate([
 __decorate([
     property()
 ], ComboBoxItem.prototype, "additionalText", void 0);
+__decorate([
+    property({ type: Boolean, noAttribute: true })
+], ComboBoxItem.prototype, "_isVisible", void 0);
 __decorate([
     property({ type: Boolean })
 ], ComboBoxItem.prototype, "focused", void 0);

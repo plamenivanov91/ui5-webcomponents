@@ -15,7 +15,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import HighlightTypes from "./types/HighlightTypes.js";
+import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -251,7 +251,7 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         };
     }
     get _hasHighlightColor() {
-        return this.highlight !== HighlightTypes.None;
+        return this.highlight !== Highlight.None;
     }
     get hasConfigurableMode() {
         return true;
@@ -279,7 +279,7 @@ __decorate([
     property({ type: Boolean })
 ], ListItem.prototype, "active", void 0);
 __decorate([
-    property({ type: HighlightTypes, defaultValue: HighlightTypes.None })
+    property({ type: Highlight, defaultValue: Highlight.None })
 ], ListItem.prototype, "highlight", void 0);
 __decorate([
     property({ type: ListItemAccessibleRole, defaultValue: ListItemAccessibleRole.ListItem })

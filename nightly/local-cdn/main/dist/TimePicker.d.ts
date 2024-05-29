@@ -134,7 +134,13 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
      * @public
      */
     formatPattern: string;
-    _isPickerOpen: boolean;
+    /**
+     * Defines the open or closed state of the popover.
+     * @public
+     * @default false
+     * @since 2.0
+     */
+    open: boolean;
     _isInputsPopoverOpen: boolean;
     /**
      * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
@@ -177,27 +183,9 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     get _timeSelectionValue(): string | undefined;
     get _isPhone(): boolean;
     onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>): void;
-    /**
-     * Opens the picker.
-     * @public
-     * @returns Resolves when the picker is open
-     */
-    openPicker(): void;
-    /**
-     * Closes the picker
-     * @public
-     * @returns Resolves when the picker is closed
-     */
-    closePicker(): void;
-    togglePicker(): void;
-    /**
-     * Checks if the picker is open
-     * @public
-     */
-    isOpen(): boolean;
+    _togglePicker(): void;
     submitPickers(): void;
     onResponsivePopoverAfterClose(): void;
-    onResponsivePopoverAfterOpen(): void;
     /**
      * Opens the Inputs popover.
      * @private
@@ -219,7 +207,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     submitInputsPopover(): void;
     onInputsPopoverAfterOpen(): void;
     onInputsPopoverAfterClose(): void;
-    _handleInputClick(evt: MouseEvent): void;
+    _handleInputClick(e: MouseEvent): void;
     _updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<string>): void;
     _updateValueState(): void;
     _handleInputChange(e: CustomEvent): void;
@@ -261,8 +249,8 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
      * Hides mobile device keyboard by temporary setting the input to readonly state.
      */
     _hideMobileKeyboard(): void;
-    _onfocusin(evt: FocusEvent): void;
-    _oninput(evt: CustomEvent): void;
+    _onfocusin(e: FocusEvent): void;
+    _oninput(e: CustomEvent): void;
     get submitButtonLabel(): string;
     get cancelButtonLabel(): string;
     /**

@@ -1,4 +1,5 @@
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import List from "@ui5/webcomponents/dist/List.js";
 /**
@@ -13,6 +14,7 @@ import List from "@ui5/webcomponents/dist/List.js";
  * @public
  */
 declare class NotificationList extends List {
+    navigationMode: NavigationMode;
     constructor();
     static i18nFioriBundle: I18nBundle;
     getEnabledItems(): Array<ListItemBase>;

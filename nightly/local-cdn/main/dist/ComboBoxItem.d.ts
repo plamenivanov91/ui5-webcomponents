@@ -24,6 +24,11 @@ declare class ComboBoxItem extends UI5Element implements IComboBoxItem {
      */
     additionalText: string;
     /**
+     * Indicates whether the item is filtered
+     * @private
+     */
+    _isVisible: boolean;
+    /**
      * Indicates whether the item is focssed
      * @protected
      */
@@ -33,11 +38,6 @@ declare class ComboBoxItem extends UI5Element implements IComboBoxItem {
      * @protected
      */
     selected: boolean;
-    /**
-     * Used to avoid tag name checks
-     * @protected
-     */
-    get isGroupItem(): boolean;
     get stableDomRef(): string;
 }
 export default ComboBoxItem;

@@ -68,9 +68,24 @@ let ColorPalettePopover = ColorPalettePopover_1 = class ColorPalettePopover exte
         this.closePopover();
         this.fireEvent("close");
     }
+    onAfterOpen() {
+        const colorPalette = this._colorPalette;
+        if (colorPalette.showDefaultColor && !colorPalette._currentlySelected) {
+            colorPalette.colorPaletteNavigationElements[0].focus();
+        }
+        else if (colorPalette._shouldFocusRecentColors && colorPalette.showRecentColors) {
+            colorPalette.recentColorsElements[0].focus();
+        }
+        else {
+            colorPalette._currentlySelected?.focus();
+        }
+    }
     onSelectedColor(e) {
         this.closePopover();
         this.fireEvent("item-click", e.detail);
+    }
+    get _colorPalette() {
+        return this.responsivePopover.content[0].querySelector("[ui5-color-palette]");
     }
     /**
      * Returns if the component is opened.

@@ -127,10 +127,10 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
         this.toggleCollapsed();
     }
     async _onkeydown(e) {
-        await super._onkeydown(e);
         if (!this.focused) {
             return;
         }
+        await super._onkeydown(e);
         const space = isSpace(e);
         const plus = isPlus(e);
         const minus = isMinus(e);
@@ -143,12 +143,14 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
             // expand
             if (this.collapsed) {
                 this.toggleCollapsed();
+                e.stopImmediatePropagation();
             }
         }
         if (minus || left) {
             // collapse
             if (!this.collapsed) {
                 this.toggleCollapsed();
+                e.stopImmediatePropagation();
             }
         }
     }

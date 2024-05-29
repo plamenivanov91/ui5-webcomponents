@@ -51,10 +51,20 @@ let ColorPaletteItem = ColorPaletteItem_1 = class ColorPaletteItem extends UI5El
             },
         };
     }
+    get classes() {
+        return {
+            root: {
+                "ui5-cp-item": true,
+            },
+        };
+    }
 };
 __decorate([
     property({ validator: CSSColor })
 ], ColorPaletteItem.prototype, "value", void 0);
+__decorate([
+    property({ type: Boolean })
+], ColorPaletteItem.prototype, "selected", void 0);
 __decorate([
     property({ defaultValue: "-1", noAttribute: true })
 ], ColorPaletteItem.prototype, "forcedTabIndex", void 0);

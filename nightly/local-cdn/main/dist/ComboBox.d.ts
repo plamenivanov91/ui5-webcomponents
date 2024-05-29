@@ -24,10 +24,12 @@ import { InputEventDetail } from "./Input.js";
 interface IComboBoxItem extends UI5Element {
     text: string;
     focused: boolean;
-    isGroupItem: boolean;
+    isGroupItem?: boolean;
     selected?: boolean;
     additionalText?: string;
     stableDomRef: string;
+    _isVisible?: boolean;
+    items?: Array<IComboBoxItem>;
 }
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
@@ -244,12 +246,14 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     closeValueStatePopover(): Promise<void>;
     _getValueStatePopover(): Promise<Popover>;
     _resetFilter(): void;
+    _resetItemVisibility(): void;
     _arrowClick(): void;
     _handleMobileInput(e: CustomEvent<InputEventDetail>): void;
     _input(e: InputEvent): void;
     shouldAutocomplete(e: InputEvent): boolean;
     _startsWithMatchingItems(str: string): Array<IComboBoxItem>;
     _clearFocus(): void;
+    _getItems(): IComboBoxItem[];
     handleNavKeyPress(e: KeyboardEvent): void;
     _handleItemNavigation(e: KeyboardEvent, indexOfItem: number, isForward: boolean): void;
     _handleArrowDown(e: KeyboardEvent, indexOfItem: number): void;
@@ -264,13 +268,8 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     _closeRespPopover(e?: Event): void;
     _openRespPopover(): Promise<void>;
     _filterItems(str: string): IComboBoxItem[];
-    /**
-     * Returns true if the group header should be shown (if there is a filtered suggestion item for this group item)
-     * @private
-     */
-    static _groupItemFilter(item: IComboBoxItem, idx: number, allItems: Array<IComboBoxItem>, filteredItems: Array<IComboBoxItem>): boolean | undefined;
-    _getFirstMatchingItem(current: string): ComboBoxItem | undefined;
-    _applyAtomicValueAndSelection(item: ComboBoxItem, filterValue: string, highlightValue: boolean): void;
+    _getFirstMatchingItem(current: string): IComboBoxItem | void;
+    _applyAtomicValueAndSelection(item: IComboBoxItem, filterValue: string, highlightValue: boolean): void;
     _selectMatchingItem(): void;
     _fireChangeEvent(): void;
     _inputChange(e: Event): void;
@@ -279,6 +278,7 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     _onItemFocus(): void;
     _announceSelectedItem(indexOfItem: number): void;
     _clear(): void;
+    _makeAllVisible(item: IComboBoxItem): void;
     _scrollToItem(indexOfItem: number, forward: boolean): Promise<void>;
     _announceValueStateText(): void;
     get _headerTitleText(): string;

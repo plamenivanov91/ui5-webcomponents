@@ -47,6 +47,9 @@ let ListItemBase = class ListItemBase extends UI5Element {
         if (isTabPrevious(e)) {
             return this._handleTabPrevious(e);
         }
+        if (getEventMark(e) === "button") {
+            return;
+        }
         if (isSpace(e)) {
             e.preventDefault();
         }

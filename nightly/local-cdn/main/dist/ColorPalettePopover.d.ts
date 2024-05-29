@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResponsivePopover from "./ResponsivePopover.js";
+import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail, IColorPaletteItem } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
@@ -86,7 +87,9 @@ declare class ColorPalettePopover extends UI5Element {
     get respPopover(): ResponsivePopover;
     closePopover(): void;
     onAfterClose(): void;
+    onAfterOpen(): void;
     onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>): void;
+    get _colorPalette(): ColorPalette;
     /**
      * Returns if the component is opened.
      * @protected

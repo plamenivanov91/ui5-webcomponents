@@ -168,14 +168,12 @@ let Input = Input_1 = class Input extends UI5Element {
         else {
             this.closeValueStatePopover();
         }
-        if (this._isPhone) {
-            this.open = this.openOnMobile;
+        const preventOpenPicker = this.disabled || this.readonly;
+        if (preventOpenPicker) {
+            this.open = false;
         }
-        else if (this._forceOpen) {
-            this.open = true;
-        }
-        else {
-            this.open = hasValue && hasItems && isFocused && this.isTyping;
+        else if (!this._isPhone) {
+            this.open = hasItems && (this.open || (hasValue && isFocused && this.isTyping));
         }
         const value = this.value;
         const innerInput = this.getInputDOMRefSync();
@@ -389,7 +387,6 @@ let Input = Input_1 = class Input extends UI5Element {
         }
         this.lastConfirmedValue = "";
         this.isTyping = false;
-        this._forceOpen = false;
     }
     _clearPopoverFocusAndSelection() {
         if (!this.showSuggestions || !this.Suggestions) {
@@ -403,7 +400,7 @@ let Input = Input_1 = class Input extends UI5Element {
     _click() {
         if (isPhone() && !this.readonly && this.Suggestions) {
             this.blur();
-            this.openOnMobile = true;
+            this.open = true;
         }
     }
     _handleChange() {
@@ -529,7 +526,6 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     _closePicker() {
         this.open = false;
-        this.openOnMobile = false;
     }
     _afterOpenPicker() {
         // Set initial focus to the native input
@@ -545,10 +541,8 @@ let Input = Input_1 = class Input extends UI5Element {
             this.blur();
             this.focused = false;
         }
-        this.openOnMobile = false;
         this.open = false;
         this.isTyping = false;
-        this._forceOpen = false;
         if (this.hasSuggestionItemSelected) {
             this.focus();
         }
@@ -568,9 +562,11 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     _handlePickerAfterOpen() {
         this.Suggestions?._onOpen();
+        this.fireEvent("open", null, false, false);
     }
     _handlePickerAfterClose() {
         this.Suggestions?._onClose();
+        this.fireEvent("close", null, false, false);
     }
     openValueStatePopover() {
         this.valueStateOpen = true;
@@ -583,17 +579,6 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     _getValueStatePopover() {
         return this.shadowRoot.querySelector("[ui5-popover]");
-    }
-    /**
-     * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
-     * @public
-     * @since 1.3.0
-     */
-    openPicker() {
-        if (!this.suggestionItems.length || this.disabled || this.readonly) {
-            return;
-        }
-        this._forceOpen = true;
     }
     enableSuggestions() {
         if (this.Suggestions) {
@@ -628,8 +613,7 @@ let Input = Input_1 = class Input extends UI5Element {
         }
         this.valueBeforeSelectionStart = "";
         this.isTyping = false;
-        this.openOnMobile = false;
-        this._forceOpen = false;
+        this.open = false;
     }
     /**
      * Updates the input value on item select.
@@ -753,7 +737,9 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     announceSelectedItem() {
         const invisibleText = this.shadowRoot.querySelector(`#selectionText`);
-        invisibleText.textContent = this.itemSelectionAnnounce;
+        if (invisibleText) {
+            invisibleText.textContent = this.itemSelectionAnnounce;
+        }
     }
     fireSelectionChange(item, targetRef, isValueFromSuggestions) {
         if (this.Suggestions) {
@@ -1041,22 +1027,16 @@ __decorate([
 ], Input.prototype, "showClearIcon", void 0);
 __decorate([
     property({ type: Boolean })
+], Input.prototype, "open", void 0);
+__decorate([
+    property({ type: Boolean })
 ], Input.prototype, "_effectiveShowClearIcon", void 0);
 __decorate([
     property({ type: Boolean })
 ], Input.prototype, "focused", void 0);
 __decorate([
     property({ type: Boolean })
-], Input.prototype, "openOnMobile", void 0);
-__decorate([
-    property({ type: Boolean })
-], Input.prototype, "open", void 0);
-__decorate([
-    property({ type: Boolean })
 ], Input.prototype, "valueStateOpen", void 0);
-__decorate([
-    property({ type: Boolean })
-], Input.prototype, "_forceOpen", void 0);
 __decorate([
     property({ type: Boolean })
 ], Input.prototype, "_isValueStateFocused", void 0);
@@ -1165,6 +1145,20 @@ Input = Input_1 = __decorate([
             scrollContainer: { type: HTMLElement },
         },
     })
+    /**
+     * Fired when the suggestions picker is open.
+     * @public
+     * @since 2.0.0
+     */
+    ,
+    event("open")
+    /**
+     * Fired when the suggestions picker is closed.
+     * @public
+     * @since 2.0.0
+     */
+    ,
+    event("close")
 ], Input);
 Input.define();
 export default Input;

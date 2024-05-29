@@ -241,6 +241,15 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
      */
     showClearIcon: boolean;
     /**
+     * Defines whether the suggestions picker is open.
+     * The picker will not open if the `showSuggestions` property is set to `false`, the input is disabled or the input is readonly.
+     * The picker will close automatically and `close` event will be fired if the input is not in the viewport.
+     * @default false
+     * @public
+     * @since 2.0.0
+     */
+    open: boolean;
+    /**
      * Defines whether the clear icon is visible.
      * @default false
      * @private
@@ -251,14 +260,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
      * @private
      */
     focused: boolean;
-    openOnMobile: boolean;
-    open: boolean;
     valueStateOpen: boolean;
-    /**
-     * Determines whether to manually show the suggestions popover
-     * @private
-     */
-    _forceOpen: boolean;
     /**
      * Indicates whether the visual focus is on the value state header
      * @private
@@ -389,12 +391,6 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     closeValueStatePopover(): void;
     _handleValueStatePopoverAfterClose(): void;
     _getValueStatePopover(): Popover;
-    /**
-     * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
-     * @public
-     * @since 1.3.0
-     */
-    openPicker(): void;
     enableSuggestions(): void;
     acceptSuggestion(item: IInputSuggestionItem, keyboardUsed: boolean): void;
     /**

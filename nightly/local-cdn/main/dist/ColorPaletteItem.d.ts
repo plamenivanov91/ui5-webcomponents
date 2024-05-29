@@ -23,6 +23,17 @@ declare class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
      */
     value?: string;
     /**
+     * Defines if the component is selected.
+     *
+     * **Note:** Only one item must be selected per <code>ui5-color-palette</code>.
+     * If more than one item is defined as selected, the last one would be considered as the selected one.
+     *
+     * @public
+     * @default false
+     * @since 2.0.0
+     */
+    selected: boolean;
+    /**
      * Defines the tab-index of the element, helper information for the ItemNavigation.
      * @private
      */
@@ -50,6 +61,11 @@ declare class ColorPaletteItem extends UI5Element implements IColorPaletteItem {
     get styles(): {
         root: {
             "background-color": string | undefined;
+        };
+    };
+    get classes(): {
+        root: {
+            "ui5-cp-item": boolean;
         };
     };
 }

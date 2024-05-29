@@ -3,7 +3,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import HighlightTypes from "./types/HighlightTypes.js";
+import Highlight from "./types/Highlight.js";
 import ListItemType from "./types/ListItemType.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -99,7 +99,7 @@ declare abstract class ListItem extends ListItemBase {
      * @public
      * @since 1.24
      */
-    highlight: `${HighlightTypes}`;
+    highlight: `${Highlight}`;
     /**
      * Used to define the role of the list item.
      * @private
