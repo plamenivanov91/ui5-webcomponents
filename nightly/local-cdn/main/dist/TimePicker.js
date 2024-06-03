@@ -173,6 +173,10 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
     }
     onResponsivePopoverAfterClose() {
         this.open = false;
+        this.fireEvent("close");
+    }
+    onResponsivePopoverAfterOpen() {
+        this.fireEvent("open");
     }
     /**
      * Opens the Inputs popover.
@@ -533,6 +537,20 @@ TimePicker = TimePicker_1 = __decorate([
             },
         },
     })
+    /**
+     * Fired after the value-help dialog of the component is opened.
+     * @since 2.0.0
+     * @public
+     */
+    ,
+    event("open")
+    /**
+     * Fired after the value-help dialog of the component is closed.
+     * @since 2.0.0
+     * @public
+     */
+    ,
+    event("close")
 ], TimePicker);
 TimePicker.define();
 export default TimePicker;

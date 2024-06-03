@@ -4,7 +4,7 @@ function block0(context, tags, suffix) { return html `<div class="ui5-tli-root">
 function block1(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-icon", tags, suffix)} class="ui5-tli-icon" name="${ifDefined(this.icon)}"></${scopeTag("ui5-icon", tags, suffix)}>` : html `<ui5-icon class="ui5-tli-icon" name="${ifDefined(this.icon)}"></ui5-icon>`; }
 function block2(context, tags, suffix) { return html `<div class="ui5-tli-dummy-icon-container"></div>`; }
 function block3(context, tags, suffix) { return html `${this.nameClickable ? block4.call(this, context, tags, suffix) : block5.call(this, context, tags, suffix)}`; }
-function block4(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-link", tags, suffix)} @ui5-click="${ifDefined(this.onNamePress)}" class="ui5-tli-title-name-clickable">${ifDefined(this.name)}&nbsp;</${scopeTag("ui5-link", tags, suffix)}>` : html `<ui5-link @ui5-click="${ifDefined(this.onNamePress)}" class="ui5-tli-title-name-clickable">${ifDefined(this.name)}&nbsp;</ui5-link>`; }
+function block4(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-link", tags, suffix)} @ui5-click="${ifDefined(this.onNamePress)}" class="ui5-tli-title-name-clickable" wrapping-type="None">${ifDefined(this.name)}&nbsp;</${scopeTag("ui5-link", tags, suffix)}>` : html `<ui5-link @ui5-click="${ifDefined(this.onNamePress)}" class="ui5-tli-title-name-clickable" wrapping-type="None">${ifDefined(this.name)}&nbsp;</ui5-link>`; }
 function block5(context, tags, suffix) { return html `<span class="ui5-tli-title-name">${ifDefined(this.name)}&nbsp;</span>`; }
 function block6(context, tags, suffix) { return html `<div class="ui5-tli-desc"><slot></slot></div>`; }
 export default block0;

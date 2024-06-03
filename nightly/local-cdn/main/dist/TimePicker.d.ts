@@ -186,6 +186,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     _togglePicker(): void;
     submitPickers(): void;
     onResponsivePopoverAfterClose(): void;
+    onResponsivePopoverAfterOpen(): void;
     /**
      * Opens the Inputs popover.
      * @private

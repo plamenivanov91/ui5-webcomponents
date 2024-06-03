@@ -56,14 +56,20 @@ declare class ListItemBase extends UI5Element implements ITabbable {
     actionable: boolean;
     onBeforeRendering(): void;
     _onfocusin(e: FocusEvent): void;
-    _onfocusout(): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
     _onclick(e: MouseEvent): void;
     fireItemPress(e: Event): void;
     _handleTabNext(e: KeyboardEvent): void;
     _handleTabPrevious(e: KeyboardEvent): void;
+    /**
+     * Determines if th current list item either has no tabbable content or
+     * [Tab] is performed onto the last tabbale content item.
+     */
     shouldForwardTabAfter(): boolean;
+    /**
+     * Determines if the current list item is target of [SHIFT+TAB].
+     */
     shouldForwardTabBefore(target: HTMLElement): boolean;
     get classes(): ClassMap;
     get _ariaDisabled(): true | undefined;

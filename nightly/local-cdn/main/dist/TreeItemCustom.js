@@ -35,14 +35,16 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
 let TreeItemCustom = class TreeItemCustom extends TreeItemBase {
     async _onkeydown(e) {
         const isTab = isTabNext(e) || isTabPrevious(e);
-        if (!isTab && !this.focused && !isF2(e)) {
+        const isFocused = this.matches(":focus");
+        if (!isTab && !isFocused && !isF2(e)) {
             return;
         }
         await super._onkeydown(e);
     }
     _onkeyup(e) {
         const isTab = isTabNext(e) || isTabPrevious(e);
-        if (!isTab && !this.focused) {
+        const isFocused = this.matches(":focus");
+        if (!isTab && !isFocused && !isF2(e)) {
             return;
         }
         super._onkeyup(e);

@@ -19,7 +19,7 @@ import NotificationListItemBase from "./NotificationListItemBase.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 // Texts
-import { NOTIFICATION_LIST_GROUP_ITEM_TXT, NOTIFICATION_LIST_GROUP_COLLAPSED, NOTIFICATION_LIST_GROUP_EXPANDED, NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE, NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE, } from "./generated/i18n/i18n-defaults.js";
+import { NOTIFICATION_LIST_GROUP_ITEM_TXT, NOTIFICATION_LIST_GROUP_COLLAPSED, NOTIFICATION_LIST_GROUP_EXPANDED, NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE, } from "./generated/i18n/i18n-defaults.js";
 // Templates
 import NotificationListGroupItemTemplate from "./generated/templates/NotificationListGroupItemTemplate.lit.js";
 // Styles
@@ -85,9 +85,6 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
         });
     }
     get toggleIconAccessibleName() {
-        if (this.collapsed) {
-            return NotificationListGroupItem_1.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_EXPAND_TITLE);
-        }
         return NotificationListGroupItem_1.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_ICON_COLLAPSE_TITLE);
     }
     get accInvisibleText() {
@@ -104,7 +101,14 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
     }
     get ariaLabelledBy() {
         const id = this._id;
-        return this.hasTitleText ? `${id}-title-text` : "";
+        const ids = [];
+        if (this.isLoading) {
+            ids.push(`${id}-loading`);
+        }
+        if (this.hasTitleText) {
+            ids.push(`${id}-title-text`);
+        }
+        return ids.join(" ");
     }
     get _ariaExpanded() {
         return !this.collapsed;
@@ -127,7 +131,8 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
         this.toggleCollapsed();
     }
     async _onkeydown(e) {
-        if (!this.focused) {
+        const isFocused = this.matches(":focus");
+        if (!isFocused) {
             return;
         }
         await super._onkeydown(e);

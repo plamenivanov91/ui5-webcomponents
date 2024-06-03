@@ -130,6 +130,14 @@ declare class MenuItem extends ListItem {
         ariaLevel?: number | undefined;
         ariaLabel: string;
         ariaLabelRadioButton: string;
+        /**
+         * Defines the `additionalText`, displayed in the end of the menu item.
+         *
+         * **Note:** The additional text would not be displayed if the item has a submenu.
+         * @default ""
+         * @public
+         * @since 1.8.0
+         */
         ariaSelectedText?: string | undefined;
         posinset?: number | undefined;
         setsize?: number | undefined;

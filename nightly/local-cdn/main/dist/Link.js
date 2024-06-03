@@ -170,7 +170,7 @@ __decorate([
     property({ type: LinkDesign, defaultValue: LinkDesign.Default })
 ], Link.prototype, "design", void 0);
 __decorate([
-    property({ type: WrappingType, defaultValue: WrappingType.None })
+    property({ type: WrappingType, defaultValue: WrappingType.Normal })
 ], Link.prototype, "wrappingType", void 0);
 __decorate([
     property()

@@ -1,12 +1,18 @@
-commit 3752ce701fe915fa0b02ba2b114c40bf3b7d9123
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Wed May 29 17:18:22 2024 +0300
+commit 1924b5457f22c428527f8be3fbdd46d9d5d7ffed
+Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
+Date:   Mon Jun 3 09:57:17 2024 +0300
 
-    feat(ui5-dynamic-page): introduce new component (#7899)
+    refactor(ui5-link): wrap text by default (#9006)
     
-    Adds New `ui5-dynamic-page` component.
-    The component is a composition of the following subcomponents:
-    - DynamicPageTitle - holds the most top area of DynamicPage (breadcrumbs, actions, etc.)
-    - DynamicPageHeader - a container displayed between the title area and the content that allows generic content.
-    - content area with random elements
-    - footer area with random content
+    The text of `ui5-link` now wraps by default.
+    
+    BREAKING CHANGE: `wrapping-type` property default value has changed from `None` to `Normal`.
+    Before:
+    ```html
+    <ui5-link>some very very very long link</ui5-link> <!-- would truncate the text if there is not enough space -->
+    ```
+    
+    Now:
+    ```html
+    <ui5-link>some very very very long link</ui5-link> <!-- would let the text wrap if there is not enough space -->
+    ```

@@ -149,6 +149,7 @@ declare class NotificationListItem extends NotificationListItemBase {
     get hasFootNotes(): boolean;
     get showMoreText(): string;
     get menuBtnAccessibleName(): string;
+    get moreLinkAccessibleName(): string;
     get closeBtnAccessibleName(): string;
     get hideShowMore(): true | undefined;
     get descriptionDOM(): HTMLElement | null;
@@ -162,16 +163,20 @@ declare class NotificationListItem extends NotificationListItemBase {
         showDivider: boolean;
     }[];
     get ariaLabelledBy(): string;
-    get ariaDescribedBy(): string;
     get itemClasses(): string;
     get statusIconName(): string;
     get statusIconDesign(): string;
     get importanceText(): string;
     get stateText(): string;
-    get accInvisibleText(): string;
-    get accInfo(): {
+    get readText(): string;
+    get accInfoButton(): {
         accessibilityAttributes: {
             hasPopup: string;
+        };
+    };
+    get accInfoLink(): {
+        accessibilityAttributes: {
+            expanded: boolean;
         };
     };
     get menuButtonDOM(): HTMLElement;

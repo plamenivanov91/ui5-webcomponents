@@ -40,6 +40,9 @@ declare class NotificationListItemBase extends ListItemBase {
     loadingDelay: number;
     static i18nFioriBundle: I18nBundle;
     get hasTitleText(): boolean;
+    get loadingText(): string;
+    get isLoading(): boolean;
+    onEnterDOM(): void;
     /**
      * Event handlers
      */

@@ -34,11 +34,7 @@ let ListItemBase = class ListItemBase extends UI5Element {
         if (e.target !== this.getFocusDomRef()) {
             return;
         }
-        this.focused = true;
         this.fireEvent("_focused", e);
-    }
-    _onfocusout() {
-        this.focused = false;
     }
     _onkeydown(e) {
         if (isTabNext(e)) {
@@ -90,17 +86,17 @@ let ListItemBase = class ListItemBase extends UI5Element {
             this.fireEvent("_forward-before");
         }
     }
-    /*
-    * Determines if th current list item either has no tabbable content or
-    * [Tab] is performed onto the last tabbale content item.
-    */
+    /**
+     * Determines if th current list item either has no tabbable content or
+     * [Tab] is performed onto the last tabbale content item.
+     */
     shouldForwardTabAfter() {
         const aContent = getTabbableElements(this.getFocusDomRef());
         return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
     }
-    /*
-    * Determines if the current list item is target of [SHIFT+TAB].
-    */
+    /**
+     * Determines if the current list item is target of [SHIFT+TAB].
+     */
     shouldForwardTabBefore(target) {
         return this.getFocusDomRef() === target;
     }

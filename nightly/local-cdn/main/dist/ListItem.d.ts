@@ -1,5 +1,5 @@
-import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { AccessibilityAttributes, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
@@ -137,6 +137,10 @@ declare abstract class ListItem extends ListItemBase {
     _onfocusout(): void;
     _ondragstart(e: DragEvent): void;
     _ondragend(e: DragEvent): void;
+    /**
+     * Called when selection components in Single (ui5-radio-button)
+     * and Multi (ui5-checkbox) selection modes are used.
+     */
     onMultiSelectionComponentPress(e: MouseEvent): void;
     onSingleSelectionComponentPress(e: MouseEvent): void;
     activate(): void;

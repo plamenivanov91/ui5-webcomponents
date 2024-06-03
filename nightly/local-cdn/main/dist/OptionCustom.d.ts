@@ -46,6 +46,7 @@ declare class OptionCustom extends ListItemBase implements IOption {
      * @public
      */
     tooltip: string;
+    onEnterDOM(): void;
     get effectiveDisplayText(): string;
 }
 export default OptionCustom;
