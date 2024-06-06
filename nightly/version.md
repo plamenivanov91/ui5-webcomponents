@@ -1,18 +1,24 @@
-commit 1924b5457f22c428527f8be3fbdd46d9d5d7ffed
-Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
-Date:   Mon Jun 3 09:57:17 2024 +0300
+commit b8d7bac56c783825cf9354e020730e0d6a87a2b4
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Wed Jun 5 13:27:02 2024 +0300
 
-    refactor(ui5-link): wrap text by default (#9006)
+    refactor(ui5-radio-button): wrap text by default (#9117)
     
-    The text of `ui5-link` now wraps by default.
+    * refactor(ui5-radio-button): wrap text by default
+    
+    The text of `ui5-radio-button` now wraps by default.
     
     BREAKING CHANGE: `wrapping-type` property default value has changed from `None` to `Normal`.
     Before:
     ```html
-    <ui5-link>some very very very long link</ui5-link> <!-- would truncate the text if there is not enough space -->
+    <ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+    <!-- would truncate the text if there is not enough space -->
     ```
     
     Now:
     ```html
-    <ui5-link>some very very very long link</ui5-link> <!-- would let the text wrap if there is not enough space -->
+    <ui5-radio-button text="Option A with long long text"></ui5-radio-button>
+    <!-- would let the text wrap if there is not enough space -->
     ```
+    
+    Related to https://github.com/SAP/ui5-webcomponents/issues/8461

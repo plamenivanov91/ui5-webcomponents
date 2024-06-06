@@ -37,6 +37,9 @@ let ListItemBase = class ListItemBase extends UI5Element {
         this.fireEvent("_focused", e);
     }
     _onkeydown(e) {
+        if (getEventMark(e) === "button") {
+            return;
+        }
         if (isTabNext(e)) {
             return this._handleTabNext(e);
         }
@@ -54,6 +57,9 @@ let ListItemBase = class ListItemBase extends UI5Element {
         }
     }
     _onkeyup(e) {
+        if (getEventMark(e) === "button") {
+            return;
+        }
         if (isSpace(e)) {
             this.fireItemPress(e);
         }

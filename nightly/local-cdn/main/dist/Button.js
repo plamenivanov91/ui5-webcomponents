@@ -148,6 +148,7 @@ let Button = Button_1 = class Button extends UI5Element {
         if (this._cancelAction) {
             e.preventDefault();
         }
+        markEvent(e, "button");
         if (isSpace(e) || isEnter(e)) {
             if (this.active) {
                 this._setActiveState(false);

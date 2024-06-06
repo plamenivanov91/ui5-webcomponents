@@ -259,7 +259,7 @@ __decorate([
     property()
 ], RadioButton.prototype, "value", void 0);
 __decorate([
-    property({ type: WrappingType, defaultValue: WrappingType.None })
+    property({ type: WrappingType, defaultValue: WrappingType.Normal })
 ], RadioButton.prototype, "wrappingType", void 0);
 __decorate([
     property()

@@ -144,6 +144,9 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         }
     }
     _itemKeyDown(e) {
+        if (!isLeft(e) && !isRight(e)) {
+            return;
+        }
         const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
         const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
         const item = e.target;

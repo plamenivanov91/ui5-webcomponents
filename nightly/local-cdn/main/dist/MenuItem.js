@@ -57,6 +57,9 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
     get hasSubmenu() {
         return !!(this.items.length || this.loading);
     }
+    get hasEndContent() {
+        return !!(this.endContent.length);
+    }
     get hasIcon() {
         return !!this.icon;
     }
@@ -168,6 +171,9 @@ __decorate([
 __decorate([
     slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 ], MenuItem.prototype, "items", void 0);
+__decorate([
+    slot({ type: HTMLElement })
+], MenuItem.prototype, "endContent", void 0);
 MenuItem = MenuItem_1 = __decorate([
     customElement({
         tag: "ui5-menu-item",
