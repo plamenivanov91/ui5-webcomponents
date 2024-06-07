@@ -226,6 +226,9 @@ let Button = Button_1 = class Button extends UI5Element {
     get ariaLabelText() {
         return getEffectiveAriaLabelText(this);
     }
+    get ariaDescribedbyText() {
+        return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
+    }
     get _isSubmit() {
         return this.type === ButtonType.Submit || this.submits;
     }

@@ -12,7 +12,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome, isSafari, isDesktop, isPhone, } from "@ui5/webcomponents-base/dist/Device.js";
+import { isChrome, isDesktop, isPhone, } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -88,6 +88,7 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         if (isDesktop()) {
             this.setAttribute("desktop", "");
         }
+        this.tabIndex = -1;
     }
     onExitDOM() {
         if (this._opened) {
@@ -196,9 +197,6 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         }
     }
     _onmousedown(e) {
-        if (!isSafari()) { // Remove when adopting native dialog
-            this._root.removeAttribute("tabindex");
-        }
         if (this.shadowRoot.contains(e.target)) {
             this._shouldFocusRoot = true;
         }
@@ -207,9 +205,6 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         }
     }
     _onmouseup() {
-        if (!isSafari()) { // Remove when adopting native dialog
-            this._root.tabIndex = -1;
-        }
         if (this._shouldFocusRoot) {
             if (isChrome()) {
                 this._root.focus();
@@ -260,6 +255,10 @@ let Popup = Popup_1 = class Popup extends UI5Element {
      * @returns Promise that resolves when the focus is applied
      */
     async applyFocus() {
+        // do nothing if the standard HTML autofocus is used
+        if (this.querySelector("[autofocus]")) {
+            return;
+        }
         await this._waitForDomRef();
         if (this.getRootNode() === this) {
             return;
@@ -271,9 +270,6 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         }
         element = element || await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
         if (element) {
-            if (element === this._root) {
-                element.tabIndex = -1;
-            }
             element.focus();
         }
     }

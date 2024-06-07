@@ -234,6 +234,7 @@ declare class Button extends UI5Element implements IButton, IFormElement {
     get tabIndexValue(): string | undefined;
     get showIconTooltip(): boolean;
     get ariaLabelText(): string | undefined;
+    get ariaDescribedbyText(): "ui5-button-hiddenText-type" | undefined;
     get _isSubmit(): boolean;
     get _isReset(): boolean;
     static onDefine(): Promise<void>;
