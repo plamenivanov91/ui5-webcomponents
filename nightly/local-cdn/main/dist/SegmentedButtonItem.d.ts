@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ISegmentedButtonItem } from "./SegmentedButton.js";
-import { IButton } from "./Button.js";
+import type { IButton } from "./Button.js";
 /**
  * @class
  *
@@ -19,7 +19,8 @@ import { IButton } from "./Button.js";
  * `import "@ui5/webcomponents/dist/SegmentedButtonItem.js";`
  * @constructor
  * @extends UI5Element
- * @implements { ISegmentedButtonItem, IButton }
+ * @implements { ISegmentedButtonItem }
+ * @implements { IButton }
  * @public
  */
 declare class SegmentedButtonItem extends UI5Element implements IButton, ISegmentedButtonItem {

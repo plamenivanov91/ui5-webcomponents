@@ -18,7 +18,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
-import "./Button.js";
 import Icon from "./Icon.js";
 import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.js";
 /**
@@ -38,7 +37,8 @@ import segmentedButtonItemCss from "./generated/themes/SegmentedButtonItem.css.j
  * `import "@ui5/webcomponents/dist/SegmentedButtonItem.js";`
  * @constructor
  * @extends UI5Element
- * @implements { ISegmentedButtonItem, IButton }
+ * @implements { ISegmentedButtonItem }
+ * @implements { IButton }
  * @public
  */
 let SegmentedButtonItem = SegmentedButtonItem_1 = class SegmentedButtonItem extends UI5Element {
