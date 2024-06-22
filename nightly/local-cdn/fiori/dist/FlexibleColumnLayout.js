@@ -13,8 +13,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
-import Float from "@ui5/webcomponents-base/dist/types/Float.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
@@ -97,6 +95,62 @@ const COLUMN_MIN_WIDTH = 312;
 let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout extends UI5Element {
     constructor() {
         super();
+        /**
+        * Defines the columns layout and their proportion.
+        *
+        * **Note:** The layout also depends on the screen size - one column for screens smaller than 599px,
+        * two columns between 599px and 1023px and three columns for sizes bigger than 1023px.
+        *
+        * **For example:** layout=`TwoColumnsStartExpanded` means the layout will display up to two columns
+        * in 67%/33% proportion.
+        * @default "OneColumn"
+        * @public
+        */
+        this.layout = "OneColumn";
+        /**
+        * Specifies if the user is allowed to change the columns layout by dragging the separator between the columns.
+        * @default false
+        * @public
+        * @since 2.0.0
+        */
+        this.disableResizing = false;
+        /**
+        * Defines additional accessibility attributes on different areas of the component.
+        *
+        * The accessibilityAttributes object has the following fields,
+        * where each field is an object supporting one or more accessibility attributes:
+        *
+        *  - **startColumn**: `startColumn.role` and `startColumn.name`.
+        *  - **midColumn**: `midColumn.role` and `midColumn.name`.
+        *  - **endColumn**: `endColumn.role` and `endColumn.name`.
+        *  - **startSeparator**: `startSeparator.role` and `startSeparator.name`.
+        *  - **endSeparator**: `endSeparator.role` and `endSeparator.name`.
+        *
+        * The accessibility attributes support the following values:
+        *
+        * - **role**: Defines the accessible ARIA landmark role of the area.
+        * Accepts the following values: `none`, `complementary`, `contentinfo`, `main` or `region`.
+        *
+        * - **name**: Defines the accessible ARIA name of the area.
+        * Accepts any string.
+        *
+        * @default {}
+        * @public
+        * @since 2.0.0
+        */
+        this.accessibilityAttributes = {};
+        /**
+        * Defines the component width in px.
+        * @default 0
+        * @private
+        */
+        this._width = 0;
+        /**
+        * Defines the visible columns count - 1, 2 or 3.
+        * @default 1
+        * @private
+        */
+        this._visibleColumns = 1;
         this._userDefinedColumnLayouts = {
             tablet: {},
             desktop: {},
@@ -805,7 +859,7 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
     }
 };
 __decorate([
-    property({ type: FCLLayout, defaultValue: FCLLayout.OneColumn })
+    property()
 ], FlexibleColumnLayout.prototype, "layout", void 0);
 __decorate([
     property({ type: Boolean })
@@ -814,16 +868,16 @@ __decorate([
     property({ type: Object })
 ], FlexibleColumnLayout.prototype, "accessibilityAttributes", void 0);
 __decorate([
-    property({ validator: Float, defaultValue: 0 })
+    property({ type: Number })
 ], FlexibleColumnLayout.prototype, "_width", void 0);
 __decorate([
-    property({ type: Object, defaultValue: undefined })
+    property({ type: Array })
 ], FlexibleColumnLayout.prototype, "_columnLayout", void 0);
 __decorate([
-    property({ validator: Integer, defaultValue: 0 })
+    property({ type: Number })
 ], FlexibleColumnLayout.prototype, "_visibleColumns", void 0);
 __decorate([
-    property({ type: Object, defaultValue: undefined })
+    property({ type: Object })
 ], FlexibleColumnLayout.prototype, "_layoutsConfiguration", void 0);
 __decorate([
     slot()
