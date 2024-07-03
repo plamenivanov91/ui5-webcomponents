@@ -26,7 +26,7 @@ type ViewSettingsDialogCancelEventDetail = VSDSettings & {
     sortDescending: boolean;
 };
 type VSDItem = {
-    text: string;
+    text?: string;
     selected: boolean;
 };
 type VSDInternalSettings = {
@@ -72,6 +72,13 @@ declare class ViewSettingsDialog extends UI5Element {
      * @public
      */
     sortDescending: boolean;
+    /**
+     * Indicates if the dialog is open.
+     * @public
+     * @default false
+     * @since 2.0.0
+     */
+    open: boolean;
     /**
      * Keeps recently focused list in order to focus it on next dialog open.
      * @private
@@ -156,7 +163,7 @@ declare class ViewSettingsDialog extends UI5Element {
      */
     get _settings(): VSDInternalSettings;
     get initSortByItems(): {
-        text: string;
+        text: string | undefined;
         selected: boolean;
         index: number;
     }[];
@@ -173,17 +180,14 @@ declare class ViewSettingsDialog extends UI5Element {
     get _dialogDomRef(): Dialog;
     /**
      * Shows the dialog.
-     * @public
      */
-    show(): void;
+    beforeDialogOpen(): void;
+    afterDialogOpen(): void;
+    afterDialogClose(): void;
     _handleModeChange(e: CustomEvent): void;
     _handleFilterValueItemClick(e: CustomEvent<ListItemClickEventDetail>): void;
     _navigateToFilters(): void;
     _changeCurrentFilter(e: CustomEvent<ListItemClickEventDetail>): void;
-    /**
-     * Closes the dialog.
-     */
-    close(): void;
     /**
      * Sets focus on recently used control within the dialog.
      */

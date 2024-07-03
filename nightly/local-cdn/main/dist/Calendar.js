@@ -19,6 +19,8 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import CalendarDate from "./CalendarDate.js";
 import CalendarDateRange from "./CalendarDateRange.js";
 import CalendarPart from "./CalendarPart.js";
@@ -412,6 +414,13 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
      */
     get _isHeaderMonthButtonHidden() {
         return this._currentPicker === "month" || this._currentPicker === "year";
+    }
+    /**
+     * The year button is hidden when the year picker is shown
+     * @private
+     */
+    get _isHeaderYearButtonHidden() {
+        return this._currentPicker === "year";
     }
     get _isDayPickerHidden() {
         return this._currentPicker !== "day";

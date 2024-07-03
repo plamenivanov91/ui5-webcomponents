@@ -36,10 +36,10 @@ declare class MenuItem extends ListItem implements IMenuItem {
     static onDefine(): Promise<void>;
     /**
      * Defines the text of the tree item.
-     * @default ""
+     * @default undefined
      * @public
      */
-    text: string;
+    text?: string;
     /**
      * Defines the `additionalText`, displayed in the end of the menu item.
      *
@@ -48,11 +48,11 @@ declare class MenuItem extends ListItem implements IMenuItem {
      *
      * The priority of what will be displayed at the end of the menu item is as follows:
      * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
-     * @default ""
+     * @default undefined
      * @public
      * @since 1.8.0
      */
-    additionalText: string;
+    additionalText?: string;
     /**
      * Defines the icon to be displayed as graphical element within the component.
      * The SAP-icons font provides numerous options.
@@ -90,11 +90,11 @@ declare class MenuItem extends ListItem implements IMenuItem {
     loadingDelay: number;
     /**
      * Defines the accessible ARIA name of the component.
-     * @default ""
+     * @default undefined
      * @public
      * @since 1.7.0
      */
-    accessibleName: string;
+    accessibleName?: string;
     /**
      * Defines the text of the tooltip for the menu item.
      * @default undefined
@@ -141,7 +141,7 @@ declare class MenuItem extends ListItem implements IMenuItem {
     get hasIcon(): boolean;
     get isSubMenuOpen(): boolean;
     get ariaLabelledByText(): string;
-    get menuHeaderTextPhone(): string;
+    get menuHeaderTextPhone(): string | undefined;
     get isPhone(): boolean;
     get labelBack(): string;
     get labelClose(): string;

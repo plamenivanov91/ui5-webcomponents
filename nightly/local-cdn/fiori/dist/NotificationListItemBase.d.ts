@@ -12,7 +12,7 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 declare class NotificationListItemBase extends ListItemBase {
     /**
      * Defines the `titleText` of the item.
-     * @default ""
+     * @default undefined
      * @public
      */
     titleText?: string;

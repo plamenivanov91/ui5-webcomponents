@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://sap.github.io/ui5-webcomponents/nightly/blog</id>
     <title>UI5 Web Components Blog</title>
-    <updated>2024-06-21T10:36:35.000Z</updated>
+    <updated>2024-07-02T11:27:08.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://sap.github.io/ui5-webcomponents/nightly/blog"/>
     <subtitle>UI5 Web Components Blog</subtitle>
@@ -11,7 +11,7 @@
         <title type="html"><![CDATA[UI5 Web Components 2.0 Release Candidate is out!]]></title>
         <id>https://sap.github.io/ui5-webcomponents/nightly/blog/releases/announcing-rc-v2</id>
         <link href="https://sap.github.io/ui5-webcomponents/nightly/blog/releases/announcing-rc-v2"/>
-        <updated>2024-06-21T10:36:35.000Z</updated>
+        <updated>2024-07-02T11:27:08.000Z</updated>
         <summary type="html"><![CDATA[U5 Web Components project has reached a pivotal stage in its evolution, geared to embrace new standards, eliminate legacy code, and integrate consumer feedback to enhance our APIs, culminating in the highly anticipated major release, version 2.0.]]></summary>
         <content type="html"><![CDATA[<p>U5 Web Components project has reached a pivotal stage in its evolution, geared to embrace new standards, eliminate legacy code, and integrate consumer feedback to enhance our APIs, culminating in the highly anticipated major release, version 2.0.</p>
 <p>Today we are extremely happy to announce <strong>UI5 Web Components 2.0 Release Candidate</strong>! 🥳️
@@ -62,7 +62,7 @@ The following <code>2.0</code> RC versions have been released:</p>
 <p><img decoding="async" loading="lazy" alt="UI5 Web Components Playground" src="https://sap.github.io/ui5-webcomponents/nightly/assets/images/playground_dark-0934fc94d79fbcafcd29e5ce577340da.png" width="2682" height="1632" class="img__Ss2"></p>
 <h3 class="anchor anchorWithStickyNavbar_fF9Z" id="breaking-changes">Breaking changes<a href="https://sap.github.io/ui5-webcomponents/nightly/blog/releases/announcing-rc-v2#breaking-changes" class="hash-link" aria-label="Direct link to Breaking changes" title="Direct link to Breaking changes">​</a></h3>
 <p>UI5 Web Components 2.0 is a new major version, including breaking changes requiring you to adjust your code accordingly.</p>
-<div class="theme-admonition theme-admonition-tip admonition_IZjC alert alert--success"><div class="admonitionHeading_uVvU"><span class="admonitionIcon_HiR3"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_bl22"><p>This documentation will help you to migrate from UI5 Web Components v1.x to UI5 Web Components 2.0 with ease: <a href="https://sap.github.io/ui5-webcomponents/nightly/docs/Migrating%20to%20version%202.0%20guide/">Migration guide 2.0</a></p></div></div>
+<div class="theme-admonition theme-admonition-tip admonition_IZjC alert alert--success"><div class="admonitionHeading_uVvU"><span class="admonitionIcon_HiR3"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_bl22"><p>This documentation will help you to migrate from UI5 Web Components v1.x to UI5 Web Components 2.0 with ease: <a href="https://sap.github.io/ui5-webcomponents/nightly/docs/migration-guides/to-version-2/">Migration guide 2.0</a></p></div></div>
 <p>Notable breaking changes include:</p>
 <ul>
 <li>Discontinuing support for Internet Explorer: <a href="https://github.com/SAP/ui5-webcomponents/pull/8494" target="_blank" rel="noopener noreferrer">#8494</a></li>
@@ -120,7 +120,7 @@ The following <code>2.0</code> RC versions have been released:</p>
         <title type="html"><![CDATA[Popover API in UI5 Web Components 2.0]]></title>
         <id>https://sap.github.io/ui5-webcomponents/nightly/blog/releases/popover-api-in-v2</id>
         <link href="https://sap.github.io/ui5-webcomponents/nightly/blog/releases/popover-api-in-v2"/>
-        <updated>2024-06-21T10:36:35.000Z</updated>
+        <updated>2024-07-02T11:27:08.000Z</updated>
         <summary type="html"><![CDATA[UI5 Web Components 2.0 will provide greatly improved popups by taking advantage of the native browser popover API.]]></summary>
         <content type="html"><![CDATA[<p>UI5 Web Components 2.0 will provide greatly improved popups by taking advantage of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API" target="_blank" rel="noopener noreferrer">native browser popover API</a>.</p>
 <h2 class="anchor anchorWithStickyNavbar_fF9Z" id="what-is-the-popover-api">What is the popover API?<a href="https://sap.github.io/ui5-webcomponents/nightly/blog/releases/popover-api-in-v2#what-is-the-popover-api" class="hash-link" aria-label="Direct link to What is the popover API?" title="Direct link to What is the popover API?">​</a></h2>
@@ -194,7 +194,7 @@ Instead, we can only provide <strong>logical</strong> <code>ui5-option</code> co
         <title type="html"><![CDATA[Preparing for UI5 Web Components 2.0]]></title>
         <id>https://sap.github.io/ui5-webcomponents/nightly/blog/releases/preparing-for-v2</id>
         <link href="https://sap.github.io/ui5-webcomponents/nightly/blog/releases/preparing-for-v2"/>
-        <updated>2024-06-21T10:36:35.000Z</updated>
+        <updated>2024-07-02T11:27:08.000Z</updated>
         <summary type="html"><![CDATA[UI5 Web Components 2.0 version is on the horizon.]]></summary>
         <content type="html"><![CDATA[<p>UI5 Web Components 2.0 version is on the horizon.
 Here's a summary of everything you need to know (release information, key features and breaking changes)
@@ -211,7 +211,7 @@ and start preparing for it.</p>
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_fF9Z" id="migration-support">Migration Support<a href="https://sap.github.io/ui5-webcomponents/nightly/blog/releases/preparing-for-v2#migration-support" class="hash-link" aria-label="Direct link to Migration Support" title="Direct link to Migration Support">​</a></h2>
 <ul>
-<li><a href="https://sap.github.io/ui5-webcomponents/nightly/docs/Migrating%20to%20version%202.0%20guide/">Migration guide</a></li>
+<li><a href="https://sap.github.io/ui5-webcomponents/nightly/docs/migration-guides/to-version-2/">Migration guide</a></li>
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_fF9Z" id="maintenance-of-1x">Maintenance of 1.x<a href="https://sap.github.io/ui5-webcomponents/nightly/blog/releases/preparing-for-v2#maintenance-of-1x" class="hash-link" aria-label="Direct link to Maintenance of 1.x" title="Direct link to Maintenance of 1.x">​</a></h2>
 <ul>

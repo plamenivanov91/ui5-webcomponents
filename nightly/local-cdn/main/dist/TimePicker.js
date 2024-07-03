@@ -101,14 +101,13 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
     constructor() {
         super(...arguments);
         /**
-         * Determines the name by which the component will be identified upon submission in an HTML form.
-         *
-         * **Note:** This property is only applicable within the context of an HTML Form element.
+         * Defines a formatted time value.
          * @default ""
+         * @formEvents change input
+         * @formProperty
          * @public
-         * @since 2.0.0
          */
-        this.name = "";
+        this.value = "";
         /**
          * Defines the value state of the component.
          * @default "None"

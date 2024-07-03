@@ -165,7 +165,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         if (!item._popover) {
             const prevented = !this.fireEvent("item-click", {
                 "item": item,
-                "text": item.text,
+                "text": item.text || "",
             }, true, false);
             if (!prevented && this._popover) {
                 item.fireEvent("close-menu", {});

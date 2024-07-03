@@ -47,25 +47,6 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
     constructor() {
         super(...arguments);
         /**
-         * Defines the text of the tree item.
-         * @default ""
-         * @public
-         */
-        this.text = "";
-        /**
-         * Defines the `additionalText`, displayed in the end of the menu item.
-         *
-         * **Note:** The additional text will not be displayed if there are items added in `items` slot or there are
-         * components added to `endContent` slot.
-         *
-         * The priority of what will be displayed at the end of the menu item is as follows:
-         * sub-menu arrow (if there are items added in `items` slot) -> components added in `endContent` -> text set to `additionalText`.
-         * @default ""
-         * @public
-         * @since 1.8.0
-         */
-        this.additionalText = "";
-        /**
          * Defines whether `ui5-menu-item` is in disabled state.
          *
          * **Note:** A disabled `ui5-menu-item` is noninteractive.
@@ -89,13 +70,6 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
          * @since 1.13.0
          */
         this.loadingDelay = 1000;
-        /**
-         * Defines the accessible ARIA name of the component.
-         * @default ""
-         * @public
-         * @since 1.7.0
-         */
-        this.accessibleName = "";
         /**
          * Indicates whether any of the element siblings have icon.
          */

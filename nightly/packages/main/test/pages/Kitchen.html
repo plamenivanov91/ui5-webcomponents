@@ -10,6 +10,12 @@
 
 	
 
+	<style>
+		[ui5-avatar] img {
+			object-fit: contain;
+		}
+	</style>
+
 	<!--
 	<link rel="stylesheet" type="text/css" href="./css/css_variables.css">
 	-->
@@ -33,7 +39,7 @@
 
 
 	<!-- <script>delete Document.prototype.adoptedStyleSheets;</script> -->
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-b1572595.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-bd019229.js"></script>
   <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/kitchen-scripts-2f5887ed.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/Kitchen-84de5405.css">
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/kitchen-styles-f4dfb211.css">
@@ -94,9 +100,21 @@
 				</ui5-card-header>
 
 				<ui5-list id="myList12" separators="Inner">
-					<ui5-li image="./img/HT-1030.jpg" icon="source-code" icon-end>Java EE</ui5-li>
-					<ui5-li image="./img/HT-1030.jpg" icon="source-code" icon-end>Maven</ui5-li>
-					<ui5-li image="./img/HT-1030.jpg" icon="source-code" icon-end>Cloud computing</ui5-li>
+					<ui5-li icon="source-code" icon-end>Java EE
+						<ui5-avatar slot="image" shape="Square">
+							<img src="/ui5-webcomponents/nightly/assets/HT-1030-7ead454a.jpg" alt="Woman image">
+						</ui5-avatar>
+					</ui5-li>
+					<ui5-li icon="source-code" icon-end>Maven
+						<ui5-avatar slot="image" shape="Square">
+							<img src="/ui5-webcomponents/nightly/assets/HT-1030-7ead454a.jpg" alt="Woman image">
+						</ui5-avatar>
+					</ui5-li>
+					<ui5-li icon="source-code" icon-end>Cloud computing
+						<ui5-avatar slot="image" shape="Square">
+							<img src="/ui5-webcomponents/nightly/assets/HT-1030-7ead454a.jpg" alt="Woman image">
+						</ui5-avatar>
+					</ui5-li>
 				</ui5-list>
 			</ui5-card>
 			<ui5-card
@@ -106,9 +124,21 @@
 				</ui5-card-header>
 
 				<ui5-list id="myList12" separators="Inner">
-					<ui5-li image="./img/HT-1030.jpg" icon="source-code">C/C++</ui5-li>
-					<ui5-li image="./img/HT-1030.jpg" icon="source-code">Phyton</ui5-li>
-					<ui5-li image="./img/HT-1030.jpg" icon="source-code">Node JS</ui5-li>
+					<ui5-li icon="source-code">C/C++
+						<ui5-avatar slot="image" shape="Square">
+							<img src="/ui5-webcomponents/nightly/assets/HT-1030-7ead454a.jpg" alt="Woman image">
+						</ui5-avatar>
+					</ui5-li>
+					<ui5-li icon="source-code">Phyton
+						<ui5-avatar slot="image" shape="Square">
+							<img src="/ui5-webcomponents/nightly/assets/HT-1030-7ead454a.jpg" alt="Woman image">
+						</ui5-avatar>
+					</ui5-li>
+					<ui5-li icon="source-code">Node JS
+						<ui5-avatar slot="image" shape="Square">
+							<img src="/ui5-webcomponents/nightly/assets/HT-1030-7ead454a.jpg" alt="Woman image">
+						</ui5-avatar>
+					</ui5-li>
 				</ui5-list>
 			</ui5-card>
 			<ui5-card

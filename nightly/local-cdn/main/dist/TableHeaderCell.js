@@ -27,6 +27,7 @@ import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
  * @extends TableCellBase
  * @since 2.0
  * @public
+ * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 let TableHeaderCell = class TableHeaderCell extends TableCellBase {
     constructor() {
@@ -71,6 +72,7 @@ let TableHeaderCell = class TableHeaderCell extends TableCellBase {
         this._popinWidth = 0;
     }
     onEnterDOM() {
+        super.onEnterDOM();
         this.style.minWidth = this.minWidth;
         this.style.maxWidth = this.maxWidth;
         this.style.width = this.width;
