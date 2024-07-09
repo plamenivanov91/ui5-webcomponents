@@ -297,6 +297,7 @@ declare class MultiComboBox extends UI5Element implements IFormInputElement {
     _tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>): void;
     get _getPlaceholder(): string;
     _handleArrowLeft(): void;
+    _onPopoverFocusOut(): void;
     _tokenizerFocusOut(e: FocusEvent): void;
     _tokenizerFocusIn(): void;
     _onkeydown(e: KeyboardEvent): void;
@@ -379,7 +380,6 @@ declare class MultiComboBox extends UI5Element implements IFormInputElement {
     get ariaValueStateHiddenText(): string | undefined;
     get valueStateDefaultText(): string;
     get valueStateTextId(): "ui5-multi-combobox-valueStateDesc" | undefined;
-    get valueStateMessageText(): Node[];
     get ariaLabelText(): string | undefined;
     /**
      * This method is relevant for sap_horizon theme only

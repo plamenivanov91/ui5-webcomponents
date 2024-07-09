@@ -79,6 +79,7 @@ declare class TableGrowing extends UI5Element implements ITableGrowing {
      * @private
      */
     _activeState: boolean;
+    readonly identifier = "TableGrowing";
     _table?: Table;
     _observer?: IntersectionObserver;
     _individualSlot?: string;

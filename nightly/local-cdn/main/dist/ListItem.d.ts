@@ -35,6 +35,7 @@ type AccInfo = {
     listItemAriaLabel?: string;
     ariaOwns?: string;
     tooltip?: string;
+    ariaKeyShortcuts?: string;
 };
 type ListItemAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "ariaSetsize" | "ariaPosinset">;
 /**

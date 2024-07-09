@@ -77,6 +77,7 @@ let TableGrowing = TableGrowing_1 = class TableGrowing extends UI5Element {
          * @private
          */
         this._activeState = false;
+        this.identifier = "TableGrowing";
     }
     static async onDefine() {
         TableGrowing_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");

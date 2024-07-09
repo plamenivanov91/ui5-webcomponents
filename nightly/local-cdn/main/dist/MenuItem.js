@@ -11,6 +11,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
+import "@ui5/webcomponents-icons/dist/nav-back.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
@@ -71,6 +72,19 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
          */
         this.loadingDelay = 1000;
         /**
+         * Defines the additional accessibility attributes that will be applied to the component.
+         * The following fields are supported:
+         *
+         * - **ariaKeyShortcuts**: Indicated the availability of a keyboard shortcuts defined for the menu item.
+         *
+         * - **role**: Defines the role of the menu item. If not set, menu item will have default role="menuitem".
+         *
+         * @public
+         * @since 2.1.0
+         * @default {}
+         */
+        this.accessibilityAttributes = {};
+        /**
          * Indicates whether any of the element siblings have icon.
          */
         this._siblingsWithIcon = false;
@@ -85,7 +99,7 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
         return this.effectiveDir === "rtl";
     }
     get hasSubmenu() {
-        return !!(this.items.length || this.loading);
+        return !!(this.items.length || this.loading) && !this.disabled;
     }
     get hasEndContent() {
         return !!(this.endContent.length);
@@ -125,8 +139,10 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
     }
     get _accInfo() {
         const accInfoSettings = {
-            role: "menuitem",
+            role: this.accessibilityAttributes.role || "menuitem",
             ariaHaspopup: this.hasSubmenu ? AriaHasPopup.Menu.toLowerCase() : undefined,
+            ariaKeyShortcuts: this.accessibilityAttributes.ariaKeyShortcuts,
+            ariaHidden: !!this.additionalText && !!this.accessibilityAttributes.ariaKeyShortcuts ? true : undefined,
         };
         return { ...super._accInfo, ...accInfoSettings };
     }
@@ -168,6 +184,9 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
         this.selected = false;
         if (e.detail.escPressed) {
             this.focus();
+            if (isPhone()) {
+                this.fireEvent("close-menu", {});
+            }
         }
     }
     _afterPopoverClose() {
@@ -198,6 +217,9 @@ __decorate([
 __decorate([
     property()
 ], MenuItem.prototype, "tooltip", void 0);
+__decorate([
+    property({ type: Object })
+], MenuItem.prototype, "accessibilityAttributes", void 0);
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], MenuItem.prototype, "_siblingsWithIcon", void 0);

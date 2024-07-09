@@ -50,6 +50,7 @@ import "./Table.js";
 import "./TableHeaderCell.js";
 import "./TableHeaderRow.js";
 import "./TableGrowing.js";
+import "./TableSelection.js";
 import "./Icon.js";
 import "./Input.js";
 import "./SuggestionItemCustom.js";

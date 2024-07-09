@@ -36,12 +36,12 @@ let TableRow = class TableRow extends TableRowBase {
     constructor() {
         super(...arguments);
         /**
-         * Unique identifier of the component.
+         * Unique identifier of the row.
          *
          * @default ""
          * @public
          */
-        this.key = "";
+        this.rowKey = "";
         /**
          * Defines the interactive state of the row.
          *
@@ -118,7 +118,7 @@ __decorate([
 ], TableRow.prototype, "cells", void 0);
 __decorate([
     property()
-], TableRow.prototype, "key", void 0);
+], TableRow.prototype, "rowKey", void 0);
 __decorate([
     property({ type: Boolean })
 ], TableRow.prototype, "interactive", void 0);

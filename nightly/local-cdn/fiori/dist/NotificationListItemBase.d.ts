@@ -41,7 +41,6 @@ declare class NotificationListItemBase extends ListItemBase {
     static i18nFioriBundle: I18nBundle;
     get hasTitleText(): boolean;
     get loadingText(): string;
-    get isLoading(): boolean;
     /**
      * Event handlers
      */

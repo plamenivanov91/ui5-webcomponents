@@ -5,7 +5,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableRow from "./TableRow.js";
 import type TableHeaderRow from "./TableHeaderRow.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
-import TableSelection from "./TableSelection.js";
+import type TableSelection from "./TableSelection.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableNavigation from "./TableNavigation.js";
 /**
@@ -15,6 +15,7 @@ import TableNavigation from "./TableNavigation.js";
  * @experimental
  */
 interface ITableFeature extends UI5Element {
+    readonly identifier: string;
     /**
      * Called when the table is activated.
      * @param table table instance
@@ -62,6 +63,7 @@ type TableRowClickEventDetail = {
  *
  * The `ui5-table` can be enhanced in its functionalities by applying different features.
  * Features can be slotted into the `features` slot, to enable them in the component.
+ * Features need to be imported separately, as they are not enabled by default.
  *
  * The following features are currently available:
  *
@@ -227,7 +229,6 @@ declare class Table extends UI5Element {
     onExitDOM(): void;
     onBeforeRendering(): void;
     onAfterRendering(): void;
-    _getFeature<Klass>(klass: any): Klass | undefined;
     _getSelection(): TableSelection | undefined;
     _onEvent(e: Event): void;
     _onResize(): void;

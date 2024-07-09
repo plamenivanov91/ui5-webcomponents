@@ -1,3 +1,6 @@
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
+import "@ui5/webcomponents-icons/dist/nav-back.js";
+import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type PopoverPlacement from "./types/PopoverPlacement.js";
@@ -9,6 +12,7 @@ type MenuBeforeOpenEventDetail = {
 type MenuBeforeCloseEventDetail = {
     escPressed: boolean;
 };
+type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeyShortcuts" | "role"> & ListItemAccessibilityAttributes;
 /**
  * @class
  *
@@ -103,6 +107,19 @@ declare class MenuItem extends ListItem implements IMenuItem {
      */
     tooltip?: string;
     /**
+     * Defines the additional accessibility attributes that will be applied to the component.
+     * The following fields are supported:
+     *
+     * - **ariaKeyShortcuts**: Indicated the availability of a keyboard shortcuts defined for the menu item.
+     *
+     * - **role**: Defines the role of the menu item. If not set, menu item will have default role="menuitem".
+     *
+     * @public
+     * @since 2.1.0
+     * @default {}
+     */
+    accessibilityAttributes: MenuItemAccessibilityAttributes;
+    /**
      * Indicates whether any of the element siblings have icon.
      */
     _siblingsWithIcon: boolean;
@@ -151,6 +168,8 @@ declare class MenuItem extends ListItem implements IMenuItem {
     get _accInfo(): {
         role: string;
         ariaHaspopup: "dialog" | "grid" | "listbox" | "menu" | "tree" | undefined;
+        ariaKeyShortcuts: string | undefined;
+        ariaHidden: boolean | undefined;
         ariaExpanded?: boolean | undefined;
         ariaLevel?: number | undefined;
         ariaLabel: string;
@@ -174,4 +193,4 @@ declare class MenuItem extends ListItem implements IMenuItem {
     _afterPopoverClose(): void;
 }
 export default MenuItem;
-export type { MenuBeforeCloseEventDetail, MenuBeforeOpenEventDetail, };
+export type { MenuBeforeCloseEventDetail, MenuBeforeOpenEventDetail, MenuItemAccessibilityAttributes, };

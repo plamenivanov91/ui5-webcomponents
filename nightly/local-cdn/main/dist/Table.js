@@ -19,12 +19,12 @@ import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
 import TableExtension from "./TableExtension.js";
-import TableSelection from "./TableSelection.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableNavigation from "./TableNavigation.js";
 import { TABLE_NO_DATA, } from "./generated/i18n/i18n-defaults.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
+import { isFeature } from "./TableUtils.js";
 /**
  * @class
  *
@@ -37,6 +37,7 @@ import TableCell from "./TableCell.js";
  *
  * The `ui5-table` can be enhanced in its functionalities by applying different features.
  * Features can be slotted into the `features` slot, to enable them in the component.
+ * Features need to be imported separately, as they are not enabled by default.
  *
  * The following features are currently available:
  *
@@ -178,11 +179,8 @@ let Table = Table_1 = class Table extends UI5Element {
     onAfterRendering() {
         this.features.forEach(feature => feature.onTableRendered?.());
     }
-    _getFeature(klass) {
-        return this.features.find(feature => feature instanceof klass);
-    }
     _getSelection() {
-        return this._getFeature(TableSelection);
+        return this.features.find(feature => isFeature(feature, "TableSelection"));
     }
     _onEvent(e) {
         const composedPath = e.composedPath();

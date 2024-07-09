@@ -141,6 +141,27 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
      * @since 2.0
      */
     open: boolean;
+    /**
+     * Defines whether the component is required.
+     * @since 2.1.0
+     * @default false
+     * @public
+     */
+    required: boolean;
+    /**
+     * Defines the aria-label attribute for the component.
+     * @default undefined
+     * @public
+     * @since 2.1.0
+     */
+    accessibleName?: string;
+    /**
+     * Receives id (or many ids) of the elements that label the component.
+     * @default undefined
+     * @public
+     * @since 2.1.0
+     */
+    accessibleNameRef?: string;
     _isInputsPopoverOpen: boolean;
     /**
      * Defines the value state message that will be displayed as pop up under the `ui5-time-picker`.
@@ -156,6 +177,8 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     tempValue?: string;
     static i18nBundle: I18nBundle;
     static onDefine(): Promise<void>;
+    get formValidityMessage(): string;
+    get formValidity(): ValidityStateFlags;
     formElementAnchor(): Promise<HTMLElement | undefined>;
     get formFormattedValue(): FormData | string | null;
     onBeforeRendering(): void;
@@ -164,13 +187,15 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     get accInfo(): {
         ariaRoledescription: string;
         ariaHasPopup: string;
+        ariaRequired: boolean;
+        ariaLabel: string | undefined;
     };
     /**
      * Currently selected time represented as JavaScript Date instance
      * @public
      * @default null
      */
-    get dateValue(): Date | Date[] | null;
+    get dateValue(): Date | null;
     /**
      * @protected
      */
