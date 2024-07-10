@@ -36,7 +36,7 @@ declare class FileUploader extends UI5Element implements IFormInputElement {
      * Comma-separated list of file types that the component should accept.
      *
      * **Note:** Please make sure you are adding the `.` in front on the file type, e.g. `.png` in case you want to accept png's only.
-     * @default ""
+     * @default undefined
      * @public
      */
     accept?: string;
