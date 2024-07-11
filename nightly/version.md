@@ -1,12 +1,9 @@
-commit 9cc7aeb3baa927518f9cb4eea10698e6297b58a8
+commit 011815b8cdd8318d61e61e68cb571fd09a40f2b2
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Jul 9 17:12:54 2024 +0300
+Date:   Wed Jul 10 13:28:48 2024 +0300
 
-    fix(ui5-table): correct font weight (#9417)
+    fix(ui5-table): correct announced row count (#9442)
     
-    "72-SemiboldDuplex", "72-SemiboldDuplexfull" fonts look broken in Safari browser when its font weight is set to bold.
-    ![image](https://github.com/SAP/ui5-webcomponents/assets/31909318/8b927aea-da58-4a73-916b-5ce8dd8ff91e)
+    Table row added for loading more functionality was read out by the screen readers. With this PR, the row is excluded from the accessibility tree.
     
-    With this the specification of `ui5-table-column` was updated and now, the column's font weight should be set to normal. With this PR the styles are align to the specification.
-    
-    Related to: #9046
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/9243
