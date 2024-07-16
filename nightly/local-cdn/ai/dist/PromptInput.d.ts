@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/paper-plane.js";
-import type { InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
+import type { IInputSuggestionItem, InputEventDetail } from "@ui5/webcomponents/dist/Input.js";
 /**
  * @class
  * ### Overview
@@ -100,6 +100,31 @@ declare class PromptInput extends UI5Element {
      */
     valueState: `${ValueState}`;
     /**
+     * Defines whether the component should show suggestions, if such are present.
+     *
+     * **Note:** You need to import the `InputSuggestions` module
+     * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
+     * @default false
+     * @public
+     */
+    showSuggestions: boolean;
+    /**
+     * Defines the suggestion items.
+     *
+     * **Note:** The suggestions would be displayed only if the `showSuggestions`
+     * property is set to `true`.
+     *
+     * **Note:** The `<ui5-suggestion-item>`, `<ui5-suggestion-item-group>` and `ui5-suggestion-item-custom` are recommended to be used as suggestion items.
+     *
+     * **Note:** Importing the Input Suggestions Support feature:
+     *
+     * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";`
+     *
+     * automatically imports the `<ui5-suggestion-item>` and `<ui5-suggestion-item-group>` for your convenience.
+     * @public
+     */
+    suggestionItems: Array<IInputSuggestionItem>;
+    /**
      * Defines the value state message that will be displayed as pop up under the component.
      * The value state message slot should contain only one root element.
      *
@@ -114,11 +139,11 @@ declare class PromptInput extends UI5Element {
     valueStateMessage: Array<HTMLElement>;
     static i18nBundle: I18nBundle;
     static onDefine(): Promise<void>;
-    constructor();
     _onkeydown(e: KeyboardEvent): void;
     _onInnerInput(e: CustomEvent<InputEventDetail>): void;
     _onInnerChange(): void;
     _onButtonClick(): void;
+    _onTypeAhead(e: CustomEvent): void;
     get _exceededText(): string | undefined;
     get _maxLenght(): number | undefined;
     get _submitButtonDisabled(): boolean;

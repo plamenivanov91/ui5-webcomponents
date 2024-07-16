@@ -340,10 +340,13 @@ class Suggestions {
      *
      */
     _getItems() {
-        return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-group], [ui5-suggestion-item-custom]"));
+        const suggestionComponent = this._getComponent();
+        return suggestionComponent.getSlottedNodes("suggestionItems").flatMap(item => {
+            return item.hasAttribute("ui5-suggestion-item-group") ? [item, ...item.items] : [item];
+        });
     }
     _getNonGroupItems() {
-        return Array.from(this._getComponent().querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]"));
+        return this._getItems().filter(item => !item.hasAttribute("ui5-suggestion-item-group"));
     }
     _getComponent() {
         return this.component;

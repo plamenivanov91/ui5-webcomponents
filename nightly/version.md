@@ -1,9 +1,7 @@
-commit 011815b8cdd8318d61e61e68cb571fd09a40f2b2
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Jul 10 13:28:48 2024 +0300
+commit 4d7d2c8455d5767126efcf23b2a7d4f8407222ab
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Mon Jul 15 12:31:30 2024 +0300
 
-    fix(ui5-table): correct announced row count (#9442)
+    docs(ui5-notification-list): set sample with group items height to 500px (#9475)
     
-    Table row added for loading more functionality was read out by the screen readers. With this PR, the row is excluded from the accessibility tree.
-    
-    Fixes: https://github.com/SAP/ui5-webcomponents/issues/9243
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/9370

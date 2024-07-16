@@ -39,11 +39,8 @@ import PromptInputCss from "./generated/themes/PromptInput.css.js";
  * @experimental The **@ui5/webcomponents-ai** package is under development and considered experimental - components' APIs are subject to change.
  */
 let PromptInput = PromptInput_1 = class PromptInput extends UI5Element {
-    static async onDefine() {
-        PromptInput_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");
-    }
     constructor() {
-        super();
+        super(...arguments);
         /**
          * Defines the value of the component.
          *
@@ -98,6 +95,18 @@ let PromptInput = PromptInput_1 = class PromptInput extends UI5Element {
          * @public
          */
         this.valueState = "None";
+        /**
+         * Defines whether the component should show suggestions, if such are present.
+         *
+         * **Note:** You need to import the `InputSuggestions` module
+         * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
+         * @default false
+         * @public
+         */
+        this.showSuggestions = false;
+    }
+    static async onDefine() {
+        PromptInput_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");
     }
     _onkeydown(e) {
         if (isEnter(e)) {
@@ -113,6 +122,9 @@ let PromptInput = PromptInput_1 = class PromptInput extends UI5Element {
     }
     _onButtonClick() {
         this.fireEvent("submit");
+    }
+    _onTypeAhead(e) {
+        this.value = e.target.value;
     }
     get _exceededText() {
         if (this.showExceededText) {
@@ -161,6 +173,12 @@ __decorate([
 __decorate([
     property()
 ], PromptInput.prototype, "valueState", void 0);
+__decorate([
+    property({ type: Boolean })
+], PromptInput.prototype, "showSuggestions", void 0);
+__decorate([
+    slot({ type: HTMLElement, "default": true })
+], PromptInput.prototype, "suggestionItems", void 0);
 __decorate([
     slot({
         type: HTMLElement,

@@ -358,6 +358,7 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
         this.processOverflowLayout();
     }
     onInteract(e) {
+        e.stopImmediatePropagation();
         const target = e.target;
         const item = target.closest(".ui5-tb-item") || target.closest(".ui5-tb-popover-item");
         if (target === this.overflowButtonDOM) {

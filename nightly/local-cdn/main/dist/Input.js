@@ -282,7 +282,7 @@ let Input = Input_1 = class Input extends UI5Element {
         }
         if (this.showSuggestions) {
             this.enableSuggestions();
-            this.suggestionItems.forEach(item => {
+            this._flattenItems.forEach(item => {
                 if (item.hasAttribute("ui5-suggestion-item")) {
                     this._highlightSuggestionItem(item);
                 }
@@ -295,7 +295,7 @@ let Input = Input_1 = class Input extends UI5Element {
         }
         this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
         this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
-        const hasItems = !!this.suggestionItems.length;
+        const hasItems = !!this._flattenItems.length;
         const hasValue = !!this.value;
         const isFocused = this.shadowRoot.querySelector("input") === getActiveElement();
         if (this.shouldDisplayOnlyValueStateMessage) {
@@ -340,6 +340,7 @@ let Input = Input_1 = class Input extends UI5Element {
             if (this.typedInValue.length && this.value.length) {
                 innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
             }
+            this.fireEvent("type-ahead");
         }
         this._performTextSelection = false;
     }
@@ -426,7 +427,7 @@ let Input = Input_1 = class Input extends UI5Element {
                 this.open = false;
             }
         }
-        if (this._isPhone && !this.suggestionItems.length && !this.isTypeNumber) {
+        if (this._isPhone && !this._flattenItems.length && !this.isTypeNumber) {
             innerInput.setSelectionRange(this.value.length, this.value.length);
         }
         if (!suggestionItemPressed) {
@@ -548,7 +549,7 @@ let Input = Input_1 = class Input extends UI5Element {
         };
         if (this.previousValue !== this.getInputDOMRefSync().value) {
             // if picker is open there might be a selected item, wait next tick to get the value applied
-            if (this.Suggestions?._getPicker().open && this.suggestionItems.some(item => item.hasAttribute("ui5-suggestion-item") && item.selected)) {
+            if (this.Suggestions?._getPicker().open && this._flattenItems.some(item => item.hasAttribute("ui5-suggestion-item") && item.selected)) {
                 this._changeToBeFired = true;
             }
             else {
@@ -640,10 +641,10 @@ let Input = Input_1 = class Input extends UI5Element {
         this.isTyping = true;
     }
     _startsWithMatchingItems(str) {
-        return StartsWith(str, Array.from(this.querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]")), "text");
+        return StartsWith(str, this._selectableItems, "text");
     }
     _getFirstMatchingItem(current) {
-        if (!this.suggestionItems.length) {
+        if (!this._flattenItems.length) {
             return;
         }
         const matchingItems = this._startsWithMatchingItems(current).filter(item => !this._isGroupItem(item));
@@ -837,10 +838,12 @@ let Input = Input_1 = class Input extends UI5Element {
         this.fireSelectionChange(item, true);
     }
     get _flattenItems() {
-        return Array.from(this.querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-group], [ui5-suggestion-item-custom]"));
+        return this.getSlottedNodes("suggestionItems").flatMap(item => {
+            return this._isGroupItem(item) ? [item, ...item.items] : [item];
+        });
     }
     get _selectableItems() {
-        return Array.from(this.querySelectorAll("[ui5-suggestion-item], [ui5-suggestion-item-custom]"));
+        return this._flattenItems.filter(item => !this._isGroupItem(item));
     }
     get valueStateTypeMappings() {
         return {
@@ -1243,6 +1246,13 @@ Input = Input_1 = __decorate([
             item: { type: HTMLElement },
         },
     })
+    /**
+     * Fires when a suggestion item is autocompleted in the input.
+     *
+     * @private
+     */
+    ,
+    event("type-ahead")
     /**
      * Fired when the user scrolls the suggestion popover.
      * @param {Integer} scrollTop The current scroll position.

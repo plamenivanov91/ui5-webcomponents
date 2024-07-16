@@ -21,6 +21,7 @@ import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+import Title from "./Title.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
@@ -40,8 +41,7 @@ const pageScrollingBlockers = new Set();
  * ### Overview
  * Base class for all popup Web Components.
  *
- * If you need to create your own popup-like custom UI5 Web Components, it is highly recommended that you extend
- * at least Popup in order to have consistency with other popups in terms of modal behavior and z-index management.
+ * If you need to create your own popup-like custom UI5 Web Components.
  *
  * 1. The Popup class handles modality:
  *  - The "isModal" getter can be overridden by derivatives to provide their own conditions when they are modal or not
@@ -49,16 +49,12 @@ const pageScrollingBlockers = new Set();
  *  - Derivatives may call the "openPopup" and "closePopup" methods which handle focus, manage the popup registry and for modal popups, manage the blocking layer
  *
  *  2. Provides blocking layer (relevant for modal popups only):
- *   - It is in the static area
  *   - Controlled by the "open" and "close" methods
  *
  * 3. The Popup class "traps" focus:
  *  - Derivatives may call the "applyInitialFocus" method (usually when opening, to transfer focus inside the popup)
  *
- * 4. The Popup class automatically assigns "z-index"
- *  - Each time a popup is opened, it gets a higher than the previously opened popup z-index
- *
- * 5. The template of this component exposes two inline partials you can override in derivatives:
+ * 4. The template of this component exposes two inline partials you can override in derivatives:
  *  - beforeContent (upper part of the box, useful for header/title/close button)
  *  - afterContent (lower part, useful for footer/action buttons)
  * @constructor
@@ -312,6 +308,9 @@ let Popup = Popup_1 = class Popup extends UI5Element {
         }
         element = element || await getFirstFocusableElement(this) || this._root; // in case of no focusable content focus the root
         if (element) {
+            if (element === this._root) {
+                element.tabIndex = -1;
+            }
             element.focus();
         }
     }
@@ -466,6 +465,9 @@ Popup = Popup_1 = __decorate([
         renderer: litRender,
         styles: [popupStlyes, popupBlockLayerStyles],
         template: PopupTemplate,
+        dependencies: [
+            Title,
+        ],
     })
     /**
      * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. **This event does not bubble.**
