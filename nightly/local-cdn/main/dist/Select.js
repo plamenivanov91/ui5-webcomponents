@@ -409,9 +409,12 @@ let Select = Select_1 = class Select extends UI5Element {
     _changeSelectedItem(oldIndex, newIndex) {
         const options = this.options;
         const previousOption = options[oldIndex];
+        const nextOption = options[newIndex];
+        if (previousOption === nextOption) {
+            return;
+        }
         previousOption.selected = false;
         previousOption.focused = false;
-        const nextOption = options[newIndex];
         nextOption.selected = true;
         nextOption.focused = true;
         this.fireEvent("live-change", { selectedOption: nextOption });

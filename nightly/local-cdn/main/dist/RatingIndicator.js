@@ -155,6 +155,7 @@ let RatingIndicator = RatingIndicator_1 = class RatingIndicator extends UI5Eleme
     }
     _onkeydown(e) {
         if (this.disabled || this.readonly) {
+            e.preventDefault();
             return;
         }
         const isDecrease = isDown(e) || isLeft(e);
