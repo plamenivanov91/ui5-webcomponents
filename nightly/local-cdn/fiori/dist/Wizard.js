@@ -584,7 +584,7 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
         return Array.from(this.shadowRoot.querySelectorAll("[ui5-wizard-tab]"));
     }
     get enabledStepsInHeaderDOM() {
-        return this.stepsInHeaderDOM;
+        return this.stepsInHeaderDOM.filter(step => !step.disabled);
     }
     get navAriaRoleDescription() {
         return Wizard_1.i18nBundle.getText(WIZARD_NAV_ARIA_ROLE_DESCRIPTION);

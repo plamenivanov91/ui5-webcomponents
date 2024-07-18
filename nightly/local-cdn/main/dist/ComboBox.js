@@ -275,7 +275,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         }
         this._fireChangeEvent();
         const focusedOutToItemsPicker = this.open && this._getPicker().contains(toBeFocused);
-        const focusedOutToValueState = this.valueStateOpen && this._getValueStatePopover().contains(toBeFocused);
+        const focusedOutToValueState = this.valueStateOpen && this.contains(toBeFocused);
         if (focusedOutToItemsPicker || focusedOutToValueState) {
             e.stopImmediatePropagation();
             return;
@@ -834,7 +834,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         }
     }
     _announceValueStateText() {
-        const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessageText.map(el => el.textContent).join(" ");
+        const valueStateText = this.shouldDisplayDefaultValueStateMessage ? this.valueStateDefaultText : this.valueStateMessage.map(el => el.textContent).join(" ");
         if (valueStateText) {
             announce(valueStateText, InvisibleMessageMode.Polite);
         }
@@ -876,16 +876,13 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         if (this.shouldDisplayDefaultValueStateMessage) {
             return `${text} ${this.valueStateDefaultText || ""}`;
         }
-        return `${text}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+        return `${text}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
     }
     get valueStateDefaultText() {
         if (this.valueState === ValueState.None) {
             return;
         }
         return this.valueStateTextMappings[this.valueState];
-    }
-    get valueStateMessageText() {
-        return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
     }
     get valueStateTextMappings() {
         return {

@@ -307,7 +307,6 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     get hasValueStateText(): boolean;
     get ariaValueStateHiddenText(): string;
     get valueStateDefaultText(): string | undefined;
-    get valueStateMessageText(): Array<Node>;
     get valueStateTextMappings(): ValueStateAnnouncement;
     get valueStateTypeMappings(): ValueStateTypeAnnouncement;
     get shouldOpenValueStateMessagePopover(): boolean;

@@ -1,9 +1,9 @@
-commit 02059bc4a01536fa27e37a578ab6eb1499a016ee
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Tue Jul 16 13:42:29 2024 +0300
+commit a24c6b79fb9215cba288873691fdfcd26cdc5c11
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Tue Jul 16 15:51:31 2024 +0300
 
-    fix(ui5-select): prevent unnecessary change event (#9489)
+    fix(ui5-combobox): remove the cloning of the value state message (#9384)
     
-    Fixed a problem where if the select dropdown is closed and we are on
-    the last item, when we press arrow down, a change event is unnecessarily
-    fired without any change actually happening.
+    * fix(ui5-combobox): remove the cloning of the value state message
+    
+    related to #9347
