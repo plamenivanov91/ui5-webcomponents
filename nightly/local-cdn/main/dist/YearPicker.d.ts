@@ -11,6 +11,7 @@ type Year = {
     yearInSecType: string | undefined;
     disabled: boolean;
     classes: string;
+    parts: string;
 };
 type YearInterval = Array<Array<Year>>;
 type YearPickerChangeEventDetail = {

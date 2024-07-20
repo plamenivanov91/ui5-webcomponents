@@ -403,6 +403,7 @@ declare class MultiComboBox extends UI5Element implements IFormInputElement {
     get iconsCount(): number;
     get clearIconAccessibleName(): string;
     get selectAllCheckboxLabel(): string;
+    get _popupLabel(): string;
     get classes(): ClassMap;
     get styles(): {
         popoverValueStateMessage: {

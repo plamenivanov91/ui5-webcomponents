@@ -139,6 +139,7 @@ declare class NotificationListItem extends NotificationListItemBase {
     _titleTextOverflowHeight: number;
     _descOverflowHeight: number;
     _onResizeBound: ResizeObserverCallback;
+    _ariaLevel: string | undefined;
     constructor();
     onEnterDOM(): void;
     onExitDOM(): void;

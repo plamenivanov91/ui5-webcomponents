@@ -1,3 +1,4 @@
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Popup from "./Popup.js";
 import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacement from "./types/PopoverPlacement.js";
@@ -189,6 +190,7 @@ declare class Popover extends Popup {
     };
     getPopoverSize(): PopoverSize;
     _showOutsideViewport(): void;
+    _isUI5Element(el: HTMLElement): el is UI5Element;
     get arrowDOM(): Element;
     /**
      * @private

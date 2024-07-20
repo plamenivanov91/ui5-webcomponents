@@ -95,9 +95,11 @@ let MonthPicker = MonthPicker_1 = class MonthPicker extends CalendarPart {
                 nameInSecType: this.hasSecondaryCalendarType && this._getDisplayedSecondaryMonthText(timestamp).text,
                 disabled: isDisabled,
                 classes: "ui5-mp-item",
+                parts: "month-cell",
             };
             if (isSelected) {
                 month.classes += " ui5-mp-item--selected";
+                month.parts += " month-cell-selected";
             }
             if (isDisabled) {
                 month.classes += " ui5-mp-item--disabled";

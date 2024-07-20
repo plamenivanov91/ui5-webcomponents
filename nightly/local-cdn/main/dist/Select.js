@@ -335,13 +335,14 @@ let Select = Select_1 = class Select extends UI5Element {
         return this.options.indexOf(item);
     }
     _select(index) {
+        const selectedIndex = this._selectedIndex;
         if (index < 0 || index >= this.options.length || this.options.length === 0) {
             return;
         }
-        if (this.options[this._selectedIndex]) {
-            this.options[this._selectedIndex].selected = false;
+        if (this.options[selectedIndex]) {
+            this.options[selectedIndex].selected = false;
         }
-        if (this._selectedIndex !== index) {
+        if (selectedIndex !== index) {
             this.fireEvent("live-change", { selectedOption: this.options[index] });
         }
         this.options[index].selected = true;

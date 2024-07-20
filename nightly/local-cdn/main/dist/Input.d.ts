@@ -433,6 +433,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     get _readonly(): boolean;
     get _headerTitleText(): string;
     get clearIconAccessibleName(): string;
+    get _popupLabel(): string;
     get inputType(): string;
     get isTypeNumber(): boolean;
     get suggestionsTextId(): "" | "suggestionsText";

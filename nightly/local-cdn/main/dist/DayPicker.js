@@ -145,15 +145,18 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
                 ariaDisabled: isOtherMonth ? "true" : undefined,
                 disabled: isDisabled,
                 type: specialDayType,
+                parts: "day-cell",
             };
             if (isFirstDayOfWeek) {
                 day.classes += " ui5-dp-firstday";
             }
             if (isSelected) {
                 day.classes += " ui5-dp-item--selected";
+                day.parts += " day-cell-selected";
             }
             if (isSelectedBetween) {
                 day.classes += " ui5-dp-item--selected-between";
+                day.parts += " day-cell-selected-between";
             }
             if (isToday) {
                 day.classes += " ui5-dp-item--now";

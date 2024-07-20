@@ -1,4 +1,5 @@
 import NotificationListItemBase from "./NotificationListItemBase.js";
+import type NotificationListItem from "./NotificationListItem.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
 import "@ui5/webcomponents-icons/dist/navigation-down-arrow.js";
 type NotificationListGroupItemToggleEventDetail = {
@@ -50,7 +51,7 @@ declare class NotificationListGroupItem extends NotificationListItemBase {
      * usually `ui5-li-notification` items.
      * @public
      */
-    items: Array<NotificationListItemBase>;
+    items: Array<NotificationListItem>;
     onBeforeRendering(): void;
     /**
      * Clears child items loading state to show a single loading over the entire group,

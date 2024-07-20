@@ -36,7 +36,7 @@ import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import { StartsWith } from "./Filters.js";
-import { VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, INPUT_SUGGESTIONS, INPUT_SUGGESTIONS_TITLE, INPUT_SUGGESTIONS_ONE_HIT, INPUT_SUGGESTIONS_MORE_HITS, INPUT_SUGGESTIONS_NO_HIT, INPUT_CLEAR_ICON_ACC_NAME, FORM_TEXTFIELD_REQUIRED, } from "./generated/i18n/i18n-defaults.js";
+import { VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, INPUT_SUGGESTIONS, INPUT_SUGGESTIONS_TITLE, INPUT_SUGGESTIONS_ONE_HIT, INPUT_SUGGESTIONS_MORE_HITS, INPUT_SUGGESTIONS_NO_HIT, INPUT_CLEAR_ICON_ACC_NAME, INPUT_AVALIABLE_VALUES, FORM_TEXTFIELD_REQUIRED, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import inputStyles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
@@ -656,7 +656,7 @@ let Input = Input_1 = class Input extends UI5Element {
         this.Suggestions?.onItemPress(e);
     }
     _handleTypeAhead(item) {
-        const value = item.text ? item.text : item.textContent || "";
+        const value = item.text ? item.text : "";
         this._innerValue = value;
         this.value = value;
         this._performTextSelection = true;
@@ -734,12 +734,12 @@ let Input = Input_1 = class Input extends UI5Element {
             return;
         }
         const value = this.typedInValue || this.value;
-        const itemText = item.text || item.textContent || ""; // keep textContent for compatibility
+        const itemText = item.text || "";
         const fireChange = keyboardUsed
             ? this.valueBeforeItemSelection !== itemText : value !== itemText;
         this.hasSuggestionItemSelected = true;
-        if (fireChange) {
-            this.value = itemText;
+        this.value = itemText;
+        if (fireChange && (this.previousValue !== itemText)) {
             this.valueBeforeItemSelection = itemText;
             this.lastConfirmedValue = itemText;
             this._performTextSelection = true;
@@ -886,6 +886,9 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     get clearIconAccessibleName() {
         return Input_1.i18nBundle.getText(INPUT_CLEAR_ICON_ACC_NAME);
+    }
+    get _popupLabel() {
+        return Input_1.i18nBundle.getText(INPUT_AVALIABLE_VALUES);
     }
     get inputType() {
         return this.type.toLowerCase();

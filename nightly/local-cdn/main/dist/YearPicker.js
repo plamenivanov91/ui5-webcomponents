@@ -103,9 +103,11 @@ let YearPicker = YearPicker_1 = class YearPicker extends CalendarPart {
                 yearInSecType: textInSecType,
                 disabled: isDisabled,
                 classes: "ui5-yp-item",
+                parts: "year-cell",
             };
             if (isSelected) {
                 year.classes += " ui5-yp-item--selected";
+                year.parts += " year-cell-selected";
             }
             if (isDisabled) {
                 year.classes += " ui5-yp-item--disabled";

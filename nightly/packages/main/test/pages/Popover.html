@@ -22,7 +22,7 @@
 	<script>
 		// delete Document.prototype.adoptedStyleSheets
 	</script>
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-e87b0581.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-9c02a6f8.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/Popover-ceb79c6e.css">
 </head>
 
@@ -378,10 +378,14 @@ z-index: 1;
 	<br>
 	<br>
 
+	<h2>Dynamic</h2>
+	<ui5-label>Create popover and open it</ui5-label>
 	<div class="popover12auto">
 		<ui5-button id="btnOpenDynamic" icon="overflow"></ui5-button>
 	</div>
-
+	<ui5-label>Create popover and open it by dynamic opener</ui5-label>
+	<ui5-button id="btnDynamicOpenerAndPopover" icon="overflow"></ui5-button>
+	<div id="dynamicOpenerList"></div>
 	<br>
 
 	<ui5-button id="btnOpenPopoverWithDiv">Open Popover with div Inside</ui5-button>
@@ -678,6 +682,24 @@ z-index: 1;
 			document.body.appendChild(popover);
 
 			popover.opener = btnOpenDynamic;
+			popover.open = true;
+		});
+
+		let dynamicOpenerCounter = 0;
+		btnDynamicOpenerAndPopover.addEventListener("click", function () {
+			var popover = document.createElement("ui5-popover"),
+				list = document.createElement("ui5-list"),
+				opener = document.createElement("ui5-li");
+
+			popover.setAttribute("placement", "Bottom");
+			popover.setAttribute("id", `dynamic-popover-dynamic-opener${dynamicOpenerCounter}`);
+			opener.textContent = `Opener ${dynamicOpenerCounter++}`;
+			
+			document.getElementById("dynamicOpenerList").appendChild(list);
+			list.appendChild(opener);
+			document.body.appendChild(popover);
+
+			popover.opener = opener;
 			popover.open = true;
 		});
 

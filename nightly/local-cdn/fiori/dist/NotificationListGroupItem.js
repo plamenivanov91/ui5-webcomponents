@@ -70,6 +70,9 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
     }
     onBeforeRendering() {
         super.onBeforeRendering();
+        this.items.forEach(item => {
+            item._ariaLevel = "2";
+        });
         if (this.loading) {
             this.clearChildBusyIndicator();
         }

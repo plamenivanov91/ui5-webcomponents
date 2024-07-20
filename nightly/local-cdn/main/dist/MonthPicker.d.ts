@@ -12,6 +12,7 @@ type Month = {
     nameInSecType: string;
     disabled: boolean;
     classes: string;
+    parts: string;
 };
 type MonthInterval = Array<Array<Month>>;
 type MonthPickerChangeEventDetail = {

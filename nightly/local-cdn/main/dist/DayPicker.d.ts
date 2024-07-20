@@ -25,6 +25,7 @@ type Day = {
     weekNum?: number;
     isHidden?: boolean;
     type?: string;
+    parts: string;
 };
 type WeekNumber = {
     weekNum: number;
