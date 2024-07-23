@@ -1,7 +1,5 @@
-commit ca153d01317286164e39a119c43c7ecaddffdeef
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Fri Jul 19 14:52:43 2024 +0300
+commit 16d7bef464be7b3e1b2d11484a5145d8d526855a
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Mon Jul 22 10:35:41 2024 +0300
 
-    fix(ui5-li-notification): fix aria-level value (#9504)
-    
-    * fix(ui5-li-notification): fix aria-level value
+    fix(ui5-upload-collection): make empty upload collection focusable (#9403)

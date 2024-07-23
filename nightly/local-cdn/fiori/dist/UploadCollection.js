@@ -15,6 +15,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
+import ListItemCustom from "@ui5/webcomponents/dist/ListItemCustom.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/Tent.js";
@@ -207,6 +208,7 @@ UploadCollection = UploadCollection_1 = __decorate([
             Icon,
             Label,
             List,
+            ListItemCustom,
             Title,
             IllustratedMessage,
         ],
