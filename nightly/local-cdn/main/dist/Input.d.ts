@@ -370,6 +370,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     _clear(): void;
     _iconMouseDown(): void;
     _scroll(e: CustomEvent<PopupScrollEventDetail>): void;
+    _handleSelect(): void;
     _handleInput(e: InputEvent | CustomEvent<InputEventDetail>): void;
     _startsWithMatchingItems(str: string): Array<IInputSuggestionItemSelectable>;
     _getFirstMatchingItem(current: string): IInputSuggestionItemSelectable | undefined;

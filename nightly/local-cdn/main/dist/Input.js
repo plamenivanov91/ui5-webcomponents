@@ -575,6 +575,9 @@ let Input = Input_1 = class Input extends UI5Element {
             scrollContainer: e.detail.targetRef,
         });
     }
+    _handleSelect() {
+        this.fireEvent("select", {});
+    }
     _handleInput(e) {
         const inputDomRef = this.getInputDOMRefSync();
         const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
@@ -1233,6 +1236,14 @@ Input = Input_1 = __decorate([
      */
     ,
     event("input")
+    /**
+     * Fired when some text has been selected.
+     *
+     * @since 2.0.0
+     * @public
+     */
+    ,
+    event("select")
     /**
      * Fired when the user navigates to a suggestion item via the ARROW keys,
      * as a preview, before the final selection.

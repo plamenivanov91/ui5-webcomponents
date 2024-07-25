@@ -247,7 +247,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         this._inputWidth = this.offsetWidth;
     }
     _handleMobileInput(e) {
-        if (!this.open) {
+        if (!this.open || this.readonly) {
             return;
         }
         const target = e.target;

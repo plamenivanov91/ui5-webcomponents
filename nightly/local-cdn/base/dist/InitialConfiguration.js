@@ -16,6 +16,7 @@ let initialConfig = {
     noConflict: false,
     formatSettings: {},
     fetchDefaultLanguage: false,
+    defaultFontLoading: true,
 };
 /* General settings */
 const getAnimationMode = () => {
@@ -46,6 +47,10 @@ const getFetchDefaultLanguage = () => {
 const getNoConflict = () => {
     initConfiguration();
     return initialConfig.noConflict;
+};
+const getDefaultFontLoading = () => {
+    initConfiguration();
+    return initialConfig.defaultFontLoading;
 };
 /**
  * Get the configured calendar type
@@ -153,5 +158,5 @@ const initConfiguration = () => {
     applyOpenUI5Configuration();
     initialized = true;
 };
-export { getAnimationMode, getTheme, getThemeRoot, getLanguage, getFetchDefaultLanguage, getNoConflict, getCalendarType, getSecondaryCalendarType, getTimezone, getFormatSettings, };
+export { getAnimationMode, getTheme, getThemeRoot, getLanguage, getFetchDefaultLanguage, getNoConflict, getCalendarType, getSecondaryCalendarType, getTimezone, getFormatSettings, getDefaultFontLoading, };
 //# sourceMappingURL=InitialConfiguration.js.map

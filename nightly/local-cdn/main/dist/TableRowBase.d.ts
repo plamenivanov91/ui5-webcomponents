@@ -32,7 +32,7 @@ declare abstract class TableRowBase extends UI5Element {
     get _selectionCell(): HTMLElement | null;
     get _visibleCells(): TableCellBase[];
     get _popinCells(): TableCellBase[];
+    get _stickyCells(): (Element | null | undefined)[];
     get _i18nRowSelector(): string;
-    get isTableRowBase(): boolean;
 }
 export default TableRowBase;

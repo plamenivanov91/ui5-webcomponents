@@ -18,13 +18,14 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
+import TableHeaderRow from "./TableHeaderRow.js";
 import TableExtension from "./TableExtension.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableNavigation from "./TableNavigation.js";
 import { TABLE_NO_DATA, } from "./generated/i18n/i18n-defaults.js";
 import BusyIndicator from "./BusyIndicator.js";
 import TableCell from "./TableCell.js";
-import { isFeature } from "./TableUtils.js";
+import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
 /**
  * @class
  *
@@ -102,7 +103,7 @@ import { isFeature } from "./TableUtils.js";
  * @experimental This Table web component is available since 2.0 and has been newly implemented to provide better screen reader and keyboard handling support.
  * Currently, it's considered experimental as its API is subject to change.
  * This Table replaces the previous Table web component, that has been part of **@ui5/webcomponents** version 1.x.
- * For compatibility reasons, we moved the previous Tabple implementation to the **@ui5/webcomponents-compat** package
+ * For compatibility reasons, we moved the previous Table implementation to the **@ui5/webcomponents-compat** package
  * and will be maintained until the new Table is experimental.
  */
 let Table = Table_1 = class Table extends UI5Element {
@@ -229,31 +230,8 @@ let Table = Table_1 = class Table extends UI5Element {
         }
     }
     _onfocusin(e) {
-        // Handles focus that is below sticky element
-        const stickyElements = this._stickyElements;
-        if (stickyElements.length === 0) {
-            return;
-        }
-        // Find the sticky element that is closest to the focused element
-        const target = e.target;
-        const element = target.closest("ui5-table-cell, ui5-table-row") ?? target;
-        const elementRect = element.getBoundingClientRect();
-        const stickyBottom = stickyElements.reduce((min, stickyElement) => {
-            const stickyRect = stickyElement.getBoundingClientRect();
-            if (stickyRect.bottom > elementRect.top) {
-                return Math.max(min, stickyRect.bottom);
-            }
-            return min;
-        }, -Infinity);
-        // If the focused element is not behind any sticky element, do nothing
-        if (stickyBottom === -Infinity) {
-            return;
-        }
-        // Scroll the focused element into view
-        const scrollContainer = this._scrollContainer;
-        scrollContainer.scrollBy({
-            top: elementRect.top - stickyBottom,
-        });
+        // Handles focus in the table, when the focus is below a sticky element
+        scrollElementIntoView(this._scrollContainer, e.target, this._stickyElements, this.effectiveDir === "rtl");
     }
     /**
      * Refreshes the popin state of the columns.
@@ -327,7 +305,7 @@ let Table = Table_1 = class Table extends UI5Element {
         return widths.join(" ");
     }
     get _tableOverflowX() {
-        return (this.overflowMode === TableOverflowMode.Popin) ? "hidden" : "auto";
+        return (this.overflowMode === TableOverflowMode.Popin) ? "clip" : "auto";
     }
     get _tableOverflowY() {
         return "auto";
@@ -363,20 +341,13 @@ let Table = Table_1 = class Table extends UI5Element {
     get _growing() {
         return this.features.find(feature => this._isGrowingFeature(feature));
     }
-    // TODO: Could be moved to UI5Element. TBD
-    get _scrollContainer() {
-        let element = this;
-        while (element) {
-            const { overflowY } = window.getComputedStyle(element);
-            if (overflowY === "auto" || overflowY === "scroll") {
-                return element;
-            }
-            element = element.parentElement;
-        }
-        return document.scrollingElement || document.documentElement;
-    }
     get _stickyElements() {
-        return [this.headerRow[0]].filter(row => row.sticky);
+        const stickyRows = this.headerRow.filter(row => row.sticky);
+        const stickyColumns = this.headerRow[0]._stickyCells;
+        return [...stickyRows, ...stickyColumns];
+    }
+    get _scrollContainer() {
+        return findVerticalScrollContainer(this._tableElement);
     }
     get isTable() {
         return true;
@@ -437,6 +408,7 @@ Table = Table_1 = __decorate([
         fastNavigation: true,
         dependencies: [
             BusyIndicator,
+            TableHeaderRow,
             TableCell,
             TableRow,
         ],

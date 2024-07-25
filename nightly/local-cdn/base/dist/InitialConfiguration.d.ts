@@ -12,6 +12,7 @@ declare const getLanguage: () => string | undefined;
  */
 declare const getFetchDefaultLanguage: () => boolean;
 declare const getNoConflict: () => boolean;
+declare const getDefaultFontLoading: () => boolean;
 /**
  * Get the configured calendar type
  * @returns { String } the name of the configured calendar type
@@ -24,4 +25,4 @@ declare const getSecondaryCalendarType: () => CalendarType | undefined;
  */
 declare const getTimezone: () => string | undefined;
 declare const getFormatSettings: () => FormatSettings;
-export { getAnimationMode, getTheme, getThemeRoot, getLanguage, getFetchDefaultLanguage, getNoConflict, getCalendarType, getSecondaryCalendarType, getTimezone, getFormatSettings, };
+export { getAnimationMode, getTheme, getThemeRoot, getLanguage, getFetchDefaultLanguage, getNoConflict, getCalendarType, getSecondaryCalendarType, getTimezone, getFormatSettings, getDefaultFontLoading, };

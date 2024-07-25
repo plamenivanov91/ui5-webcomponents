@@ -3,7 +3,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TableRow from "./TableRow.js";
-import type TableHeaderRow from "./TableHeaderRow.js";
+import TableHeaderRow from "./TableHeaderRow.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
 import type TableSelection from "./TableSelection.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
@@ -128,7 +128,7 @@ type TableRowClickEventDetail = {
  * @experimental This Table web component is available since 2.0 and has been newly implemented to provide better screen reader and keyboard handling support.
  * Currently, it's considered experimental as its API is subject to change.
  * This Table replaces the previous Table web component, that has been part of **@ui5/webcomponents** version 1.x.
- * For compatibility reasons, we moved the previous Tabple implementation to the **@ui5/webcomponents-compat** package
+ * For compatibility reasons, we moved the previous Table implementation to the **@ui5/webcomponents-compat** package
  * and will be maintained until the new Table is experimental.
  */
 declare class Table extends UI5Element {
@@ -252,7 +252,7 @@ declare class Table extends UI5Element {
         };
     };
     get _gridTemplateColumns(): string;
-    get _tableOverflowX(): "auto" | "hidden";
+    get _tableOverflowX(): "auto" | "clip";
     get _tableOverflowY(): string;
     get _nodataRow(): TableRow;
     get _beforeElement(): HTMLElement;
@@ -264,8 +264,8 @@ declare class Table extends UI5Element {
     get _ariaMultiSelectable(): boolean | undefined;
     get _shouldRenderGrowing(): boolean | 0;
     get _growing(): ITableGrowing;
+    get _stickyElements(): (TableHeaderCell | TableHeaderRow)[];
     get _scrollContainer(): HTMLElement;
-    get _stickyElements(): TableHeaderRow[];
     get isTable(): boolean;
 }
 export default Table;

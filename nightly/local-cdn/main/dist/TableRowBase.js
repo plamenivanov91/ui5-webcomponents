@@ -90,11 +90,13 @@ let TableRowBase = TableRowBase_1 = class TableRowBase extends UI5Element {
     get _popinCells() {
         return this.cells.filter(c => c._popin);
     }
+    get _stickyCells() {
+        const selectionCell = this.shadowRoot?.querySelector("#selection-cell"), navigatedCell = this.shadowRoot?.querySelector("#navigated-cell");
+        // filter out null/undefined
+        return [selectionCell, ...this.cells, navigatedCell].filter(cell => cell?.hasAttribute("fixed"));
+    }
     get _i18nRowSelector() {
         return TableRowBase_1.i18nBundle.getText(TABLE_ROW_SELECTOR);
-    }
-    get isTableRowBase() {
-        return true;
     }
 };
 __decorate([

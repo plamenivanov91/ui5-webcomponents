@@ -13,7 +13,7 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-5470d959.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-14652e53.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/MultiInput-715aafd5.css">
 </head>
 
@@ -492,7 +492,7 @@
 		}
 		document.getElementById("mi-event").addEventListener("ui5-token-delete", handleTokenDelete2);
 
-		document.getElementById("token-unique").addEventListener("ui5-paste", function (event) {
+		document.getElementById("token-unique").addEventListener("paste", function (event) {
 			event.preventDefault();
 
 			let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;

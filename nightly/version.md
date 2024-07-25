@@ -1,5 +1,5 @@
-commit 16d7bef464be7b3e1b2d11484a5145d8d526855a
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Mon Jul 22 10:35:41 2024 +0300
+commit 14b6223d46b681f37b8b1c33f6d09f87798d01eb
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Wed Jul 24 10:46:22 2024 +0300
 
-    fix(ui5-upload-collection): make empty upload collection focusable (#9403)
+    chore(ui5-option): updated "since" tag of tooltip property (#9550)
