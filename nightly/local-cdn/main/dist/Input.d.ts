@@ -335,6 +335,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     _isLatestValueFromSuggestions: boolean;
     static i18nBundle: I18nBundle;
     get formValidityMessage(): string;
+    get _effectiveShowSuggestions(): boolean;
     get formValidity(): ValidityStateFlags;
     formElementAnchor(): Promise<HTMLElement | undefined>;
     get formFormattedValue(): FormData | string | null;

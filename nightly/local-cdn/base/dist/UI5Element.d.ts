@@ -337,6 +337,7 @@ declare abstract class UI5Element extends HTMLElement {
      * @protected
      */
     static get dependencies(): Array<typeof UI5Element>;
+    static cacheUniqueDependencies(this: typeof UI5Element): void;
     /**
      * Returns a list of the unique dependencies for this UI5 Web Component
      *

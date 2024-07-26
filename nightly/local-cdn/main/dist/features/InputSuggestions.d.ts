@@ -1,4 +1,5 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { ComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
@@ -32,7 +33,7 @@ type SuggestionsAccInfo = {
  * @class
  * @private
  */
-declare class Suggestions {
+declare class Suggestions extends ComponentFeature {
     component: SuggestionComponent;
     slotName: string;
     handleFocus: boolean;
@@ -97,7 +98,7 @@ declare class Suggestions {
     _clearValueStateFocus(): void;
     _clearSelectedSuggestionAndaccInfo(): void;
     static get dependencies(): (typeof Button | typeof Icon | typeof List | typeof SuggestionItem | typeof SuggestionItemGroup)[];
-    static init(): Promise<void>;
+    static define(): Promise<void>;
 }
 export default Suggestions;
 export type { SuggestionComponent, };

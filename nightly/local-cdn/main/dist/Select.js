@@ -668,7 +668,7 @@ __decorate([
     slot()
 ], Select.prototype, "label", void 0);
 __decorate([
-    property()
+    property({ noAttribute: true })
 ], Select.prototype, "value", null);
 Select = Select_1 = __decorate([
     customElement({

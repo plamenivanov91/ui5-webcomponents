@@ -92,13 +92,14 @@ declare class ColorPalette extends UI5Element {
     _itemNavigation: ItemNavigation;
     _itemNavigationRecentColors: ItemNavigation;
     _recentColors: Array<string>;
-    moreColorsFeature: ColorPaletteMoreColors | Record<string, any>;
+    moreColorsFeature?: ColorPaletteMoreColors;
     _currentlySelected?: ColorPaletteItem;
     _shouldFocusRecentColors: boolean;
     static i18nBundle: I18nBundle;
     static onDefine(): Promise<void>;
     constructor();
     onBeforeRendering(): void;
+    get _effectiveShowMoreColors(): boolean;
     onAfterRendering(): void;
     selectColor(item: ColorPaletteItem): void;
     _setColor(color: string): void;
@@ -131,6 +132,9 @@ declare class ColorPalette extends UI5Element {
      */
     get selectedItem(): IColorPaletteItem | undefined;
     get allColorsInPalette(): IColorPaletteItem[];
+    get colorPaletteDialogTitle(): string | undefined;
+    get colorPaletteDialogOKButton(): string | undefined;
+    get colorPaletteCancelButton(): string | undefined;
     /**
      * Returns the selected color.
      */
@@ -139,7 +143,7 @@ declare class ColorPalette extends UI5Element {
     get colorContainerLabel(): string;
     get colorPaletteMoreColorsText(): string;
     get colorPaletteDefaultColorText(): string;
-    get _showMoreColors(): false | ColorPaletteMoreColors | Record<string, any>;
+    get _showMoreColors(): false | ColorPaletteMoreColors | undefined;
     get rowSize(): number;
     get hasRecentColors(): string | false;
     get recentColors(): string[];

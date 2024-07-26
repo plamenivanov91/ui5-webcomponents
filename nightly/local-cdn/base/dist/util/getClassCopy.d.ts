@@ -415,6 +415,7 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
     metadata: import("../UI5ElementMetadata.js").Metadata;
     styles: import("../types.js").ComponentStylesData;
     readonly dependencies: (typeof UI5Element)[];
+    cacheUniqueDependencies(this: typeof UI5Element): void;
     getUniqueDependencies(this: typeof UI5Element): (typeof UI5Element)[];
     whenDependenciesDefined(): Promise<(typeof UI5Element)[]>;
     onDefine(): Promise<void>;

@@ -19,5 +19,6 @@ declare const customElement: (tagNameOrComponentSettings?: string | {
     fastNavigation?: boolean;
     formAssociated?: boolean;
     shadowRootOptions?: Partial<ShadowRootInit>;
+    features?: Array<string>;
 }) => ClassDecorator;
 export default customElement;
