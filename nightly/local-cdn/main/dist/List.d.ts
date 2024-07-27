@@ -268,12 +268,6 @@ declare class List extends UI5Element {
     get growsOnScroll(): boolean;
     get growsWithButton(): boolean;
     get _growingButtonText(): string;
-    get loadingIndPosition(): "absolute" | "sticky";
-    get styles(): {
-        loadingInd: {
-            position: string;
-        };
-    };
     get listAccessibleRole(): string;
     get classes(): ClassMap;
     prepareListItems(): void;
