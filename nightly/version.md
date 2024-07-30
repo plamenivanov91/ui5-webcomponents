@@ -1,7 +1,13 @@
-commit 47da4a16f138132121694ecc25c87d67781d3a8e
-Author: Alexandar Mitsev <alexandar.mitsev@sap.com>
-Date:   Fri Jul 26 16:49:31 2024 +0300
+commit 81b04f4b38a7d18444dce0c1f0bb7bf63097e686
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Mon Jul 29 00:33:49 2024 -0700
 
-    feat(ui5-card): add properties loading and loadingDelay (#9558)
+    Translation Delivery (#9569)
     
-    Fixes: #9437
+    * [INTERNAL] Translation delivery: commit by LX Lab
+    
+    Change-Id: I4d118fa36bcbf27f41595a0b78b4cf6b62d434f3
+    
+    * [INTERNAL] Translation delivery: commit by LX Lab
+    
+    Change-Id: Id482d2f1c545c7a3ae7d6c734194b8e1d015ddb6
