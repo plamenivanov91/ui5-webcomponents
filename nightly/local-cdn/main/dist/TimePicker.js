@@ -132,7 +132,7 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
          * Defines the open or closed state of the popover.
          * @public
          * @default false
-         * @since 2.0
+         * @since 2.0.0
          */
         this.open = false;
         /**

@@ -6,6 +6,7 @@ import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import DateComponentBase from "./DateComponentBase.js";
 import ResponsivePopover from "./ResponsivePopover.js";
+import Calendar from "./Calendar.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
@@ -212,6 +213,7 @@ declare class DatePicker extends DateComponentBase implements IFormInputElement 
     onResponsivePopoverAfterClose(): void;
     onResponsivePopoverBeforeOpen(): void;
     onBeforeRendering(): void;
+    get _calendar(): Calendar;
     /**
      * Override in derivatives to change calendar selection mode
      * @protected

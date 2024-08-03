@@ -12,7 +12,7 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-21a40147.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-5ea4e228.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/NotificationList_test_page-49bcf0a8.css">
 </head>
 
@@ -220,15 +220,15 @@
 	<br >
 	<ui5-button>Some button</ui5-button>
 	<script>
-		notificationList.addEventListener("ui5-itemClick", function(event) {
+		notificationList.addEventListener("ui5-item-click", function(event) {
 			clickInput.value = event.detail.item.titleText;
 		});
 
-		notificationList.addEventListener("ui5-itemClose", function(event) {
+		notificationList.addEventListener("ui5-item-close", function(event) {
 			closeInput.value = event.detail.item.titleText;
 		});
 
-		notificationList.addEventListener("ui5-itemToggle", function(event) {
+		notificationList.addEventListener("ui5-item-toggle", function(event) {
 			toggleInput.value = event.detail.item.titleText;
 		});
 

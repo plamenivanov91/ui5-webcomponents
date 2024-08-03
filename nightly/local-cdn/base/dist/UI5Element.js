@@ -11,14 +11,14 @@ import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./Cu
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
+import { kebabToCamelCase, camelToKebabCase, kebabToPascalCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import executeTemplate, { getTagsToScope } from "./renderer/executeTemplate.js";
 import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
-import { subscribeForFeatureLoad } from "./FeaturesRegistry.js";
+import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 const DEV_MODE = true;
 let autoId = 0;
 const elementTimeouts = new Map();
@@ -753,9 +753,13 @@ class UI5Element extends HTMLElement {
      */
     fireEvent(name, data, cancelable = false, bubbles = true) {
         const eventResult = this._fireEvent(name, data, cancelable, bubbles);
-        const camelCaseEventName = kebabToCamelCase(name);
-        if (camelCaseEventName !== name) {
-            return eventResult && this._fireEvent(camelCaseEventName, data, cancelable, bubbles);
+        const pascalCaseEventName = kebabToPascalCase(name);
+        // pascal events are more convinient for native react usage
+        // live-change:
+        //	 Before: onlive-change
+        //	 After: onLiveChange
+        if (pascalCaseEventName !== name) {
+            return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
         }
         return eventResult;
     }
@@ -990,6 +994,9 @@ class UI5Element extends HTMLElement {
         const tag = this.getMetadata().getTag();
         const features = this.getMetadata().getFeatures();
         features.forEach(feature => {
+            if (getComponentFeature(feature)) {
+                this.cacheUniqueDependencies();
+            }
             subscribeForFeatureLoad(feature, this, this.cacheUniqueDependencies.bind(this));
         });
         const definedLocally = isTagRegistered(tag);

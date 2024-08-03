@@ -8,6 +8,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Link from "@ui5/webcomponents/dist/Link.js";
@@ -27,7 +28,6 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @extends UI5Element
  * @implements { ITimelineItem }
  * @public
- * @slot {Node[]} default - Determines the description of the `ui5-timeline-item`.
  */
 let TimelineItem = class TimelineItem extends UI5Element {
     constructor() {
@@ -39,11 +39,33 @@ let TimelineItem = class TimelineItem extends UI5Element {
          */
         this.nameClickable = false;
         /**
+         * @private
+         */
+        this.firstItemInTimeline = false;
+        /**
+         * @private
+         */
+        this.isNextItemGroup = false;
+        this.forcedTabIndex = "-1";
+        /**
          * Defines the items orientation.
          * @default "Vertical"
          * @private
          */
         this.layout = "Vertical";
+        /**
+         * @private
+         */
+        this.hideBubble = false;
+        /**
+         * Marks the last `<ui5-timeline-item>`
+         * @private
+         */
+        this.lastItem = false;
+        /**
+         * @private
+         */
+        this.hidden = false;
     }
     onNamePress() {
         this.fireEvent("name-click", {});
@@ -68,6 +90,9 @@ let TimelineItem = class TimelineItem extends UI5Element {
             },
         };
     }
+    get isGroupItem() {
+        return false;
+    }
 };
 __decorate([
     property()
@@ -85,14 +110,35 @@ __decorate([
     property()
 ], TimelineItem.prototype, "subtitleText", void 0);
 __decorate([
+    slot({ type: HTMLElement, "default": true })
+], TimelineItem.prototype, "content", void 0);
+__decorate([
+    property({ type: Boolean })
+], TimelineItem.prototype, "firstItemInTimeline", void 0);
+__decorate([
+    property({ type: Boolean })
+], TimelineItem.prototype, "isNextItemGroup", void 0);
+__decorate([
     property({ noAttribute: true })
 ], TimelineItem.prototype, "forcedTabIndex", void 0);
 __decorate([
     property()
 ], TimelineItem.prototype, "layout", void 0);
 __decorate([
-    property()
+    property({ noAttribute: true })
 ], TimelineItem.prototype, "forcedLineWidth", void 0);
+__decorate([
+    property({ type: Boolean })
+], TimelineItem.prototype, "hideBubble", void 0);
+__decorate([
+    property({ type: Boolean })
+], TimelineItem.prototype, "lastItem", void 0);
+__decorate([
+    property({ type: Boolean })
+], TimelineItem.prototype, "hidden", void 0);
+__decorate([
+    property({ type: Number })
+], TimelineItem.prototype, "positionInGroup", void 0);
 TimelineItem = __decorate([
     customElement({
         tag: "ui5-timeline-item",

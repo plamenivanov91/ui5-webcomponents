@@ -1315,7 +1315,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         return !this.valueStateMessage.length && this.hasValueStateMessage;
     }
     get shouldDisplayOnlyValueStateMessage() {
-        return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed;
+        return this.focused && !this.readonly && this.hasValueStateMessage && !this._iconPressed && !this.open;
     }
     get valueStateTypeMappings() {
         return {

@@ -199,6 +199,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         }
     }
     onResponsivePopoverBeforeOpen() {
+        this._calendar.timestamp = this._calendarTimestamp;
         this._calendarCurrentPicker = this.firstPicker;
     }
     onBeforeRendering() {
@@ -210,6 +211,10 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         });
         this.value = this.normalizeValue(this.value) || this.value;
         this.liveValue = this.value;
+    }
+    get _calendar() {
+        return this.shadowRoot.querySelector("[ui5-responsive-popover]")
+            .querySelector("[ui5-calendar]");
     }
     /**
      * Override in derivatives to change calendar selection mode

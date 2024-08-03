@@ -405,7 +405,8 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
     }
     getItemsInfo(items) {
         return items.map((item) => {
-            const ElementClass = getRegisteredToolbarItem(item.constructor.name);
+            const ctor = item.constructor;
+            const ElementClass = getRegisteredToolbarItem(ctor.getMetadata().getPureTag());
             if (!ElementClass) {
                 return null;
             }

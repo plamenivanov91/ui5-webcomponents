@@ -658,7 +658,7 @@ __decorate([
     property({ type: Boolean, noAttribute: true })
 ], DayPicker.prototype, "_hidden", void 0);
 __decorate([
-    property()
+    property({ type: Number })
 ], DayPicker.prototype, "_secondTimestamp", void 0);
 __decorate([
     property({ type: Array })

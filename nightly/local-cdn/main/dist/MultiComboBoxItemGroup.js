@@ -17,7 +17,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
  * @abstract
  * @public
  * @implements {IMultiComboBoxItem}
- * @since 2.0
+ * @since 2.0.0
  */
 let MultiComboBoxItemGroup = class MultiComboBoxItemGroup extends UI5Element {
     /**

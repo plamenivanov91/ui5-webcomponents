@@ -10,6 +10,7 @@ import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import type { Timeout, ClassMap, AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
@@ -152,7 +153,7 @@ declare class ShellBar extends UI5Element {
      * - **notifications** - `notifications.expanded` and `notifications.hasPopup`.
      * - **profile** - `profile.expanded`, `profile.hasPopup` and `profile.name`.
      * - **product** - `product.expanded` and `product.hasPopup`.
-     * - **search** - `search.expanded` and `search.hasPopup`.
+     * - **search** - `search.hasPopup`.
      * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
      *
      * The accessibility attributes support the following values:
@@ -407,7 +408,6 @@ declare class ShellBar extends UI5Element {
             title: string;
             accessibilityAttributes: {
                 hasPopup: ("dialog" | "menu" | "grid" | "listbox" | "tree") | undefined;
-                expanded: boolean | "true" | "false";
             };
         };
         overflow: {

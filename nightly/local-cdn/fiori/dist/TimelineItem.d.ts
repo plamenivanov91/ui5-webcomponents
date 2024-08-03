@@ -11,7 +11,6 @@ import TimelineLayout from "./types/TimelineLayout.js";
  * @extends UI5Element
  * @implements { ITimelineItem }
  * @public
- * @slot {Node[]} default - Determines the description of the `ui5-timeline-item`.
  */
 declare class TimelineItem extends UI5Element implements ITimelineItem {
     /**
@@ -47,7 +46,20 @@ declare class TimelineItem extends UI5Element implements ITimelineItem {
      * @public
      */
     subtitleText?: string;
-    forcedTabIndex?: string;
+    /**
+     * Defines the content of the `ui5-timeline-item`.
+     * @public
+     */
+    content: Array<Node>;
+    /**
+     * @private
+     */
+    firstItemInTimeline: boolean;
+    /**
+     * @private
+     */
+    isNextItemGroup: boolean;
+    forcedTabIndex: string;
     /**
      * Defines the items orientation.
      * @default "Vertical"
@@ -59,6 +71,24 @@ declare class TimelineItem extends UI5Element implements ITimelineItem {
      * @private
      */
     forcedLineWidth?: string;
+    /**
+     * @private
+     */
+    hideBubble: boolean;
+    /**
+     * Marks the last `<ui5-timeline-item>`
+     * @private
+     */
+    lastItem: boolean;
+    /**
+     * @private
+     */
+    hidden: boolean;
+    /**
+     * Defines the position of the item in a group.
+     * @private
+     */
+    positionInGroup?: number;
     constructor();
     onNamePress(): void;
     /**
@@ -77,5 +107,6 @@ declare class TimelineItem extends UI5Element implements ITimelineItem {
             "ui5-tli-bubble-arrow--top": boolean;
         };
     };
+    get isGroupItem(): boolean;
 }
 export default TimelineItem;

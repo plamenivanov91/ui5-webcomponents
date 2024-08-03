@@ -26,6 +26,7 @@ import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 // Templates
 import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
 // Styles
@@ -116,7 +117,7 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
          * - **notifications** - `notifications.expanded` and `notifications.hasPopup`.
          * - **profile** - `profile.expanded`, `profile.hasPopup` and `profile.name`.
          * - **product** - `product.expanded` and `product.hasPopup`.
-         * - **search** - `search.expanded` and `search.hasPopup`.
+         * - **search** - `search.hasPopup`.
          * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
          *
          * The accessibility attributes support the following values:
@@ -710,7 +711,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         return ShellBar_1.i18nBundle.getText(SHELLBAR_OVERFLOW);
     }
     get accInfo() {
-        const searchExpanded = this.accessibilityAttributes.search?.expanded;
         const overflowExpanded = this.accessibilityAttributes.overflow?.expanded;
         return {
             notifications: {
@@ -738,7 +738,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
                 "title": this._searchText,
                 "accessibilityAttributes": {
                     hasPopup: this.accessibilityAttributes.search?.hasPopup,
-                    expanded: searchExpanded === undefined ? this.showSearchField : searchExpanded,
                 },
             },
             overflow: {

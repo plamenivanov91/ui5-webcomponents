@@ -11,7 +11,7 @@
 
 
 	
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-21a40147.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-5ea4e228.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/Wizard_test-c1970af5.css">
 </head>
 
@@ -337,7 +337,7 @@
 		wiz.addEventListener("ui5-step-change", function (event) {
 			console.log(event.detail.step);
 			inpStepChangeCounter.value = `${++counter}`;
-			inpStepChangeCause.value = !event.detail.withScroll;
+			inpStepChangeCause.value = `${!event.detail.withScroll}`;
 		});
 
 		toStep2.addEventListener("click", function () {

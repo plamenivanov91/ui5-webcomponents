@@ -10,7 +10,7 @@ import type MultiComboBoxItem from "./MultiComboBoxItem.js";
  * @abstract
  * @public
  * @implements {IMultiComboBoxItem}
- * @since 2.0
+ * @since 2.0.0
  */
 declare class MultiComboBoxItemGroup extends UI5Element implements IMultiComboBoxItem {
     /**

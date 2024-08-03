@@ -21,7 +21,7 @@ import { TABLE_ROW_SELECTOR, } from "./generated/i18n/i18n-defaults.js";
  * @constructor
  * @abstract
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  */
 let TableRowBase = TableRowBase_1 = class TableRowBase extends UI5Element {

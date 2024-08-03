@@ -6,7 +6,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
  * @constructor
  * @abstract
  * @extends UI5Element
- * @since 2.0
+ * @since 2.0.0
  * @public
  */
 declare abstract class TableCellBase extends UI5Element {

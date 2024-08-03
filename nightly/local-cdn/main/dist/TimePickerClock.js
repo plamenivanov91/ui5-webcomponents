@@ -123,6 +123,22 @@ let TimePickerClock = class TimePickerClock extends UI5Element {
          */
         this._selectedItem = {};
         /**
+         * Keeps variables used in interaction calculations.
+         */
+        this._dimensionParameters = {
+            radius: 0,
+            centerX: 0,
+            centerY: 0,
+            dotHeight: 0,
+            numberHeight: 0,
+            outerMax: 0,
+            outerMin: 0,
+            innerMax: 0,
+            innerMin: 0,
+            offsetX: 0,
+            offsetY: 0,
+        };
+        /**
          * Mousedown or Touchstart event flag.
          * @default false
          */

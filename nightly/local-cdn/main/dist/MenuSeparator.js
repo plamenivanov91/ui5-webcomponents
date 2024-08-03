@@ -17,7 +17,7 @@ import ListItemCustom from "./ListItemCustom.js";
  * @extends ListItemBase
  * @implements {IMenuItem}
  * @public
- * @since 2.0
+ * @since 2.0.0
  */
 let MenuSeparator = class MenuSeparator extends ListItemBase {
     get isSeparator() {

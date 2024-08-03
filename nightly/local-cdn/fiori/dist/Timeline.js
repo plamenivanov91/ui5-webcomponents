@@ -11,13 +11,14 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isTabNext, isTabPrevious, } from "@ui5/webcomponents-base/dist/Keys.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
+import TimelineGroupItem from "./TimelineGroupItem.js";
 // Styles
 import TimelineCss from "./generated/themes/Timeline.css.js";
 import TimelineLayout from "./types/TimelineLayout.js";
@@ -49,7 +50,7 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
          */
         this.layout = "Vertical";
         this._itemNavigation = new ItemNavigation(this, {
-            getItemsCallback: () => this.items,
+            getItemsCallback: () => this._navigatableItems,
         });
     }
     static async onDefine() {
@@ -61,11 +62,17 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
             : Timeline_1.i18nBundle.getText(TIMELINE_ARIA_LABEL);
     }
     _onfocusin(e) {
-        const target = e.target;
+        let target = e.target;
+        if (target.isGroupItem) {
+            target = target.shadowRoot.querySelector("[ui5-toggle-button]");
+        }
         this._itemNavigation.setCurrentItem(target);
     }
     onBeforeRendering() {
         this._itemNavigation._navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
+        if (!this.items.length) {
+            return;
+        }
         for (let i = 0; i < this.items.length; i++) {
             this.items[i].layout = this.layout;
             if (this.items[i + 1] && !!this.items[i + 1].icon) {
@@ -75,33 +82,77 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
                 this.items[i].forcedLineWidth = LARGE_LINE_WIDTH;
             }
         }
+        this._setLastItem();
+        this._setIsNextItemGroup();
+        this.items[0].firstItemInTimeline = true;
+    }
+    _setLastItem() {
+        const items = this.items;
+        for (let i = 0; i < items.length; i++) {
+            items[i].lastItem = false;
+        }
+        if (items.length > 0) {
+            items[items.length - 1].lastItem = true;
+        }
+    }
+    _setIsNextItemGroup() {
+        for (let i = 0; i < this.items.length; i++) {
+            this.items[i].isNextItemGroup = false;
+        }
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i + 1] && this.items[i + 1].isGroupItem) {
+                this.items[i].isNextItemGroup = true;
+            }
+        }
     }
     _onkeydown(e) {
         const target = e.target;
+        if (target.nameClickable && getEventMark(e) !== "link") {
+            return;
+        }
         if (isTabNext(e)) {
-            if (!target.nameClickable || getEventMark(e) === "link") {
-                this._handleTabNextOrPrevious(e, isTabNext(e));
-            }
+            this._handleNextOrPreviousItem(e, true);
         }
         else if (isTabPrevious(e)) {
-            this._handleTabNextOrPrevious(e);
+            this._handleNextOrPreviousItem(e);
         }
     }
-    _handleTabNextOrPrevious(e, isNext) {
+    _handleNextOrPreviousItem(e, isNext) {
         const target = e.target;
-        const nextTargetIndex = isNext ? this.items.indexOf(target) + 1 : this.items.indexOf(target) - 1;
-        const nextTarget = this.items[nextTargetIndex];
+        let updatedTarget = target;
+        if (target.isGroupItem) {
+            updatedTarget = target.shadowRoot.querySelector("[ui5-toggle-button]");
+        }
+        const nextTargetIndex = isNext ? this._navigatableItems.indexOf(updatedTarget) + 1 : this._navigatableItems.indexOf(updatedTarget) - 1;
+        const nextTarget = this._navigatableItems[nextTargetIndex];
         if (!nextTarget) {
             return;
         }
-        if (nextTarget.nameClickable && !isNext) {
+        if (nextTarget) {
             e.preventDefault();
-            nextTarget.focusLink();
-            return;
+            nextTarget.focus();
+            this._itemNavigation.setCurrentItem(nextTarget);
         }
-        e.preventDefault();
-        nextTarget.focus();
-        this._itemNavigation.setCurrentItem(nextTarget);
+    }
+    get _navigatableItems() {
+        const navigatableItems = [];
+        if (!this.items.length) {
+            return [];
+        }
+        this.items.forEach(item => {
+            if (!item.isGroupItem) {
+                navigatableItems.push(item);
+            }
+            else {
+                navigatableItems.push(item.shadowRoot.querySelector("[ui5-toggle-button]"));
+            }
+            if (item.isGroupItem && !item.collapsed) {
+                item.items?.forEach(groupItem => {
+                    navigatableItems.push(groupItem);
+                });
+            }
+        });
+        return navigatableItems;
     }
 };
 __decorate([
@@ -120,7 +171,7 @@ Timeline = Timeline_1 = __decorate([
         renderer: litRender,
         styles: TimelineCss,
         template: TimelineTemplate,
-        dependencies: [TimelineItem],
+        dependencies: [TimelineItem, TimelineGroupItem],
     })
 ], Timeline);
 Timeline.define();

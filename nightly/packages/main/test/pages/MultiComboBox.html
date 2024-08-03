@@ -21,7 +21,7 @@
 
 	
 
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-f63c7e4d.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-ba9d7912.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/MultiComboBox-67ce5436.css">
 </head>
 
@@ -239,7 +239,7 @@
 
 		<div class="demo-section">
 			<span>Select all with groups</span>
-	
+
 			<br>
 			<ui5-multi-combobox show-select-all id="mcb-select-all-grouping" value-state="Critical">
 				<ui5-mcb-item-group header-text="Asia">
@@ -261,7 +261,7 @@
 					<ui5-mcb-item text="United States"></ui5-mcb-item>
 				</ui5-mcb-item-group>
 			</ui5-multi-combobox>
-	
+
 			<br>
 
 		<ui5-multi-combobox show-select-all id="mcb-select-all">
@@ -299,7 +299,7 @@
 		<span id="select-all-event">Selected items count: <span>0</span></span>
 
 		<script>
-			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selectionChange", e => {
+			document.getElementById("mcb-select-all-vs").addEventListener("ui5-selection-change", e => {
 				console.log("selection change")
 				document.querySelector("#select-all-event span").textContent = e.detail.items.length;
 			});
@@ -600,7 +600,7 @@
 		var closeCounter = 0;
 		const multiComboBox = document.querySelector("#mcb-prevent");
 
-		document.getElementById("mcb").addEventListener("ui5-selectionChange", function (event) {
+		document.getElementById("mcb").addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
 			eventNameInput.value = "selectionChange";
 			eventParamsInput.value = event.detail.items.length;

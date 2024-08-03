@@ -491,6 +491,7 @@ Dialog = Dialog_1 = __decorate([
         ],
         dependencies: [
             Icon,
+            ...Popup.dependencies,
         ],
     })
 ], Dialog);

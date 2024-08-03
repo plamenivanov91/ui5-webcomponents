@@ -7,7 +7,7 @@
 	<title>Carousel</title>
 	
 	
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-f63c7e4d.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-ba9d7912.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/Carousel-0d3d911d.css">
 </head>
 
@@ -688,7 +688,7 @@
 <script>
 	var counter = 0;
 	carousel8.addEventListener("ui5-navigate", function (event) {
-		result.value = event.detail.selectedIndex;
+		result.value = `${event.detail.selectedIndex}`;
 		resultCounter.value = `${++counter}`;
 	});
 

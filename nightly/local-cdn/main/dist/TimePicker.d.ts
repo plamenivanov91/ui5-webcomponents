@@ -138,7 +138,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
      * Defines the open or closed state of the popover.
      * @public
      * @default false
-     * @since 2.0
+     * @since 2.0.0
      */
     open: boolean;
     /**

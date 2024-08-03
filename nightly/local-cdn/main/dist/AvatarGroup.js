@@ -238,7 +238,7 @@ let AvatarGroup = AvatarGroup_1 = class AvatarGroup extends UI5Element {
         return button.offsetWidth;
     }
     get firstAvatarSize() {
-        return this.items[0].size;
+        return this.items[0]?.size ?? AvatarSize.S;
     }
     get classes() {
         return {

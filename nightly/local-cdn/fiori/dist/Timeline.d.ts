@@ -1,7 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 /**
  * Interface for components that may be slotted inside `ui5-timeline` as items
@@ -9,10 +10,17 @@ import TimelineLayout from "./types/TimelineLayout.js";
  */
 interface ITimelineItem extends UI5Element, ITabbable {
     layout: `${TimelineLayout}`;
-    icon?: string;
+    isGroupItem: boolean;
     forcedLineWidth?: string;
-    nameClickable: boolean;
-    focusLink: () => void;
+    icon?: string;
+    nameClickable?: boolean;
+    positionInGroup?: number;
+    collapsed?: boolean;
+    items?: Array<ITimelineItem>;
+    focusLink?(): void;
+    lastItem: boolean;
+    isNextItemGroup?: boolean;
+    firstItemInTimeline?: boolean;
 }
 /**
  * @class
@@ -56,8 +64,11 @@ declare class Timeline extends UI5Element {
     get ariaLabel(): string;
     _onfocusin(e: FocusEvent): void;
     onBeforeRendering(): void;
+    _setLastItem(): void;
+    _setIsNextItemGroup(): void;
     _onkeydown(e: KeyboardEvent): void;
-    _handleTabNextOrPrevious(e: KeyboardEvent, isNext?: boolean): void;
+    _handleNextOrPreviousItem(e: KeyboardEvent, isNext?: boolean): void;
+    get _navigatableItems(): (ToggleButton | ITimelineItem)[];
 }
 export default Timeline;
 export type { ITimelineItem, };

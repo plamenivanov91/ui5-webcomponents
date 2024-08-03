@@ -15,7 +15,7 @@
 	
 
 
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-21a40147.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-5ea4e228.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/ViewSettingsDialog-735acc66.css">
 </head>
 
@@ -105,7 +105,7 @@
 		vsd.addEventListener("ui5-confirm", function(evt) {
 			var sortByItemTagName = evt.detail.sortByItem && evt.detail.sortByItem.tagName;
 			sortByItem.value = `${sortByItemTagName} with text ${evt.detail.sortBy}`;
-			sortOrder.value = evt.detail.sortDescending;
+			sortOrder.value = `${evt.detail.sortDescending}`;
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 		btnOpenDialogSort.addEventListener("click", function () {

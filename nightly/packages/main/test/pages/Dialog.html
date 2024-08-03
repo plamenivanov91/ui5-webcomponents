@@ -21,7 +21,7 @@
 	
 
 
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-f63c7e4d.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-ba9d7912.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/Dialog-fcfb4736.css">
 </head>
 
@@ -625,7 +625,7 @@
 			const listContainerDialog = document.getElementById("listContainerDialogId");
 			const listContainerDialogCloseBtn = document.getElementById("listContainerDialogCloseBtnId");
 
-			listContainer.addEventListener("ui5-selectionChange", function (event) {
+			listContainer.addEventListener("ui5-selection-change", function (event) {
 				listContainerDialog.open = true;
 			});
 
@@ -702,7 +702,7 @@
 			window["msg-dialog"].open = true;
 		});
 
-		window["prevent-dialog"].addEventListener("ui5-beforeClose", function (event) {
+		window["prevent-dialog"].addEventListener("ui5-before-close", function (event) {
 			if (preventClosing) {
 				event.preventDefault();
 				window["confirm-dialog"].open = true;

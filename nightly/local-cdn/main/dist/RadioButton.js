@@ -187,7 +187,7 @@ let RadioButton = RadioButton_1 = class RadioButton extends UI5Element {
                 RadioButtonGroup.addToGroup(this, currentGroup);
             }
         }
-        else if (currentGroup) {
+        else if (currentGroup && this.isConnected) {
             RadioButtonGroup.enforceSingleSelection(this, currentGroup);
         }
         if (this.name && currentChecked !== oldChecked) {

@@ -9,8 +9,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 // Template
 import PageTemplate from "./generated/templates/PageTemplate.lit.js";
@@ -47,7 +45,7 @@ import PageCss from "./generated/themes/Page.css.js";
  */
 let Page = class Page extends UI5Element {
     constructor() {
-        super();
+        super(...arguments);
         /**
          * Defines the background color of the `ui5-page`.
          *
@@ -77,22 +75,6 @@ let Page = class Page extends UI5Element {
          * @public
          */
         this.hideFooter = false;
-        /**
-         * Defines the current media query size.
-         * @private
-         * @since 1.0.0-rc.15
-         */
-        this.mediaRange = "S";
-        this._updateMediaRange = this.updateMediaRange.bind(this);
-    }
-    onEnterDOM() {
-        ResizeHandler.register(this, this._updateMediaRange);
-    }
-    onExitDOM() {
-        ResizeHandler.deregister(this, this._updateMediaRange);
-    }
-    updateMediaRange() {
-        this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
     }
     get _contentBottom() {
         return this.fixedFooter && !this.hideFooter ? "2.75rem" : "0";
@@ -126,9 +108,6 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Page.prototype, "hideFooter", void 0);
-__decorate([
-    property()
-], Page.prototype, "mediaRange", void 0);
 __decorate([
     slot()
 ], Page.prototype, "header", void 0);

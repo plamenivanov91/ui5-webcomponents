@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 /**
  * @class
@@ -61,12 +60,6 @@ declare class Page extends UI5Element {
      */
     hideFooter: boolean;
     /**
-     * Defines the current media query size.
-     * @private
-     * @since 1.0.0-rc.15
-     */
-    mediaRange: string;
-    /**
      * Defines the header HTML Element.
      * @public
      */
@@ -81,11 +74,6 @@ declare class Page extends UI5Element {
      * @public
      */
     footer: Array<HTMLElement>;
-    _updateMediaRange: ResizeObserverCallback;
-    constructor();
-    onEnterDOM(): void;
-    onExitDOM(): void;
-    updateMediaRange(): void;
     get _contentBottom(): "0" | "2.75rem";
     get _contentPaddingBottom(): "0" | "3.5rem";
     get _contentTop(): "2.75rem" | "0rem";
