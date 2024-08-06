@@ -1,5 +1,7 @@
-commit 3eecdf86ea2ce8b11a56e6a12adcf46fcb1f7600
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Fri Aug 2 09:10:06 2024 +0000
+commit 6a5610b6f8ddd87d603614bac0f4dd3e1f9390ac
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Aug 5 13:33:30 2024 +0300
 
-    chore(release): publish v2.1.0 [ci skip]
+    chore: enhance runtime information (#9615)
+    
+    Enhance runtime information stored inside shared resources. This will be helpful in debugging MFE scenarios.

@@ -182,10 +182,19 @@ declare class SplitButton extends UI5Element {
     get isTextButton(): boolean;
     get textButton(): Button | null | undefined;
     get arrowButton(): Button | null | undefined;
-    get accessibilityInfo(): {
-        description: string;
-        keyboardHint: string;
+    get accInfo(): {
+        root: {
+            description: string;
+            keyboardHint: string;
+        };
+        arrowButton: {
+            title: string;
+            accessibilityAttributes: {
+                hasPopup: string;
+            };
+        };
     };
+    get arrowButtonTooltip(): string;
     get ariaLabelText(): string;
 }
 export default SplitButton;

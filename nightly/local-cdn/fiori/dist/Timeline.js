@@ -142,11 +142,13 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
         this.items.forEach(item => {
             if (!item.isGroupItem) {
                 navigatableItems.push(item);
+                return;
             }
-            else {
-                navigatableItems.push(item.shadowRoot.querySelector("[ui5-toggle-button]"));
+            const navigatableItem = item.shadowRoot.querySelector("[ui5-toggle-button]");
+            if (navigatableItem) {
+                navigatableItems.push(navigatableItem);
             }
-            if (item.isGroupItem && !item.collapsed) {
+            if (!item.collapsed) {
                 item.items?.forEach(groupItem => {
                     navigatableItems.push(groupItem);
                 });
