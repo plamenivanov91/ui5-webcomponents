@@ -1,5 +1,9 @@
 import { getDefaultFontLoading as getConfiguredDefaultFontLoading } from "../InitialConfiguration.js";
+import { attachConfigurationReset } from "./ConfigurationReset.js";
 let defaultFontLoading;
+attachConfigurationReset(() => {
+    defaultFontLoading = undefined;
+});
 /**
  * Returns if the "defaultFontLoading" configuration is set.
  * @public

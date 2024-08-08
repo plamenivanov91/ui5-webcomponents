@@ -295,7 +295,7 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     _announceSelectedItem(indexOfItem: number): void;
     _clear(): void;
     _makeAllVisible(item: IComboBoxItem): void;
-    _scrollToItem(indexOfItem: number, forward: boolean): void;
+    _scrollToItem(indexOfItem: number): void;
     _announceValueStateText(): void;
     get _headerTitleText(): string;
     get _iconAccessibleNameText(): string;

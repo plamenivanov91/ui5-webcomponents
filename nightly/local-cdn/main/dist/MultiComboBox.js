@@ -365,7 +365,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     _tokenDelete(e) {
         this._previouslySelectedItems = this._getSelectedItems();
         const token = e.detail.tokens;
-        const deletingItems = this.items.filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
+        const deletingItems = this._getItems().filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
         deletingItems.forEach(item => {
             item.selected = false;
         });

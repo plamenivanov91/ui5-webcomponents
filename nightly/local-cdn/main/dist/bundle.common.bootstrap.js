@@ -43,6 +43,7 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // });
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
+import { resetConfiguration } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
 import { sanitizeHTML, URLListValidator } from "@ui5/webcomponents-base/dist/util/HTMLSanitizer.js";
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
@@ -67,6 +68,7 @@ window.URLListValidator = URLListValidator;
 ignoreCustomElements("app-");
 ignoreCustomElements("my-");
 const testAssets = {
+    resetConfiguration,
     configuration: {
         getAnimationMode,
         setAnimationMode,

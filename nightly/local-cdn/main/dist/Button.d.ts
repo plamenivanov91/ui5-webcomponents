@@ -229,6 +229,7 @@ declare class Button extends UI5Element implements IButton, IFormElement {
     get endIconMode(): "" | IconMode.Decorative;
     get isIconOnly(): boolean;
     static typeTextMappings(): Record<string, I18nText>;
+    getDefaultTooltip(): Promise<string | undefined> | undefined;
     get buttonTypeText(): string;
     get effectiveAccRole(): string;
     get tabIndexValue(): string | undefined;

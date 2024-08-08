@@ -122,6 +122,8 @@ declare class DynamicPage extends UI5Element {
     showHeaderInStickArea: boolean;
     _headerSnapped: boolean;
     _updateMediaRange: ResizeObserverCallback;
+    scrollContainer?: HTMLElement;
+    headerActions?: DynamicPageHeaderActions;
     constructor();
     static onDefine(): Promise<void>;
     onEnterDOM(): void;
@@ -129,8 +131,6 @@ declare class DynamicPage extends UI5Element {
     onBeforeRendering(): void;
     get dynamicPageTitle(): DynamicPageTitle | null;
     get dynamicPageHeader(): DynamicPageHeader | null;
-    get scrollContainer(): HTMLElement | null;
-    get headerActions(): DynamicPageHeaderActions | null;
     get actionsInTitle(): boolean;
     get headerInTitle(): boolean;
     get headerInContent(): boolean;

@@ -4,11 +4,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var Text_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import renderer, { html } from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import EmptyIndicatorMode from "./types/TextEmptyIndicatorMode.js";
+// Template
+import TextTemplate from "./generated/templates/TextTemplate.lit.js";
+import { EMPTY_INDICATOR_SYMBOL, EMPTY_INDICATOR_ACCESSIBLE_TEXT, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import styles from "./generated/themes/Text.css.js";
 /**
@@ -40,7 +48,7 @@ import styles from "./generated/themes/Text.css.js";
  * @slot {Array<Node>} default - Defines the text of the component.
  * @since 2.0.0
  */
-let Text = class Text extends UI5Element {
+let Text = Text_1 = class Text extends UI5Element {
     constructor() {
         super(...arguments);
         /**
@@ -49,21 +57,47 @@ let Text = class Text extends UI5Element {
          * @public
          */
         this.maxLines = Infinity;
+        /**
+         * Specifies if an empty indicator should be displayed when there is no text.
+         * @default "Off"
+         * @since 2.2.0
+         * @public
+         */
+        this.emptyIndicatorMode = "Off";
+    }
+    static async onDefine() {
+        Text_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
     }
     onBeforeRendering() {
         this.style.setProperty(getScopedVarName("--_ui5_text_max_lines"), `${this.maxLines}`);
+    }
+    get hasText() {
+        return willShowContent(this.text);
+    }
+    get _renderEmptyIndicator() {
+        return !this.hasText && this.emptyIndicatorMode === EmptyIndicatorMode.On;
+    }
+    get _emptyIndicatorAriaLabel() {
+        return Text_1.i18nBundle.getText(EMPTY_INDICATOR_ACCESSIBLE_TEXT);
+    }
+    get _emptyIndicatorSymbol() {
+        return Text_1.i18nBundle.getText(EMPTY_INDICATOR_SYMBOL);
     }
 };
 __decorate([
     property({ type: Number })
 ], Text.prototype, "maxLines", void 0);
-Text = __decorate([
+__decorate([
+    property()
+], Text.prototype, "emptyIndicatorMode", void 0);
+__decorate([
+    slot({ type: Node, "default": true })
+], Text.prototype, "text", void 0);
+Text = Text_1 = __decorate([
     customElement({
         tag: "ui5-text",
-        renderer,
-        template: () => {
-            return html `<span><slot></slot></span>`;
-        },
+        renderer: litRender,
+        template: TextTemplate,
         styles,
     })
 ], Text);

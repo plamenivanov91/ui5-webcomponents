@@ -11,6 +11,6 @@ function block7(context, tags, suffix) { return html `<span id="${ifDefined(this
 function block8(context, tags, suffix) { return html `${this.draggable ? block9.call(this, context, tags, suffix) : undefined}`; }
 function block9(context, tags, suffix) { return html `<span id="${ifDefined(this._id)}-descr" aria-hidden="true" class="ui5-hidden-text">${ifDefined(this.ariaDescribedByHeaderTextDraggable)}</span>`; }
 function block10(context, tags, suffix) { return html `<footer class="ui5-popup-footer-root" part="footer"><slot name="footer"></slot></footer>`; }
-function block11(context, tags, suffix) { return suffix ? html `<${scopeTag("ui5-icon", tags, suffix)} name="resize-corner" class="ui5-popup-resize-handle" @mousedown="${this._onResizeMouseDown}"></${scopeTag("ui5-icon", tags, suffix)}>` : html `<ui5-icon name="resize-corner" class="ui5-popup-resize-handle" @mousedown="${this._onResizeMouseDown}"></ui5-icon>`; }
+function block11(context, tags, suffix) { return suffix ? html `<div class="ui5-popup-resize-handle" @mousedown="${this._onResizeMouseDown}"><${scopeTag("ui5-icon", tags, suffix)} name="resize-corner"></${scopeTag("ui5-icon", tags, suffix)}></div>` : html `<div class="ui5-popup-resize-handle" @mousedown="${this._onResizeMouseDown}"><ui5-icon name="resize-corner"></ui5-icon></div>`; }
 export default block0;
 //# sourceMappingURL=DialogTemplate.lit.js.map

@@ -14,6 +14,7 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 declare const testAssets: {
+    resetConfiguration: (testEnv?: boolean | undefined) => void;
     configuration: {
         getAnimationMode: () => "none" | "full" | "basic" | "minimal";
         setAnimationMode: (animationMode: "none" | "full" | "basic" | "minimal") => void;

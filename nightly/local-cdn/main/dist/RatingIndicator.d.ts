@@ -125,7 +125,7 @@ declare class RatingIndicator extends UI5Element {
     _onfocusin(): void;
     _onfocusout(): void;
     get effectiveTabIndex(): string;
-    get ratingTooltip(): string;
+    get ratingTooltip(): string | undefined;
     get defaultTooltip(): string;
     get _ariaRoleDescription(): string;
     get _ariaDisabled(): true | undefined;

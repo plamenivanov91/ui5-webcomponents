@@ -19,6 +19,7 @@ import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-regist
 import { isDesktop, isSafari, } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm, resetForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
@@ -194,7 +195,7 @@ let Button = Button_1 = class Button extends UI5Element {
         this.hasIcon = !!this.icon;
         this.hasEndIcon = !!this.endIcon;
         this.iconOnly = this.isIconOnly;
-        this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
+        this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
     }
     _onclick(e) {
         if (this.nonInteractive) {
@@ -306,6 +307,12 @@ let Button = Button_1 = class Button extends UI5Element {
             "Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
         };
     }
+    getDefaultTooltip() {
+        if (!getEnableDefaultTooltips()) {
+            return;
+        }
+        return getIconAccessibleName(this.icon);
+    }
     get buttonTypeText() {
         return Button_1.i18nBundle.getText(Button_1.typeTextMappings()[this.design]);
     }
@@ -323,7 +330,7 @@ let Button = Button_1 = class Button extends UI5Element {
         return this.nonInteractive ? "-1" : this.forcedTabIndex;
     }
     get showIconTooltip() {
-        return this.iconOnly && !this.tooltip;
+        return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
     }
     get ariaLabelText() {
         return getEffectiveAriaLabelText(this);

@@ -8,6 +8,7 @@ var RatingIndicator_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { getEnableDefaultTooltips } from "@ui5/webcomponents-base/dist/config/Tooltips.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isDown, isUp, isLeft, isRight, isSpace, isEnter, isHome, isEnd, } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -204,7 +205,10 @@ let RatingIndicator = RatingIndicator_1 = class RatingIndicator extends UI5Eleme
         return this.disabled ? "-1" : tabindex || "0";
     }
     get ratingTooltip() {
-        return this.tooltip || this.defaultTooltip;
+        if (this.tooltip) {
+            return this.tooltip;
+        }
+        return getEnableDefaultTooltips() ? this.defaultTooltip : undefined;
     }
     get defaultTooltip() {
         return RatingIndicator_1.i18nBundle.getText(RATING_INDICATOR_TOOLTIP_TEXT);

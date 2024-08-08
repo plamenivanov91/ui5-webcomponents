@@ -162,6 +162,7 @@ declare class MenuItem extends ListItem implements IMenuItem {
     get isPhone(): boolean;
     get labelBack(): string;
     get labelClose(): string;
+    get acessibleNameText(): string;
     get isSeparator(): boolean;
     onBeforeRendering(): void;
     get _focusable(): boolean;

@@ -80,6 +80,7 @@ declare class Page extends UI5Element {
     get styles(): {
         content: {
             "padding-bottom": string | 0;
+            "scroll-padding-bottom": string | 0;
             bottom: string | 0;
             top: string;
         };

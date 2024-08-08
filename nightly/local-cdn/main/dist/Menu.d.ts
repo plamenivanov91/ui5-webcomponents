@@ -113,6 +113,7 @@ declare class Menu extends UI5Element {
     get isPhone(): boolean;
     get _popover(): ResponsivePopover;
     get _menuItems(): MenuItem[];
+    get acessibleNameText(): string;
     onBeforeRendering(): void;
     _close(): void;
     _openItemSubMenu(item: MenuItem): void;

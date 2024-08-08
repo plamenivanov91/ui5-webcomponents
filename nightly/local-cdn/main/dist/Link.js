@@ -14,6 +14,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
 // Template
 import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
@@ -126,11 +127,10 @@ let Link = Link_1 = class Link extends UI5Element {
         this._rel = needsNoReferrer ? "noreferrer noopener" : undefined;
     }
     _isCrossOrigin(href) {
-        const loc = window.location;
         this._dummyAnchor.href = href;
-        return !(this._dummyAnchor.hostname === loc.hostname
-            && this._dummyAnchor.port === loc.port
-            && this._dummyAnchor.protocol === loc.protocol);
+        return !(this._dummyAnchor.hostname === getLocationHostname()
+            && this._dummyAnchor.port === getLocationPort()
+            && this._dummyAnchor.protocol === getLocationProtocol());
     }
     get effectiveTabIndex() {
         if (this.forcedTabIndex) {

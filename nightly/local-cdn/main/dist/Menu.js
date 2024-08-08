@@ -23,7 +23,7 @@ import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
 import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
-import { MENU_CLOSE_BUTTON_ARIA_LABEL, } from "./generated/i18n/i18n-defaults.js";
+import { MENU_CLOSE_BUTTON_ARIA_LABEL, MENU_POPOVER_ACCESSIBLE_NAME, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import menuCss from "./generated/themes/Menu.css.js";
 const MENU_OPEN_DELAY = 300;
@@ -105,6 +105,9 @@ let Menu = Menu_1 = class Menu extends UI5Element {
     }
     get _menuItems() {
         return this.items.filter((item) => !item.isSeparator);
+    }
+    get acessibleNameText() {
+        return Menu_1.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
     }
     onBeforeRendering() {
         const siblingsWithIcon = this._menuItems.some(menuItem => !!menuItem.icon);
