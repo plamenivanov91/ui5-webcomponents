@@ -307,7 +307,6 @@ declare class Select extends UI5Element implements IFormInputElement {
         };
     };
     get ariaLabelText(): string | undefined;
-    get valueStateMessageText(): Node[];
     get shouldDisplayDefaultValueStateMessage(): boolean;
     get hasValueStateText(): boolean;
     get shouldOpenValueStateMessagePopover(): boolean;

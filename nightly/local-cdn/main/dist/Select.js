@@ -493,7 +493,7 @@ let Select = Select_1 = class Select extends UI5Element {
             valueStateText = this.valueStateDefaultText;
         }
         else {
-            valueStateText = this.valueStateMessageText.map(el => el.textContent).join(" ");
+            valueStateText = this.valueStateMessage.map(el => el.textContent).join(" ");
         }
         return `${this.valueStateTypeText} ${valueStateText}`;
     }
@@ -569,11 +569,8 @@ let Select = Select_1 = class Select extends UI5Element {
     get ariaLabelText() {
         return getEffectiveAriaLabelText(this);
     }
-    get valueStateMessageText() {
-        return this.getSlottedNodes("valueStateMessage").map(el => el.cloneNode(true));
-    }
     get shouldDisplayDefaultValueStateMessage() {
-        return !this.valueStateMessageText.length && this.hasValueStateText;
+        return !this.valueStateMessage.length && this.hasValueStateText;
     }
     get hasValueStateText() {
         return this.hasValueState && this.valueState !== ValueState.Positive;

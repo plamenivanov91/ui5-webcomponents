@@ -10,6 +10,7 @@ import type BreadcrumbsSeparator from "./types/BreadcrumbsSeparator.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
 import Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
+import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ListSelectionChangeEventDetail } from "./List.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -19,6 +20,10 @@ type BreadcrumbsItemClickEventDetail = {
     ctrlKey: boolean;
     metaKey: boolean;
     shiftKey: boolean;
+};
+type FocusAdaptor = ITabbable & {
+    getlabelWrapper: () => Element | null;
+    forcedTabIndex: string;
 };
 /**
  * @class
@@ -83,6 +88,7 @@ declare class Breadcrumbs extends UI5Element {
     _onResizeHandler: ResizeObserverCallback;
     _breadcrumbItemWidths: WeakMap<BreadcrumbsItem, number>;
     _dropdownArrowLinkWidth: number;
+    _labelFocusAdaptor: FocusAdaptor;
     responsivePopover?: ResponsivePopover;
     static i18nBundle: I18nBundle;
     constructor();
@@ -110,6 +116,7 @@ declare class Breadcrumbs extends UI5Element {
     _getElementWidth(element: HTMLElement): number;
     _getTotalContentWidth(): number;
     _onLinkPress(e: CustomEvent<LinkClickEventDetail>): void;
+    _onLabelPress(e: MouseEvent | KeyboardEvent): void;
     _onOverflowListItemSelect(e: CustomEvent<ListSelectionChangeEventDetail>): void;
     _respPopover(): ResponsivePopover;
     _toggleRespPopover(): void;
@@ -120,9 +127,14 @@ declare class Breadcrumbs extends UI5Element {
     _preprocessItems(): void;
     _getItemPositionText(position: number, size: number): string;
     _getItemAccessibleName(item: BreadcrumbsItem, position: number, size: number): string;
+    getCurrentLocationLabelWrapper(): HTMLElement | null;
     get _visibleItems(): BreadcrumbsItem[];
-    get _endsWithCurrentPageItem(): boolean;
+    get _endsWithCurrentLinkItem(): string | 0 | undefined;
+    get _endsWithCurrentLocation(): boolean;
+    get _currentLocationText(): string;
+    get _currentLocationLabel(): Label | null;
     get _isDropdownArrowFocused(): boolean;
+    get _isCurrentLocationLabelFocused(): boolean | null;
     /**
      * Returns the maximum allowed count of items in the overflow
      * with respect to the UX requirement to never overflow the last visible item
@@ -141,6 +153,10 @@ declare class Breadcrumbs extends UI5Element {
      * Getter for the list of abstract breadcrumb items to be rendered as links outside the overflow
      */
     get _linksData(): BreadcrumbsItem[];
+    /**
+     * Getter for accessible name of the current location. Includes the position of the current location and the size of the breadcrumbs
+     */
+    get _currentLocationAccName(): string;
     /**
      * Getter for the list of links corresponding to the abstract breadcrumb items
      */

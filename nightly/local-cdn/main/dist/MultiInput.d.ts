@@ -111,6 +111,7 @@ declare class MultiInput extends Input implements IFormInputElement {
             ariaLabel: string | undefined;
         };
     };
+    get valueHelpLabel(): string;
     get ariaRoleDescription(): string;
     get morePopoverOpener(): HTMLElement;
     get shouldDisplayOnlyValueStateMessage(): boolean;

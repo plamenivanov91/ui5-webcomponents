@@ -12,7 +12,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isShow, isBackSpace, isLeft, isRight, isRightCtrl, isHome, isEnd, isDown, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
+import { MULTIINPUT_ROLEDESCRIPTION_TEXT, MULTIINPUT_VALUE_HELP_LABEL } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
@@ -256,6 +256,9 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
                 "ariaDescribedBy": ariaDescribedBy,
             },
         };
+    }
+    get valueHelpLabel() {
+        return MultiInput_1.i18nBundle.getText(MULTIINPUT_VALUE_HELP_LABEL);
     }
     get ariaRoleDescription() {
         return MultiInput_1.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);

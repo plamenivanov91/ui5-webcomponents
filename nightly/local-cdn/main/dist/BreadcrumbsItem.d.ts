@@ -52,6 +52,7 @@ declare class BreadcrumbsItem extends UI5Element {
     text: Array<Node>;
     _accessibleNameText?: string;
     _isCurrentPageItem?: boolean;
+    _needsSeparator?: boolean;
     get stableDomRef(): string;
     get _linkDesign(): LinkDesign.Default | LinkDesign.Emphasized;
 }

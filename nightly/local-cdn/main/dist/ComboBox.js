@@ -935,6 +935,9 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     get clearIconAccessibleName() {
         return ComboBox_1.i18nBundle.getText(INPUT_CLEAR_ICON_ACC_NAME);
     }
+    get responsivePopoverId() {
+        return `${this._id}-popover`;
+    }
     static async onDefine() {
         ComboBox_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
     }

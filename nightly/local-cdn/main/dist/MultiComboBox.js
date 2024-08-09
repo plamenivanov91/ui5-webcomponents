@@ -1384,6 +1384,9 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     get _popupLabel() {
         return MultiComboBox_1.i18nBundle.getText(COMBOBOX_AVAILABLE_OPTIONS);
     }
+    get responsivePopoverId() {
+        return `${this._id}-popover`;
+    }
     get classes() {
         return {
             popover: {

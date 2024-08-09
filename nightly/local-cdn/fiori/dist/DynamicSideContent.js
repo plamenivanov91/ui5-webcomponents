@@ -252,7 +252,7 @@ let DynamicSideContent = DynamicSideContent_1 = class DynamicSideContent extends
         return "fixed";
     }
     get containerWidth() {
-        return this.parentElement.clientWidth;
+        return this.parentElement.getBoundingClientRect().width;
     }
     get breakpoint() {
         let size;
