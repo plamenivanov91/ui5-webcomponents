@@ -285,7 +285,7 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     onBeforeRendering() {
         if (!this._keepInnerValue) {
-            this._innerValue = this.value;
+            this._innerValue = this.value === null ? "" : this.value;
         }
         if (this.showSuggestions) {
             this.enableSuggestions();
