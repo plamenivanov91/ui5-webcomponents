@@ -268,15 +268,15 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         return !!date;
     }
     get _specialCalendarDates() {
+        const hasSelectedType = this._specialDates.some(date => date.type === this._selectedItemType);
         const validSpecialDates = this._specialDates.filter(date => {
             const dateType = date.type;
             const dateValue = date.value;
-            const isTypeMatch = this._selectedItemType !== "None" ? dateType === this._selectedItemType : true;
+            const isTypeMatch = hasSelectedType
+                ? (dateType === this._selectedItemType || dateType === "Working" || dateType === "NonWorking")
+                : true;
             return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
         });
-        if (validSpecialDates.length === 0) {
-            this._selectedItemType = "None";
-        }
         const uniqueDates = new Set();
         const uniqueSpecialDates = [];
         validSpecialDates.forEach(date => {
@@ -292,7 +292,11 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         return uniqueSpecialDates;
     }
     _onCalendarLegendSelectionChange(e) {
+        const defaultTypes = ["Working", "NonWorking", "Selected", "Today"];
         this._selectedItemType = e.detail.item.type;
+        if (defaultTypes.includes(this._selectedItemType)) {
+            this._selectedItemType = "None"; // In order to avoid filtering of default types
+        }
         this._currentPickerDOM._autoFocus = false;
     }
     /**

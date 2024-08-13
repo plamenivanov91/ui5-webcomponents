@@ -34,10 +34,16 @@ const getLocationHref = () => {
 const getLocationSearch = () => {
     return internals.search();
 };
+const locationOpen = (url, target, features) => {
+    if (isSSR) {
+        return;
+    }
+    window.open(url, target, features);
+};
 const locationReload = () => {
     if (!isSSR) {
         window.location.reload();
     }
 };
-export { internals, locationReload, getLocationHref, getLocationSearch, getLocationHostname, getLocationPort, getLocationProtocol, };
+export { internals, locationReload, getLocationHref, getLocationSearch, getLocationHostname, getLocationPort, getLocationProtocol, locationOpen, };
 //# sourceMappingURL=Location.js.map

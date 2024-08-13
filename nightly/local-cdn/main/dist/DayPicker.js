@@ -164,8 +164,8 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
             if (isOtherMonth) {
                 day.classes += " ui5-dp-item--othermonth";
             }
-            if (isWeekend) {
-                day.classes += " ui5-dp-item--weeekend";
+            if ((isWeekend || specialDayType === "NonWorking") && specialDayType !== "Working") {
+                day.classes += " ui5-dp-item--weekend";
             }
             if (isDisabled) {
                 day.classes += " ui5-dp-item--disabled";

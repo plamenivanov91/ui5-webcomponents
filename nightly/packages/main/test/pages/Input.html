@@ -12,7 +12,7 @@
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-a3c2a58f.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-996d46d5.js"></script>
   <link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/Input-7c735883.css">
 </head>
 
@@ -368,6 +368,7 @@
 
 	<h3>Test Backspace</h3>
 	<ui5-input id="input-number3" type="Number" value="4"></ui5-input><br>
+	<ui5-input id="input-number3-change-count" type="Number" value="0"></ui5-input><br />
 	<ui5-button id="input-number3-focusout">Click</ui5-button>
 
 	<ui5-input id="input-number31" type="Number" value="4.333"></ui5-input><br>
@@ -1051,6 +1052,12 @@
 
 			invisibleMessage.announce(text, "Polite");
 		})
+
+		document.getElementById("input-number3").addEventListener("ui5-input", () => {
+			const inputNumber3ChangeCount = document.getElementById("input-number3-change-count");
+			inputNumber3ChangeCount.value = (parseInt(inputNumber3ChangeCount.value) + 1).toString();
+		});
+
 	</script>
 </body>
 

@@ -1,9 +1,11 @@
-commit a5c3f1f5aa4bce3e81a31bbafe7ad9712840bf50
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Fri Aug 9 08:54:06 2024 +0300
+commit a95ef11885b8c4ac592a55c15c27ad55328f77c6
+Author: Nikoleta Ivanova <31706628+nikoletavnv@users.noreply.github.com>
+Date:   Mon Aug 12 10:05:27 2024 +0300
 
-    fix(ui5-input): reset value on when set to null (#9657)
+    fix(ui5-input): properly change numeric input value using the arrow keys (#9616)
     
-    * fix(ui5-input): reset value on when set to null
+    * fix(ui5-input): properly change numeric input value using the arrow keys
     
-    fixes: #2616
+    Fire input event when user uses the arrow keys to increase or decrease the value of a numeric input
+    
+    Fixes #9588

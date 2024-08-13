@@ -11,6 +11,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import { locationOpen } from "@ui5/webcomponents-base/dist/Location.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isSpace, isShow, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -266,7 +267,7 @@ let Breadcrumbs = Breadcrumbs_1 = class Breadcrumbs extends UI5Element {
     _onOverflowListItemSelect(e) {
         const listItem = e.detail.selectedItems[0], items = this._getItems(), item = items.find(x => `${x._id}-li` === listItem.id);
         if (this.fireEvent("item-click", { item }, true)) {
-            window.open(item.href, item.target || "_self", "noopener,noreferrer");
+            locationOpen(item.href, item.target || "_self", "noopener,noreferrer");
             this.responsivePopover.open = false;
         }
     }

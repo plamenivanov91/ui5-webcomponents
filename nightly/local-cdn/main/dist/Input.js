@@ -589,7 +589,7 @@ let Input = Input_1 = class Input extends UI5Element {
         const inputDomRef = this.getInputDOMRefSync();
         const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef.value;
         const eventType = e.inputType
-            || e.detail.inputType
+            || (e.detail && e.detail.inputType)
             || "";
         this._keepInnerValue = false;
         const allowedEventTypes = [
@@ -778,7 +778,8 @@ let Input = Input_1 = class Input extends UI5Element {
         this.typedInValue = inputValue;
         this.valueBeforeSelectionStart = inputValue;
         if (isUserInput) { // input
-            this.fireEvent(INPUT_EVENTS.INPUT, { inputType: e.inputType });
+            const inputType = e.inputType || "";
+            this.fireEvent(INPUT_EVENTS.INPUT, { inputType });
             // Angular two way data binding
             this.fireEvent("value-changed");
             this.fireResetSelectionChange();
