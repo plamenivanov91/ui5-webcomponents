@@ -248,10 +248,10 @@ declare class Table extends UI5Element {
     _onRowPress(row: TableRow): void;
     get styles(): {
         table: {
-            "grid-template-columns": string;
+            "grid-template-columns": string | undefined;
         };
     };
-    get _gridTemplateColumns(): string;
+    get _gridTemplateColumns(): string | undefined;
     get _tableOverflowX(): "auto" | "clip";
     get _tableOverflowY(): string;
     get _nodataRow(): TableRow;
