@@ -25,6 +25,7 @@ import FileUploaderTemplate from "./generated/templates/FileUploaderTemplate.lit
 import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+const convertBytesToMegabytes = (bytes) => (bytes / 1024) / 1024;
 /**
  * @class
  *
@@ -145,13 +146,18 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         e.preventDefault();
         e.stopPropagation();
         const files = e.dataTransfer?.files;
-        if (files) {
-            this._input.files = files;
-            this._updateValue(files);
-            this.fireEvent("change", {
-                files,
-            });
+        if (!files) {
+            return;
         }
+        const validatedFiles = this._validateFiles(files);
+        if (!this.value && !validatedFiles.length) {
+            return;
+        }
+        this._input.files = validatedFiles;
+        this._updateValue(validatedFiles);
+        this.fireEvent("change", {
+            files: validatedFiles,
+        });
     }
     _onfocusin() {
         this.focused = true;
@@ -177,7 +183,13 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
     }
     _onChange(e) {
-        const changedFiles = e.target.files;
+        let changedFiles = e.target.files;
+        if (changedFiles) {
+            changedFiles = this._validateFiles(changedFiles);
+        }
+        if (!this.value && !changedFiles?.length) {
+            return;
+        }
         this._updateValue(changedFiles);
         this.fireEvent("change", {
             files: changedFiles,
@@ -187,6 +199,35 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         this.value = Array.from(files || []).reduce((acc, currFile) => {
             return `${acc}"${currFile.name}" `;
         }, "");
+    }
+    /**
+     * Checks whether all files are below `maxFileSize` (if set),
+     * and fires a `fileSizeExceeded` event if any file exceeds it.
+     * @private
+     */
+    _validateFiles(changedFiles) {
+        const exceededFilesData = this.maxFileSize ? this._getExceededFiles(changedFiles) : [];
+        if (exceededFilesData.length) {
+            this.fireEvent("fileSizeExceeded", {
+                filesData: exceededFilesData,
+            });
+            changedFiles = new DataTransfer().files;
+        }
+        return changedFiles;
+    }
+    _getExceededFiles(files) {
+        const filesArray = Array.from(files);
+        const exceededFiles = [];
+        for (let i = 0; i < filesArray.length; i++) {
+            const fileSize = convertBytesToMegabytes(filesArray[i].size);
+            if (fileSize > this.maxFileSize) {
+                exceededFiles.push({
+                    fileName: filesArray[i].name,
+                    fileSize,
+                });
+            }
+        }
+        return exceededFiles;
     }
     toggleValueStatePopover(open) {
         if (open) {
@@ -317,6 +358,9 @@ __decorate([
     property()
 ], FileUploader.prototype, "value", void 0);
 __decorate([
+    property({ type: Number })
+], FileUploader.prototype, "maxFileSize", void 0);
+__decorate([
     property()
 ], FileUploader.prototype, "valueState", void 0);
 __decorate([
@@ -360,6 +404,21 @@ FileUploader = FileUploader_1 = __decorate([
              * @public
              */
             files: { type: FileList },
+        },
+    })
+    /**
+     * Event is fired when the size of a file is above the `maxFileSize` property value.
+     * @param {Array<FileData>} filesData An array of `FileData` objects containing the`fileName` and `fileSize` in MB of each file that exceeds the upload limit.
+     * @since 2.2.0
+     * @public
+     */
+    ,
+    event("fileSizeExceeded", {
+        detail: {
+            /**
+             * @public
+             */
+            filesData: { type: (Array) },
         },
     })
 ], FileUploader);
