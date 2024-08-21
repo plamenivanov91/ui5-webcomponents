@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var TimePicker_1;
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isPhone, isTablet } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -218,6 +218,9 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
     get _isPhone() {
         return isPhone();
     }
+    get _isMobileDevice() {
+        return !isDesktop() && (isPhone() || isTablet());
+    }
     onTimeSelectionChange(e) {
         this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
     }
@@ -287,7 +290,7 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
         if (this.open) {
             return;
         }
-        if (this._isPhone && target && !target.hasAttribute("ui5-icon")) {
+        if (this._isMobileDevice && target && !target.hasAttribute("ui5-icon")) {
             this.toggleInputsPopover();
         }
         const inputField = this._getInputField();
@@ -334,7 +337,7 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
         return !this.disabled && !this.readonly;
     }
     _canOpenInputsPopover() {
-        return !this.disabled && this._isPhone;
+        return !this.disabled && this._isMobileDevice;
     }
     _getPopover() {
         return this.shadowRoot.querySelector("[ui5-responsive-popover]");
@@ -350,7 +353,7 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
         return input && input.getInputDOMRef();
     }
     _onkeydown(e) {
-        if (this._isPhone && !this.isInputsPopoverOpen()) {
+        if (this._isMobileDevice && !this.isInputsPopoverOpen()) {
             e.preventDefault();
         }
         if (isShow(e)) {
@@ -473,7 +476,7 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
         setTimeout(() => { this._getInput().readonly = false; }, 0);
     }
     _onfocusin(e) {
-        if (this._isPhone) {
+        if (this._isMobileDevice) {
             this._hideMobileKeyboard();
             if (this._isInputsPopoverOpen) {
                 const popover = this._getInputsPopover();

@@ -4,7 +4,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { isUpShift, isShift, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isUpShift, } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -209,11 +209,9 @@ let TableSelection = class TableSelection extends UI5Element {
         if (!this._table) {
             return;
         }
-        if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !isShift(e)) {
-            // Stop range selection if a) Shift is relased or b) the event target is not a row or c) the event is not from the selection checkbox
-            if (isSelectionCheckbox(e)) {
-                this._stopRangeSelection();
-            }
+        if (!eventOrigin.hasAttribute("ui5-table-row") || !this._rangeSelection || !e.shiftKey) {
+            // Stop range selection if a) Shift is relased or b) the event target is not a row
+            this._stopRangeSelection();
         }
         if (this._rangeSelection) {
             this._rangeSelection.shiftPressed = e.shiftKey;

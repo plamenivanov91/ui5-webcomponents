@@ -208,6 +208,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     get _effectiveValue(): string;
     get _timeSelectionValue(): string | undefined;
     get _isPhone(): boolean;
+    get _isMobileDevice(): boolean;
     onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>): void;
     _togglePicker(): void;
     submitPickers(): void;

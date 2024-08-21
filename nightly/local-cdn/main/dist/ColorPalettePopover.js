@@ -96,14 +96,14 @@ let ColorPalettePopover = ColorPalettePopover_1 = class ColorPalettePopover exte
     }
     onAfterOpen() {
         const colorPalette = this._colorPalette;
-        if (colorPalette.showDefaultColor && !colorPalette._currentlySelected) {
-            colorPalette.colorPaletteNavigationElements[0].focus();
+        if (colorPalette._currentlySelected) {
+            colorPalette._currentlySelected?.focus();
         }
-        else if (colorPalette._shouldFocusRecentColors && colorPalette.showRecentColors) {
+        else if (colorPalette.showRecentColors && colorPalette.recentColorsElements.length) {
             colorPalette.recentColorsElements[0].focus();
         }
-        else {
-            colorPalette._currentlySelected?.focus();
+        else if (colorPalette.showDefaultColor) {
+            colorPalette.colorPaletteNavigationElements[0].focus();
         }
     }
     onSelectedColor(e) {

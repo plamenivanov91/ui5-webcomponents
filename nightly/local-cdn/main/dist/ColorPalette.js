@@ -95,7 +95,7 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
     }
     onBeforeRendering() {
         this._ensureSingleSelectionOrDeselectAll();
-        const selectedItem = this.allColorsInPalette.find(item => item.selected);
+        const selectedItem = this.selectedItem;
         if (selectedItem && !this.showRecentColors) {
             this._selectedColor = selectedItem.value;
         }
@@ -114,9 +114,15 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
         return !!(this.showMoreColors && this.moreColorsFeature);
     }
     onAfterRendering() {
-        if (this._shouldFocusRecentColors && this.hasRecentColors) {
-            this.recentColorsElements[0].selected = true;
-            this.recentColorsElements[0].focus();
+        if (this.hasRecentColors && this._shouldFocusRecentColors) {
+            if (this.selectedItem) {
+                this.selectedItem.selected = false;
+            }
+            const firstRecentColor = this.recentColorsElements[0];
+            firstRecentColor.selected = true;
+            this._currentlySelected = firstRecentColor;
+            this._currentlySelected.focus();
+            this._shouldFocusRecentColors = false;
         }
     }
     selectColor(item) {
@@ -338,9 +344,7 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
         const colorPicker = this.getColorPicker();
         this._setColor(colorPicker.value);
         this._closeDialog();
-        this._shouldFocusRecentColors = !this.popupMode;
-        this.recentColorsElements[0].selected = true;
-        this._currentlySelected = colorPicker.value ? this.recentColorsElements[0] : undefined;
+        this._shouldFocusRecentColors = true;
     }
     _addRecentColor(color) {
         if (this.showRecentColors && !this._recentColors.includes(color)) {
@@ -372,7 +376,7 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
      * Returns the selected item.
      */
     get selectedItem() {
-        return [...this.effectiveColorItems, ...this.recentColorsElements].find(item => item.selected);
+        return this.allColorsInPalette.find(item => item.selected);
     }
     get allColorsInPalette() {
         return [...this.effectiveColorItems, ...this.recentColorsElements];

@@ -1,13 +1,7 @@
-commit 08fa1b95879bdab853f6378ca09192c0abeb7b20
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Mon Aug 19 09:01:29 2024 +0300
+commit 7894823d5aba86098f2661977627be8cac3df97c
+Author: Duc Vo Ngoc <duc.vo.ngoc@sap.com>
+Date:   Tue Aug 20 16:27:15 2024 +0200
 
-    fix(ui5-flexible-column-layout): correct min-width constraint (#9673)
+    fix(ui5-table): range selection should stop when releasing shift (#9710)
     
-    * feat(ui5-flexible-column-layout): correct min-width constraint
-    
-    * fix(ui5-flexible-column-layout): correct min-width docu
-    
-    * fix(ui5-flexible-column-layout): add test
-    
-    * fix(ui5-flexible-column-layout): stabilize test
+    Instead of using isShift(), use event.shiftKey instead, as isShift just checks the released key.
