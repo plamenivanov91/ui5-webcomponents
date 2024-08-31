@@ -20,7 +20,7 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
         };
         _doNotSyncAttributes: Set<string>;
         _state: import("../UI5ElementMetadata.js").State;
-        _internals?: ElementInternals | undefined;
+        _internals: ElementInternals;
         _getRealDomRef?: (() => HTMLElement) | undefined;
         initializedProperties: Map<string, unknown>;
         _rendered: boolean;
@@ -76,10 +76,10 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
         readonly isUI5Element: boolean;
         readonly classes: import("../types.js").ClassMap;
         readonly accessibilityInfo: import("../types.js").AccessibilityInfo;
-        readonly validity: ValidityState | undefined;
-        readonly validationMessage: string | undefined;
-        checkValidity(): boolean | undefined;
-        reportValidity(): boolean | undefined;
+        readonly validity: ValidityState;
+        readonly validationMessage: string;
+        checkValidity(): boolean;
+        reportValidity(): boolean;
         accessKey: string;
         readonly accessKeyLabel: string;
         autocapitalize: string;

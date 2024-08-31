@@ -9,13 +9,13 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import { isSpace, isSpaceShift, isEnter, isEnterShift, isUp, isDown, isLeft, isRight, isHome, isEnd, isHomeCtrl, isEndCtrl, isPageUp, isPageDown, isPageUpShift, isPageUpAlt, isPageUpShiftCtrl, isPageDownShift, isPageDownAlt, isPageDownShiftCtrl, } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calculateWeekNumber.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
+import CalendarUtils from "@ui5/webcomponents-localization/dist/CalendarUtils.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
 import { DAY_PICKER_WEEK_NUMBER_TEXT, DAY_PICKER_NON_WORKING_DAY, DAY_PICKER_TODAY, } from "./generated/i18n/i18n-defaults.js";
@@ -142,7 +142,7 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
                 classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
                 ariaLabel,
                 ariaSelected: String(isSelected || isSelectedBetween),
-                ariaDisabled: isOtherMonth ? "true" : undefined,
+                ariaDisabled: isDisabled || isOtherMonth ? "true" : undefined,
                 disabled: isDisabled,
                 type: specialDayType,
                 parts: "day-cell",
@@ -175,8 +175,9 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
             }
             week.push(day);
             if (dayOfTheWeek === DAYS_IN_WEEK - 1) { // 0-indexed so 6 is the last day of the week
+                const weekNumber = this._calculateWeekNumber(tempDate.toLocalJSDate());
                 week.unshift({
-                    weekNum: calculateWeekNumber(getFirstDayOfWeek(), tempDate.toUTCJSDate(), tempDate.getYear(), getLocale(), localeData, this._primaryCalendarType),
+                    weekNum: weekNumber,
                     isHidden: this.shouldHideWeekNumbers,
                 });
             }
@@ -189,6 +190,11 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
                 tempSecondDate.setDate(tempSecondDate.getDate() + 1);
             }
         }
+    }
+    _calculateWeekNumber(date) {
+        const oDateFormat = DateFormat.getDateInstance({ pattern: "w", calendarType: this.primaryCalendarType, calendarWeekNumbering: this.calendarWeekNumbering });
+        const weekNumber = oDateFormat.format(date);
+        return Number(weekNumber);
     }
     /**
      * Builds the dayNames object (header of the month).
@@ -299,24 +305,27 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
         const timestamp = this._getTimestampFromDom(target);
         this._safelySetTimestamp(timestamp);
         this._updateSecondTimestamp();
-        if (this.selectionMode === CalendarSelectionMode.Single) {
-            this.selectedDates = [timestamp];
-        }
-        else if (this.selectionMode === CalendarSelectionMode.Multiple) {
+        this._updateSelectedDates(timestamp, isShift);
+        this.fireEvent("change", {
+            timestamp: this.timestamp,
+            dates: this.selectedDates,
+        });
+    }
+    _updateSelectedDates(timestamp, isShift) {
+        if (this.selectionMode === CalendarSelectionMode.Multiple) {
             if (this.selectedDates.length > 0 && isShift) {
                 this._multipleSelection(timestamp);
             }
             else {
                 this._toggleTimestampInSelection(timestamp);
             }
+            return;
         }
-        else {
-            this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp] : [timestamp];
+        if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+            this.selectedDates = [this.selectedDates[0], timestamp];
+            return;
         }
-        this.fireEvent("change", {
-            timestamp: this.timestamp,
-            dates: this.selectedDates,
-        });
+        this.selectedDates = [timestamp];
     }
     /**
      * Selects/deselects the whole row (week).
@@ -618,9 +627,9 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
         return firstDay;
     }
     _getFirstDayOfWeek() {
+        const result = CalendarUtils.getWeekConfigurationValues(this.calendarWeekNumbering);
         const localeData = getCachedLocaleDataInstance(getLocale());
-        const confFirstDayOfWeek = getFirstDayOfWeek();
-        return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : localeData.getFirstDayOfWeek();
+        return result?.firstDayOfWeek ? result.firstDayOfWeek : localeData.getFirstDayOfWeek();
     }
     get styles() {
         return {

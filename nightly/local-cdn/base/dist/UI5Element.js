@@ -17,7 +17,7 @@ import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import executeTemplate, { getTagsToScope } from "./renderer/executeTemplate.js";
-import { attachFormElementInternals, setFormValue } from "./features/InputElementsFormSupport.js";
+import { updateFormValue, setFormValue } from "./features/InputElementsFormSupport.js";
 import { getComponentFeature, subscribeForFeatureLoad } from "./FeaturesRegistry.js";
 const DEV_MODE = true;
 let autoId = 0;
@@ -121,6 +121,7 @@ class UI5Element extends HTMLElement {
                 this.initializedProperties.set(propertyName, value);
             }
         });
+        this._internals = this.attachInternals();
         this._initShadowRoot();
     }
     _initShadowRoot() {
@@ -465,7 +466,7 @@ class UI5Element extends HTMLElement {
         if (!ctor.getMetadata().isFormAssociated()) {
             return;
         }
-        attachFormElementInternals(this);
+        updateFormValue(this);
     }
     static get formAssociated() {
         return this.getMetadata().isFormAssociated();
@@ -1038,10 +1039,10 @@ class UI5Element extends HTMLElement {
         this._metadata = new UI5ElementMetadata(mergedMetadata);
         return this._metadata;
     }
-    get validity() { return this._internals?.validity; }
-    get validationMessage() { return this._internals?.validationMessage; }
-    checkValidity() { return this._internals?.checkValidity(); }
-    reportValidity() { return this._internals?.reportValidity(); }
+    get validity() { return this._internals.validity; }
+    get validationMessage() { return this._internals.validationMessage; }
+    checkValidity() { return this._internals.checkValidity(); }
+    reportValidity() { return this._internals.reportValidity(); }
 }
 /**
  * Returns the metadata object for this UI5 Web Component Class

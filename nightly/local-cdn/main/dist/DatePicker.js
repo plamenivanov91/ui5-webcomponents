@@ -267,7 +267,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
             return;
         }
         if (isEnter(e)) {
-            if (this._internals?.form) {
+            if (this._internals.form) {
                 submitForm(this);
             }
         }

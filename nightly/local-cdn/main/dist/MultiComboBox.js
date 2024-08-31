@@ -821,9 +821,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         const matchingItem = this._getItems().find(item => (!item.isGroupItem && item.text.toLowerCase() === lowerCaseValue));
         const oldValueState = this.valueState;
         const innerInput = this._innerInput;
-        if (this._internals?.form) {
-            submitForm(this);
-        }
         if (matchingItem) {
             if (matchingItem.selected) {
                 if (this._validationTimeout) {
@@ -846,6 +843,9 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             }
             innerInput.setSelectionRange(matchingItem.text.length, matchingItem.text.length);
             this._open = false;
+        }
+        else if (this._internals?.form) {
+            submitForm(this);
         }
     }
     _resetValueState(valueState, callback) {
@@ -1246,7 +1246,11 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         return this.readonly ? "Inactive" : "Active";
     }
     get hasValueState() {
-        return (this.valueState !== ValueState.None) || (this._dialogInputValueState !== ValueState.None);
+        const isValueStateSet = this.valueState !== ValueState.None;
+        if (isPhone()) {
+            return isValueStateSet || (this._dialogInputValueState !== ValueState.None);
+        }
+        return isValueStateSet;
     }
     get hasValueStateMessage() {
         const valueState = isPhone() ? this._dialogInputValueState : this.valueState;

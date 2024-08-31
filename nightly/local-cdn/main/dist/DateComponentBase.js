@@ -52,6 +52,14 @@ let DateComponentBase = DateComponentBase_1 = class DateComponentBase extends UI
          * @public
          */
         this.maxDate = "";
+        /**
+         * Defines how to calculate calendar weeks and first day of the week.
+         * If not set, the calendar will be displayed according to the currently set global configuration.
+         * @default "Default"
+         * @since 2.2.0
+         * @public
+         */
+        this.calendarWeekNumbering = "Default";
     }
     get _primaryCalendarType() {
         const localeData = getCachedLocaleDataInstance(getLocale());
@@ -153,6 +161,9 @@ __decorate([
 __decorate([
     property()
 ], DateComponentBase.prototype, "maxDate", void 0);
+__decorate([
+    property()
+], DateComponentBase.prototype, "calendarWeekNumbering", void 0);
 DateComponentBase = DateComponentBase_1 = __decorate([
     customElement({
         languageAware: true,

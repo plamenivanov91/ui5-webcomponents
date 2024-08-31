@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import LinkDesign from "./types/LinkDesign.js";
 /**
  * @class
@@ -55,5 +56,6 @@ declare class BreadcrumbsItem extends UI5Element {
     _needsSeparator?: boolean;
     get stableDomRef(): string;
     get _linkDesign(): LinkDesign.Default | LinkDesign.Emphasized;
+    get accessibilityAttributes(): Pick<AccessibilityAttributes, "current">;
 }
 export default BreadcrumbsItem;

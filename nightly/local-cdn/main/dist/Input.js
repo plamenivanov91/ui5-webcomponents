@@ -439,7 +439,7 @@ let Input = Input_1 = class Input extends UI5Element {
         }
         if (!suggestionItemPressed) {
             this.lastConfirmedValue = this.value;
-            if (this._internals?.form) {
+            if (this._internals.form) {
                 submitForm(this);
             }
             return;

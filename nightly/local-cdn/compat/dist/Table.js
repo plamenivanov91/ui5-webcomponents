@@ -21,7 +21,6 @@ import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
-import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
@@ -184,11 +183,6 @@ let Table = Table_1 = class Table extends UI5Element {
          */
         this._loadMoreActive = false;
         /**
-         * Defines if the entire table is in view port.
-         * @private
-         */
-        this._inViewport = false;
-        /**
          * Defines whether all rows are selected or not when table is in MultiSelect mode.
          * @default false
          * @since 2.0.0
@@ -255,7 +249,6 @@ let Table = Table_1 = class Table extends UI5Element {
         if (this.growsOnScroll) {
             this.observeTableEnd();
         }
-        this.checkTableInViewport();
     }
     onEnterDOM() {
         this.growingIntersectionObserver = this.getIntersectionObserver();
@@ -684,11 +677,7 @@ let Table = Table_1 = class Table extends UI5Element {
         return null;
     }
     handleResize() {
-        this.checkTableInViewport();
         this.popinContent();
-    }
-    checkTableInViewport() {
-        this._inViewport = isElementInView(this.getDomRef());
     }
     popinContent() {
         const clientRect = this.getDomRef().getBoundingClientRect();
@@ -750,13 +739,6 @@ let Table = Table_1 = class Table extends UI5Element {
         }
         return this.growingIntersectionObserver;
     }
-    get styles() {
-        return {
-            busy: {
-                position: this.busyIndPosition,
-            },
-        };
-    }
     get growsWithButton() {
         return this.growing === TableGrowingMode.Button;
     }
@@ -788,9 +770,6 @@ let Table = Table_1 = class Table extends UI5Element {
     }
     get tableEndDOM() {
         return this.shadowRoot.querySelector(".ui5-table-end-marker");
-    }
-    get busyIndPosition() {
-        return this._inViewport ? "absolute" : "sticky";
     }
     get isMultiSelect() {
         return this.mode === TableMode.MultiSelect;
@@ -862,9 +841,6 @@ __decorate([
 __decorate([
     property({ type: Object })
 ], Table.prototype, "_columnHeader", void 0);
-__decorate([
-    property({ type: Boolean })
-], Table.prototype, "_inViewport", void 0);
 __decorate([
     property({ type: Boolean })
 ], Table.prototype, "_allRowsSelected", void 0);

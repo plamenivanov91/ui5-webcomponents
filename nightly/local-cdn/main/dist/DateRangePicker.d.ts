@@ -1,6 +1,5 @@
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import DatePicker from "./DatePicker.js";
-import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import type { DatePickerChangeEventDetail as DateRangePickerChangeEventDetail, DatePickerInputEventDetail as DateRangePickerInputEventDetail } from "./DatePicker.js";
 import type { CalendarSelectionChangeEventDetail } from "./Calendar.js";
 /**
@@ -153,10 +152,6 @@ declare class DateRangePicker extends DatePicker implements IFormInputElement {
      * @private
      */
     _buildValue(firstDateTimestamp: number | undefined, lastDateTimestamp: number | undefined): string;
-    /**
-     * @override
-     */
-    get _calendarPickersMode(): CalendarPickersMode;
 }
 export default DateRangePicker;
 export type { DateRangePickerChangeEventDetail, DateRangePickerInputEventDetail, };

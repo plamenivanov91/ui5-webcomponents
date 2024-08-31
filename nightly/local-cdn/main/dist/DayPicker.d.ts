@@ -104,6 +104,7 @@ declare class DayPicker extends CalendarPart implements ICalendarPicker {
      * @private
      */
     _buildWeeks(localeData: LocaleData): void;
+    _calculateWeekNumber(date: Date): number;
     /**
      * Builds the dayNames object (header of the month).
      * @param localeData
@@ -138,6 +139,7 @@ declare class DayPicker extends CalendarPart implements ICalendarPicker {
      * @private
      */
     _selectDate(e: Event, isShift: boolean): void;
+    _updateSelectedDates(timestamp: number, isShift: boolean): void;
     /**
      * Selects/deselects the whole row (week).
      * @private

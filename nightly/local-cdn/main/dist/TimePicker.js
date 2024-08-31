@@ -368,7 +368,7 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
             return;
         }
         if (isEnter(e)) {
-            if (this._internals?.form) {
+            if (this._internals.form) {
                 submitForm(this);
             }
         }

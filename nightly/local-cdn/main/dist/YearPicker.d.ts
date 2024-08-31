@@ -1,6 +1,7 @@
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CalendarPart from "./CalendarPart.js";
 import type { ICalendarPicker } from "./Calendar.js";
+import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 type Year = {
     timestamp: string;
     _tabIndex: string;
@@ -10,11 +11,13 @@ type Year = {
     year: string;
     yearInSecType: string | undefined;
     disabled: boolean;
+    ariaDisabled: string | undefined;
     classes: string;
     parts: string;
 };
 type YearInterval = Array<Array<Year>>;
 type YearPickerChangeEventDetail = {
+    dates: Array<number>;
     timestamp: number;
 };
 type YearPickerNavigateEventDetail = {
@@ -36,8 +39,27 @@ declare class YearPicker extends CalendarPart implements ICalendarPicker {
      * @public
      */
     selectedDates: Array<number>;
+    /**
+     * Defines the type of selection used in the year picker component.
+     * Accepted property values are:
+     *
+     * - `CalendarSelectionMode.Single` - enables election of a single year.
+     * - `CalendarSelectionMode.Range` - enables selection of a year range.
+     *
+     * Note that 'CalendarSelectionMode.Multiple` is not supported for Year Picker!
+     * @default "Single"
+     * @public
+     * @since 2.2.0
+     */
+    selectionMode: `${CalendarSelectionMode}`;
     _years: YearInterval;
     _hidden: boolean;
+    /**
+     * When selectionMode="Range" and the first year in the range is selected, this is the currently hovered or focused year.
+     *
+     * @private
+     */
+    _secondTimestamp?: number;
     _firstYear?: number;
     _lastYear?: number;
     static i18nBundle: I18nBundle;
@@ -49,8 +71,25 @@ declare class YearPicker extends CalendarPart implements ICalendarPicker {
     _buildYears(): void;
     _calculateFirstYear(): void;
     onAfterRendering(): void;
+    /**
+      * Returns true if year timestamp is inside the selection range.
+      * @private
+      */
+    _isYearInsideSelectionRange(timestamp: number): boolean;
     _onkeydown(e: KeyboardEvent): void;
     _onHomeOrEnd(homePressed: boolean): void;
+    /**
+     * In range selection, the currently focused or hovered year is considered the "second day".
+     * @private
+     */
+    _updateSecondTimestamp(): void;
+    /**
+     * Set the hovered day as the "_secondTimestamp".
+     *
+     * @param e
+     * @private
+     */
+    _onmouseover(e: MouseEvent): void;
     /**
      * Sets the timestamp to an absolute value.
      * @param value
@@ -70,6 +109,7 @@ declare class YearPicker extends CalendarPart implements ICalendarPicker {
      * @private
      */
     _selectYear(e: Event): void;
+    _updateSelectedDates(timestamp: number): void;
     /**
      * Called by the Calendar component.
      * @protected

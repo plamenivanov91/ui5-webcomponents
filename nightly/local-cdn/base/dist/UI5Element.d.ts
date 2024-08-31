@@ -49,7 +49,7 @@ declare abstract class UI5Element extends HTMLElement {
     };
     _doNotSyncAttributes: Set<string>;
     _state: State;
-    _internals?: ElementInternals;
+    _internals: ElementInternals;
     _getRealDomRef?: () => HTMLElement;
     static template?: TemplateFunction;
     static _metadata: UI5ElementMetadata;
@@ -365,10 +365,10 @@ declare abstract class UI5Element extends HTMLElement {
      * @public
      */
     static getMetadata(): UI5ElementMetadata;
-    get validity(): ValidityState | undefined;
-    get validationMessage(): string | undefined;
-    checkValidity(): boolean | undefined;
-    reportValidity(): boolean | undefined;
+    get validity(): ValidityState;
+    get validationMessage(): string;
+    checkValidity(): boolean;
+    reportValidity(): boolean;
 }
 /**
  * Always use duck-typing to cover all runtimes on the page.

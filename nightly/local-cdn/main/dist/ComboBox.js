@@ -609,7 +609,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
                 this.focused = true;
                 this.inner.setSelectionRange(this.value.length, this.value.length);
             }
-            else if (this._internals?.form) {
+            else if (this._internals.form) {
                 submitForm(this);
             }
         }

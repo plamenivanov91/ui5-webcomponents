@@ -125,6 +125,9 @@ let Popup = Popup_1 = class Popup extends UI5Element {
             this.setAttribute("desktop", "");
         }
         this.tabIndex = -1;
+        if (this.open) {
+            this.showPopover();
+        }
     }
     onExitDOM() {
         if (this._opened) {

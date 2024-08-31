@@ -234,11 +234,6 @@ declare class Table extends UI5Element {
      */
     _columnHeader: TableColumnHeaderInfo;
     /**
-     * Defines if the entire table is in view port.
-     * @private
-     */
-    _inViewport: boolean;
-    /**
      * Defines whether all rows are selected or not when table is in MultiSelect mode.
      * @default false
      * @since 2.0.0
@@ -330,18 +325,12 @@ declare class Table extends UI5Element {
     get columnHeader(): HTMLElement | null;
     get morеBtn(): HTMLElement | null;
     handleResize(): void;
-    checkTableInViewport(): void;
     popinContent(): void;
     /**
      * Gets settings to be propagated from columns to rows.
      */
     getColumnPropagationSettings(): Array<TableColumnInfo>;
     getIntersectionObserver(): IntersectionObserver;
-    get styles(): {
-        busy: {
-            position: string;
-        };
-    };
     get growsWithButton(): boolean;
     get growsOnScroll(): boolean;
     get _growingButtonText(): string;
@@ -350,7 +339,6 @@ declare class Table extends UI5Element {
     get ariaLabelSelectAllText(): string;
     get loadMoreAriaLabelledBy(): string;
     get tableEndDOM(): Element;
-    get busyIndPosition(): string;
     get isMultiSelect(): boolean;
     get isSingleSelect(): boolean;
     get selectedRows(): Array<ITableRow>;

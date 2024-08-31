@@ -140,8 +140,10 @@ import { CALENDAR_HEADER_NEXT_BUTTON, CALENDAR_HEADER_PREVIOUS_BUTTON } from "./
  * @csspart day-cell-selected-between - Used to style the day cells in between of selected dates in range.
  * @csspart month-cell - Used to style the month cells.
  * @csspart month-cell-selected - Used to style the month cells when selected.
+ * @csspart month-cell-selected-between - Used to style the day cells in between of selected months in range.
  * @csspart year-cell - Used to style the year cells.
  * @csspart year-cell-selected - Used to style the year cells when selected.
+ * @csspart year-cell-selected-between - Used to style the day cells in between of selected years in range.
  * @since 1.0.0-rc.11
  */
 let Calendar = Calendar_1 = class Calendar extends CalendarPart {
@@ -462,7 +464,7 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
             this._currentPicker = "day";
         }
         else {
-            this._fireEventAndUpdateSelectedDates([this.timestamp]);
+            this._fireEventAndUpdateSelectedDates(e.detail.dates);
         }
         this._currentPickerDOM._autoFocus = true;
     }
@@ -475,7 +477,7 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
             this._currentPicker = "month";
         }
         else {
-            this._fireEventAndUpdateSelectedDates([this.timestamp]);
+            this._fireEventAndUpdateSelectedDates(e.detail.dates);
         }
         this._currentPickerDOM._autoFocus = true;
     }
