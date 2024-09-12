@@ -179,6 +179,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
         if (Number.isNaN(this._alpha)) {
             this._alpha = 1;
         }
+        this._isHueValueChanged = true;
         this._setColor(this._value);
     }
     _handleHueInput(e) {

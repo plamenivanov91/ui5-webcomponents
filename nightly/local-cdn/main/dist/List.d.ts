@@ -27,6 +27,7 @@ type ListItemDeleteEventDetail = {
     item: ListItemBase;
 };
 type ListMoveEventDetail = {
+    originalEvent: Event;
     source: {
         element: HTMLElement;
     };
@@ -98,6 +99,8 @@ type ListItemClickEventDetail = {
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart growing-button - Used to style the button, that is used for growing of the component
+ * @csspart growing-button-inner - Used to style the button inner element
  */
 declare class List extends UI5Element {
     /**
@@ -288,6 +291,7 @@ declare class List extends UI5Element {
     getItemsForProcessing(): Array<ListItemBase>;
     _revertSelection(previouslySelectedItems: Array<ListItemBase>): void;
     _onkeydown(e: KeyboardEvent): void;
+    _moveItem(item: ListItemBase, e: KeyboardEvent): void;
     _onLoadMoreKeydown(e: KeyboardEvent): void;
     _onLoadMoreKeyup(e: KeyboardEvent): void;
     _onLoadMoreMousedown(): void;

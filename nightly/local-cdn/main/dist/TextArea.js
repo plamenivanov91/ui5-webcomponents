@@ -26,9 +26,8 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import { VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, TEXTAREA_CHARACTERS_LEFT, TEXTAREA_CHARACTERS_EXCEEDED, FORM_TEXTFIELD_REQUIRED, } from "./generated/i18n/i18n-defaults.js";
 // Styles
-import styles from "./generated/themes/TextArea.css.js";
+import textareaStyles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 /**
  * @class
  *
@@ -315,7 +314,7 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
         return {
             root: {
                 "ui5-textarea-root": true,
-                "ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
+                "ui5-content-custom-scrollbars": !!getEffectiveScrollbarStyle(),
             },
             valueStateMsg: {
                 "ui5-valuestatemessage-header": true,
@@ -478,7 +477,11 @@ TextArea = TextArea_1 = __decorate([
         tag: "ui5-textarea",
         formAssociated: true,
         languageAware: true,
-        styles: [browserScrollbarCSS, styles, valueStateMessageStyles],
+        styles: [
+            textareaStyles,
+            valueStateMessageStyles,
+            getEffectiveScrollbarStyle(),
+        ],
         renderer: litRender,
         template: TextAreaTemplate,
         dependencies: [Popover, Icon],

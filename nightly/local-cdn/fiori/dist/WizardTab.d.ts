@@ -85,8 +85,8 @@ declare class WizardTab extends UI5Element implements ITabbable {
     _wizardTabAccInfo?: WizardTabInfo;
     _onclick(): void;
     _onkeyup(e: KeyboardEvent): void;
+    get effectiveTabIndex(): "0" | "-1" | undefined;
     _onfocusin(): void;
-    get tabIndex(): number;
     get hasTexts(): string | undefined;
     get accInfo(): {
         ariaSetsize: string | undefined;

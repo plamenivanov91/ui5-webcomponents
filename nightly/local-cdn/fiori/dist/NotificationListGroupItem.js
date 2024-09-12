@@ -67,6 +67,14 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
          * @public
          */
         this.collapsed = false;
+        /**
+         * Defines whether the component will have growing capability by pressing a `More` button.
+         * When button is pressed `load-more` event will be fired.
+         * @default false
+         * @public
+         * @since 2.2.0
+         */
+        this.growing = "None";
     }
     onBeforeRendering() {
         super.onBeforeRendering();
@@ -133,6 +141,13 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
     _onHeaderToggleClick() {
         this.toggleCollapsed();
     }
+    _onLoadMore() {
+        this.fireEvent("load-more");
+    }
+    get loadMoreButton() {
+        const innerList = this.getDomRef()?.querySelector("[ui5-notification-group-list]");
+        return innerList.getDomRef()?.querySelector("[growing-button-inner]");
+    }
     async _onkeydown(e) {
         const isFocused = this.matches(":focus");
         if (!isFocused) {
@@ -170,6 +185,9 @@ __decorate([
     property({ type: Boolean })
 ], NotificationListGroupItem.prototype, "collapsed", void 0);
 __decorate([
+    property()
+], NotificationListGroupItem.prototype, "growing", void 0);
+__decorate([
     slot({ type: HTMLElement, "default": true })
 ], NotificationListGroupItem.prototype, "items", void 0);
 NotificationListGroupItem = NotificationListGroupItem_1 = __decorate([
@@ -193,6 +211,14 @@ NotificationListGroupItem = NotificationListGroupItem_1 = __decorate([
      */
     ,
     event("toggle")
+    /**
+     * Fired when additional items are requested.
+     *
+     * @public
+     * @since 2.2.0
+     */
+    ,
+    event("load-more")
 ], NotificationListGroupItem);
 NotificationListGroupItem.define();
 export default NotificationListGroupItem;

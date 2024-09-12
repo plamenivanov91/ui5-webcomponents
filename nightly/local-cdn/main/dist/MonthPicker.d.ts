@@ -37,7 +37,6 @@ declare class MonthPicker extends CalendarPart implements ICalendarPicker {
     /**
      * An array of UTC timestamps representing the selected date
      * or dates depending on the capabilities of the picker component.
-     * @public
      * @default []
      */
     selectedDates: Array<number>;
@@ -50,7 +49,6 @@ declare class MonthPicker extends CalendarPart implements ICalendarPicker {
      *
      * Note that 'CalendarSelectionMode.Multiple` is not supported for Month Picker!
      * @default "Single"
-     * @public
      * @since 2.2.0
      */
     selectionMode: `${CalendarSelectionMode}`;

@@ -206,9 +206,11 @@ declare class TabContainer extends UI5Element {
     _onHeaderDragEnter(e: DragEvent): void;
     _onHeaderDragOver(e: DragEvent, isLongDragOver: boolean): void;
     _onHeaderDrop(e: DragEvent): void;
+    _moveHeaderItem(tab: Tab, e: KeyboardEvent): void;
     _onHeaderDragLeave(e: DragEvent): void;
     _onPopoverListMoveOver(e: CustomEvent<ListMoveEventDetail>): void;
     _onPopoverListMove(e: CustomEvent<ListMoveEventDetail>): void;
+    _onPopoverListKeyDown(e: KeyboardEvent): void;
     _onTabStripClick(e: Event): Promise<void>;
     _onTabExpandButtonClick(e: Event): Promise<void>;
     _setPopoverInitialFocus(): void;
@@ -281,6 +283,7 @@ declare class TabContainer extends UI5Element {
     _respPopover(): Promise<ResponsivePopover>;
     _closePopover(): void;
     get dropIndicatorDOM(): DropIndicator | null;
+    _findSiblings(tab: Tab): ITab[];
     get classes(): {
         root: {
             "ui5-tc-root": boolean;

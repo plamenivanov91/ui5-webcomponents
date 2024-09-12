@@ -51,7 +51,6 @@ declare class DayPicker extends CalendarPart implements ICalendarPicker {
     /**
      * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
      * @default []
-     * @public
      */
     selectedDates: Array<number>;
     /**
@@ -62,7 +61,6 @@ declare class DayPicker extends CalendarPart implements ICalendarPicker {
      * - `CalendarSelectionMode.Range` - enables selection of a date range.
      * - `CalendarSelectionMode.Multiple` - enables selection of multiple dates.
      * @default "Single"
-     * @public
      */
     selectionMode: `${CalendarSelectionMode}`;
     /**
@@ -71,7 +69,6 @@ declare class DayPicker extends CalendarPart implements ICalendarPicker {
      * **Note:** For calendars other than Gregorian,
      * the week numbers are not displayed regardless of what is set.
      * @default false
-     * @public
      * @since 1.0.0-rc.8
      */
     hideWeekNumbers: boolean;

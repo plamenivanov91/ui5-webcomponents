@@ -232,7 +232,7 @@ declare class TextArea extends UI5Element implements IFormInputElement {
     get classes(): {
         root: {
             "ui5-textarea-root": boolean;
-            "ui5-content-native-scrollbars": boolean;
+            "ui5-content-custom-scrollbars": boolean;
         };
         valueStateMsg: {
             "ui5-valuestatemessage-header": boolean;

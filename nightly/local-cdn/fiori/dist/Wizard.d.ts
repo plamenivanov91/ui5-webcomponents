@@ -29,7 +29,6 @@ type StepInfo = {
     pos: number;
     accInfo: AccessibilityInformation;
     refStepId: string;
-    tabIndex: string;
     styles: object;
 };
 /**
@@ -177,7 +176,6 @@ declare class Wizard extends UI5Element {
     get classes(): {
         root: {
             "ui5-wiz-root": boolean;
-            "ui5-content-native-scrollbars": boolean;
         };
         popover: {
             "ui5-wizard-responsive-popover": boolean;

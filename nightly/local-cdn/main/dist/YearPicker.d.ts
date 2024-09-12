@@ -36,7 +36,6 @@ declare class YearPicker extends CalendarPart implements ICalendarPicker {
      * An array of UTC timestamps representing the selected date
      * or dates depending on the capabilities of the picker component.
      * @default []
-     * @public
      */
     selectedDates: Array<number>;
     /**
@@ -48,7 +47,6 @@ declare class YearPicker extends CalendarPart implements ICalendarPicker {
      *
      * Note that 'CalendarSelectionMode.Multiple` is not supported for Year Picker!
      * @default "Single"
-     * @public
      * @since 2.2.0
      */
     selectionMode: `${CalendarSelectionMode}`;

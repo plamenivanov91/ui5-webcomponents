@@ -202,13 +202,13 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
     }
     /**
      * Checks whether all files are below `maxFileSize` (if set),
-     * and fires a `fileSizeExceeded` event if any file exceeds it.
+     * and fires a `file-size-exceed` event if any file exceeds it.
      * @private
      */
     _validateFiles(changedFiles) {
         const exceededFilesData = this.maxFileSize ? this._getExceededFiles(changedFiles) : [];
         if (exceededFilesData.length) {
-            this.fireEvent("fileSizeExceeded", {
+            this.fireEvent("file-size-exceed", {
                 filesData: exceededFilesData,
             });
             changedFiles = new DataTransfer().files;
@@ -413,7 +413,7 @@ FileUploader = FileUploader_1 = __decorate([
      * @public
      */
     ,
-    event("fileSizeExceeded", {
+    event("file-size-exceed", {
         detail: {
             /**
              * @public

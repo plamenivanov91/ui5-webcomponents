@@ -142,6 +142,7 @@ declare class Popover extends Popup {
     _left?: number;
     _oldPlacement?: CalculatedPlacement;
     _width?: string;
+    _height?: string;
     static get VIEWPORT_MARGIN(): number;
     constructor();
     /**

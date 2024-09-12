@@ -12,6 +12,7 @@ import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import isElementContainingBlock from "@ui5/webcomponents-base/dist/util/isElementContainingBlock.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import getParentElement from "@ui5/webcomponents-base/dist/util/getParentElement.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
@@ -23,7 +24,6 @@ import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegi
 // Template
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 // Styles
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 const ARROW_SIZE = 8;
@@ -297,6 +297,9 @@ let Popover = Popover_1 = class Popover extends Popup {
         if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
             this.style.width = this._width;
         }
+        if (this.verticalAlign === PopoverVerticalAlign.Stretch && this._height) {
+            this.style.height = this._height;
+        }
     }
     /**
      * Adjust the desired top position to compensate for shift of the screen
@@ -359,6 +362,7 @@ let Popover = Popover_1 = class Popover extends Popup {
         }
         else if (this.verticalAlign === PopoverVerticalAlign.Stretch && !isVertical) {
             popoverSize.height = targetRect.height;
+            this._height = `${targetRect.height}px`;
         }
         const arrowOffset = this.hideArrow ? 0 : ARROW_SIZE;
         // calc popover positions
@@ -656,9 +660,9 @@ Popover = Popover_1 = __decorate([
         tag: "ui5-popover",
         styles: [
             Popup.styles,
-            browserScrollbarCSS,
             PopupsCommonCss,
             PopoverCss,
+            getEffectiveScrollbarStyle(),
         ],
         template: PopoverTemplate,
     })

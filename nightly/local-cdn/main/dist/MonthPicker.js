@@ -40,7 +40,6 @@ let MonthPicker = MonthPicker_1 = class MonthPicker extends CalendarPart {
         /**
          * An array of UTC timestamps representing the selected date
          * or dates depending on the capabilities of the picker component.
-         * @public
          * @default []
          */
         this.selectedDates = [];
@@ -53,7 +52,6 @@ let MonthPicker = MonthPicker_1 = class MonthPicker extends CalendarPart {
          *
          * Note that 'CalendarSelectionMode.Multiple` is not supported for Month Picker!
          * @default "Single"
-         * @public
          * @since 2.2.0
          */
         this.selectionMode = "Single";
@@ -345,14 +343,12 @@ MonthPicker = MonthPicker_1 = __decorate([
     })
     /**
      * Fired when the user selects a month via "Space", "Enter" or click.
-     * @public
      */
     ,
     event("change")
     /**
      * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
      * @since 1.0.0-rc.9
-     * @public
      */
     ,
     event("navigate")

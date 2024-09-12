@@ -38,7 +38,6 @@ let YearPicker = YearPicker_1 = class YearPicker extends CalendarPart {
          * An array of UTC timestamps representing the selected date
          * or dates depending on the capabilities of the picker component.
          * @default []
-         * @public
          */
         this.selectedDates = [];
         /**
@@ -50,7 +49,6 @@ let YearPicker = YearPicker_1 = class YearPicker extends CalendarPart {
          *
          * Note that 'CalendarSelectionMode.Multiple` is not supported for Year Picker!
          * @default "Single"
-         * @public
          * @since 2.2.0
          */
         this.selectionMode = "Single";
@@ -376,14 +374,12 @@ YearPicker = YearPicker_1 = __decorate([
     })
     /**
      * Fired when the user selects a year via "Space", "Enter" or click.
-     * @public
      */
     ,
     event("change")
     /**
      * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
      * @since 1.0.0-rc.9
-     * @public
      */
     ,
     event("navigate")

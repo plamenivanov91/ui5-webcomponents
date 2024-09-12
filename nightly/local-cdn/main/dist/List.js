@@ -14,9 +14,9 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isTabNext, isSpace, isEnter, isTabPrevious, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isTabNext, isSpace, isEnter, isTabPrevious, isCtrl, } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -35,7 +35,6 @@ import BusyIndicator from "./BusyIndicator.js";
 import ListTemplate from "./generated/templates/ListTemplate.lit.js";
 // Styles
 import listCss from "./generated/themes/List.css.js";
-import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 // Texts
 import { LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE, ARIA_LABEL_LIST_MULTISELECTABLE, ARIA_LABEL_LIST_DELETABLE, } from "./generated/i18n/i18n-defaults.js";
 import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
@@ -95,6 +94,8 @@ const PAGE_UP_DOWN_SIZE = 10;
  * @constructor
  * @extends UI5Element
  * @public
+ * @csspart growing-button - Used to style the button, that is used for growing of the component
+ * @csspart growing-button-inner - Used to style the button inner element
  */
 let List = List_1 = class List extends UI5Element {
     static async onDefine() {
@@ -330,7 +331,6 @@ let List = List_1 = class List extends UI5Element {
         return {
             root: {
                 "ui5-list-root": true,
-                "ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
             },
         };
     }
@@ -461,8 +461,47 @@ let List = List_1 = class List extends UI5Element {
         });
     }
     _onkeydown(e) {
+        if (isCtrl(e)) {
+            this._moveItem(e.target, e);
+            return;
+        }
         if (isTabNext(e)) {
             this._handleTabNext(e);
+        }
+    }
+    _moveItem(item, e) {
+        if (!item || !item.movable) {
+            return;
+        }
+        const closestPositions = findClosestPositionsByKey(this.items, item, e);
+        if (!closestPositions.length) {
+            return;
+        }
+        e.preventDefault();
+        const acceptedPosition = closestPositions.find(({ element, placement }) => {
+            return !this.fireEvent("move-over", {
+                originalEvent: e,
+                source: {
+                    element: item,
+                },
+                destination: {
+                    element,
+                    placement,
+                },
+            }, true);
+        });
+        if (acceptedPosition) {
+            this.fireEvent("move", {
+                originalEvent: e,
+                source: {
+                    element: item,
+                },
+                destination: {
+                    element: acceptedPosition.element,
+                    placement: acceptedPosition.placement,
+                },
+            });
+            item.focus();
         }
     }
     _onLoadMoreKeydown(e) {
@@ -588,6 +627,7 @@ let List = List_1 = class List extends UI5Element {
         }
         const placementAccepted = placements.some(placement => {
             const beforeItemMovePrevented = !this.fireEvent("move-over", {
+                originalEvent: e,
                 source: {
                     element: draggedElement,
                 },
@@ -612,6 +652,7 @@ let List = List_1 = class List extends UI5Element {
         e.preventDefault();
         const draggedElement = DragRegistry.getDraggedElement();
         this.fireEvent("move", {
+            originalEvent: e,
             source: {
                 element: draggedElement,
             },
@@ -865,7 +906,10 @@ List = List_1 = __decorate([
         fastNavigation: true,
         renderer: litRender,
         template: ListTemplate,
-        styles: [browserScrollbarCSS, listCss],
+        styles: [
+            listCss,
+            getEffectiveScrollbarStyle(),
+        ],
         dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
     })
     /**
@@ -1005,6 +1049,10 @@ List = List_1 = __decorate([
             /**
              * @public
              */
+            originalEvent: { type: Event },
+            /**
+             * @public
+             */
             source: { type: Object },
             /**
              * @public
@@ -1024,6 +1072,10 @@ List = List_1 = __decorate([
     ,
     event("move", {
         detail: {
+            /**
+             * @public
+             */
+            originalEvent: { type: Event },
             /**
              * @public
              */

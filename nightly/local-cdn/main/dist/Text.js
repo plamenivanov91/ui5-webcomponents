@@ -45,7 +45,6 @@ import styles from "./generated/themes/Text.css.js";
  * @constructor
  * @extends UI5Element
  * @public
- * @slot {Array<Node>} default - Defines the text of the component.
  * @since 2.0.0
  */
 let Text = Text_1 = class Text extends UI5Element {

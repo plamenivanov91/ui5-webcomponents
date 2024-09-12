@@ -39,7 +39,6 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
         /**
          * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
          * @default []
-         * @public
          */
         this.selectedDates = [];
         /**
@@ -50,7 +49,6 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
          * - `CalendarSelectionMode.Range` - enables selection of a date range.
          * - `CalendarSelectionMode.Multiple` - enables selection of multiple dates.
          * @default "Single"
-         * @public
          */
         this.selectionMode = "Single";
         /**
@@ -59,7 +57,6 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
          * **Note:** For calendars other than Gregorian,
          * the week numbers are not displayed regardless of what is set.
          * @default false
-         * @public
          * @since 1.0.0-rc.8
          */
         this.hideWeekNumbers = false;
@@ -680,13 +677,11 @@ DayPicker = DayPicker_1 = __decorate([
     })
     /**
      * Fired when the selected date(s) change
-     * @public
      */
     ,
     event("change")
     /**
      * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
-     * @public
      */
     ,
     event("navigate")

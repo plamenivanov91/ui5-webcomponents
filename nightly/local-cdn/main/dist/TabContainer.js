@@ -17,14 +17,14 @@ import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
-import { isSpace, isEnter, isDown, isRight, isLeft, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isDown, isRight, isLeft, isUp, isCtrl, } from "@ui5/webcomponents-base/dist/Keys.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
-import findClosestPosition from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import longDragOverHandler from "@ui5/webcomponents-base/dist/util/dragAndDrop/longDragOverHandler.js";
@@ -337,6 +337,51 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         this.dropIndicatorDOM.targetReference = null;
         draggedElement.focus();
     }
+    _moveHeaderItem(tab, e) {
+        if (!tab.movable) {
+            return;
+        }
+        const headerItems = this.items.map(item => item.getDomRefInStrip())
+            .filter((item) => !item?.hasAttribute("hidden"));
+        let positions = findClosestPositionsByKey(headerItems, tab.getDomRefInStrip(), e);
+        positions = positions.map(({ element, placement }) => {
+            while (element && element.realTabReference.hasAttribute("ui5-tab-separator") && placement === MovePlacement.Before) {
+                element = headerItems.at(headerItems.indexOf(element) - 1);
+                placement = MovePlacement.After;
+            }
+            while (element && element.realTabReference.hasAttribute("ui5-tab-separator") && placement === MovePlacement.After) {
+                element = headerItems.at(headerItems.indexOf(element) + 1);
+                placement = MovePlacement.Before;
+            }
+            return {
+                element,
+                placement,
+            };
+        });
+        const acceptedPosition = positions.find(({ element, placement }) => {
+            return !this.fireEvent("move-over", {
+                source: {
+                    element: tab,
+                },
+                destination: {
+                    element: element.realTabReference,
+                    placement,
+                },
+            }, true);
+        });
+        if (acceptedPosition) {
+            this.fireEvent("move", {
+                source: {
+                    element: tab,
+                },
+                destination: {
+                    element: acceptedPosition.element.realTabReference,
+                    placement: acceptedPosition.placement,
+                },
+            });
+            tab.focus();
+        }
+    }
     _onHeaderDragLeave(e) {
         if (e.relatedTarget instanceof Node && this.shadowRoot.contains(e.relatedTarget)) {
             return;
@@ -344,13 +389,29 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         this.dropIndicatorDOM.targetReference = null;
     }
     _onPopoverListMoveOver(e) {
-        const { destination } = e.detail;
+        const { destination, source } = e.detail;
         const draggedElement = DragRegistry.getDraggedElement();
-        const dropTarget = destination.element.realTabReference;
-        if (destination.placement === MovePlacement.On && (dropTarget.isSeparator || draggedElement === dropTarget)) {
+        let destinationElement = destination.element.realTabReference;
+        // workaround to simulate tree behavior
+        if (e.detail.originalEvent instanceof KeyboardEvent) {
+            const realTabReference = source.element.realTabReference;
+            const siblings = this._findSiblings(realTabReference);
+            let items = siblings;
+            if (this.items.includes(realTabReference)) {
+                items = siblings.filter(sibling => {
+                    return e.target.items.some(el => el.realTabReference === sibling);
+                });
+            }
+            const nextPosition = findClosestPositionsByKey(items, realTabReference, e.detail.originalEvent);
+            destinationElement = nextPosition[0]?.element;
+        }
+        if (!destinationElement) {
             return;
         }
-        if (draggedElement !== dropTarget && draggedElement.contains(dropTarget)) {
+        if (destination.placement === MovePlacement.On && (destinationElement.hasAttribute("ui5-tab-separator") || draggedElement === destinationElement)) {
+            return;
+        }
+        if (draggedElement !== destinationElement && draggedElement.contains(destinationElement)) {
             return;
         }
         const placementAccepted = !this.fireEvent("move-over", {
@@ -358,7 +419,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                 element: draggedElement,
             },
             destination: {
-                element: dropTarget,
+                element: destinationElement,
                 placement: destination.placement,
             },
         }, true);
@@ -370,20 +431,42 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         }
     }
     _onPopoverListMove(e) {
-        const { destination } = e.detail;
+        const { destination, source } = e.detail;
         const draggedElement = DragRegistry.getDraggedElement();
+        let destinationElement = destination.element.realTabReference;
+        // Workaround to simulate tree behavior
+        if (e.detail.originalEvent instanceof KeyboardEvent) {
+            const realTabReference = source.element.realTabReference;
+            const siblings = this._findSiblings(realTabReference);
+            let items = siblings;
+            if (this.items.includes(realTabReference)) {
+                items = siblings.filter(sibling => {
+                    return e.target.items.some(el => el.realTabReference === sibling);
+                });
+            }
+            const nextPosition = findClosestPositionsByKey(items, realTabReference, e.detail.originalEvent);
+            destinationElement = nextPosition[0]?.element;
+        }
+        if (!destinationElement) {
+            return;
+        }
         e.preventDefault();
         this.fireEvent("move", {
             source: {
                 element: draggedElement,
             },
             destination: {
-                element: destination.element.realTabReference,
+                element: destinationElement,
                 placement: destination.placement,
             },
         }, true);
         this.dropIndicatorDOM.targetReference = null;
         draggedElement.focus();
+    }
+    _onPopoverListKeyDown(e) {
+        if (isCtrl(e)) {
+            this._setDraggedElement(e.target.realTabReference);
+        }
     }
     async _onTabStripClick(e) {
         const tab = getTabInStrip(e.target);
@@ -447,7 +530,14 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     }
     _onTabStripKeyDown(e) {
         const tab = getTabInStrip(e.target);
-        if (!tab || tab.realTabReference.disabled) {
+        if (!tab) {
+            return;
+        }
+        if (isCtrl(e)) {
+            this._moveHeaderItem(tab.realTabReference, e);
+            return;
+        }
+        if (tab.realTabReference.disabled) {
             return;
         }
         if (isEnter(e)) {
@@ -936,6 +1026,15 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     }
     get dropIndicatorDOM() {
         return this.shadowRoot.querySelector("[ui5-drop-indicator]");
+    }
+    _findSiblings(tab) {
+        let parent;
+        walk(this.items, item => {
+            if (item.items && item.items.includes(tab)) {
+                parent = item;
+            }
+        });
+        return (parent ?? this).items;
     }
     get classes() {
         return {
