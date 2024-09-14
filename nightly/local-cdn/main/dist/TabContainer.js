@@ -535,6 +535,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         }
         if (isCtrl(e)) {
             this._moveHeaderItem(tab.realTabReference, e);
+            e.preventDefault();
             return;
         }
         if (tab.realTabReference.disabled) {
