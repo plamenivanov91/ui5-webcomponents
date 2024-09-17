@@ -1,5 +1,10 @@
-commit bd3aab9d7765f31019d3dd93b8923e9bfea8a71f
-Author: ilhan orhan <ilhan.orhan007@gmail.com>
-Date:   Fri Sep 13 09:36:47 2024 +0300
+commit 371c547676ed71582dc6ff64a2a1b1181dd9bf9d
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Mon Sep 16 11:09:55 2024 +0300
 
-    chore: migrate more base tests to Cypress (#9849)
+    fix(ui5-popover): correct opacity (#9839)
+    
+    The background of the modal popover was black which made the context page not visible.
+    So opacity was added to grey out the background
+    
+    Fixes: #9823
