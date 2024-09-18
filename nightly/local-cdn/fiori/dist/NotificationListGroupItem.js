@@ -70,7 +70,7 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
         /**
          * Defines whether the component will have growing capability by pressing a `More` button.
          * When button is pressed `load-more` event will be fired.
-         * @default false
+         * @default "None"
          * @public
          * @since 2.2.0
          */

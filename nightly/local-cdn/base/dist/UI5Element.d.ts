@@ -376,4 +376,4 @@ declare abstract class UI5Element extends HTMLElement {
 declare const instanceOfUI5Element: (object: any) => object is UI5Element;
 export default UI5Element;
 export { instanceOfUI5Element, };
-export type { ChangeInfo, Renderer, RendererOptions, };
+export type { ChangeInfo, InvalidationInfo, Renderer, RendererOptions, };

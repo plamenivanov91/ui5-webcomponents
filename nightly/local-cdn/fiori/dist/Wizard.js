@@ -316,7 +316,9 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
             this.selectionRequestedByClick = false;
             return;
         }
-        debounce(this.changeSelectionByScroll.bind(this, e.target.scrollTop), Wizard_1.SCROLL_DEBOUNCE_RATE);
+        if (this.contentLayout !== "SingleStep") {
+            debounce(this.changeSelectionByScroll.bind(this, e.target.scrollTop), Wizard_1.SCROLL_DEBOUNCE_RATE);
+        }
     }
     /**
      * Handles when a step in the header is focused in order to update the `ItemNavigation`.
