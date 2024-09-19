@@ -407,8 +407,9 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
     readonly dependencies: (typeof UI5Element)[];
     cacheUniqueDependencies(this: typeof UI5Element): void;
     getUniqueDependencies(this: typeof UI5Element): (typeof UI5Element)[];
-    whenDependenciesDefined(): Promise<(typeof UI5Element)[]>;
     onDefine(): Promise<void>;
+    asyncFinished: boolean;
+    definePromise: Promise<[void, void]> | undefined;
     define(): Promise<typeof UI5Element>;
     getMetadata(): import("../UI5ElementMetadata.js").default;
 };

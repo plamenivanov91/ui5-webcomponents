@@ -345,15 +345,13 @@ declare abstract class UI5Element extends HTMLElement {
      */
     static getUniqueDependencies(this: typeof UI5Element): Array<typeof UI5Element>;
     /**
-     * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
-     */
-    static whenDependenciesDefined(): Promise<Array<typeof UI5Element>>;
-    /**
      * Hook that will be called upon custom element definition
      *
      * @protected
      */
     static onDefine(): Promise<void>;
+    static asyncFinished: boolean;
+    static definePromise: Promise<[void, void]> | undefined;
     /**
      * Registers a UI5 Web Component in the browser window object
      * @public

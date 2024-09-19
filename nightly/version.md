@@ -1,5 +1,17 @@
-commit 6e150bb0aa61ae4660347358c5ba29ac054e0cc0
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue Sep 17 16:47:20 2024 +0300
+commit be7691a0522218334b034c2d284abcb9d465ab83
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Wed Sep 18 09:02:49 2024 +0300
 
-    chore(ui5-notification-list): add tests for the growing functionality (#9856)
+    chore: add guided prompt pattern for <ui5-ai-button> (#9854)
+    
+    * chore: add guided prompt sample for <ui5-ai-button>
+    
+    * chore: correct ai-button state after send
+    
+    * chore: improve sample with popover
+    
+    * chore: make word count more realistic
+    
+    * chore: apply core review feedback
+    
+    * chore: add exp and new tags
