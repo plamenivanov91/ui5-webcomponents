@@ -268,7 +268,6 @@ declare class MultiComboBox extends UI5Element implements IFormInputElement {
     _isOpenedByKeyboard?: boolean;
     _itemToFocus?: IMultiComboBoxItem;
     _itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
-    _tokenCount: number | undefined;
     selectedItems: Array<IMultiComboBoxItem>;
     static i18nBundle: I18nBundle;
     get formValidityMessage(): string;

@@ -174,7 +174,6 @@ declare class FileUploader extends UI5Element implements IFormInputElement {
     get valueStateText(): string;
     get hasValueState(): boolean;
     get hasValueStateText(): boolean;
-    get valueStateMessageText(): Node[];
     get shouldDisplayDefaultValueStateMessage(): boolean;
     get shouldOpenValueStateMessagePopover(): boolean;
     /**

@@ -363,7 +363,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         this.fireEvent("input");
     }
     _tokenDelete(e) {
-        this._tokenCount = this._tokenizer.tokens.length - e.detail.tokens.length;
         this._previouslySelectedItems = this._getSelectedItems();
         const token = e.detail.tokens;
         const deletingItems = this._getItems().filter(item => token.some(t => t.getAttribute("data-ui5-id") === item._id));
@@ -1306,8 +1305,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         if (!this._tokenizer) {
             return;
         }
-        this._tokenCount = this._tokenCount !== undefined ? this._tokenCount : this._tokenizer.tokens.length;
-        return getTokensCountText(this._tokenCount);
+        return getTokensCountText(this.selectedValues.length);
     }
     get _tokensCountTextId() {
         return "ui5-multi-combobox-hiddenText-nMore";

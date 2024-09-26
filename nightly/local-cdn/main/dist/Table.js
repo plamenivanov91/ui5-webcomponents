@@ -105,6 +105,7 @@ import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from ".
  * This Table replaces the previous Table web component, that has been part of **@ui5/webcomponents** version 1.x.
  * For compatibility reasons, we moved the previous Table implementation to the **@ui5/webcomponents-compat** package
  * and will be maintained until the new Table is experimental.
+ * Keep in mind that you can use either the compat/Table, or the main/Table - you can't use them both as they both define the `ui5-table` tag name.
  */
 let Table = Table_1 = class Table extends UI5Element {
     static async onDefine() {

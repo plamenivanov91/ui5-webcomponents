@@ -1,17 +1,7 @@
-commit be7691a0522218334b034c2d284abcb9d465ab83
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Wed Sep 18 09:02:49 2024 +0300
+commit 793b86c507c742a1c89f06c9b373c236ef7e0154
+Author: ilhan orhan <ilhan.orhan007@gmail.com>
+Date:   Wed Sep 25 12:19:31 2024 +0300
 
-    chore: add guided prompt pattern for <ui5-ai-button> (#9854)
+    docs: enhance Table docs (#9929)
     
-    * chore: add guided prompt sample for <ui5-ai-button>
-    
-    * chore: correct ai-button state after send
-    
-    * chore: improve sample with popover
-    
-    * chore: make word count more realistic
-    
-    * chore: apply core review feedback
-    
-    * chore: add exp and new tags
+    Fixes: #9920

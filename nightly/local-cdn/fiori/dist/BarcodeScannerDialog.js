@@ -11,10 +11,11 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import * as ZXing from "@zxing/library/umd/index.min.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import ZXing from "@ui5/webcomponents-fiori/dist/ssr-zxing.js";
 // Texts
 import { BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT, BARCODE_SCANNER_DIALOG_LOADING_TXT, } from "./generated/i18n/i18n-defaults.js";
 // Template
@@ -23,7 +24,8 @@ import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDi
 import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css.js";
 // some tools handle named exports from UMD files and the window object is not assigned but the imports work (vitejs)
 // other tools do not handle named exports (they are undefined after the import), but the window global is assigned and can be used (web dev server)
-const effectiveZXing = { ...ZXing, ...window.ZXing };
+const windowZXing = typeof window === "undefined" ? {} : window.ZXing;
+const effectiveZXing = { ...ZXing, ...windowZXing };
 const { BrowserMultiFormatReader, NotFoundException } = effectiveZXing;
 const defaultMediaConstraints = {
     audio: false,

@@ -369,6 +369,7 @@ let Select = Select_1 = class Select extends UI5Element {
      * @private
      */
     _handleSelectionChange(index = this._selectedIndex) {
+        this._typedChars = "";
         this._select(index);
         this._toggleRespPopover();
     }
