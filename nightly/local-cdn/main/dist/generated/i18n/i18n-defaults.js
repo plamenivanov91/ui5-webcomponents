@@ -1,4 +1,3 @@
-import "@ui5/webcomponents-base/dist/i18nBundle.js";
 const ARIA_LABEL_CARD_CONTENT = { key: "ARIA_LABEL_CARD_CONTENT", defaultText: "Card Content" };
 const ARIA_ROLEDESCRIPTION_CARD = { key: "ARIA_ROLEDESCRIPTION_CARD", defaultText: "Card" };
 const ARIA_ROLEDESCRIPTION_CARD_HEADER = { key: "ARIA_ROLEDESCRIPTION_CARD_HEADER", defaultText: "Card Header" };

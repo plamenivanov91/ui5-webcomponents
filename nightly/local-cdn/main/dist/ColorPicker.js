@@ -289,7 +289,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
     }
     _changeSelectedColor(x, y) {
         this._selectedCoordinates = {
-            x: x - PICKER_POINTER_WIDTH,
+            x: x - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
             y: y - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
         };
         // Idication that changes to the color settings are triggered as a result of user pressing over the main color section.
@@ -348,7 +348,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
     _setValues() {
         const hslColours = RGBToHSL(this._value);
         this._selectedCoordinates = {
-            x: ((Math.round(hslColours.l * 100) * 2.56)) - PICKER_POINTER_WIDTH,
+            x: ((Math.round(hslColours.l * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
             y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
         };
         if (this._isSelectedColorChanged) { // We shouldn't update the hue value when user presses over the main color section.

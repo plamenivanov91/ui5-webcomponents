@@ -54,6 +54,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], TableCellBase.prototype, "_popin", void 0);
+__decorate([
+    property()
+], TableCellBase.prototype, "horizontalAlign", void 0);
 TableCellBase = TableCellBase_1 = __decorate([
     customElement({
         renderer: litRender,

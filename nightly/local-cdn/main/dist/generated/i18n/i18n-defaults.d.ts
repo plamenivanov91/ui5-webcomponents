@@ -1,4 +1,4 @@
-import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 declare const ARIA_LABEL_CARD_CONTENT: I18nText;
 declare const ARIA_ROLEDESCRIPTION_CARD: I18nText;
 declare const ARIA_ROLEDESCRIPTION_CARD_HEADER: I18nText;

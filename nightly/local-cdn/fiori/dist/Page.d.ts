@@ -74,6 +74,7 @@ declare class Page extends UI5Element {
      * @public
      */
     footer: Array<HTMLElement>;
+    constructor();
     get _contentBottom(): "0" | "2.75rem";
     get _contentPaddingBottom(): "0" | "3.5rem";
     get _contentTop(): "2.75rem" | "0rem";

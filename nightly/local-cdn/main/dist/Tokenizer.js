@@ -239,7 +239,7 @@ let Tokenizer = Tokenizer_1 = class Tokenizer extends UI5Element {
         const nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
         this._handleCurrentItemAfterDeletion(nextToken);
         this._tokenDeleting = true;
-        this.fireEvent("token-delete", { tokens: [token] || [target] });
+        this.fireEvent("token-delete", { tokens: [token] });
     }
     _handleCurrentItemAfterDeletion(nextToken) {
         if (nextToken && !isPhone()) {

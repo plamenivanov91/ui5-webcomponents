@@ -565,8 +565,13 @@ let Input = Input_1 = class Input extends UI5Element {
         }
     }
     _clear() {
+        const valueBeforeClear = this.value;
         this.value = "";
-        this.fireEvent(INPUT_EVENTS.INPUT, { inputType: "" });
+        const prevented = !this.fireEvent(INPUT_EVENTS.INPUT, { inputType: "" }, true);
+        if (prevented) {
+            this.value = valueBeforeClear;
+            return;
+        }
         if (!this._isPhone) {
             this.fireResetSelectionChange();
             this.focus();
@@ -769,6 +774,8 @@ let Input = Input_1 = class Input extends UI5Element {
         this._performTextSelection = true;
     }
     fireEventByAction(action, e) {
+        const valueBeforeInput = this.value;
+        const inputRef = this.getInputDOMRefSync();
         if (this.disabled || this.readonly) {
             return;
         }
@@ -779,7 +786,11 @@ let Input = Input_1 = class Input extends UI5Element {
         this.valueBeforeSelectionStart = inputValue;
         if (isUserInput) { // input
             const inputType = e.inputType || "";
-            this.fireEvent(INPUT_EVENTS.INPUT, { inputType });
+            const prevented = !this.fireEvent(INPUT_EVENTS.INPUT, { inputType }, true);
+            if (prevented) {
+                this.value = valueBeforeInput;
+                inputRef && (inputRef.value = valueBeforeInput);
+            }
             // Angular two way data binding
             this.fireEvent("value-changed");
             this.fireResetSelectionChange();
@@ -1234,6 +1245,7 @@ Input = Input_1 = __decorate([
     /**
      * Fired when the value of the component changes at each keystroke,
      * and when a suggestion item has been selected.
+     * @allowPreventDefault
      * @public
      */
     ,

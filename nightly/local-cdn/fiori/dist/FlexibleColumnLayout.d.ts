@@ -338,7 +338,7 @@ declare class FlexibleColumnLayout extends UI5Element {
     get endSeparatorGripVisibility(): boolean | undefined;
     get effectiveSeparatorsInfo(): {
         visible: boolean;
-        gripVisible?: boolean | undefined;
+        gripVisible?: boolean;
     }[];
     get effectiveLayout(): "OneColumn" | "TwoColumnsStartExpanded" | "TwoColumnsMidExpanded" | "ThreeColumnsMidExpanded" | "ThreeColumnsEndExpanded" | "ThreeColumnsStartExpandedEndHidden" | "ThreeColumnsMidExpandedEndHidden" | "MidColumnFullScreen" | "EndColumnFullScreen" | FCLLayout;
     get startSeparatorDOM(): HTMLElement;

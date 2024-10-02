@@ -5,10 +5,10 @@ declare const testAssets: {
     getAcceptIconPathData: () => Promise<string>;
     generateHighlightedMarkup: typeof generateHighlightedMarkup;
     getExportedIconsValues: () => ("accept" | "SAP-icons-v4/accept" | "SAP-icons-v5/accept" | "tnt/actor" | "tnt-v2/actor" | "tnt-v3/actor" | "business-suite/3d" | "business-suite-v1/3d" | "business-suite-v2/3d")[];
-    resetConfiguration: (testEnv?: boolean | undefined) => void;
+    resetConfiguration: (testEnv?: boolean) => void;
     configuration: {
-        getAnimationMode: () => "none" | "full" | "basic" | "minimal";
-        setAnimationMode: (animationMode: "none" | "full" | "basic" | "minimal") => void;
+        getAnimationMode: () => `${import("@ui5/webcomponents-base/dist/types/AnimationMode.js").default}`;
+        setAnimationMode: (animationMode: `${import("@ui5/webcomponents-base/dist/types/AnimationMode.js").default}`) => void;
         getTheme: () => string;
         setTheme: (theme: string) => Promise<void>;
         getThemeRoot: () => string | undefined;
@@ -17,7 +17,7 @@ declare const testAssets: {
         getLanguage: () => string | undefined;
         setLanguage: (language: string) => Promise<void>;
         setNoConflict: (noConflictData: boolean | {
-            events: string[];
+            events: Array<string>;
         }) => void;
         getFirstDayOfWeek: () => number | undefined;
         getTimezone: () => string | undefined;
@@ -48,7 +48,7 @@ declare const testAssets: {
     getIconAccessibleName: (name: string | undefined) => Promise<string | undefined>;
     renderFinished: () => Promise<void>;
     defaultTexts: typeof import("./generated/i18n/i18n-defaults.js");
-    getEffectiveIconCollection: (collectionName?: string | undefined) => string;
+    getEffectiveIconCollection: (collectionName?: import("@ui5/webcomponents-base/dist/config/Icons.js").IconCollection) => import("@ui5/webcomponents-base/dist/config/Icons.js").IconCollection;
     ignoreCustomElements: (tagPrefix: string) => void;
     shouldIgnoreCustomElement: (tag: string) => boolean;
 };

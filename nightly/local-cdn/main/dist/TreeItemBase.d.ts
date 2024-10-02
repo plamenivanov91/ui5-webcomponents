@@ -140,10 +140,10 @@ declare class TreeItemBase extends ListItem {
         ariaHaspopup: ("dialog" | "grid" | "listbox" | "menu" | "tree") | undefined;
         ariaLabel: string;
         ariaLabelRadioButton: string;
-        ariaSelected?: boolean | undefined;
-        ariaChecked?: boolean | undefined;
-        tooltip?: string | undefined;
-        ariaKeyShortcuts?: string | undefined;
+        ariaSelected?: boolean;
+        ariaChecked?: boolean;
+        tooltip?: string;
+        ariaKeyShortcuts?: string;
     };
     /**
      * Used to duck-type TreeItem elements without using instanceof

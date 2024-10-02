@@ -170,7 +170,7 @@ let List = List_1 = class List extends UI5Element {
         // Indicates if the IntersectionObserver started observing the List
         this.listEndObserved = false;
         this._itemNavigation = new ItemNavigation(this, {
-            skipItemsSize: PAGE_UP_DOWN_SIZE,
+            skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
             navigationMode: NavigationMode.Vertical,
             getItemsCallback: () => this.getEnabledItems(),
         });

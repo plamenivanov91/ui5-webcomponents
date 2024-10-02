@@ -10,6 +10,9 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
+import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 // Template
 import PageTemplate from "./generated/templates/PageTemplate.lit.js";
 // Styles
@@ -45,7 +48,7 @@ import PageCss from "./generated/themes/Page.css.js";
  */
 let Page = class Page extends UI5Element {
     constructor() {
-        super(...arguments);
+        super();
         /**
          * Defines the background color of the `ui5-page`.
          *
@@ -75,6 +78,7 @@ let Page = class Page extends UI5Element {
          * @public
          */
         this.hideFooter = false;
+        this.style.setProperty(getScopedVarName("--_ui5-page-animation-duration"), getAnimationMode() === AnimationMode.None ? "0s" : "0.35s");
     }
     get _contentBottom() {
         return this.fixedFooter && !this.hideFooter ? "2.75rem" : "0";

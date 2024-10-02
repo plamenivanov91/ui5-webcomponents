@@ -227,7 +227,7 @@ declare abstract class UI5Element extends HTMLElement {
      * @private
      */
     _waitForDomRef(): Promise<void> & {
-        _deferredResolve?: PromiseResolve | undefined;
+        _deferredResolve?: PromiseResolve;
     };
     /**
      * Returns the DOM Element inside the Shadow Root that corresponds to the opening tag in the UI5 Web Component's template

@@ -14,10 +14,10 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Persian.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import * as defaultTexts from "./generated/i18n/i18n-defaults.js";
 declare const testAssets: {
-    resetConfiguration: (testEnv?: boolean | undefined) => void;
+    resetConfiguration: (testEnv?: boolean) => void;
     configuration: {
-        getAnimationMode: () => "none" | "full" | "basic" | "minimal";
-        setAnimationMode: (animationMode: "none" | "full" | "basic" | "minimal") => void;
+        getAnimationMode: () => `${import("@ui5/webcomponents-base/dist/types/AnimationMode.js").default}`;
+        setAnimationMode: (animationMode: `${import("@ui5/webcomponents-base/dist/types/AnimationMode.js").default}`) => void;
         getTheme: () => string;
         setTheme: (theme: string) => Promise<void>;
         getThemeRoot: () => string | undefined;
@@ -26,7 +26,7 @@ declare const testAssets: {
         getLanguage: () => string | undefined;
         setLanguage: (language: string) => Promise<void>;
         setNoConflict: (noConflictData: boolean | {
-            events: string[];
+            events: Array<string>;
         }) => void;
         getFirstDayOfWeek: () => number | undefined;
         getTimezone: () => string | undefined;
@@ -57,7 +57,7 @@ declare const testAssets: {
     getIconAccessibleName: (name: string | undefined) => Promise<string | undefined>;
     renderFinished: () => Promise<void>;
     defaultTexts: typeof defaultTexts;
-    getEffectiveIconCollection: (collectionName?: string | undefined) => string;
+    getEffectiveIconCollection: (collectionName?: import("@ui5/webcomponents-base/dist/config/Icons.js").IconCollection) => import("@ui5/webcomponents-base/dist/config/Icons.js").IconCollection;
     ignoreCustomElements: (tagPrefix: string) => void;
     shouldIgnoreCustomElement: (tag: string) => boolean;
 };

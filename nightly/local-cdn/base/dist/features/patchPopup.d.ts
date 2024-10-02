@@ -6,7 +6,7 @@ type OpenUI5Popup = {
         open: (...args: any[]) => void;
         _closed: (...args: any[]) => void;
         getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING";
-        getContent: () => Control | HTMLElement;
+        getContent: () => Control | HTMLElement | null;
         onFocusEvent: (e: FocusEvent) => void;
     };
 };

@@ -282,7 +282,7 @@ let TimeSelectionClocks = class TimeSelectionClocks extends TimePickerInternals 
                 "itemMax": 60,
                 "value": time.minutes,
                 "stringValue": this._minutes,
-                "textValue": `${time.minutes} ${this.minutesLabel}`,
+                "textValue": `${time.minutes} ${this.minutesLabel}`, // possible concatenation
                 "displayStep": 5,
                 "lastItemReplacement": 0,
                 "showInnerCircle": false,
@@ -306,7 +306,7 @@ let TimeSelectionClocks = class TimeSelectionClocks extends TimePickerInternals 
                 "itemMax": 60,
                 "value": time.seconds,
                 "stringValue": this._seconds,
-                "textValue": `${time.seconds} ${this.secondsLabel}`,
+                "textValue": `${time.seconds} ${this.secondsLabel}`, // possible concatenation
                 "displayStep": 5,
                 "lastItemReplacement": 0,
                 "showInnerCircle": false,

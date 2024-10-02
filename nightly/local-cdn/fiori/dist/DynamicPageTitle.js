@@ -16,6 +16,8 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import Icon from "@ui5/webcomponents/dist/Icon.js";
+import Title from "@ui5/webcomponents/dist/Title.js";
 // Template
 import DynamicPageTitleTemplate from "./generated/templates/DynamicPageTitleTemplate.lit.js";
 // Styles
@@ -75,6 +77,11 @@ let DynamicPageTitle = DynamicPageTitle_1 = class DynamicPageTitle extends UI5El
          * @private
          */
         this.focused = false;
+        /**
+         * Indicates whether the title has snapped on mobile devices.
+         * @private
+         */
+        this.hasSnappedTitleOnMobile = false;
         /**
          * @private
          */
@@ -184,11 +191,17 @@ __decorate([
     property({ type: Number })
 ], DynamicPageTitle.prototype, "minActionsWidth", void 0);
 __decorate([
+    property({ type: Boolean })
+], DynamicPageTitle.prototype, "hasSnappedTitleOnMobile", void 0);
+__decorate([
     slot({ type: HTMLElement })
 ], DynamicPageTitle.prototype, "heading", void 0);
 __decorate([
     slot({ type: HTMLElement })
 ], DynamicPageTitle.prototype, "snappedHeading", void 0);
+__decorate([
+    slot({ type: HTMLElement })
+], DynamicPageTitle.prototype, "snappedTitleOnMobile", void 0);
 __decorate([
     slot({ type: HTMLElement })
 ], DynamicPageTitle.prototype, "actionsBar", void 0);
@@ -217,6 +230,7 @@ DynamicPageTitle = DynamicPageTitle_1 = __decorate([
         renderer: litRender,
         styles: DynamicPageTitleCss,
         template: DynamicPageTitleTemplate,
+        dependencies: [Title, Icon],
     })
     /**
      * Event is fired when the title is toggled.
