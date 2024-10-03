@@ -11,6 +11,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import AriaHasPopup from "@ui5/webcomponents-base/dist/types/AriaHasPopup.js";
@@ -20,7 +21,6 @@ import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
@@ -752,9 +752,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
     get accLogoRole() {
         return this.accessibilityAttributes.logo?.role || "button";
     }
-    static async onDefine() {
-        ShellBar_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-    }
 };
 __decorate([
     property()
@@ -825,6 +822,9 @@ __decorate([
 __decorate([
     slot()
 ], ShellBar.prototype, "midContent", void 0);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], ShellBar, "i18nBundle", void 0);
 ShellBar = ShellBar_1 = __decorate([
     customElement({
         tag: "ui5-shellbar",

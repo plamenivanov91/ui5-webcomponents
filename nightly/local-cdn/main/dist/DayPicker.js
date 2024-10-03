@@ -8,6 +8,7 @@ var DayPicker_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import { isSpace, isSpaceShift, isEnter, isEnterShift, isUp, isDown, isLeft, isRight, isHome, isEnd, isHomeCtrl, isEndCtrl, isPageUp, isPageDown, isPageUpShift, isPageUpAlt, isPageUpShiftCtrl, isPageDownShift, isPageDownAlt, isPageDownShiftCtrl, } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -669,6 +670,9 @@ __decorate([
 __decorate([
     property({ type: Array })
 ], DayPicker.prototype, "specialCalendarDates", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], DayPicker, "i18nBundle", void 0);
 DayPicker = DayPicker_1 = __decorate([
     customElement({
         tag: "ui5-daypicker",

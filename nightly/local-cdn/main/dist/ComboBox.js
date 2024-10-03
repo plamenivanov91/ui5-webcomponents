@@ -24,7 +24,7 @@ import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { isBackSpace, isDelete, isShow, isUp, isDown, isEnter, isEscape, isTabNext, isTabPrevious, isPageUp, isPageDown, isHome, isEnd, } from "@ui5/webcomponents-base/dist/Keys.js";
 import * as Filters from "./Filters.js";
@@ -938,9 +938,6 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     get responsivePopoverId() {
         return `${this._id}-popover`;
     }
-    static async onDefine() {
-        ComboBox_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
     get styles() {
         const remSizeInPx = parseInt(getComputedStyle(document.documentElement).fontSize);
         return {
@@ -1051,6 +1048,9 @@ __decorate([
 __decorate([
     slot()
 ], ComboBox.prototype, "icon", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], ComboBox, "i18nBundle", void 0);
 ComboBox = ComboBox_1 = __decorate([
     customElement({
         tag: "ui5-combobox",

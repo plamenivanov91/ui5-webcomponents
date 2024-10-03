@@ -10,10 +10,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isEscape, isShift, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { isDesktop, isSafari, } from "@ui5/webcomponents-base/dist/Device.js";
@@ -344,9 +344,6 @@ let Button = Button_1 = class Button extends UI5Element {
     get _isReset() {
         return this.type === ButtonType.Reset;
     }
-    static async onDefine() {
-        Button_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property()
@@ -414,6 +411,9 @@ __decorate([
 __decorate([
     slot({ type: Node, "default": true })
 ], Button.prototype, "text", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Button, "i18nBundle", void 0);
 Button = Button_1 = __decorate([
     customElement({
         tag: "ui5-button",

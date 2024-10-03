@@ -195,7 +195,6 @@ declare class FileUploader extends UI5Element implements IFormInputElement {
         };
     };
     get ui5Input(): Input | null;
-    static onDefine(): Promise<void>;
 }
 export default FileUploader;
 export type { FileData, FileUploaderChangeEventDetail, FileUploaderFileSizeExceedEventDetail, };

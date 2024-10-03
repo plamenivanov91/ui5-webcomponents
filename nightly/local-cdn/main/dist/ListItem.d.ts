@@ -180,7 +180,6 @@ declare abstract class ListItem extends ListItemBase {
     get _hasHighlightColor(): boolean;
     get hasConfigurableMode(): boolean;
     get _listItem(): HTMLLIElement | null;
-    static onDefine(): Promise<void>;
 }
 export default ListItem;
 export type { IAccessibleListItem, SelectionRequestEventDetail, ListItemAccessibilityAttributes, };

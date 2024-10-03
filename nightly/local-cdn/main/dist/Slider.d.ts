@@ -132,7 +132,6 @@ declare class Slider extends SliderBase implements IFormInputElement {
     get tooltipValue(): string;
     get _ariaDisabled(): true | undefined;
     get _ariaLabelledByText(): string;
-    static onDefine(): Promise<void>;
     get tickmarksObject(): boolean[];
 }
 export default Slider;

@@ -254,7 +254,6 @@ declare class Table extends UI5Element {
      * @public
      */
     columns: Array<TableColumn>;
-    static onDefine(): Promise<void>;
     static i18nBundle: I18nBundle;
     fnHandleF7: (e: CustomEvent) => void;
     fnOnRowFocused: (e: CustomEvent) => void;

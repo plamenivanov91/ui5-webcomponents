@@ -12,7 +12,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -176,9 +176,6 @@ let Switch = Switch_1 = class Switch extends UI5Element {
     get ariaLabelText() {
         return [getEffectiveAriaLabelText(this), this.hiddenText].join(" ").trim();
     }
-    static async onDefine() {
-        Switch_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property()
@@ -210,6 +207,9 @@ __decorate([
 __decorate([
     property()
 ], Switch.prototype, "name", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Switch, "i18nBundle", void 0);
 Switch = Switch_1 = __decorate([
     customElement({
         tag: "ui5-switch",

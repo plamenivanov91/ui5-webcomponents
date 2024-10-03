@@ -11,7 +11,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getRGBColor, HSLToRGB, HEXToRGB, RGBToHSL, } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
@@ -48,15 +48,11 @@ const PICKER_POINTER_WIDTH = 6.5;
  * @public
  */
 let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
-    ;
     async formElementAnchor() {
         return this.getFocusDomRefAsync();
     }
     get formFormattedValue() {
         return this.value;
-    }
-    static async onDefine() {
-        ColorPicker_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
     }
     constructor() {
         super();
@@ -438,6 +434,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], ColorPicker.prototype, "_wrongHEX", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], ColorPicker, "i18nBundle", void 0);
 ColorPicker = ColorPicker_1 = __decorate([
     customElement({
         tag: "ui5-color-picker",

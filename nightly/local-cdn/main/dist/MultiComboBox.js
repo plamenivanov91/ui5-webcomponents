@@ -17,7 +17,7 @@ import { isShow, isDown, isUp, isSpace, isSpaceCtrl, isSpaceShift, isRight, isHo
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isPhone, isAndroid, isFirefox, } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -1426,9 +1426,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             },
         };
     }
-    static async onDefine() {
-        MultiComboBox_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property()
@@ -1535,6 +1532,9 @@ __decorate([
 __decorate([
     slot()
 ], MultiComboBox.prototype, "valueStateMessage", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], MultiComboBox, "i18nBundle", void 0);
 MultiComboBox = MultiComboBox_1 = __decorate([
     customElement({
         tag: "ui5-multi-combobox",

@@ -214,7 +214,6 @@ declare class Table extends UI5Element {
     _invalidate: number;
     _renderNavigated: boolean;
     static i18nBundle: I18nBundle;
-    static onDefine(): Promise<void>;
     _events: string[];
     _onEventBound: (e: Event) => void;
     _onResizeBound: ResizeObserverCallback;

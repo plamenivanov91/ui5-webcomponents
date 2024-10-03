@@ -9,7 +9,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -112,12 +112,6 @@ let UploadCollectionItem = UploadCollectionItem_1 = class UploadCollectionItem e
          * @private
          */
         this._editing = false;
-    }
-    static async onDefine() {
-        [UploadCollectionItem_1.i18nFioriBundle] = await Promise.all([
-            getI18nBundle("@ui5/webcomponents-fiori"),
-            super.onDefine(),
-        ]);
     }
     /**
      * @override
@@ -324,6 +318,9 @@ __decorate([
 __decorate([
     slot({ type: HTMLElement })
 ], UploadCollectionItem.prototype, "thumbnail", void 0);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], UploadCollectionItem, "i18nFioriBundle", void 0);
 UploadCollectionItem = UploadCollectionItem_1 = __decorate([
     customElement({
         tag: "ui5-upload-collection-item",

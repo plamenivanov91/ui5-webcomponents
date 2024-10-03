@@ -10,7 +10,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isF7, isTabNext, isTabPrevious, } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -292,9 +292,6 @@ let TableRow = TableRow_1 = class TableRow extends UI5Element {
     getNormilzedTextContent(textContent) {
         return textContent.replace(/[\n\r\t]/g, "").trim();
     }
-    static async onDefine() {
-        TableRow_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property()
@@ -326,6 +323,9 @@ __decorate([
 __decorate([
     slot({ type: HTMLElement, "default": true, individualSlots: true })
 ], TableRow.prototype, "cells", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], TableRow, "i18nBundle", void 0);
 TableRow = TableRow_1 = __decorate([
     customElement({
         tag: "ui5-table-row",

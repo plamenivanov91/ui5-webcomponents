@@ -11,16 +11,15 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
 import { isShow, isEnter, isPageUp, isPageDown, isPageUpShift, isPageDownShift, isPageUpShiftCtrl, isPageDownShiftCtrl, isTabNext, isTabPrevious, isF6Next, isF6Previous, } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
@@ -143,12 +142,6 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
          */
         this.required = false;
         this._isInputsPopoverOpen = false;
-    }
-    static async onDefine() {
-        [TimePicker_1.i18nBundle] = await Promise.all([
-            getI18nBundle("@ui5/webcomponents"),
-            fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-        ]);
     }
     get formValidityMessage() {
         return TimePicker_1.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
@@ -542,10 +535,14 @@ __decorate([
 __decorate([
     slot()
 ], TimePicker.prototype, "valueStateMessage", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], TimePicker, "i18nBundle", void 0);
 TimePicker = TimePicker_1 = __decorate([
     customElement({
         tag: "ui5-time-picker",
         languageAware: true,
+        cldr: true,
         formAssociated: true,
         renderer: litRender,
         template: TimePickerTemplate,

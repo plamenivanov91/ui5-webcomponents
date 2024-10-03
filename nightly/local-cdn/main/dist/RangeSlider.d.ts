@@ -312,6 +312,5 @@ declare class RangeSlider extends SliderBase implements IFormInputElement {
             visibility: string;
         };
     };
-    static onDefine(): Promise<void>;
 }
 export default RangeSlider;

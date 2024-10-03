@@ -211,7 +211,6 @@ declare class FlexibleColumnLayout extends UI5Element {
     _ontouchstart: PassiveEventListenerObject;
     separatorMovementSession?: SeparatorMovementSession | null;
     constructor();
-    static onDefine(): Promise<void>;
     static get ANIMATION_DURATION(): 0 | 560;
     onEnterDOM(): void;
     onExitDOM(): void;

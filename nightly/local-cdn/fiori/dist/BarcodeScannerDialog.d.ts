@@ -53,7 +53,6 @@ declare class BarcodeScannerDialog extends UI5Element {
     dialog?: Dialog;
     static i18nBundle: I18nBundle;
     constructor();
-    static onDefine(): Promise<void>;
     onAfterRendering(): void;
     get _open(): boolean;
     /**

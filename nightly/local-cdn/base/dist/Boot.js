@@ -7,6 +7,7 @@ import applyTheme from "./theming/applyTheme.js";
 import { registerCurrentRuntime } from "./Runtimes.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import { attachThemeRegistered } from "./theming/ThemeRegistered.js";
+import fixSafariActiveState from "./util/fixSafariActiveState.js";
 let booted = false;
 let bootPromise;
 const eventProvider = new EventProvider();
@@ -51,6 +52,7 @@ const boot = async () => {
         openUI5Support && openUI5Support.attachListeners();
         insertFontFace();
         insertSystemCSSVars();
+        fixSafariActiveState();
         resolve();
         booted = true;
         eventProvider.fireEvent("boot");

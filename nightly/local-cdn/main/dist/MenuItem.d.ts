@@ -1,5 +1,6 @@
 import type { AccessibilityAttributes } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ListItemAccessibilityAttributes } from "./ListItem.js";
 import ListItem from "./ListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -37,7 +38,6 @@ type MenuItemAccessibilityAttributes = Pick<AccessibilityAttributes, "ariaKeySho
  * @public
  */
 declare class MenuItem extends ListItem implements IMenuItem {
-    static onDefine(): Promise<void>;
     /**
      * Defines the text of the tree item.
      * @default undefined
@@ -151,6 +151,7 @@ declare class MenuItem extends ListItem implements IMenuItem {
      * @since 2.0.0
      */
     endContent: Array<HTMLElement>;
+    static i18nBundle: I18nBundle;
     get placement(): `${PopoverPlacement}`;
     get isRtl(): boolean;
     get hasSubmenu(): boolean;

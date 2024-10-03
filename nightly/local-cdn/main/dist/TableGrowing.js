@@ -10,7 +10,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isSpace, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import TableGrowingTemplate from "./generated/templates/TableGrowingTemplate.lit.js";
@@ -78,9 +78,6 @@ let TableGrowing = TableGrowing_1 = class TableGrowing extends UI5Element {
          */
         this._activeState = false;
         this.identifier = "TableGrowing";
-    }
-    static async onDefine() {
-        TableGrowing_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
     }
     onTableActivate(table) {
         this._table = table;
@@ -229,6 +226,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], TableGrowing.prototype, "_activeState", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], TableGrowing, "i18nBundle", void 0);
 TableGrowing = TableGrowing_1 = __decorate([
     customElement({
         tag: "ui5-table-growing",

@@ -12,7 +12,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
@@ -162,9 +162,6 @@ let Link = Link_1 = class Link extends UI5Element {
     get _hasPopup() {
         return this.accessibilityAttributes.hasPopup;
     }
-    static async onDefine() {
-        Link_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
     _onclick(e) {
         const { altKey, ctrlKey, metaKey, shiftKey, } = e;
         e.stopImmediatePropagation();
@@ -253,6 +250,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Link.prototype, "focused", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Link, "i18nBundle", void 0);
 Link = Link_1 = __decorate([
     customElement({
         tag: "ui5-link",

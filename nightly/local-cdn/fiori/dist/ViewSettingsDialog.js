@@ -9,7 +9,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -130,9 +130,6 @@ let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends
             }
             filter.additionalText = !selectedCount ? "" : `${selectedCount}`;
         });
-    }
-    static async onDefine() {
-        ViewSettingsDialog_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
     }
     get _selectedFilter() {
         for (let i = 0; i < this._currentSettings.filters.length; i++) {
@@ -527,6 +524,9 @@ __decorate([
 __decorate([
     slot()
 ], ViewSettingsDialog.prototype, "filterItems", void 0);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], ViewSettingsDialog, "i18nBundle", void 0);
 ViewSettingsDialog = ViewSettingsDialog_1 = __decorate([
     customElement({
         tag: "ui5-view-settings-dialog",

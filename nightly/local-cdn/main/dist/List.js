@@ -13,6 +13,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isTabNext, isSpace, isEnter, isTabPrevious, isCtrl, } from "@ui5/webcomponents-base/dist/Keys.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
@@ -21,7 +22,6 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
@@ -98,9 +98,6 @@ const PAGE_UP_DOWN_SIZE = 10;
  * @csspart growing-button-inner - Used to style the button inner element
  */
 let List = List_1 = class List extends UI5Element {
-    static async onDefine() {
-        List_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
     constructor() {
         super();
         /**
@@ -900,6 +897,9 @@ __decorate([
 __decorate([
     slot()
 ], List.prototype, "header", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], List, "i18nBundle", void 0);
 List = List_1 = __decorate([
     customElement({
         tag: "ui5-list",

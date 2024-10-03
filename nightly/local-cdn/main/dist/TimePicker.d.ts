@@ -175,7 +175,6 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     valueStateMessage: Array<HTMLElement>;
     tempValue?: string;
     static i18nBundle: I18nBundle;
-    static onDefine(): Promise<void>;
     get formValidityMessage(): string;
     get formValidity(): ValidityStateFlags;
     formElementAnchor(): Promise<HTMLElement | undefined>;

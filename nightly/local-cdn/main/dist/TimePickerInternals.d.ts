@@ -113,7 +113,6 @@ declare class TimePickerInternals extends UI5Element {
      */
     _keyboardBuffer: string;
     static i18nBundle: I18nBundle;
-    static onDefine(): Promise<void>;
     get _hoursConfiguration(): import("./timepicker-utils/TimeSlider.js").HoursConfiguration;
     get _zeroPaddedHours(): boolean;
     get _neededComponents(): boolean[];

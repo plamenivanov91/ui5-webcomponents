@@ -125,7 +125,6 @@ declare class DynamicPage extends UI5Element {
     scrollContainer?: HTMLElement;
     headerActions?: DynamicPageHeaderActions;
     constructor();
-    static onDefine(): Promise<void>;
     onEnterDOM(): void;
     onExitDOM(): void;
     onBeforeRendering(): void;

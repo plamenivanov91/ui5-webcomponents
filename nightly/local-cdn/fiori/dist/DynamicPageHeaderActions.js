@@ -9,8 +9,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import { isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
@@ -72,9 +72,6 @@ let DynamicPageHeaderActions = DynamicPageHeaderActions_1 = class DynamicPageHea
          */
         this.accessibilityAttributes = {};
     }
-    static async onDefine() {
-        DynamicPageHeaderActions_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-    }
     get arrowButtonIcon() {
         return this.snapped ? "slim-arrow-down" : "slim-arrow-up";
     }
@@ -132,6 +129,9 @@ __decorate([
 __decorate([
     property({ type: Object })
 ], DynamicPageHeaderActions.prototype, "accessibilityAttributes", void 0);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], DynamicPageHeaderActions, "i18nBundle", void 0);
 DynamicPageHeaderActions = DynamicPageHeaderActions_1 = __decorate([
     customElement({
         tag: "ui5-dynamic-page-header-actions",

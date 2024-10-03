@@ -86,6 +86,5 @@ declare class DateComponentBase extends UI5Element {
     _getStringFromTimestamp(timestamp: number): string;
     getFormat(): import("sap/ui/core/format/DateFormat").default;
     getISOFormat(): DateFormat;
-    static onDefine(): Promise<void>;
 }
 export default DateComponentBase;

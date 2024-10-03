@@ -412,11 +412,11 @@ let Popover = Popover_1 = class Popover extends Popup {
             }
         }
         else {
-            if (popoverSize.height > clientHeight || top < 0) { // eslint-disable-line
-                top = 0;
+            if (popoverSize.height > clientHeight || top < Popover_1.VIEWPORT_MARGIN) { // eslint-disable-line
+                top = Popover_1.VIEWPORT_MARGIN;
             }
-            else if (top + popoverSize.height > clientHeight) {
-                top -= top + popoverSize.height - clientHeight;
+            else if (top + popoverSize.height > clientHeight - Popover_1.VIEWPORT_MARGIN) {
+                top = clientHeight - Popover_1.VIEWPORT_MARGIN - popoverSize.height;
             }
         }
         this._maxHeight = Math.round(maxHeight - Popover_1.VIEWPORT_MARGIN);

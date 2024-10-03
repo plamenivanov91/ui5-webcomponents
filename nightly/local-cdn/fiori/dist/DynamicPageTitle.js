@@ -10,8 +10,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import ToolbarItemOverflowBehavior from "@ui5/webcomponents/dist/types/ToolbarItemOverflowBehavior.js";
@@ -88,9 +88,6 @@ let DynamicPageTitle = DynamicPageTitle_1 = class DynamicPageTitle extends UI5El
         this.interactive = false;
         this._handleResize = this.handleResize.bind(this);
     }
-    static async onDefine() {
-        DynamicPageTitle_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-    }
     onEnterDOM() {
         ResizeHandler.register(this, this._handleResize);
         if (isDesktop()) {
@@ -144,13 +141,14 @@ let DynamicPageTitle = DynamicPageTitle_1 = class DynamicPageTitle extends UI5El
         return (this.navigationBar.length && this.actionsBar.length);
     }
     prepareLayoutActions() {
-        // all navigation/layout actions should have the NeverOverflow behavior
-        const navigationBar = this.querySelector("[ui5-toolbar][slot='navigationBar']");
+        const navigationBar = this.querySelector("[ui5-toolbar][slot='navigationBar']"), isWideScreen = this.offsetWidth >= 1280;
         if (!navigationBar) {
             return;
         }
         navigationBar.items.forEach(action => {
-            action.overflowPriority = ToolbarItemOverflowBehavior.NeverOverflow;
+            action.overflowPriority = isWideScreen
+                ? ToolbarItemOverflowBehavior.NeverOverflow
+                : ToolbarItemOverflowBehavior.Default;
         });
     }
     handleResize() {
@@ -223,6 +221,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], DynamicPageTitle.prototype, "interactive", void 0);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], DynamicPageTitle, "i18nBundle", void 0);
 DynamicPageTitle = DynamicPageTitle_1 = __decorate([
     customElement({
         tag: "ui5-dynamic-page-title",

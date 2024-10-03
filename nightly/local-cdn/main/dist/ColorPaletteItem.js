@@ -9,7 +9,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import { COLORPALETTE_COLOR_LABEL, } from "./generated/i18n/i18n-defaults.js";
@@ -28,9 +28,6 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * @public
  */
 let ColorPaletteItem = ColorPaletteItem_1 = class ColorPaletteItem extends UI5Element {
-    static async onDefine() {
-        ColorPaletteItem_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
     constructor() {
         super();
         /**
@@ -109,6 +106,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], ColorPaletteItem.prototype, "_disabled", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], ColorPaletteItem, "i18nBundle", void 0);
 ColorPaletteItem = ColorPaletteItem_1 = __decorate([
     customElement({
         tag: "ui5-color-palette-item",

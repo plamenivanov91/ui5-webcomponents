@@ -415,9 +415,11 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
     cacheUniqueDependencies(this: typeof UI5Element): void;
     getUniqueDependencies(this: typeof UI5Element): Array<typeof UI5Element>;
     onDefine(): Promise<void>;
+    fetchI18nBundles(): Promise<import("../i18nBundle.js").default[]>;
+    fetchCLDR(): Promise<void>;
     asyncFinished: boolean;
-    definePromise: Promise<[void, void]> | undefined;
-    define(): Promise<typeof UI5Element>;
+    definePromise: Promise<void> | undefined;
+    define(): typeof UI5Element;
     getMetadata(): import("../UI5ElementMetadata.js").default;
 };
 export default getClassCopy;

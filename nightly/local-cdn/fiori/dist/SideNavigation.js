@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var SideNavigation_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
@@ -14,7 +15,6 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import { isPhone, isTablet, isCombi, } from "@ui5/webcomponents-base/dist/Device.js";
@@ -73,8 +73,6 @@ const PAGE_UP_DOWN_SIZE = 10;
  * @public
  */
 let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element {
-    ;
-    ;
     constructor() {
         super();
         /**
@@ -439,12 +437,6 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
             this._handleOverflowClick();
         }
     }
-    static async onDefine() {
-        [SideNavigation_1.i18nBundle] = await Promise.all([
-            getI18nBundle("@ui5/webcomponents-fiori"),
-            super.onDefine(),
-        ]);
-    }
 };
 __decorate([
     property({ type: Boolean })
@@ -470,6 +462,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], SideNavigation.prototype, "isTouchDevice", void 0);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], SideNavigation, "i18nBundle", void 0);
 SideNavigation = SideNavigation_1 = __decorate([
     customElement({
         tag: "ui5-side-navigation",

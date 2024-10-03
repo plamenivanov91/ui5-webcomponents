@@ -10,7 +10,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
@@ -179,12 +179,6 @@ let TreeItemBase = TreeItemBase_1 = class TreeItemBase extends ListItem {
     get iconAccessibleName() {
         return this.expanded ? TreeItemBase_1.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeItemBase_1.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
     }
-    static async onDefine() {
-        [TreeItemBase_1.i18nBundle] = await Promise.all([
-            getI18nBundle("@ui5/webcomponents"),
-            super.onDefine(),
-        ]);
-    }
 };
 __decorate([
     property({ type: Number })
@@ -232,6 +226,9 @@ __decorate([
         "default": true,
     })
 ], TreeItemBase.prototype, "items", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], TreeItemBase, "i18nBundle", void 0);
 TreeItemBase = TreeItemBase_1 = __decorate([
     customElement({
         languageAware: true,

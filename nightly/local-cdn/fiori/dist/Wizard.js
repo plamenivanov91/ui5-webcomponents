@@ -10,8 +10,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -197,9 +197,6 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
                 "ui5-wizard-dialog": isPhone(),
             },
         };
-    }
-    static async onDefine() {
-        Wizard_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
     }
     static get SCROLL_DEBOUNCE_RATE() {
         return 25;
@@ -824,6 +821,9 @@ __decorate([
         invalidateOnChildChange: true,
     })
 ], Wizard.prototype, "steps", void 0);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], Wizard, "i18nBundle", void 0);
 Wizard = Wizard_1 = __decorate([
     customElement({
         tag: "ui5-wizard",

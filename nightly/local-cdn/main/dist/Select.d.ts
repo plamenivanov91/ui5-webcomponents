@@ -318,7 +318,6 @@ declare class Select extends UI5Element implements IFormInputElement {
     toggleValueStatePopover(open: boolean): void;
     get selectedOptionIcon(): string | undefined;
     _getPopover(): Popover | null;
-    static onDefine(): Promise<void>;
 }
 export default Select;
 export type { IOption, SelectChangeEventDetail, SelectLiveChangeEventDetail, };

@@ -19,7 +19,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import { isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter, isDown, isRight, isLeft, isUp, isCtrl, } from "@ui5/webcomponents-base/dist/Keys.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -1105,9 +1105,6 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     get tablistAriaDescribedById() {
         return this.hasItems ? `${this._id}-invisibleText` : undefined;
     }
-    static async onDefine() {
-        TabContainer_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property({ type: Boolean })
@@ -1171,6 +1168,9 @@ __decorate([
 __decorate([
     longDragOverHandler("[data-ui5-stable=overflow-start],[data-ui5-stable=overflow-end],[role=tab]")
 ], TabContainer.prototype, "_onHeaderDragOver", null);
+__decorate([
+    i18n("@ui5/webcomponents")
+], TabContainer, "i18nBundle", void 0);
 TabContainer = TabContainer_1 = __decorate([
     customElement({
         tag: "ui5-tabcontainer",

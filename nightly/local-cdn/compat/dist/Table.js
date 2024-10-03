@@ -10,6 +10,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -19,7 +20,6 @@ import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalized
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement, getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import CheckBox from "@ui5/webcomponents/dist/CheckBox.js";
@@ -101,9 +101,6 @@ var TableFocusTargetElement;
  * @public
  */
 let Table = Table_1 = class Table extends UI5Element {
-    static async onDefine() {
-        Table_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
     constructor() {
         super();
         /**
@@ -862,6 +859,9 @@ __decorate([
         },
     })
 ], Table.prototype, "columns", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Table, "i18nBundle", void 0);
 Table = Table_1 = __decorate([
     customElement({
         tag: "ui5-table",

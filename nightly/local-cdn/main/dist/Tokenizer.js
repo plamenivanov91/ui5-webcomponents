@@ -18,7 +18,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFocusedElement } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import { isSpace, isSpaceCtrl, isSpaceShift, isLeftCtrl, isRightCtrl, isUpCtrl, isDownCtrl, isUpShift, isDownShift, isLeftShift, isRightShift, isLeftShiftCtrl, isRightShiftCtrl, isDeleteShift, isInsertCtrl, isEnd, isHome, isHomeShift, isEndShift, isPageUpShift, isPageDownShift, isHomeCtrl, isEndCtrl, isRight, isLeft, isUp, isDown, isEscape, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -756,9 +756,6 @@ let Tokenizer = Tokenizer_1 = class Tokenizer extends UI5Element {
         const lastToken = tokens[tokens.length - 1];
         lastToken.focus();
     }
-    static async onDefine() {
-        Tokenizer_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
     getPopover() {
         return this.shadowRoot.querySelector("[ui5-responsive-popover]");
     }
@@ -815,6 +812,9 @@ __decorate([
         },
     })
 ], Tokenizer.prototype, "tokens", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Tokenizer, "i18nBundle", void 0);
 Tokenizer = Tokenizer_1 = __decorate([
     customElement({
         tag: "ui5-tokenizer",

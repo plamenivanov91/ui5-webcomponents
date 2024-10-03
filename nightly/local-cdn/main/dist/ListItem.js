@@ -8,12 +8,12 @@ var ListItem_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isSpace, isEnter, isDelete, isF2, } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import Highlight from "./types/Highlight.js";
@@ -321,9 +321,6 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
     get _listItem() {
         return this.shadowRoot.querySelector("li");
     }
-    static async onDefine() {
-        ListItem_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property()
@@ -355,6 +352,9 @@ __decorate([
 __decorate([
     slot()
 ], ListItem.prototype, "deleteButton", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], ListItem, "i18nBundle", void 0);
 ListItem = ListItem_1 = __decorate([
     customElement({
         languageAware: true,

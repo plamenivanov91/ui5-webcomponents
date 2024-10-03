@@ -21,7 +21,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -619,9 +619,6 @@ let Select = Select_1 = class Select extends UI5Element {
     _getPopover() {
         return this.shadowRoot.querySelector("[ui5-popover]");
     }
-    static async onDefine() {
-        Select_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property({ type: Boolean })
@@ -668,6 +665,9 @@ __decorate([
 __decorate([
     property({ noAttribute: true })
 ], Select.prototype, "value", null);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Select, "i18nBundle", void 0);
 Select = Select_1 = __decorate([
     customElement({
         tag: "ui5-select",

@@ -9,6 +9,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDateComponent from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -16,7 +17,6 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isF4, isF4Shift, isSpace, } from "@ui5/webcomponents-base/dist/Keys.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
@@ -184,12 +184,6 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
          */
         this._selectedItemType = "None";
         this._valueIsProcessed = false;
-    }
-    static async onDefine() {
-        [Calendar_1.i18nBundle] = await Promise.all([
-            getI18nBundle("@ui5/webcomponents"),
-            super.onDefine(),
-        ]);
     }
     /**
      * @private
@@ -635,6 +629,9 @@ __decorate([
 __decorate([
     property()
 ], Calendar.prototype, "_selectedItemType", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Calendar, "i18nBundle", void 0);
 Calendar = Calendar_1 = __decorate([
     customElement({
         tag: "ui5-calendar",

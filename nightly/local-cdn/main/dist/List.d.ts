@@ -238,7 +238,6 @@ declare class List extends UI5Element {
     onForwardAfterBound: (e: CustomEvent) => void;
     onForwardBeforeBound: (e: CustomEvent) => void;
     onItemTabIndexChangeBound: (e: CustomEvent) => void;
-    static onDefine(): Promise<void>;
     constructor();
     /**
      * Returns an array containing the list item instances without the groups in a flat structure.

@@ -348,15 +348,18 @@ declare abstract class UI5Element extends HTMLElement {
      * Hook that will be called upon custom element definition
      *
      * @protected
+     * @deprecated use the "i18n" decorator for fetching message bundles and the "cldr" option in the "customElements" decorator for fetching CLDR
      */
     static onDefine(): Promise<void>;
+    static fetchI18nBundles(): Promise<import("./i18nBundle.js").default[]>;
+    static fetchCLDR(): Promise<void>;
     static asyncFinished: boolean;
-    static definePromise: Promise<[void, void]> | undefined;
+    static definePromise: Promise<void> | undefined;
     /**
      * Registers a UI5 Web Component in the browser window object
      * @public
      */
-    static define(): Promise<typeof UI5Element>;
+    static define(): typeof UI5Element;
     /**
      * Returns an instance of UI5ElementMetadata.js representing this UI5 Web Component's full metadata (its and its parents')
      * Note: not to be confused with the "get metadata()" method, which returns an object for this class's metadata only

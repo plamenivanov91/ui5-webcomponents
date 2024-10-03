@@ -11,7 +11,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 // Styles
@@ -48,9 +48,6 @@ import ColorPalette from "./ColorPalette.js";
  * @since 1.0.0-rc.16
  */
 let ColorPalettePopover = ColorPalettePopover_1 = class ColorPalettePopover extends UI5Element {
-    static async onDefine() {
-        ColorPalettePopover_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
     constructor() {
         super();
         /**
@@ -155,6 +152,9 @@ __decorate([
 __decorate([
     slot({ "default": true, type: HTMLElement, individualSlots: true })
 ], ColorPalettePopover.prototype, "colors", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], ColorPalettePopover, "i18nBundle", void 0);
 ColorPalettePopover = ColorPalettePopover_1 = __decorate([
     customElement({
         tag: "ui5-color-palette-popover",

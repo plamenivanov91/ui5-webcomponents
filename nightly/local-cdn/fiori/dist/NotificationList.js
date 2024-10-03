@@ -10,8 +10,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NotificationListInternal from "./NotificationListInternal.js";
 // Template
 import NotificationListTemplate from "./generated/templates/NotificationListTemplate.lit.js";
@@ -81,9 +81,6 @@ let NotificationList = NotificationList_1 = class NotificationList extends UI5El
     _onLoadMore() {
         this.fireEvent("load-more");
     }
-    static async onDefine() {
-        NotificationList_1.i18nFioriBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-    }
 };
 __decorate([
     slot({ type: HTMLElement, "default": true })
@@ -91,6 +88,9 @@ __decorate([
 __decorate([
     property()
 ], NotificationList.prototype, "noDataText", void 0);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], NotificationList, "i18nFioriBundle", void 0);
 NotificationList = NotificationList_1 = __decorate([
     customElement({
         tag: "ui5-notification-list",

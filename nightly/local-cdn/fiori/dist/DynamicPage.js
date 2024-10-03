@@ -11,13 +11,13 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 // Template
@@ -120,9 +120,6 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
         this.showHeaderInStickArea = false;
         this._headerSnapped = false;
         this._updateMediaRange = this.updateMediaRange.bind(this);
-    }
-    static async onDefine() {
-        DynamicPage_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
     }
     onEnterDOM() {
         ResizeHandler.register(this, this._updateMediaRange);
@@ -301,6 +298,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], DynamicPage.prototype, "headerSnapped", null);
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], DynamicPage, "i18nBundle", void 0);
 DynamicPage = DynamicPage_1 = __decorate([
     customElement({
         tag: "ui5-dynamic-page",

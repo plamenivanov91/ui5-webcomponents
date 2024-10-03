@@ -183,7 +183,6 @@ declare class Wizard extends UI5Element {
             "ui5-wizard-dialog": boolean;
         };
     };
-    static onDefine(): Promise<void>;
     static get SCROLL_DEBOUNCE_RATE(): number;
     onExitDOM(): void;
     onBeforeRendering(): void;

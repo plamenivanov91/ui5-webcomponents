@@ -145,7 +145,6 @@ declare class DynamicPageTitle extends UI5Element {
     static i18nBundle: I18nBundle;
     _handleResize: ResizeObserverCallback;
     constructor();
-    static onDefine(): Promise<void>;
     onEnterDOM(): void;
     onExitDOM(): void;
     onBeforeRendering(): void;

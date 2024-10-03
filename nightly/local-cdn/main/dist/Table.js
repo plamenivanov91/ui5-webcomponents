@@ -14,7 +14,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 import TableStyles from "./generated/themes/Table.css.js";
 import TableRow from "./TableRow.js";
@@ -108,9 +108,6 @@ import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from ".
  * Keep in mind that you can use either the compat/Table, or the main/Table - you can't use them both as they both define the `ui5-table` tag name.
  */
 let Table = Table_1 = class Table extends UI5Element {
-    static async onDefine() {
-        Table_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
     constructor() {
         super();
         /**
@@ -410,6 +407,9 @@ __decorate([
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], Table.prototype, "_renderNavigated", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Table, "i18nBundle", void 0);
 Table = Table_1 = __decorate([
     customElement({
         tag: "ui5-table",

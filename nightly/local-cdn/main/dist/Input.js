@@ -19,7 +19,7 @@ import { isPhone, isAndroid, } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isUp, isDown, isSpace, isEnter, isBackSpace, isDelete, isEscape, isTabNext, isPageUp, isPageDown, isHome, isEnd, } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import { getAssociatedLabelForTexts, getAllAccessibleNameRefTexts, registerUI5Element, deregisterUI5Element, } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
@@ -737,6 +737,7 @@ let Input = Input_1 = class Input extends UI5Element {
             return;
         }
         const Suggestions = getComponentFeature("InputSuggestions");
+        Suggestions.i18nBundle = Input_1.i18nBundle;
         if (Suggestions) {
             this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
         }
@@ -1117,9 +1118,6 @@ let Input = Input_1 = class Input extends UI5Element {
         }
         return value;
     }
-    static async onDefine() {
-        Input_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property({ type: Boolean })
@@ -1217,6 +1215,9 @@ __decorate([
         invalidateOnChildChange: true,
     })
 ], Input.prototype, "valueStateMessage", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], Input, "i18nBundle", void 0);
 Input = Input_1 = __decorate([
     customElement({
         tag: "ui5-input",

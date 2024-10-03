@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var RangeSlider_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isEscape, isHome, isEnd, } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
@@ -720,9 +720,6 @@ let RangeSlider = RangeSlider_1 = class RangeSlider extends SliderBase {
             },
         };
     }
-    static async onDefine() {
-        RangeSlider_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-    }
 };
 __decorate([
     property({ type: Number })
@@ -733,6 +730,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], RangeSlider.prototype, "rangePressed", void 0);
+__decorate([
+    i18n("@ui5/webcomponents")
+], RangeSlider, "i18nBundle", void 0);
 RangeSlider = RangeSlider_1 = __decorate([
     customElement({
         tag: "ui5-range-slider",
