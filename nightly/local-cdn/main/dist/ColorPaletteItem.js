@@ -11,6 +11,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import { COLORPALETTE_COLOR_LABEL, } from "./generated/i18n/i18n-defaults.js";
 // Styles
@@ -69,6 +70,9 @@ let ColorPaletteItem = ColorPaletteItem_1 = class ColorPaletteItem extends UI5El
         this._disabled = !this.value;
         this.onPhone = isPhone();
         this.setAttribute("style", `background-color: ${this.value}`);
+        // since height is dynamically determined by padding-block-start
+        const itemHeight = this.offsetHeight + 4; // adding 4px for the offsets on top and bottom
+        this.style.setProperty(getScopedVarName("--_ui5_color_palette_item_height"), `${itemHeight}px`);
     }
     get colorLabel() {
         return ColorPaletteItem_1.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
@@ -115,6 +119,7 @@ ColorPaletteItem = ColorPaletteItem_1 = __decorate([
         renderer: litRender,
         styles: ColorPaletteItemCss,
         template: ColorPaletteItemTemplate,
+        shadowRootOptions: { delegatesFocus: true },
     })
 ], ColorPaletteItem);
 ColorPaletteItem.define();

@@ -259,6 +259,7 @@ declare class List extends UI5Element {
     get listEndDOM(): Element | null;
     get dropIndicatorDOM(): DropIndicator | null;
     get hasData(): boolean;
+    get showBusyIndicatorOverlay(): boolean;
     get showNoDataText(): string | false | undefined;
     get isDelete(): boolean;
     get isSingleSelect(): boolean;

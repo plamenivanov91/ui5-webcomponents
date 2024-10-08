@@ -296,7 +296,7 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
         if (pressedSeparator.classList.contains("ui5-fcl-separator-start") && !this.showStartSeparatorGrip) {
             return;
         }
-        const isTouch = e instanceof TouchEvent, cursorPositionX = this.getPageXValueFromEvent(e);
+        const isTouch = supportsTouch() && e instanceof TouchEvent, cursorPositionX = this.getPageXValueFromEvent(e);
         this.separatorMovementSession = this.initSeparatorMovementSession(pressedSeparator, cursorPositionX, isTouch);
     }
     onSeparatorMove(e) {

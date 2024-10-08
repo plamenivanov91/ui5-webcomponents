@@ -13,6 +13,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 // Styles
 import ColorPalettePopoverCss from "./generated/themes/ColorPalettePopover.css.js";
@@ -102,6 +103,11 @@ let ColorPalettePopover = ColorPalettePopover_1 = class ColorPalettePopover exte
         else if (colorPalette.showDefaultColor) {
             colorPalette.colorPaletteNavigationElements[0].focus();
         }
+        // since height is dynamically determined by padding-block-start
+        colorPalette.allColorsInPalette.forEach((item) => {
+            const itemHeight = item.offsetHeight + 4; // adding 4px for the offsets on top and bottom
+            item.style.setProperty(getScopedVarName("--_ui5_color_palette_item_height"), `${itemHeight}px`);
+        });
     }
     onSelectedColor(e) {
         this.closePopover();
