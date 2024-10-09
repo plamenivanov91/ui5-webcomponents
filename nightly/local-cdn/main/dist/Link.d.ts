@@ -177,14 +177,10 @@ declare class Link extends UI5Element implements ITabbable {
     endIcon?: string;
     _rel: string | undefined;
     forcedTabIndex?: string;
-    /**
-     * Indicates if the element is on focus.
-     * @private
-     */
-    focused: boolean;
     _dummyAnchor: HTMLAnchorElement;
     static i18nBundle: I18nBundle;
     constructor();
+    onEnterDOM(): void;
     onBeforeRendering(): void;
     _isCrossOrigin(href: string): boolean;
     get effectiveTabIndex(): string;
@@ -197,7 +193,6 @@ declare class Link extends UI5Element implements ITabbable {
     get _hasPopup(): ("dialog" | "grid" | "listbox" | "menu" | "tree") | undefined;
     _onclick(e: MouseEvent | KeyboardEvent): void;
     _onfocusin(e: FocusEvent): void;
-    _onfocusout(): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
 }

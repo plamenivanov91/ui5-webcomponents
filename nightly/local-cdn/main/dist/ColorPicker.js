@@ -449,6 +449,7 @@ ColorPicker = ColorPicker_1 = __decorate([
             Slider,
             Label,
         ],
+        shadowRootOptions: { delegatesFocus: true },
     })
     /**
      * Fired when the the selected color is changed

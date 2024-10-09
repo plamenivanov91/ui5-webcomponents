@@ -1,10 +1,7 @@
-commit f7ae10e105c2eb36c4dfc153e96fd688e3d76f38
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Mon Oct 7 15:06:14 2024 +0300
+commit cd7e202f0f9c6d363db17d39ff56171bc69555a8
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Tue Oct 8 10:15:20 2024 +0300
 
-    fix(ui5-list): growing button loading aligned with visual spec (#9977)
+    fix(ui5-daypicker): announce selected state change (#9934)
     
-    The new visual spec mandates that when we have growing with button
-    there shouldn't be busy indicator overlay on top of the whole list
-    but a small one next to "More" text without blocking the rest of the
-    list.
+    Fixes: #9860

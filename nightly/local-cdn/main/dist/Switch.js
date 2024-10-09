@@ -219,6 +219,7 @@ Switch = Switch_1 = __decorate([
         renderer: litRender,
         template: SwitchTemplate,
         dependencies: [Icon],
+        shadowRootOptions: { delegatesFocus: true },
     })
     /**
      * Fired when the component checked state changes.

@@ -130,6 +130,9 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         document.removeEventListener("touchend", this.deactivate);
     }
     async _onkeydown(e) {
+        if ((isSpace(e) || isEnter(e)) && this._isTargetSelfFocusDomRef(e)) {
+            return;
+        }
         super._onkeydown(e);
         const itemActive = this.type === ListItemType.Active, itemNavigated = this.typeNavigation;
         if ((isSpace(e) || isEnter(e)) && (itemActive || itemNavigated)) {
@@ -188,6 +191,10 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         if (e.target === this._listItem) {
             this.removeAttribute("data-moving");
         }
+    }
+    _isTargetSelfFocusDomRef(e) {
+        const target = e.target, focusDomRef = this.getFocusDomRef();
+        return target !== focusDomRef;
     }
     /**
      * Called when selection components in Single (ui5-radio-button)

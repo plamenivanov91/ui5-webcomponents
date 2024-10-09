@@ -11,6 +11,8 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { isSpace, isSpaceShift, isEnter, isEnterShift, isUp, isDown, isLeft, isRight, isHome, isEnd, isHomeCtrl, isEndCtrl, isPageUp, isPageDown, isPageUpShift, isPageUpAlt, isPageUpShiftCtrl, isPageDownShift, isPageDownAlt, isPageDownShiftCtrl, } from "@ui5/webcomponents-base/dist/Keys.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
@@ -19,7 +21,7 @@ import CalendarUtils from "@ui5/webcomponents-localization/dist/CalendarUtils.js
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
-import { DAY_PICKER_WEEK_NUMBER_TEXT, DAY_PICKER_NON_WORKING_DAY, DAY_PICKER_TODAY, } from "./generated/i18n/i18n-defaults.js";
+import { DAY_PICKER_WEEK_NUMBER_TEXT, DAY_PICKER_NON_WORKING_DAY, DAY_PICKER_TODAY, LIST_ITEM_SELECTED, } from "./generated/i18n/i18n-defaults.js";
 // Template
 import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
 // Styles
@@ -319,6 +321,7 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
             }
             return;
         }
+        announce(DayPicker_1.i18nBundle.getText(LIST_ITEM_SELECTED), InvisibleMessageMode.Assertive);
         if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
             this.selectedDates = [this.selectedDates[0], timestamp];
             return;
@@ -361,6 +364,7 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
         }
         else {
             this._addTimestampToSelection(timestamp);
+            announce(DayPicker_1.i18nBundle.getText(LIST_ITEM_SELECTED), InvisibleMessageMode.Assertive);
         }
     }
     _addTimestampToSelection(timestamp) {

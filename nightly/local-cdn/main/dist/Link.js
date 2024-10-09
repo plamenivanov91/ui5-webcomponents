@@ -14,6 +14,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import { getLocationHostname, getLocationPort, getLocationProtocol } from "@ui5/webcomponents-base/dist/Location.js";
 import LinkDesign from "./types/LinkDesign.js";
 // Template
@@ -113,12 +114,12 @@ let Link = Link_1 = class Link extends UI5Element {
          * @default {}
          */
         this.accessibilityAttributes = {};
-        /**
-         * Indicates if the element is on focus.
-         * @private
-         */
-        this.focused = false;
         this._dummyAnchor = document.createElement("a");
+    }
+    onEnterDOM() {
+        if (isDesktop()) {
+            this.setAttribute("desktop", "");
+        }
     }
     onBeforeRendering() {
         const needsNoReferrer = this.target !== "_self"
@@ -178,10 +179,6 @@ let Link = Link_1 = class Link extends UI5Element {
     }
     _onfocusin(e) {
         markEvent(e, "link");
-        this.focused = true;
-    }
-    _onfocusout() {
-        this.focused = false;
     }
     _onkeydown(e) {
         if (isEnter(e) && !this.href) {
@@ -247,9 +244,6 @@ __decorate([
 __decorate([
     property({ noAttribute: true })
 ], Link.prototype, "forcedTabIndex", void 0);
-__decorate([
-    property({ type: Boolean })
-], Link.prototype, "focused", void 0);
 __decorate([
     i18n("@ui5/webcomponents")
 ], Link, "i18nBundle", void 0);

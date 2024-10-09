@@ -144,6 +144,7 @@ declare abstract class ListItem extends ListItemBase {
     _onfocusout(): void;
     _ondragstart(e: DragEvent): void;
     _ondragend(e: DragEvent): void;
+    _isTargetSelfFocusDomRef(e: KeyboardEvent): boolean;
     /**
      * Called when selection components in Single (ui5-radio-button)
      * and Multi (ui5-checkbox) selection modes are used.
