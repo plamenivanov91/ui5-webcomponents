@@ -230,10 +230,10 @@ let CheckBox = CheckBox_1 = class CheckBox extends UI5Element {
             else {
                 this.checked = !this.checked;
             }
-            const changePrevented = !this.fireEvent("change", null, true);
+            const changePrevented = !this.fireDecoratorEvent("change");
             // Angular two way data binding
-            const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
-            if (changePrevented || valueChagnePrevented) {
+            const valueChangePrevented = !this.fireDecoratorEvent("value-changed");
+            if (changePrevented || valueChangePrevented) {
                 this.checked = lastState.checked;
                 this.indeterminate = lastState.indeterminate;
             }
@@ -364,10 +364,21 @@ CheckBox = CheckBox_1 = __decorate([
     /**
      * Fired when the component checked state changes.
      * @public
-     * @allowPreventDefault
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+        cancelable: true,
+    })
+    /**
+     * Fired to make Angular two way data binding work properly.
+     * @private
+     */
+    ,
+    event("value-changed", {
+        bubbles: true,
+        cancelable: true,
+    })
 ], CheckBox);
 CheckBox.define();
 export default CheckBox;

@@ -143,7 +143,7 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
                 this._addRecentColor(this._selectedColor);
             }
         }
-        this.fireEvent("item-click", {
+        this.fireDecoratorEvent("item-click", {
             color: this._selectedColor,
         });
     }

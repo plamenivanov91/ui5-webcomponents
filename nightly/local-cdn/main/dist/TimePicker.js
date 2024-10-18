@@ -226,10 +226,10 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
     }
     onResponsivePopoverAfterClose() {
         this.open = false;
-        this.fireEvent("close");
+        this.fireDecoratorEvent("close");
     }
     onResponsivePopoverAfterOpen() {
-        this.fireEvent("open");
+        this.fireDecoratorEvent("open");
     }
     /**
      * Opens the Inputs popover.
@@ -306,7 +306,7 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
         this.tempValue = value; // if the picker is open, sync it
         this._updateValueState(); // Change the value state to Error/None, but only if needed
         eventsNames.forEach(eventName => {
-            this.fireEvent(eventName, { value, valid });
+            this.fireDecoratorEvent(eventName, { value, valid });
         });
     }
     _updateValueState() {
@@ -584,6 +584,7 @@ TimePicker = TimePicker_1 = __decorate([
                 type: Boolean,
             },
         },
+        bubbles: true,
     })
     /**
      * Fired when the value of the `ui5-time-picker` is changed at each key stroke.
@@ -607,6 +608,7 @@ TimePicker = TimePicker_1 = __decorate([
                 type: Boolean,
             },
         },
+        bubbles: true,
     })
     /**
      * Fired after the value-help dialog of the component is opened.
@@ -614,14 +616,18 @@ TimePicker = TimePicker_1 = __decorate([
      * @public
      */
     ,
-    event("open")
+    event("open", {
+        bubbles: true,
+    })
     /**
      * Fired after the value-help dialog of the component is closed.
      * @since 2.0.0
      * @public
      */
     ,
-    event("close")
+    event("close", {
+        bubbles: true,
+    })
 ], TimePicker);
 TimePicker.define();
 export default TimePicker;

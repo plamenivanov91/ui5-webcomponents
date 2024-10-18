@@ -72,7 +72,7 @@ declare class NotificationListGroupItem extends NotificationListItemBase {
     get expandText(): string;
     get groupText(): string;
     get ariaLabelledBy(): string;
-    get _ariaExpanded(): boolean;
+    get _expanded(): boolean;
     get _pressable(): boolean;
     get groupCollapsedIcon(): "navigation-right-arrow" | "navigation-down-arrow";
     toggleCollapsed(): void;

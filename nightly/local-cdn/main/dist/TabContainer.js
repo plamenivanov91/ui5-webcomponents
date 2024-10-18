@@ -288,7 +288,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                 placements = placements.filter(placement => placement !== MovePlacement.On);
             }
             const acceptedPlacement = placements.find(placement => {
-                const dragOverPrevented = !this.fireEvent("move-over", {
+                const dragOverPrevented = !this.fireDecoratorEvent("move-over", {
                     source: {
                         element: draggedElement,
                     },
@@ -296,7 +296,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                         element: dropTarget,
                         placement,
                     },
-                }, true);
+                });
                 if (dragOverPrevented) {
                     e.preventDefault();
                     this.dropIndicatorDOM.targetReference = closestPosition.element;
@@ -325,7 +325,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         }
         e.preventDefault();
         const draggedElement = DragRegistry.getDraggedElement();
-        this.fireEvent("move", {
+        this.fireDecoratorEvent("move", {
             source: {
                 element: draggedElement,
             },
@@ -359,7 +359,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
             };
         });
         const acceptedPosition = positions.find(({ element, placement }) => {
-            return !this.fireEvent("move-over", {
+            return !this.fireDecoratorEvent("move-over", {
                 source: {
                     element: tab,
                 },
@@ -367,10 +367,10 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                     element: element.realTabReference,
                     placement,
                 },
-            }, true);
+            });
         });
         if (acceptedPosition) {
-            this.fireEvent("move", {
+            this.fireDecoratorEvent("move", {
                 source: {
                     element: tab,
                 },
@@ -414,7 +414,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         if (draggedElement !== destinationElement && draggedElement.contains(destinationElement)) {
             return;
         }
-        const placementAccepted = !this.fireEvent("move-over", {
+        const placementAccepted = !this.fireDecoratorEvent("move-over", {
             source: {
                 element: draggedElement,
             },
@@ -422,7 +422,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                 element: destinationElement,
                 placement: destination.placement,
             },
-        }, true);
+        });
         if (placementAccepted) {
             e.preventDefault();
         }
@@ -451,7 +451,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
             return;
         }
         e.preventDefault();
-        this.fireEvent("move", {
+        this.fireDecoratorEvent("move", {
             source: {
                 element: draggedElement,
             },
@@ -459,7 +459,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                 element: destinationElement,
                 placement: destination.placement,
             },
-        }, true);
+        });
         this.dropIndicatorDOM.targetReference = null;
         draggedElement.focus();
     }
@@ -631,7 +631,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
      * @returns true if the tab selection is successful, false if it was prevented
      */
     selectTab(selectedTab, selectedTabIndex) {
-        if (!this.fireEvent("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
+        if (!this.fireDecoratorEvent("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex })) {
             return false;
         }
         // select the tab
@@ -1198,7 +1198,6 @@ TabContainer = TabContainer_1 = __decorate([
      * @param {Integer} tabIndex The selected `tab` index in the flattened array of all tabs and their subTabs, provided by the `allItems` getter.
      * @public
      * @since 2.0.0
-     * @allowPreventDefault
      */
     ,
     event("tab-select", {
@@ -1212,6 +1211,8 @@ TabContainer = TabContainer_1 = __decorate([
              */
             tabIndex: { type: Number },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when element is being moved over the tab container.
@@ -1221,7 +1222,6 @@ TabContainer = TabContainer_1 = __decorate([
      * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
      * @public
      * @since 2.0.0
-     * @allowPreventDefault
      */
     ,
     event("move-over", {
@@ -1235,6 +1235,8 @@ TabContainer = TabContainer_1 = __decorate([
              */
             destination: { type: Object },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when element is moved to the tab container.
@@ -1243,7 +1245,6 @@ TabContainer = TabContainer_1 = __decorate([
      * @param {object} source Contains information about the moved element under `element` property.
      * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
      * @public
-     * @allowPreventDefault
      */
     ,
     event("move", {
@@ -1257,6 +1258,7 @@ TabContainer = TabContainer_1 = __decorate([
              */
             destination: { type: Object },
         },
+        bubbles: true,
     })
 ], TabContainer);
 const isTabInStrip = (el) => el.localName === "div" && el.getAttribute("role") === "tab";

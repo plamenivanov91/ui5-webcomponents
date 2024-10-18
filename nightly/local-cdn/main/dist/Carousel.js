@@ -223,7 +223,7 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         }
         if (this._selectedIndex > this.pagesCount - 1) {
             this._selectedIndex = this.pagesCount - 1;
-            this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
+            this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
         }
     }
     _updateScrolling(e) {
@@ -324,7 +324,7 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
             --this._selectedIndex;
         }
         if (previousSelectedIndex !== this._selectedIndex) {
-            this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
+            this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
         }
     }
     navigateRight() {
@@ -342,7 +342,7 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
             ++this._selectedIndex;
         }
         if (previousSelectedIndex !== this._selectedIndex) {
-            this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
+            this.fireDecoratorEvent("navigate", { selectedIndex: this._selectedIndex });
         }
     }
     _navButtonClick(e) {
@@ -629,6 +629,7 @@ Carousel = Carousel_1 = __decorate([
              */
             selectedIndex: { type: Number },
         },
+        bubbles: true,
     })
 ], Carousel);
 Carousel.define();

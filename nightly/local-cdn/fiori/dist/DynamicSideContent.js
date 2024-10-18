@@ -341,7 +341,7 @@ let DynamicSideContent = DynamicSideContent_1 = class DynamicSideContent extends
                 mainContentVisible: mainSize !== this.span0,
                 sideContentVisible: sideSize !== this.span0,
             };
-            this.fireEvent("layout-change", eventParams);
+            this.fireDecoratorEvent("layout-change", eventParams);
             this._currentBreakpoint = this.breakpoint;
         }
         // update contents sizes
@@ -434,6 +434,7 @@ DynamicSideContent = DynamicSideContent_1 = __decorate([
                 type: Boolean,
             },
         },
+        bubbles: true,
     })
 ], DynamicSideContent);
 DynamicSideContent.define();

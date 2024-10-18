@@ -164,12 +164,12 @@ let DynamicPageTitle = DynamicPageTitle_1 = class DynamicPageTitle extends UI5El
         }
     }
     onTitleClick() {
-        this.fireEvent("_toggle-title");
+        this.fireDecoratorEvent("_toggle-title");
     }
     _onkeydown(e) {
         if (isEnter(e) || isSpace(e)) {
             e.preventDefault();
-            this.fireEvent("_toggle-title");
+            this.fireDecoratorEvent("_toggle-title");
         }
     }
 };
@@ -238,7 +238,9 @@ DynamicPageTitle = DynamicPageTitle_1 = __decorate([
      * @private
      */
     ,
-    event("_toggle-title")
+    event("_toggle-title", {
+        bubbles: true,
+    })
 ], DynamicPageTitle);
 DynamicPageTitle.define();
 export default DynamicPageTitle;

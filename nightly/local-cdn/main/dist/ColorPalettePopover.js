@@ -90,7 +90,7 @@ let ColorPalettePopover = ColorPalettePopover_1 = class ColorPalettePopover exte
     }
     onAfterClose() {
         this.closePopover();
-        this.fireEvent("close");
+        this.fireDecoratorEvent("close");
     }
     onAfterOpen() {
         const colorPalette = this._colorPalette;
@@ -111,7 +111,7 @@ let ColorPalettePopover = ColorPalettePopover_1 = class ColorPalettePopover exte
     }
     onSelectedColor(e) {
         this.closePopover();
-        this.fireEvent("item-click", e.detail);
+        this.fireDecoratorEvent("item-click", e.detail);
     }
     get _colorPalette() {
         return this.responsivePopover.content[0].querySelector("[ui5-color-palette]");
@@ -189,6 +189,7 @@ ColorPalettePopover = ColorPalettePopover_1 = __decorate([
                 type: String,
             },
         },
+        bubbles: true,
     })
     /**
      * Fired when the `ui5-color-palette-popover` is closed due to user interaction.
@@ -196,7 +197,9 @@ ColorPalettePopover = ColorPalettePopover_1 = __decorate([
      * @public
      */
     ,
-    event("close")
+    event("close", {
+        bubbles: true,
+    })
 ], ColorPalettePopover);
 ColorPalettePopover.define();
 export default ColorPalettePopover;

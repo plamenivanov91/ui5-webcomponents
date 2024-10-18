@@ -107,7 +107,7 @@ let MessageStrip = MessageStrip_1 = class MessageStrip extends UI5Element {
         this.hideCloseButton = false;
     }
     _closeClick() {
-        this.fireEvent("close");
+        this.fireDecoratorEvent("close");
     }
     static designAnnouncementMappings() {
         const getTranslation = (text) => {
@@ -201,7 +201,9 @@ MessageStrip = MessageStrip_1 = __decorate([
      * @public
      */
     ,
-    event("close")
+    event("close", {
+        bubbles: true,
+    })
 ], MessageStrip);
 MessageStrip.define();
 export default MessageStrip;

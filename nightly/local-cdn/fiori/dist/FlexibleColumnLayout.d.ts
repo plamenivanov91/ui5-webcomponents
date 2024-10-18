@@ -343,7 +343,7 @@ declare class FlexibleColumnLayout extends UI5Element {
     get startSeparatorDOM(): HTMLElement;
     get endSeparatorDOM(): HTMLElement;
     get startSeparatorTabIndex(): 0 | undefined;
-    get endSeparatorTabIndex(): -1 | 0;
+    get endSeparatorTabIndex(): 0 | -1;
     get media(): MEDIA;
     get widthDOM(): number;
     get startColumnDOM(): HTMLElement;

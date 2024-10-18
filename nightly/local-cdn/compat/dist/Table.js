@@ -354,7 +354,7 @@ let Table = Table_1 = class Table extends UI5Element {
             nextItem.focus();
         }
         const selectedRows = this.selectedRows;
-        this.fireEvent("selection-change", {
+        this.fireDecoratorEvent("selection-change", {
             selectedRows,
             previouslySelectedRows,
         });
@@ -380,7 +380,7 @@ let Table = Table_1 = class Table extends UI5Element {
             rows[rows.length - 1].focus();
         }
         const selectedRows = this.selectedRows;
-        this.fireEvent("selection-change", {
+        this.fireDecoratorEvent("selection-change", {
             selectedRows,
             previouslySelectedRows,
         });
@@ -569,7 +569,7 @@ let Table = Table_1 = class Table extends UI5Element {
         }
     }
     _onLoadMoreClick() {
-        this.fireEvent("load-more");
+        this.fireDecoratorEvent("load-more");
     }
     observeTableEnd() {
         if (!this.tableEndObserved) {
@@ -587,7 +587,7 @@ let Table = Table_1 = class Table extends UI5Element {
         }
     }
     loadMore() {
-        this.fireEvent("load-more");
+        this.fireDecoratorEvent("load-more");
     }
     _handleSingleSelect(e) {
         const row = this.getRowParent(e.target);
@@ -602,7 +602,7 @@ let Table = Table_1 = class Table extends UI5Element {
                 }
             });
             row.selected = true;
-            this.fireEvent("selection-change", {
+            this.fireDecoratorEvent("selection-change", {
                 selectedRows: [row],
                 previouslySelectedRows,
             });
@@ -622,7 +622,7 @@ let Table = Table_1 = class Table extends UI5Element {
         else {
             this._allRowsSelected = false;
         }
-        this.fireEvent("selection-change", {
+        this.fireDecoratorEvent("selection-change", {
             selectedRows,
             previouslySelectedRows,
         });
@@ -644,7 +644,7 @@ let Table = Table_1 = class Table extends UI5Element {
             row.selected = bAllSelected;
         });
         const selectedRows = bAllSelected ? this.rows : [];
-        this.fireEvent("selection-change", {
+        this.fireDecoratorEvent("selection-change", {
             selectedRows,
             previouslySelectedRows,
         });
@@ -705,7 +705,7 @@ let Table = Table_1 = class Table extends UI5Element {
         // invalidate if hidden columns count has changed or columns are shown
         if (hiddenColumnsChange || shownColumnsChange) {
             this._hiddenColumns = hiddenColumns;
-            this.fireEvent("popin-change", {
+            this.fireDecoratorEvent("popin-change", {
                 poppedColumns: this._hiddenColumns,
             });
         }
@@ -883,6 +883,7 @@ Table = Table_1 = __decorate([
             */
             row: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when `ui5-table-column` is shown as a pop-in instead of hiding it.
@@ -900,6 +901,7 @@ Table = Table_1 = __decorate([
                 type: Array,
             },
         },
+        bubbles: true,
     })
     /**
      * Fired when the user presses the `More` button or scrolls to the table's end.
@@ -909,7 +911,9 @@ Table = Table_1 = __decorate([
      * @since 2.0.0
      */
     ,
-    event("load-more")
+    event("load-more", {
+        bubbles: true,
+    })
     /**
      * Fired when selection is changed by user interaction
      * in `SingleSelect` and `MultiSelect` modes.
@@ -930,6 +934,7 @@ Table = Table_1 = __decorate([
              */
             previouslySelectedRows: { type: Array },
         },
+        bubbles: true,
     })
 ], Table);
 Table.define();

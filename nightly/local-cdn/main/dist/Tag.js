@@ -177,7 +177,7 @@ let Tag = Tag_1 = class Tag extends UI5Element {
         }
     }
     _onclick() {
-        this.fireEvent("click");
+        this.fireDecoratorEvent("click");
     }
 };
 __decorate([
@@ -232,7 +232,9 @@ Tag = Tag_1 = __decorate([
      * @since 1.22.0
      */
     ,
-    event("click")
+    event("click", {
+        bubbles: true,
+    })
 ], Tag);
 Tag.define();
 export default Tag;

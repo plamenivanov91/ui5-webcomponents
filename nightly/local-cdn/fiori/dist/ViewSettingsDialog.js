@@ -296,15 +296,15 @@ let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends
         else {
             this._restoreSettings(this._confirmedSettings);
         }
-        this.fireEvent("before-open", {}, true, false);
+        this.fireDecoratorEvent("before-open", {});
     }
     afterDialogOpen() {
         this._dialog?.querySelector("[ui5-list]")?.focusFirstItem();
         this._focusRecentlyUsedControl();
-        this.fireEvent("open");
+        this.fireDecoratorEvent("open");
     }
     afterDialogClose() {
-        this.fireEvent("close");
+        this.fireDecoratorEvent("close");
     }
     _handleModeChange(e) {
         const mode = e.detail.selectedItems[0].getAttribute("mode");
@@ -352,14 +352,14 @@ let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends
     _confirmSettings() {
         this.open = false;
         this._confirmedSettings = this._currentSettings;
-        this.fireEvent("confirm", this.eventsParams);
+        this.fireDecoratorEvent("confirm", this.eventsParams);
     }
     /**
      * Sets current settings to recently confirmed ones and fires `cancel` event.
      */
     _cancelSettings() {
         this._restoreSettings(this._confirmedSettings);
-        this.fireEvent("cancel", this.eventsParams);
+        this.fireDecoratorEvent("cancel", this.eventsParams);
         this.open = false;
     }
     get eventsParams() {
@@ -578,6 +578,7 @@ ViewSettingsDialog = ViewSettingsDialog_1 = __decorate([
              */
             filters: { type: Array },
         },
+        bubbles: true,
     })
     /**
      * Fired when cancel button is activated.
@@ -612,27 +613,34 @@ ViewSettingsDialog = ViewSettingsDialog_1 = __decorate([
              */
             filters: { type: Array },
         },
+        bubbles: true,
     })
     /**
-     * Fired before the component is opened. **This event does not bubble.**
+     * Fired before the component is opened.
      * @public
      */
     ,
-    event("before-open")
+    event("before-open", {
+        cancelable: true,
+    })
     /**
      * Fired after the dialog is opened.
      * @since 2.0.0
      * @public
      */
     ,
-    event("open")
+    event("open", {
+        bubbles: true,
+    })
     /**
      * Fired after the dialog is closed.
      * @since 2.0.0
      * @public
      */
     ,
-    event("close")
+    event("close", {
+        bubbles: true,
+    })
 ], ViewSettingsDialog);
 ViewSettingsDialog.define();
 export default ViewSettingsDialog;

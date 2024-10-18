@@ -78,6 +78,8 @@ let Page = class Page extends UI5Element {
          * @public
          */
         this.hideFooter = false;
+    }
+    onEnterDOM() {
         this.style.setProperty(getScopedVarName("--_ui5-page-animation-duration"), getAnimationMode() === AnimationMode.None ? "0s" : "0.35s");
     }
     get _contentBottom() {

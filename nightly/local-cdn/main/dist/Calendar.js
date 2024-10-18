@@ -347,7 +347,7 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
      */
     onHeaderShowMonthPress(e) {
         this.showMonth();
-        this.fireEvent("show-month-view", e);
+        this.fireDecoratorEvent("show-month-view", e);
     }
     showMonth() {
         this._currentPickerDOM._autoFocus = false;
@@ -358,7 +358,7 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
      */
     onHeaderShowYearPress(e) {
         this.showYear();
-        this.fireEvent("show-year-view", e);
+        this.fireDecoratorEvent("show-year-view", e);
     }
     showYear() {
         this._currentPickerDOM._autoFocus = false;
@@ -446,7 +446,7 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
             const calendarDate = CalendarDateComponent.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
             return this.getFormat().format(calendarDate.toUTCJSDate(), true);
         });
-        const defaultPrevented = !this.fireEvent("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues }, true);
+        const defaultPrevented = !this.fireDecoratorEvent("selection-change", { timestamp: this.timestamp, selectedDates: [...selectedDates], selectedValues: datesValues });
         if (!defaultPrevented) {
             this._setSelectedDates(selectedDates);
         }
@@ -484,11 +484,11 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
     _onkeydown(e) {
         if (isF4(e) && this._currentPicker !== "month") {
             this._currentPicker = "month";
-            this.fireEvent("show-month-view", e);
+            this.fireDecoratorEvent("show-month-view", e);
         }
         if (isF4Shift(e) && this._currentPicker !== "year") {
             this._currentPicker = "year";
-            this.fireEvent("show-year-view", e);
+            this.fireDecoratorEvent("show-year-view", e);
         }
     }
     _onLegendFocusOut() {
@@ -531,14 +531,14 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         }
         if (isEnter(e)) {
             this.showMonth();
-            this.fireEvent("show-month-view", e);
+            this.fireDecoratorEvent("show-month-view", e);
         }
     }
     onMonthButtonKeyUp(e) {
         if (isSpace(e)) {
             e.preventDefault();
             this.showMonth();
-            this.fireEvent("show-month-view", e);
+            this.fireDecoratorEvent("show-month-view", e);
         }
     }
     onYearButtonKeyDown(e) {
@@ -547,13 +547,13 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         }
         if (isEnter(e)) {
             this.showYear();
-            this.fireEvent("show-year-view", e);
+            this.fireDecoratorEvent("show-year-view", e);
         }
     }
     onYearButtonKeyUp(e) {
         if (isSpace(e)) {
             this.showYear();
-            this.fireEvent("show-year-view", e);
+            this.fireDecoratorEvent("show-year-view", e);
         }
     }
     onPrevButtonClick(e) {
@@ -654,7 +654,6 @@ Calendar = Calendar_1 = __decorate([
      *
      * **Note:** If you call `preventDefault()` for this event, the component will not
      * create instances of `ui5-date` for the newly selected dates. In that case you should do this manually.
-     * @allowPreventDefault
      * @param {Array<string>} selectedValues The selected dates
      * @param {Array<number>} selectedDates The selected dates as UTC timestamps
      * @public
@@ -672,9 +671,15 @@ Calendar = Calendar_1 = __decorate([
             selectedValues: { type: Array },
             timestamp: { type: Number },
         },
+        bubbles: true,
+        cancelable: true,
     }),
-    event("show-month-view"),
-    event("show-year-view")
+    event("show-month-view", {
+        bubbles: true,
+    }),
+    event("show-year-view", {
+        bubbles: true,
+    })
 ], Calendar);
 Calendar.define();
 export default Calendar;

@@ -306,7 +306,7 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
         this._safelySetTimestamp(timestamp);
         this._updateSecondTimestamp();
         this._updateSelectedDates(timestamp, isShift);
-        this.fireEvent("change", {
+        this.fireDecoratorEvent("change", {
             timestamp: this.timestamp,
             dates: this.selectedDates,
         });
@@ -353,7 +353,7 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
                 }
             }
         });
-        this.fireEvent("change", {
+        this.fireDecoratorEvent("change", {
             timestamp: this.timestamp,
             dates: this.selectedDates,
         });
@@ -561,7 +561,7 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
         this._safelyModifyTimestampBy(amount, unit, preserveDate);
         this._updateSecondTimestamp();
         // Notify the calendar to update its timestamp
-        this.fireEvent("navigate", { timestamp: this.timestamp });
+        this.fireDecoratorEvent("navigate", { timestamp: this.timestamp });
     }
     /**
      * Sets the timestamp to an absolute value.
@@ -571,7 +571,7 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
     _setTimestamp(value) {
         this._safelySetTimestamp(value);
         this._updateSecondTimestamp();
-        this.fireEvent("navigate", { timestamp: this.timestamp });
+        this.fireDecoratorEvent("navigate", { timestamp: this.timestamp });
     }
     /**
      * During range selection, when the user is navigating with the keyboard,
@@ -687,12 +687,16 @@ DayPicker = DayPicker_1 = __decorate([
      * Fired when the selected date(s) change
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+    })
     /**
      * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
      */
     ,
-    event("navigate")
+    event("navigate", {
+        bubbles: true,
+    })
 ], DayPicker);
 DayPicker.define();
 export default DayPicker;

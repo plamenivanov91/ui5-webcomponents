@@ -97,7 +97,7 @@ let SegmentedButton = SegmentedButton_1 = class SegmentedButton extends UI5Eleme
             default:
                 this._applySingleSelection(target);
         }
-        this.fireEvent("selection-change", {
+        this.fireDecoratorEvent("selection-change", {
             selectedItems: this.selectedItems,
         });
         this._itemNavigation.setCurrentItem(target);
@@ -205,6 +205,7 @@ SegmentedButton = SegmentedButton_1 = __decorate([
              */
             selectedItems: { type: Array },
         },
+        bubbles: true,
     })
 ], SegmentedButton);
 SegmentedButton.define();

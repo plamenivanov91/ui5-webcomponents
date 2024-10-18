@@ -205,13 +205,13 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
     _fireClick(e) {
         e?.stopPropagation();
         if (!this._shiftOrEscapePressed) {
-            this.fireEvent("click");
+            this.fireDecoratorEvent("click");
         }
         this._shiftOrEscapePressed = false;
     }
     _fireArrowClick(e) {
         e?.stopPropagation();
-        this.fireEvent("arrow-click");
+        this.fireDecoratorEvent("arrow-click");
     }
     _textButtonRelease() {
         this._textButtonActive = false;
@@ -387,13 +387,17 @@ SplitButton = SplitButton_1 = __decorate([
      * @public
      */
     ,
-    event("click")
+    event("click", {
+        bubbles: true,
+    })
     /**
      * Fired when the user clicks on the arrow action.
      * @public
      */
     ,
-    event("arrow-click")
+    event("arrow-click", {
+        bubbles: true,
+    })
 ], SplitButton);
 SplitButton.define();
 export default SplitButton;

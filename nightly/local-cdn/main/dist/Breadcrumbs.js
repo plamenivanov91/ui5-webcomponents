@@ -244,19 +244,19 @@ let Breadcrumbs = Breadcrumbs_1 = class Breadcrumbs extends UI5Element {
     }
     _onLinkPress(e) {
         const link = e.target, items = this._getItems(), item = items.find(x => `${x._id}-link` === link.id), { altKey, ctrlKey, metaKey, shiftKey, } = e.detail;
-        if (!this.fireEvent("item-click", {
+        if (!this.fireDecoratorEvent("item-click", {
             item,
             altKey,
             ctrlKey,
             metaKey,
             shiftKey,
-        }, true)) {
+        })) {
             e.preventDefault();
         }
     }
     _onLabelPress(e) {
         const items = this._getItems(), item = items[items.length - 1], { altKey, ctrlKey, metaKey, shiftKey, } = e;
-        this.fireEvent("item-click", {
+        this.fireDecoratorEvent("item-click", {
             item,
             altKey,
             ctrlKey,
@@ -266,7 +266,7 @@ let Breadcrumbs = Breadcrumbs_1 = class Breadcrumbs extends UI5Element {
     }
     _onOverflowListItemSelect(e) {
         const listItem = e.detail.selectedItems[0], items = this._getItems(), item = items.find(x => `${x._id}-li` === listItem.id);
-        if (this.fireEvent("item-click", { item }, true)) {
+        if (this.fireDecoratorEvent("item-click", { item })) {
             locationOpen(item.href, item.target || "_self", "noopener,noreferrer");
             this.responsivePopover.open = false;
         }
@@ -479,7 +479,6 @@ Breadcrumbs = Breadcrumbs_1 = __decorate([
      * Fires when a `BreadcrumbsItem` is clicked.
      *
      * **Note:** You can prevent browser location change by calling `event.preventDefault()`.
-     * @allowPreventDefault
      * @param {HTMLElement} item The clicked item.
      * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
      * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
@@ -511,6 +510,8 @@ Breadcrumbs = Breadcrumbs_1 = __decorate([
              */
             shiftKey: { type: Boolean },
         },
+        bubbles: true,
+        cancelable: true,
     })
 ], Breadcrumbs);
 Breadcrumbs.define();

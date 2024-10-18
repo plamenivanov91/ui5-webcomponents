@@ -292,7 +292,7 @@ let AvatarGroup = AvatarGroup_1 = class AvatarGroup extends UI5Element {
     }
     _fireGroupEvent(targetRef) {
         const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
-        this.fireEvent("click", {
+        this.fireDecoratorEvent("click", {
             targetRef,
             overflowButtonClicked: isOverflowButtonClicked,
         });
@@ -402,7 +402,7 @@ let AvatarGroup = AvatarGroup_1 = class AvatarGroup extends UI5Element {
         });
         this._overflowButtonText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
         if (shouldFireEvent) {
-            this.fireEvent("overflow");
+            this.fireDecoratorEvent("overflow");
         }
     }
     _getAriaHasPopup() {

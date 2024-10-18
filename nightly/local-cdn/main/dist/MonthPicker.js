@@ -206,7 +206,7 @@ let MonthPicker = MonthPicker_1 = class MonthPicker extends CalendarPart {
      */
     _setTimestamp(value) {
         this._safelySetTimestamp(value);
-        this.fireEvent("navigate", { timestamp: this.timestamp });
+        this.fireDecoratorEvent("navigate", { timestamp: this.timestamp });
     }
     /**
      * In range selection, the currently focused or hovered month is considered the "second day".
@@ -242,7 +242,7 @@ let MonthPicker = MonthPicker_1 = class MonthPicker extends CalendarPart {
         this._safelyModifyTimestampBy(amount, "month", preserveDate);
         this._updateSecondTimestamp();
         // Notify the calendar to update its timestamp
-        this.fireEvent("navigate", { timestamp: this.timestamp });
+        this.fireDecoratorEvent("navigate", { timestamp: this.timestamp });
     }
     _onkeyup(e) {
         if (isSpace(e)) {
@@ -264,7 +264,7 @@ let MonthPicker = MonthPicker_1 = class MonthPicker extends CalendarPart {
         this._safelySetTimestamp(timestamp);
         this._updateSecondTimestamp();
         this._updateSelectedDates(timestamp);
-        this.fireEvent("change", {
+        this.fireDecoratorEvent("change", {
             timestamp: this.timestamp,
             dates: this.selectedDates,
         });
@@ -345,13 +345,17 @@ MonthPicker = MonthPicker_1 = __decorate([
      * Fired when the user selects a month via "Space", "Enter" or click.
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+    })
     /**
      * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
      * @since 1.0.0-rc.9
      */
     ,
-    event("navigate")
+    event("navigate", {
+        bubbles: true,
+    })
 ], MonthPicker);
 MonthPicker.define();
 export default MonthPicker;

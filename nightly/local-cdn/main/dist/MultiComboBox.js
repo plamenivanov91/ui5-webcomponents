@@ -261,12 +261,12 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         this.value = value;
         this._shouldFilterItems = true;
         this.valueBeforeAutoComplete = value;
-        this.fireEvent("input");
+        this.fireDecoratorEvent("input");
     }
     _inputChange() {
         if (!this._clearingValue && this._lastValue !== this.value) {
             this._lastValue = this.value;
-            this.fireEvent("change");
+            this.fireDecoratorEvent("change");
         }
     }
     _onMobileInputKeydown(e) {
@@ -360,7 +360,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                 this._open = true;
             }
         }
-        this.fireEvent("input");
+        this.fireDecoratorEvent("input");
     }
     _tokenDelete(e) {
         this._previouslySelectedItems = this._getSelectedItems();
@@ -912,7 +912,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         else {
             this._getResponsivePopover().focus();
         }
-        this.fireEvent(action);
+        this.fireDecoratorEvent(action);
         this._previouslySelectedItems = this._getSelectedItems();
         this._isOpenedByKeyboard = false;
     }
@@ -971,7 +971,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                     this._revertSelection();
                 }
             }
-            this.fireEvent("input");
+            this.fireDecoratorEvent("input");
             return;
         }
         this.value = this.valueBeforeAutoComplete || "";
@@ -986,11 +986,11 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         });
     }
     fireSelectionChange() {
-        const changePrevented = !this.fireEvent("selection-change", {
+        const changePrevented = !this.fireDecoratorEvent("selection-change", {
             items: this._getSelectedItems(),
-        }, true);
+        });
         // Angular 2 way data binding
-        this.fireEvent("value-changed");
+        this.fireDecoratorEvent("value-changed");
         return changePrevented;
     }
     _getList() {
@@ -1022,7 +1022,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             this._dialogInputValueState = this.valueState;
             this._tokenizer.expanded = false;
         }
-        this.fireEvent(action);
+        this.fireDecoratorEvent(action);
         this._iconPressed = false;
         this._preventTokenizerToggle = false;
         this.filterSelected = false;
@@ -1138,7 +1138,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
     _clear() {
         this.value = "";
         this._inputDom.value = "";
-        this.fireEvent("input");
+        this.fireDecoratorEvent("input");
         if (!this._isPhone) {
             this.focus();
         }
@@ -1572,32 +1572,39 @@ MultiComboBox = MultiComboBox_1 = __decorate([
      * @public
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+    })
     /**
      * Fired when the value of the component changes at each keystroke or clear icon is pressed.
      * @public
      */
     ,
-    event("input")
+    event("input", {
+        bubbles: true,
+    })
     /**
      * Fired when the dropdown is opened.
      * @since 2.0.0
      * @public
      */
     ,
-    event("open")
+    event("open", {
+        bubbles: true,
+    })
     /**
      * Fired when the dropdown is closed.
      * @since 2.0.0
      * @public
      */
     ,
-    event("close")
+    event("close", {
+        bubbles: true,
+    })
     /**
      * Fired when selection is changed by user interaction.
      * @param {IMultiComboBoxItem[]} items an array of the selected items.
      * @public
-     * @allowPreventDefault
      */
     ,
     event("selection-change", {
@@ -1607,6 +1614,8 @@ MultiComboBox = MultiComboBox_1 = __decorate([
              */
             items: { type: (Array) },
         },
+        bubbles: true,
+        cancelable: true,
     })
 ], MultiComboBox);
 MultiComboBox.define();

@@ -275,7 +275,7 @@ let Table = Table_1 = class Table extends UI5Element {
         return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
     }
     _onRowPress(row) {
-        this.fireEvent("row-click", { row });
+        this.fireDecoratorEvent("row-click", { row });
     }
     get styles() {
         const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
@@ -438,6 +438,7 @@ Table = Table_1 = __decorate([
              */
             row: { type: TableRow },
         },
+        bubbles: true,
     })
 ], Table);
 Table.define();

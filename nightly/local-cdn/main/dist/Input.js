@@ -347,7 +347,7 @@ let Input = Input_1 = class Input extends UI5Element {
             if (this.typedInValue.length && this.value.length) {
                 innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
             }
-            this.fireEvent("type-ahead");
+            this.fireDecoratorEvent("type-ahead");
         }
         this._performTextSelection = false;
     }
@@ -550,7 +550,7 @@ let Input = Input_1 = class Input extends UI5Element {
             return;
         }
         const fireChange = () => {
-            this.fireEvent(INPUT_EVENTS.CHANGE);
+            this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
             this.previousValue = this.value;
             this.typedInValue = this.value;
         };
@@ -567,7 +567,7 @@ let Input = Input_1 = class Input extends UI5Element {
     _clear() {
         const valueBeforeClear = this.value;
         this.value = "";
-        const prevented = !this.fireEvent(INPUT_EVENTS.INPUT, { inputType: "" }, true);
+        const prevented = !this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType: "" });
         if (prevented) {
             this.value = valueBeforeClear;
             return;
@@ -582,13 +582,13 @@ let Input = Input_1 = class Input extends UI5Element {
         this._clearIconClicked = true;
     }
     _scroll(e) {
-        this.fireEvent("suggestion-scroll", {
+        this.fireDecoratorEvent("suggestion-scroll", {
             scrollTop: e.detail.scrollTop,
             scrollContainer: e.detail.targetRef,
         });
     }
     _handleSelect() {
-        this.fireEvent("select", {});
+        this.fireDecoratorEvent("select", {});
     }
     _handleInput(e) {
         const inputDomRef = this.getInputDOMRefSync();
@@ -702,7 +702,7 @@ let Input = Input_1 = class Input extends UI5Element {
             this.focused = false;
         }
         if (this._changeToBeFired) {
-            this.fireEvent(INPUT_EVENTS.CHANGE);
+            this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
             this._changeToBeFired = false;
         }
         this.open = false;
@@ -714,11 +714,11 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     _handlePickerAfterOpen() {
         this.Suggestions?._onOpen();
-        this.fireEvent("open", null, false, false);
+        this.fireDecoratorEvent("open");
     }
     _handlePickerAfterClose() {
         this.Suggestions?._onClose();
-        this.fireEvent("close", null, false, false);
+        this.fireDecoratorEvent("close");
     }
     openValueStatePopover() {
         this.valueStateOpen = true;
@@ -756,7 +756,7 @@ let Input = Input_1 = class Input extends UI5Element {
             this.valueBeforeItemSelection = itemText;
             this.lastConfirmedValue = itemText;
             this._performTextSelection = true;
-            this.fireEvent(INPUT_EVENTS.CHANGE);
+            this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
             // value might change in the change event handler
             this.typedInValue = this.value;
             this.previousValue = this.value;
@@ -787,13 +787,13 @@ let Input = Input_1 = class Input extends UI5Element {
         this.valueBeforeSelectionStart = inputValue;
         if (isUserInput) { // input
             const inputType = e.inputType || "";
-            const prevented = !this.fireEvent(INPUT_EVENTS.INPUT, { inputType }, true);
+            const prevented = !this.fireDecoratorEvent(INPUT_EVENTS.INPUT, { inputType });
             if (prevented) {
                 this.value = valueBeforeInput;
                 inputRef && (inputRef.value = valueBeforeInput);
             }
             // Angular two way data binding
-            this.fireEvent("value-changed");
+            this.fireDecoratorEvent("value-changed");
             this.fireResetSelectionChange();
         }
     }
@@ -889,7 +889,7 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     fireSelectionChange(item, isValueFromSuggestions) {
         if (this.Suggestions) {
-            this.fireEvent(INPUT_EVENTS.SELECTION_CHANGE, { item });
+            this.fireDecoratorEvent(INPUT_EVENTS.SELECTION_CHANGE, { item });
             this._isLatestValueFromSuggestions = isValueFromSuggestions;
         }
     }
@@ -1242,15 +1242,27 @@ Input = Input_1 = __decorate([
      * @public
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+    })
+    /**
+     * Fired to make Angular two way data binding work properly.
+     * @private
+     */
+    ,
+    event("value-changed", {
+        bubbles: true,
+    })
     /**
      * Fired when the value of the component changes at each keystroke,
      * and when a suggestion item has been selected.
-     * @allowPreventDefault
      * @public
      */
     ,
-    event("input")
+    event("input", {
+        bubbles: true,
+        cancelable: true,
+    })
     /**
      * Fired when some text has been selected.
      *
@@ -1258,7 +1270,9 @@ Input = Input_1 = __decorate([
      * @public
      */
     ,
-    event("select")
+    event("select", {
+        bubbles: true,
+    })
     /**
      * Fired when the user navigates to a suggestion item via the ARROW keys,
      * as a preview, before the final selection.
@@ -1274,6 +1288,7 @@ Input = Input_1 = __decorate([
             */
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fires when a suggestion item is autocompleted in the input.
@@ -1281,7 +1296,9 @@ Input = Input_1 = __decorate([
      * @private
      */
     ,
-    event("type-ahead")
+    event("type-ahead", {
+        bubbles: true,
+    })
     /**
      * Fired when the user scrolls the suggestion popover.
      * @param {Integer} scrollTop The current scroll position.
@@ -1301,6 +1318,7 @@ Input = Input_1 = __decorate([
             */
             scrollContainer: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when the suggestions picker is open.
@@ -1308,14 +1326,18 @@ Input = Input_1 = __decorate([
      * @since 2.0.0
      */
     ,
-    event("open")
+    event("open", {
+        bubbles: true,
+    })
     /**
      * Fired when the suggestions picker is closed.
      * @public
      * @since 2.0.0
      */
     ,
-    event("close")
+    event("close", {
+        bubbles: true,
+    })
 ], Input);
 Input.define();
 export default Input;

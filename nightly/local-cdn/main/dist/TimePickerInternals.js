@@ -163,7 +163,7 @@ let TimePickerInternals = TimePickerInternals_1 = class TimePickerInternals exte
         const value = this.formatValue(date);
         if (this.isValid(value)) {
             this.value = this.normalizeValue(value);
-            this.fireEvent("change", { value: this.value, valid: true });
+            this.fireDecoratorEvent("change", { value: this.value, valid: true });
         }
     }
     isValid(value) {
@@ -374,6 +374,7 @@ TimePickerInternals = TimePickerInternals_1 = __decorate([
             value: { type: String },
             valid: { type: Boolean },
         },
+        bubbles: true,
     })
 ], TimePickerInternals);
 export default TimePickerInternals;

@@ -146,7 +146,7 @@ let RatingIndicator = RatingIndicator_1 = class RatingIndicator extends UI5Eleme
                 this.value = 0;
             }
             if (this._liveValue !== this.value) {
-                this.fireEvent("change");
+                this.fireDecoratorEvent("change");
                 this._liveValue = this.value;
             }
         }
@@ -184,7 +184,7 @@ let RatingIndicator = RatingIndicator_1 = class RatingIndicator extends UI5Eleme
                 const pressedNumber = parseInt(e.key);
                 this.value = pressedNumber > this.max ? this.max : pressedNumber;
             }
-            this.fireEvent("change");
+            this.fireDecoratorEvent("change");
         }
     }
     _onfocusin() {
@@ -273,7 +273,9 @@ RatingIndicator = RatingIndicator_1 = __decorate([
      * @public
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+    })
 ], RatingIndicator);
 RatingIndicator.define();
 export default RatingIndicator;

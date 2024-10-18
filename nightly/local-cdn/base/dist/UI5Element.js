@@ -765,6 +765,7 @@ class UI5Element extends HTMLElement {
      * @param cancelable - true, if the user can call preventDefault on the event object
      * @param bubbles - true, if the event bubbles
      * @returns false, if the event was cancelled (preventDefault called), true otherwise
+     * @deprecated use fireDecoratorEvent instead
      */
     fireEvent(name, data, cancelable = false, bubbles = true) {
         const eventResult = this._fireEvent(name, data, cancelable, bubbles);
@@ -775,6 +776,28 @@ class UI5Element extends HTMLElement {
         //	 After: onLiveChange
         if (pascalCaseEventName !== name) {
             return eventResult && this._fireEvent(pascalCaseEventName, data, cancelable, bubbles);
+        }
+        return eventResult;
+    }
+    /**
+     * Fires a custom event, configured via the "event" decorator.
+     * @public
+     * @param name - name of the event
+     * @param data - additional data for the event
+     * @returns false, if the event was cancelled (preventDefault called), true otherwise
+     */
+    fireDecoratorEvent(name, data) {
+        const eventData = this.getEventData(name);
+        const cancellable = eventData ? eventData.cancelable : false;
+        const bubbles = eventData ? eventData.bubbles : false;
+        const eventResult = this._fireEvent(name, data, cancellable, bubbles);
+        const pascalCaseEventName = kebabToPascalCase(name);
+        // pascal events are more convinient for native react usage
+        // live-change:
+        //	 Before: onlive-change
+        //	 After: onLiveChange
+        if (pascalCaseEventName !== name) {
+            return eventResult && this._fireEvent(pascalCaseEventName, data, cancellable, bubbles);
         }
         return eventResult;
     }
@@ -800,6 +823,11 @@ class UI5Element extends HTMLElement {
         const normalEventResult = this.dispatchEvent(normalEvent);
         // Return false if any of the two events was prevented (its result was false).
         return normalEventResult && noConflictEventResult;
+    }
+    getEventData(name) {
+        const ctor = this.constructor;
+        const eventMap = ctor.getMetadata().getEvents();
+        return eventMap[name];
     }
     /**
      * Returns the actual children, associated with a slot.

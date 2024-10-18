@@ -121,7 +121,7 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
         }
         return ids.join(" ");
     }
-    get _ariaExpanded() {
+    get _expanded() {
         return !this.collapsed;
     }
     get _pressable() {
@@ -132,7 +132,7 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
     }
     toggleCollapsed() {
         this.collapsed = !this.collapsed;
-        this.fireEvent("toggle", { item: this });
+        this.fireDecoratorEvent("toggle", { item: this });
     }
     /**
      * Event handlers
@@ -142,7 +142,7 @@ let NotificationListGroupItem = NotificationListGroupItem_1 = class Notification
         this.toggleCollapsed();
     }
     _onLoadMore() {
-        this.fireEvent("load-more");
+        this.fireDecoratorEvent("load-more");
     }
     get loadMoreButton() {
         const innerList = this.getDomRef()?.querySelector("[ui5-notification-group-list]");
@@ -210,7 +210,9 @@ NotificationListGroupItem = NotificationListGroupItem_1 = __decorate([
      * @public
      */
     ,
-    event("toggle")
+    event("toggle", {
+        bubbles: true,
+    })
     /**
      * Fired when additional items are requested.
      *
@@ -218,7 +220,9 @@ NotificationListGroupItem = NotificationListGroupItem_1 = __decorate([
      * @since 2.2.0
      */
     ,
-    event("load-more")
+    event("load-more", {
+        bubbles: true,
+    })
 ], NotificationListGroupItem);
 NotificationListGroupItem.define();
 export default NotificationListGroupItem;

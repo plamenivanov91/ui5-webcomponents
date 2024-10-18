@@ -71,7 +71,7 @@ let TableGroupRow = TableGroupRow_1 = class TableGroupRow extends UI5Element {
         this._colSpan = this.visibleColCount();
     }
     _onfocusin(e) {
-        this.fireEvent("_focused", e);
+        this.fireDecoratorEvent("_focused", e);
     }
 };
 __decorate([
@@ -102,7 +102,9 @@ TableGroupRow = TableGroupRow_1 = __decorate([
             CheckBox,
         ],
     }),
-    event("_focused")
+    event("_focused", {
+        bubbles: true,
+    })
 ], TableGroupRow);
 TableGroupRow.define();
 export default TableGroupRow;

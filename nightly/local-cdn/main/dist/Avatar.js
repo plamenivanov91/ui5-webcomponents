@@ -242,7 +242,7 @@ let Avatar = Avatar_1 = class Avatar extends UI5Element {
         }
     }
     _fireClick() {
-        this.fireEvent("click");
+        this.fireDecoratorEvent("click");
     }
     _getAriaHasPopup() {
         const ariaHaspopup = this.accessibilityAttributes.hasPopup;
@@ -318,7 +318,9 @@ Avatar = Avatar_1 = __decorate([
      * @since 1.0.0-rc.11
      */
     ,
-    event("click")
+    event("click", {
+        bubbles: true,
+    })
 ], Avatar);
 Avatar.define();
 export default Avatar;

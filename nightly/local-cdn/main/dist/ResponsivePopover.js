@@ -132,7 +132,7 @@ let ResponsivePopover = ResponsivePopover_1 = class ResponsivePopover extends Po
     }
     _propagateDialogEvent(e) {
         const type = e.type.replace("ui5-", "");
-        this.fireEvent(type, e.detail);
+        this.fireDecoratorEvent(type, e.detail);
     }
     get isModal() {
         if (!isPhone()) {

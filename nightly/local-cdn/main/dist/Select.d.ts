@@ -17,14 +17,14 @@ import type ListItemBase from "./ListItemBase.js";
  * Interface for components that may be slotted inside `ui5-select` as options
  * @public
  */
-type IOption = ListItemBase & {
+interface IOption extends ListItemBase {
     tooltip?: string;
     icon?: string;
     value?: string;
     additionalText?: string;
-    focused?: boolean;
+    focused: boolean;
     effectiveDisplayText: string;
-};
+}
 type SelectChangeEventDetail = {
     selectedOption: IOption;
 };

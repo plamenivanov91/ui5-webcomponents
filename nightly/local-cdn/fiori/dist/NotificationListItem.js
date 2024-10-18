@@ -359,7 +359,7 @@ let NotificationListItem = NotificationListItem_1 = class NotificationListItem e
             return;
         }
         if (isDelete(e)) {
-            this.fireEvent("close", { item: this });
+            this.fireDecoratorEvent("close", { item: this });
         }
         if (isF10Shift(e)) {
             this._onBtnMenuClick();
@@ -369,7 +369,7 @@ let NotificationListItem = NotificationListItem_1 = class NotificationListItem e
         }
     }
     _onBtnCloseClick() {
-        this.fireEvent("close", { item: this });
+        this.fireDecoratorEvent("close", { item: this });
     }
     _onBtnMenuClick() {
         if (this.getMenu()) {
@@ -392,7 +392,7 @@ let NotificationListItem = NotificationListItem_1 = class NotificationListItem e
         if (getEventMark(e) === "button" || getEventMark(e) === "link") {
             return;
         }
-        this.fireEvent("_press", { item: this });
+        this.fireDecoratorEvent("_press", { item: this });
     }
     onResize() {
         if (this.wrappingType === WrappingType.Normal) {
@@ -470,7 +470,9 @@ NotificationListItem = NotificationListItem_1 = __decorate([
             Tag,
         ],
     }),
-    event("_press")
+    event("_press", {
+        bubbles: true,
+    })
     /**
      * Fired when the `Close` button is pressed.
      * @param {HTMLElement} item the closed item.
@@ -486,6 +488,7 @@ NotificationListItem = NotificationListItem_1 = __decorate([
                 type: HTMLElement,
             },
         },
+        bubbles: true,
     })
 ], NotificationListItem);
 NotificationListItem.define();

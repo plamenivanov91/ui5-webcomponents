@@ -138,7 +138,7 @@ declare class DynamicPage extends UI5Element {
     get _accAttributesForHeaderActions(): {
         controls: string;
     };
-    get headerTabIndex(): -1 | 0;
+    get headerTabIndex(): 0 | -1;
     get headerAriaHidden(): boolean;
     get hasHeading(): boolean;
     get headerSnapped(): boolean;

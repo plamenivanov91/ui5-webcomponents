@@ -167,12 +167,12 @@ let Link = Link_1 = class Link extends UI5Element {
         const { altKey, ctrlKey, metaKey, shiftKey, } = e;
         e.stopImmediatePropagation();
         markEvent(e, "link");
-        const executeEvent = this.fireEvent("click", {
+        const executeEvent = this.fireDecoratorEvent("click", {
             altKey,
             ctrlKey,
             metaKey,
             shiftKey,
-        }, true);
+        });
         if (!executeEvent) {
             e.preventDefault();
         }
@@ -260,7 +260,6 @@ Link = Link_1 = __decorate([
      * Fired when the component is triggered either with a mouse/tap
      * or by using the Enter key.
      * @public
-     * @allowPreventDefault
      * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
      * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
      * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
@@ -286,6 +285,8 @@ Link = Link_1 = __decorate([
              */
             shiftKey: { type: Boolean },
         },
+        bubbles: true,
+        cancelable: true,
     })
 ], Link);
 Link.define();

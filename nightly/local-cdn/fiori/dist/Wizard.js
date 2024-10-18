@@ -773,7 +773,7 @@ let Wizard = Wizard_1 = class Wizard extends UI5Element {
                 selectedStep.selected = false;
                 stepToSelect.selected = true;
             }
-            this.fireEvent("step-change", {
+            this.fireDecoratorEvent("step-change", {
                 step: stepToSelect,
                 previousStep: selectedStep,
                 withScroll,
@@ -867,6 +867,7 @@ Wizard = Wizard_1 = __decorate([
             */
             withScroll: { type: Boolean },
         },
+        bubbles: true,
     })
 ], Wizard);
 Wizard.define();

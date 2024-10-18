@@ -1,7 +1,10 @@
-commit cd7e202f0f9c6d363db17d39ff56171bc69555a8
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Oct 8 10:15:20 2024 +0300
+commit ed3abfcf2eec5469bd18ac5becf29e34e427a2f1
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Oct 17 14:19:03 2024 +0300
 
-    fix(ui5-daypicker): announce selected state change (#9934)
+    fix(ui5-slider, ui5-range-slider): adjust aria-attributes (#10039)
     
-    Fixes: #9860
+    * fix(ui5-slider, ui5-range-slider): adjust aria-attributes
+    
+    fix accessibility related attributes for slider and range slider
+    related to: #9547

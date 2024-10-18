@@ -8,6 +8,7 @@ var Toolbar_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { event } from "@ui5/webcomponents-base/dist/decorators.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -275,7 +276,7 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
         });
         if (minWidth !== this.minContentWidth) {
             const spaceAroundContent = this.offsetWidth - this.getDomRef().offsetWidth;
-            this.fireEvent("_min-content-width-change", {
+            this.fireDecoratorEvent("_min-content-width-change", {
                 minWidth: minWidth + spaceAroundContent + this.overflowButtonSize,
             });
         }
@@ -476,6 +477,18 @@ Toolbar = Toolbar_1 = __decorate([
         languageAware: true,
         renderer: litRender,
         template: ToolbarTemplate,
+    })
+    /**
+     * @private
+    */
+    ,
+    event("_min-content-width-change", {
+        detail: {
+            minWidth: {
+                type: Number,
+            },
+        },
+        bubbles: true,
     })
 ], Toolbar);
 Toolbar.define();

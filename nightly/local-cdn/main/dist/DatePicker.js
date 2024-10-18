@@ -325,7 +325,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
             this._updateValueState(); // Change the value state to Error/None, but only if needed
         }
         events.forEach((e) => {
-            if (!this.fireEvent(e, { value, valid }, true)) {
+            if (!this.fireDecoratorEvent(e, { value, valid })) {
                 executeEvent = false;
             }
         });
@@ -341,7 +341,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         const valid = this._checkValueValidity(this.value);
         const previousValueState = this.valueState;
         this.valueState = valid ? ValueState.None : ValueState.Negative;
-        const eventPrevented = !this.fireEvent("value-state-change", { valueState: this.valueState, valid }, true);
+        const eventPrevented = !this.fireDecoratorEvent("value-state-change", { valueState: this.valueState, valid });
         if (eventPrevented) {
             this.valueState = previousValueState;
         }
@@ -640,7 +640,6 @@ DatePicker = DatePicker_1 = __decorate([
     })
     /**
      * Fired when the input operation has finished by pressing Enter or on focusout.
-     * @allowPreventDefault
      * @public
      * @param {string} value The submitted value.
      * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
@@ -661,10 +660,11 @@ DatePicker = DatePicker_1 = __decorate([
                 type: Boolean,
             },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when the value of the component is changed at each key stroke.
-     * @allowPreventDefault
      * @public
      * @param {string} value The submitted value.
      * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
@@ -685,12 +685,13 @@ DatePicker = DatePicker_1 = __decorate([
                 type: Boolean,
             },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired before the value state of the component is updated internally.
      * The event is preventable, meaning that if it's default action is
      * prevented, the component will not update the value state.
-     * @allowPreventDefault
      * @public
      * @param {string} valueState The new `valueState` that will be set.
      * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
@@ -711,6 +712,8 @@ DatePicker = DatePicker_1 = __decorate([
                 type: Boolean,
             },
         },
+        bubbles: true,
+        cancelable: true,
     })
 ], DatePicker);
 DatePicker.define();

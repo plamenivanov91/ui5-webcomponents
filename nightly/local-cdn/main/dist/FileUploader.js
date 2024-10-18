@@ -155,7 +155,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         }
         this._input.files = validatedFiles;
         this._updateValue(validatedFiles);
-        this.fireEvent("change", {
+        this.fireDecoratorEvent("change", {
             files: validatedFiles,
         });
     }
@@ -191,7 +191,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
             return;
         }
         this._updateValue(changedFiles);
-        this.fireEvent("change", {
+        this.fireDecoratorEvent("change", {
             files: changedFiles,
         });
     }
@@ -208,7 +208,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
     _validateFiles(changedFiles) {
         const exceededFilesData = this.maxFileSize ? this._getExceededFiles(changedFiles) : [];
         if (exceededFilesData.length) {
-            this.fireEvent("file-size-exceed", {
+            this.fireDecoratorEvent("file-size-exceed", {
                 filesData: exceededFilesData,
             });
             changedFiles = new DataTransfer().files;
@@ -402,6 +402,7 @@ FileUploader = FileUploader_1 = __decorate([
              */
             files: { type: FileList },
         },
+        bubbles: true,
     })
     /**
      * Event is fired when the size of a file is above the `maxFileSize` property value.
@@ -417,6 +418,7 @@ FileUploader = FileUploader_1 = __decorate([
              */
             filesData: { type: (Array) },
         },
+        bubbles: true,
     })
 ], FileUploader);
 FileUploader.define();

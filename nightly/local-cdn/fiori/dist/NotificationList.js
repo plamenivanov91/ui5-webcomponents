@@ -62,24 +62,24 @@ let NotificationList = NotificationList_1 = class NotificationList extends UI5El
     }
     _onItemClick(e) {
         const item = e.detail.item;
-        if (!this.fireEvent("item-click", { item }, true)) {
+        if (!this.fireDecoratorEvent("item-click", { item })) {
             e.preventDefault();
         }
     }
     _onItemClose(e) {
         const item = e.detail.item;
-        if (!this.fireEvent("item-close", { item }, true)) {
+        if (!this.fireDecoratorEvent("item-close", { item })) {
             e.preventDefault();
         }
     }
     _onItemToggle(e) {
         const item = e.detail.item;
-        if (!this.fireEvent("item-toggle", { item }, true)) {
+        if (!this.fireDecoratorEvent("item-toggle", { item })) {
             e.preventDefault();
         }
     }
     _onLoadMore() {
-        this.fireEvent("load-more");
+        this.fireDecoratorEvent("load-more");
     }
 };
 __decorate([
@@ -104,7 +104,6 @@ NotificationList = NotificationList_1 = __decorate([
     })
     /**
      * Fired when an item is clicked.
-     * @allowPreventDefault
      * @param {HTMLElement} item The clicked item.
      * @public
      */
@@ -116,10 +115,11 @@ NotificationList = NotificationList_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when the `Close` button of any item is clicked.
-     *
      * @param {HTMLElement} item the item about to be closed.
      * @public
      */
@@ -131,6 +131,8 @@ NotificationList = NotificationList_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when an item is toggled.
@@ -146,6 +148,8 @@ NotificationList = NotificationList_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
+        cancelable: true,
     })
 ], NotificationList);
 NotificationList.define();

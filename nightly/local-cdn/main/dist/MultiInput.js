@@ -78,7 +78,7 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
     }
     valueHelpPress() {
         this.closeValueStatePopover();
-        this.fireEvent("value-help-trigger");
+        this.fireDecoratorEvent("value-help-trigger");
     }
     tokenDelete(e) {
         const deletedTokens = e.detail.tokens;
@@ -88,7 +88,7 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
             return;
         }
         if (deletedTokens) {
-            this.fireEvent("token-delete", { tokens: deletedTokens });
+            this.fireDecoratorEvent("token-delete", { tokens: deletedTokens });
             if (shouldFocusInput) {
                 this.focus();
             }
@@ -311,7 +311,9 @@ MultiInput = MultiInput_1 = __decorate([
      * @public
      */
     ,
-    event("value-help-trigger")
+    event("value-help-trigger", {
+        bubbles: true,
+    })
     /**
      * Fired when tokens are being deleted.
      * @param {Array} tokens An array containing the deleted tokens.
@@ -325,6 +327,7 @@ MultiInput = MultiInput_1 = __decorate([
              */
             tokens: { type: Array },
         },
+        bubbles: true,
     })
 ], MultiInput);
 MultiInput.define();

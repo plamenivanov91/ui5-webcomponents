@@ -120,7 +120,7 @@ let CardHeader = CardHeader_1 = class CardHeader extends UI5Element {
         // prevents the native browser "click" event from firing
         e.stopImmediatePropagation();
         if (this.interactive && this._root.contains(e.target)) {
-            this.fireEvent("click");
+            this.fireDecoratorEvent("click");
         }
     }
     _keydown(e) {
@@ -131,7 +131,7 @@ let CardHeader = CardHeader_1 = class CardHeader extends UI5Element {
         const space = isSpace(e);
         this._headerActive = enter || space;
         if (enter) {
-            this.fireEvent("click");
+            this.fireDecoratorEvent("click");
             return;
         }
         if (space) {
@@ -145,7 +145,7 @@ let CardHeader = CardHeader_1 = class CardHeader extends UI5Element {
         const space = isSpace(e);
         this._headerActive = false;
         if (space) {
-            this.fireEvent("click");
+            this.fireDecoratorEvent("click");
         }
     }
 };
@@ -191,7 +191,9 @@ CardHeader = CardHeader_1 = __decorate([
      * @public
      */
     ,
-    event("click")
+    event("click", {
+        bubbles: true,
+    })
 ], CardHeader);
 CardHeader.define();
 export default CardHeader;

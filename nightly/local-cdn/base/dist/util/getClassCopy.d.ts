@@ -58,7 +58,13 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
         getFocusDomRefAsync(): Promise<HTMLElement | undefined>;
         focus(focusOptions?: FocusOptions): Promise<void>;
         fireEvent<T>(name: string, data?: T, cancelable?: boolean, bubbles?: boolean): boolean;
+        fireDecoratorEvent<T>(name: string, data?: T): boolean;
         _fireEvent<T>(name: string, data?: T | undefined, cancelable?: boolean, bubbles?: boolean): boolean;
+        getEventData(name: string): {
+            detail: Record<string, object>;
+            cancelable: boolean;
+            bubbles: boolean;
+        };
         getSlottedNodes<T = Node>(slotName: string): Array<T>;
         attachComponentStateFinalized(callback: () => void): void;
         detachComponentStateFinalized(callback: () => void): void;

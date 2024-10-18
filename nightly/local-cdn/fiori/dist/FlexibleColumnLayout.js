@@ -281,7 +281,7 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
         return colLayout.filter(colWidth => !this._isColumnHidden(colWidth)).length;
     }
     fireLayoutChange(separatorUsed, resized) {
-        this.fireEvent("layout-change", {
+        this.fireDecoratorEvent("layout-change", {
             layout: this.layout,
             columnLayout: this._columnLayout,
             startColumnVisible: this.startColumnVisible,
@@ -953,6 +953,7 @@ FlexibleColumnLayout = FlexibleColumnLayout_1 = __decorate([
             */
             resized: { type: Boolean },
         },
+        bubbles: true,
     })
 ], FlexibleColumnLayout);
 FlexibleColumnLayout.define();

@@ -263,9 +263,23 @@ declare abstract class UI5Element extends HTMLElement {
      * @param cancelable - true, if the user can call preventDefault on the event object
      * @param bubbles - true, if the event bubbles
      * @returns false, if the event was cancelled (preventDefault called), true otherwise
+     * @deprecated use fireDecoratorEvent instead
      */
     fireEvent<T>(name: string, data?: T, cancelable?: boolean, bubbles?: boolean): boolean;
+    /**
+     * Fires a custom event, configured via the "event" decorator.
+     * @public
+     * @param name - name of the event
+     * @param data - additional data for the event
+     * @returns false, if the event was cancelled (preventDefault called), true otherwise
+     */
+    fireDecoratorEvent<T>(name: string, data?: T): boolean;
     _fireEvent<T>(name: string, data?: T, cancelable?: boolean, bubbles?: boolean): boolean;
+    getEventData(name: string): {
+        detail: Record<string, object>;
+        cancelable: boolean;
+        bubbles: boolean;
+    };
     /**
      * Returns the actual children, associated with a slot.
      * Useful when there are transitive slots in nested component scenarios and you don't want to get a list of the slots, but rather of their content.

@@ -209,13 +209,13 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
             this._headerSnapped = false;
         }
         if (lastHeaderSnapped !== this._headerSnapped) {
-            this.fireEvent("title-toggle");
+            this.fireDecoratorEvent("title-toggle");
         }
         this.dynamicPageTitle.snapped = this._headerSnapped;
     }
     async onExpandClick() {
         this._toggleHeader();
-        this.fireEvent("title-toggle");
+        this.fireDecoratorEvent("title-toggle");
         await renderFinished();
         this.headerActions?.focusExpandButton();
         if (this.hasSnappedTitleOnMobile) {
@@ -225,7 +225,7 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
     }
     async onPinClick() {
         this.headerPinned = !this.headerPinned;
-        this.fireEvent("pin-button-toggle");
+        this.fireDecoratorEvent("pin-button-toggle");
         await renderFinished();
         this.headerActions?.focusPinButton();
     }
@@ -234,7 +234,7 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
             return;
         }
         this._toggleHeader();
-        this.fireEvent("title-toggle");
+        this.fireDecoratorEvent("title-toggle");
         await renderFinished();
         this.dynamicPageTitle.focus();
     }
@@ -315,14 +315,18 @@ DynamicPage = DynamicPage_1 = __decorate([
      * @public
      */
     ,
-    event("pin-button-toggle")
+    event("pin-button-toggle", {
+        bubbles: true,
+    })
     /**
      * Fired when the expand/collapse area of the title is toggled.
      *
      * @public
      */
     ,
-    event("title-toggle")
+    event("title-toggle", {
+        bubbles: true,
+    })
 ], DynamicPage);
 DynamicPage.define();
 export default DynamicPage;

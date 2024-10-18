@@ -120,10 +120,10 @@ let UploadCollection = UploadCollection_1 = class UploadCollection extends UI5El
         this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
     }
     _onItemDelete(e) {
-        this.fireEvent("item-delete", { item: e.target });
+        this.fireDecoratorEvent("item-delete", { item: e.target });
     }
     _onSelectionChange(e) {
-        this.fireEvent("selection-change", { selectedItems: e.detail.selectedItems });
+        this.fireDecoratorEvent("selection-change", { selectedItems: e.detail.selectedItems });
     }
     get classes() {
         return {
@@ -222,7 +222,9 @@ UploadCollection = UploadCollection_1 = __decorate([
      * @native
      */
     ,
-    event("drop")
+    event("drop", {
+        bubbles: true,
+    })
     /**
      * Fired when the delete button of any item is pressed.
      * @param {HTMLElement} item The `ui5-upload-collection-item` which was deleted.
@@ -236,6 +238,7 @@ UploadCollection = UploadCollection_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when selection is changed by user interaction
@@ -251,6 +254,7 @@ UploadCollection = UploadCollection_1 = __decorate([
              */
             selectedItems: { type: Array },
         },
+        bubbles: true,
     })
 ], UploadCollection);
 UploadCollection.define();

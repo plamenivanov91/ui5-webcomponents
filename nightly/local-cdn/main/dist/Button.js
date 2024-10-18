@@ -273,7 +273,7 @@ let Button = Button_1 = class Button extends UI5Element {
         markEvent(e, "button");
     }
     _setActiveState(active) {
-        const eventPrevented = !this.fireEvent("_active-state-change", null, true);
+        const eventPrevented = !this.fireDecoratorEvent("_active-state-change");
         if (eventPrevented) {
             return;
         }
@@ -435,13 +435,18 @@ Button = Button_1 = __decorate([
      * @native
      */
     ,
-    event("click")
+    event("click", {
+        bubbles: true,
+    })
     /**
      * Fired whenever the active state of the component changes.
      * @private
      */
     ,
-    event("_active-state-change")
+    event("_active-state-change", {
+        bubbles: true,
+        cancelable: true,
+    })
 ], Button);
 Button.define();
 export default Button;

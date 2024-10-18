@@ -382,13 +382,13 @@ let List = List_1 = class List extends UI5Element {
             selectionChange = this[`handle${this.selectionMode}`](e.detail.item, !!e.detail.selected);
         }
         if (selectionChange) {
-            const changePrevented = !this.fireEvent("selection-change", {
+            const changePrevented = !this.fireDecoratorEvent("selection-change", {
                 selectedItems: this.getSelectedItems(),
                 previouslySelectedItems,
                 selectionComponentPressed: e.detail.selectionComponentPressed,
                 targetItem: e.detail.item,
                 key: e.detail.key,
-            }, true);
+            });
             if (changePrevented) {
                 this._revertSelection(previouslySelectedItems);
             }
@@ -416,7 +416,7 @@ let List = List_1 = class List extends UI5Element {
         return true;
     }
     handleDelete(item) {
-        this.fireEvent("item-delete", { item });
+        this.fireDecoratorEvent("item-delete", { item });
         return true;
     }
     deselectSelectedItems() {
@@ -479,7 +479,7 @@ let List = List_1 = class List extends UI5Element {
         }
         e.preventDefault();
         const acceptedPosition = closestPositions.find(({ element, placement }) => {
-            return !this.fireEvent("move-over", {
+            return !this.fireDecoratorEvent("move-over", {
                 originalEvent: e,
                 source: {
                     element: item,
@@ -488,10 +488,10 @@ let List = List_1 = class List extends UI5Element {
                     element,
                     placement,
                 },
-            }, true);
+            });
         });
         if (acceptedPosition) {
-            this.fireEvent("move", {
+            this.fireDecoratorEvent("move", {
                 originalEvent: e,
                 source: {
                     element: item,
@@ -545,7 +545,7 @@ let List = List_1 = class List extends UI5Element {
         this._inViewport = isElementInView(this.getDomRef());
     }
     loadMore() {
-        this.fireEvent("load-more");
+        this.fireDecoratorEvent("load-more");
     }
     /*
     * KEYBOARD SUPPORT
@@ -626,7 +626,7 @@ let List = List_1 = class List extends UI5Element {
             placements = placements.filter(placement => placement !== MovePlacement.On);
         }
         const placementAccepted = placements.some(placement => {
-            const beforeItemMovePrevented = !this.fireEvent("move-over", {
+            const beforeItemMovePrevented = !this.fireDecoratorEvent("move-over", {
                 originalEvent: e,
                 source: {
                     element: draggedElement,
@@ -635,7 +635,7 @@ let List = List_1 = class List extends UI5Element {
                     element: closestPosition.element,
                     placement,
                 },
-            }, true);
+            });
             if (beforeItemMovePrevented) {
                 e.preventDefault();
                 this.dropIndicatorDOM.targetReference = closestPosition.element;
@@ -651,7 +651,7 @@ let List = List_1 = class List extends UI5Element {
     _ondrop(e) {
         e.preventDefault();
         const draggedElement = DragRegistry.getDraggedElement();
-        this.fireEvent("move", {
+        this.fireDecoratorEvent("move", {
             originalEvent: e,
             source: {
                 element: draggedElement,
@@ -685,7 +685,7 @@ let List = List_1 = class List extends UI5Element {
         const target = e.target;
         e.stopPropagation();
         this._itemNavigation.setCurrentItem(target);
-        this.fireEvent("item-focused", { item: target });
+        this.fireDecoratorEvent("item-focused", { item: target });
         if (this.selectionMode === ListSelectionMode.SingleAuto) {
             const detail = {
                 item: target,
@@ -698,7 +698,7 @@ let List = List_1 = class List extends UI5Element {
     }
     onItemPress(e) {
         const pressedItem = e.detail.item;
-        if (!this.fireEvent("item-click", { item: pressedItem }, true)) {
+        if (!this.fireDecoratorEvent("item-click", { item: pressedItem })) {
             return;
         }
         if (!this._selectionRequested && this.selectionMode !== ListSelectionMode.Delete) {
@@ -718,11 +718,11 @@ let List = List_1 = class List extends UI5Element {
         const target = e.target;
         const shouldFireItemClose = target?.hasAttribute("ui5-li-notification") || target?.hasAttribute("ui5-li-notification-group");
         if (shouldFireItemClose) {
-            this.fireEvent("item-close", { item: e.detail?.item });
+            this.fireDecoratorEvent("item-close", { item: e.detail?.item });
         }
     }
     onItemToggle(e) {
-        this.fireEvent("item-toggle", { item: e.detail.item });
+        this.fireDecoratorEvent("item-toggle", { item: e.detail.item });
     }
     onForwardBefore(e) {
         this.setPreviouslyFocusedItem(e.target);
@@ -918,7 +918,6 @@ List = List_1 = __decorate([
     /**
      * Fired when an item is activated, unless the item's `type` property
      * is set to `Inactive`.
-     * @allowPreventDefault
      * @param {HTMLElement} item The clicked item.
      * @public
      */
@@ -930,6 +929,8 @@ List = List_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when the `Close` button of any item is clicked
@@ -948,6 +949,7 @@ List = List_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when the `Toggle` button of any item is clicked.
@@ -965,6 +967,7 @@ List = List_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when the Delete button of any item is pressed.
@@ -982,11 +985,11 @@ List = List_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when selection is changed by user interaction
      * in `Single`, `SingleStart`, `SingleEnd` and `Multiple` selection modes.
-     * @allowPreventDefault
      * @param {Array<ListItemBase>} selectedItems An array of the selected items.
      * @param {Array<ListItemBase>} previouslySelectedItems An array of the previously selected items.
      * @public
@@ -1017,6 +1020,8 @@ List = List_1 = __decorate([
              */
             key: { type: String },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when the user scrolls to the bottom of the list.
@@ -1026,7 +1031,9 @@ List = List_1 = __decorate([
      * @since 1.0.0-rc.6
      */
     ,
-    event("load-more")
+    event("load-more", {
+        bubbles: true,
+    })
     /**
      * @private
      */
@@ -1035,6 +1042,7 @@ List = List_1 = __decorate([
         detail: {
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when a movable list item is moved over a potential drop target during a dragging operation.
@@ -1044,7 +1052,6 @@ List = List_1 = __decorate([
      * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
      * @public
      * @since 2.0.0
-     * @allowPreventDefault
      */
     ,
     event("move-over", {
@@ -1062,6 +1069,8 @@ List = List_1 = __decorate([
              */
             destination: { type: Object },
         },
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when a movable list item is dropped onto a drop target.
@@ -1070,7 +1079,6 @@ List = List_1 = __decorate([
      * @param {object} source Contains information about the moved element under `element` property.
      * @param {object} destination Contains information about the destination of the moved element. Has `element` and `placement` properties.
      * @public
-     * @allowPreventDefault
      */
     ,
     event("move", {
@@ -1088,6 +1096,7 @@ List = List_1 = __decorate([
              */
             destination: { type: Object },
         },
+        bubbles: true,
     })
 ], List);
 List.define();

@@ -365,7 +365,7 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
     }
     _handleItemClick(e, item) {
         if (item.selected && !this.collapsed) {
-            item.fireEvent("click");
+            item.fireDecoratorEvent("click");
             return;
         }
         if (this.collapsed && isInstanceOfSideNavigationItem(item) && item.items.length) {
@@ -378,7 +378,7 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
             this.openPicker(item.getFocusDomRef());
         }
         else {
-            item.fireEvent("click");
+            item.fireDecoratorEvent("click");
             if (!item.selected) {
                 this._selectItem(item);
             }
@@ -404,7 +404,7 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
         if (item.disabled) {
             return;
         }
-        if (!this.fireEvent("selection-change", { item }, true)) {
+        if (!this.fireDecoratorEvent("selection-change", { item })) {
             return;
         }
         let items = this._getSelectableItems(this.items);
@@ -484,7 +484,6 @@ SideNavigation = SideNavigation_1 = __decorate([
      * Fired when the selection has changed via user interaction
      *
      * @param {SideNavigationSelectableItemBase} item the clicked item.
-     * @allowPreventDefault
      * @public
      */
     ,
@@ -495,6 +494,8 @@ SideNavigation = SideNavigation_1 = __decorate([
              */
             item: { type: HTMLElement },
         },
+        bubbles: true,
+        cancelable: true,
     })
 ], SideNavigation);
 SideNavigation.define();

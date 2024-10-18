@@ -132,7 +132,7 @@ let TableGrowing = TableGrowing_1 = class TableGrowing extends UI5Element {
             this._currentLastRow = this._table.rows[this._table.rows.length - 1];
         }
         this._shouldFocusRow = true;
-        this.fireEvent("load-more");
+        this.fireDecoratorEvent("load-more");
     }
     _hasScrollToLoad() {
         return this.type === TableGrowingMode.Scroll;
@@ -242,7 +242,9 @@ TableGrowing = TableGrowing_1 = __decorate([
      * @public
      */
     ,
-    event("load-more")
+    event("load-more", {
+        bubbles: true,
+    })
 ], TableGrowing);
 TableGrowing.define();
 export default TableGrowing;

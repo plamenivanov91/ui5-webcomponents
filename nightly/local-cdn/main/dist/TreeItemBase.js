@@ -155,24 +155,24 @@ let TreeItemBase = TreeItemBase_1 = class TreeItemBase extends ListItem {
     }
     _toggleClick(e) {
         e.stopPropagation();
-        this.fireEvent("toggle", { item: this });
+        this.fireDecoratorEvent("toggle", { item: this });
     }
     async _onkeydown(e) {
         await super._onkeydown(e);
         if (!this._fixed && this.showToggleButton && isRight(e)) {
             if (!this.expanded) {
-                this.fireEvent("toggle", { item: this });
+                this.fireDecoratorEvent("toggle", { item: this });
             }
             else {
-                this.fireEvent("step-in", { item: this });
+                this.fireDecoratorEvent("step-in", { item: this });
             }
         }
         if (!this._fixed && isLeft(e)) {
             if (this.expanded) {
-                this.fireEvent("toggle", { item: this });
+                this.fireDecoratorEvent("toggle", { item: this });
             }
             else if (this.hasParent) {
-                this.fireEvent("step-out", { item: this });
+                this.fireDecoratorEvent("step-out", { item: this });
             }
         }
     }
@@ -252,6 +252,7 @@ TreeItemBase = TreeItemBase_1 = __decorate([
         detail: {
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
@@ -263,6 +264,7 @@ TreeItemBase = TreeItemBase_1 = __decorate([
         detail: {
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
     /**
      * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
@@ -274,6 +276,7 @@ TreeItemBase = TreeItemBase_1 = __decorate([
         detail: {
             item: { type: HTMLElement },
         },
+        bubbles: true,
     })
 ], TreeItemBase);
 export default TreeItemBase;

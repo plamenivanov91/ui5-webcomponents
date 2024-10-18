@@ -204,13 +204,13 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         if (this.isInactive) {
             return;
         }
-        this.fireEvent("_selection-requested", { item: this, selected: e.target.checked, selectionComponentPressed: true });
+        this.fireDecoratorEvent("_selection-requested", { item: this, selected: e.target.checked, selectionComponentPressed: true });
     }
     onSingleSelectionComponentPress(e) {
         if (this.isInactive) {
             return;
         }
-        this.fireEvent("_selection-requested", { item: this, selected: !e.target.checked, selectionComponentPressed: true });
+        this.fireDecoratorEvent("_selection-requested", { item: this, selected: !e.target.checked, selectionComponentPressed: true });
     }
     activate() {
         if (this.type === ListItemType.Active || this.type === ListItemType.Navigation) {
@@ -218,10 +218,10 @@ let ListItem = ListItem_1 = class ListItem extends ListItemBase {
         }
     }
     onDelete() {
-        this.fireEvent("_selection-requested", { item: this, selectionComponentPressed: false });
+        this.fireDecoratorEvent("_selection-requested", { item: this, selectionComponentPressed: false });
     }
     onDetailClick() {
-        this.fireEvent("detail-click", { item: this, selected: this.selected });
+        this.fireDecoratorEvent("detail-click", { item: this, selected: this.selected });
     }
     fireItemPress(e) {
         if (this.isInactive) {
@@ -381,9 +381,15 @@ ListItem = ListItem_1 = __decorate([
      * @public
      */
     ,
-    event("detail-click"),
-    event("_focused"),
-    event("_selection-requested")
+    event("detail-click", {
+        bubbles: true,
+    }),
+    event("_focused", {
+        bubbles: true,
+    }),
+    event("_selection-requested", {
+        bubbles: true,
+    })
 ], ListItem);
 export default ListItem;
 //# sourceMappingURL=ListItem.js.map

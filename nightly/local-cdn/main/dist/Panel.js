@@ -199,7 +199,7 @@ let Panel = Panel_1 = class Panel extends UI5Element {
         }
         this.collapsed = !this.collapsed;
         if (this.shouldNotAnimate()) {
-            this.fireEvent("toggle");
+            this.fireDecoratorEvent("toggle");
             return;
         }
         this._animationRunning = true;
@@ -216,7 +216,7 @@ let Panel = Panel_1 = class Panel extends UI5Element {
         Promise.all(animations).then(() => {
             this._animationRunning = false;
             this._contentExpanded = !this.collapsed;
-            this.fireEvent("toggle");
+            this.fireDecoratorEvent("toggle");
         });
     }
     _headerOnTarget(target) {
@@ -351,7 +351,9 @@ Panel = Panel_1 = __decorate([
      * @public
      */
     ,
-    event("toggle")
+    event("toggle", {
+        bubbles: true,
+    })
 ], Panel);
 Panel.define();
 export default Panel;

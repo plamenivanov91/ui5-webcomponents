@@ -107,18 +107,18 @@ let PromptInput = PromptInput_1 = class PromptInput extends UI5Element {
     }
     _onkeydown(e) {
         if (isEnter(e)) {
-            this.fireEvent("submit");
+            this.fireDecoratorEvent("submit");
         }
     }
     _onInnerInput(e) {
         this.value = e.target.value;
-        this.fireEvent("input");
+        this.fireDecoratorEvent("input");
     }
     _onInnerChange() {
-        this.fireEvent("change");
+        this.fireDecoratorEvent("change");
     }
     _onButtonClick() {
-        this.fireEvent("submit");
+        this.fireDecoratorEvent("submit");
     }
     _onTypeAhead(e) {
         this.value = e.target.value;
@@ -205,7 +205,9 @@ PromptInput = PromptInput_1 = __decorate([
      * @public
      */
     ,
-    event("submit")
+    event("submit", {
+        bubbles: true,
+    })
     /**
      * Fired when the value of the component changes at each keystroke,
      * and when a suggestion item has been selected.
@@ -214,7 +216,9 @@ PromptInput = PromptInput_1 = __decorate([
      * @public
      */
     ,
-    event("input")
+    event("input", {
+        bubbles: true,
+    })
     /**
      * Fired when the input operation has finished by pressing Enter
      * or on focusout.
@@ -223,7 +227,9 @@ PromptInput = PromptInput_1 = __decorate([
      * @public
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+    })
 ], PromptInput);
 PromptInput.define();
 export default PromptInput;

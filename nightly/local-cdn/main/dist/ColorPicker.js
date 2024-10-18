@@ -323,7 +323,7 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
     _setColor(color = { r: 0, g: 0, b: 0 }) {
         this.value = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
         this._wrongHEX = !this.isValidRGBColor(color);
-        this.fireEvent("change");
+        this.fireDecoratorEvent("change");
     }
     isValidRGBColor(color) {
         return color.r >= 0 && color.r <= 255 && color.g >= 0 && color.g <= 255 && color.b >= 0 && color.b <= 255;
@@ -456,7 +456,9 @@ ColorPicker = ColorPicker_1 = __decorate([
      * @public
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+    })
 ], ColorPicker);
 ColorPicker.define();
 export default ColorPicker;

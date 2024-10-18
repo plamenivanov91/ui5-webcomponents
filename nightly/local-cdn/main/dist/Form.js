@@ -53,7 +53,7 @@ const StepColumn = {
  * - **S** (< 600px) – 1 column is recommended (default: 1)
  * - **M** (600px - 1022px) – up to 2 columns are recommended (default: 1)
  * - **L** (1023px - 1439px) - up to 3 columns are recommended (default: 2)
- * - **XL** (> 1439px) – up to 6 columns are recommended (default: 2)
+ * - **XL** (> 1439px) – up to 6 columns are recommended (default: 3)
  *
  * To change the layout, use the `layout` property - f.e. layout="S1 M2 L3 XL6".
  *
@@ -121,12 +121,12 @@ let Form = class Form extends UI5Element {
          * - `S` - 1 column by default (1 column is recommended)
          * - `M` - 1 column by default (up to 2 columns are recommended)
          * - `L` - 2 columns by default (up to 3 columns are recommended)
-         * - `XL` - 2 columns by default (up to 6 columns  are recommended)
+         * - `XL` - 3 columns by default (up to 6 columns  are recommended)
          *
-         * @default "S1 M1 L2 XL2"
+         * @default "S1 M1 L2 XL3"
          * @public
          */
-        this.layout = "S1 M1 L2 XL2";
+        this.layout = "S1 M1 L2 XL3";
         /**
          * Defines the width proportion of the labels and fields of a FormItem by breakpoint.
          *
@@ -160,7 +160,7 @@ let Form = class Form extends UI5Element {
         this.labelSpanM = 4;
         this.columnsL = 2;
         this.labelSpanL = 4;
-        this.columnsXl = 2;
+        this.columnsXl = 3;
         this.labelSpanXl = 4;
     }
     onBeforeRendering() {

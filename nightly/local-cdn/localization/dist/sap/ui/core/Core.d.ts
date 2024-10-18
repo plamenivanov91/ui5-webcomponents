@@ -11,7 +11,6 @@ declare const Core: {
             getFormatLocale: (lang?: string) => import("@ui5/webcomponents-base/dist/locale/Locale.js").default;
             getLegacyDateFormat: () => void;
             getCustomLocaleData: () => void;
-            getLegacyDateCalendarCustomizing: typeof import("@ui5/webcomponents-base/dist/features/LegacyDateFormats.js").default.getLegacyDateCalendarCustomizing;
         };
         getTimezone: () => string;
         getCalendarWeekNumbering: () => string;
@@ -21,7 +20,6 @@ declare const Core: {
         getFormatLocale: (lang?: string) => import("@ui5/webcomponents-base/dist/locale/Locale.js").default;
         getLegacyDateFormat: () => void;
         getCustomLocaleData: () => void;
-        getLegacyDateCalendarCustomizing: typeof import("@ui5/webcomponents-base/dist/features/LegacyDateFormats.js").default.getLegacyDateCalendarCustomizing;
     };
 };
 export default Core;

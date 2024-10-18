@@ -161,7 +161,7 @@ let UploadCollectionItem = UploadCollectionItem_1 = class UploadCollectionItem e
     _onRename() {
         const inp = this.shadowRoot.querySelector("#ui5-uci-edit-input");
         this.fileName = inp.value + this._fileExtension;
-        this.fireEvent("rename");
+        this.fireDecoratorEvent("rename");
         this._editing = false;
         this._focus();
     }
@@ -186,13 +186,13 @@ let UploadCollectionItem = UploadCollectionItem_1 = class UploadCollectionItem e
         }
     }
     _focus() {
-        this.fireEvent("_focus-requested");
+        this.fireDecoratorEvent("_focus-requested");
     }
     _onFileNameClick() {
-        this.fireEvent("file-name-click");
+        this.fireDecoratorEvent("file-name-click");
     }
     _onRetry() {
-        this.fireEvent("retry");
+        this.fireDecoratorEvent("retry");
     }
     _onRetryKeyup(e) {
         if (isSpace(e)) {
@@ -200,7 +200,7 @@ let UploadCollectionItem = UploadCollectionItem_1 = class UploadCollectionItem e
         }
     }
     _onTerminate() {
-        this.fireEvent("terminate");
+        this.fireDecoratorEvent("terminate");
     }
     _onTerminateKeyup(e) {
         if (isSpace(e)) {
@@ -208,7 +208,7 @@ let UploadCollectionItem = UploadCollectionItem_1 = class UploadCollectionItem e
         }
     }
     _onDelete() {
-        this.fireEvent("_uci-delete");
+        this.fireDecoratorEvent("_uci-delete");
     }
     getFocusDomRef() {
         return this.getDomRef();
@@ -343,7 +343,9 @@ UploadCollectionItem = UploadCollectionItem_1 = __decorate([
      * @public
      */
     ,
-    event("file-name-click")
+    event("file-name-click", {
+        bubbles: true,
+    })
     /**
      * Fired when the `fileName` property gets changed.
      *
@@ -352,7 +354,9 @@ UploadCollectionItem = UploadCollectionItem_1 = __decorate([
      * @public
      */
     ,
-    event("rename")
+    event("rename", {
+        bubbles: true,
+    })
     /**
      * Fired when the terminate button is pressed.
      *
@@ -360,7 +364,9 @@ UploadCollectionItem = UploadCollectionItem_1 = __decorate([
      * @public
      */
     ,
-    event("terminate")
+    event("terminate", {
+        bubbles: true,
+    })
     /**
      * Fired when the retry button is pressed.
      *
@@ -368,18 +374,24 @@ UploadCollectionItem = UploadCollectionItem_1 = __decorate([
      * @public
      */
     ,
-    event("retry")
+    event("retry", {
+        bubbles: true,
+    })
     /**
      * @since 1.0.0-rc.8
      * @private
      */
     ,
-    event("_focus-requested")
+    event("_focus-requested", {
+        bubbles: true,
+    })
     /**
      * @private
      */
     ,
-    event("_uci-delete")
+    event("_uci-delete", {
+        bubbles: true,
+    })
 ], UploadCollectionItem);
 UploadCollectionItem.define();
 export default UploadCollectionItem;

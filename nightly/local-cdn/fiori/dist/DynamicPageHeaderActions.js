@@ -102,16 +102,16 @@ let DynamicPageHeaderActions = DynamicPageHeaderActions_1 = class DynamicPageHea
         this.pinButton?.focus();
     }
     onExpandClick() {
-        this.fireEvent("expand-button-click");
+        this.fireDecoratorEvent("expand-button-click");
     }
     onPinClick() {
-        this.fireEvent("pin-button-click");
+        this.fireDecoratorEvent("pin-button-click");
     }
     onExpandHoverIn() {
-        this.fireEvent("expand-button-hover-in");
+        this.fireDecoratorEvent("expand-button-hover-in");
     }
     onExpandHoverOut() {
-        this.fireEvent("expand-button-hover-out");
+        this.fireDecoratorEvent("expand-button-hover-out");
     }
     get showPinButton() {
         return !this.hidePinButton && !this.snapped;
@@ -146,21 +146,36 @@ DynamicPageHeaderActions = DynamicPageHeaderActions_1 = __decorate([
      * @protected
      */
     ,
-    event("expand-button-click")
+    event("expand-button-click", {
+        bubbles: true,
+    })
     /**
      * Event that is being fired by clicking on the pin button.
      *
      * @protected
      */
     ,
-    event("pin-button-click")
+    event("pin-button-click", {
+        bubbles: true,
+    })
     /**
-     * Event that is being fired by hovering over the expand button.
+     * Event that is being fired by hovering in the expand button.
      *
      * @protected
      */
     ,
-    event("expand-button-hover")
+    event("expand-button-hover-in", {
+        bubbles: true,
+    })
+    /**
+     * Event that is being fired by hovering out the expand button.
+     *
+     * @protected
+     */
+    ,
+    event("expand-button-hover-out", {
+        bubbles: true,
+    })
 ], DynamicPageHeaderActions);
 DynamicPageHeaderActions.define();
 export default DynamicPageHeaderActions;

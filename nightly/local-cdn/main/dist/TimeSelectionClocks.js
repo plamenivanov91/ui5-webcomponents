@@ -111,7 +111,7 @@ let TimeSelectionClocks = class TimeSelectionClocks extends TimePickerInternals 
         const toggleSpinButtonTarget = evt.target && evt.target.tagName.toLowerCase().indexOf("segmented") === -1;
         if (isEnter(evt)) {
             // Accept the time and close the popover
-            this.fireEvent("close-picker");
+            this.fireDecoratorEvent("close-picker");
         }
         else if (isSpace(evt) && toggleSpinButtonTarget && !this._spacePressed) {
             evt.preventDefault();
@@ -409,7 +409,9 @@ __decorate([
     property({ type: Boolean, noAttribute: true })
 ], TimeSelectionClocks.prototype, "_amPmFocused", void 0);
 TimeSelectionClocks = __decorate([
-    event("close-picker")
+    event("close-picker", {
+        bubbles: true,
+    })
     /**
      * @class
      *

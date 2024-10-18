@@ -251,7 +251,7 @@ let RadioButton = RadioButton_1 = class RadioButton extends UI5Element {
         }
         if (!this.name) {
             this.checked = !this.checked;
-            this.fireEvent("change");
+            this.fireDecoratorEvent("change");
             return this;
         }
         RadioButtonGroup.selectItem(this, this.name);
@@ -368,7 +368,9 @@ RadioButton = RadioButton_1 = __decorate([
      * @since 1.0.0-rc.15
      */
     ,
-    event("change")
+    event("change", {
+        bubbles: true,
+    })
 ], RadioButton);
 RadioButton.define();
 export default RadioButton;

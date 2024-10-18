@@ -88,7 +88,7 @@ let Token = Token_1 = class Token extends UI5Element {
     _handleSelect() {
         if (!this.toBeDeleted) {
             this.selected = !this.selected;
-            this.fireEvent("select");
+            this.fireDecoratorEvent("select");
         }
     }
     _focusin() {
@@ -99,14 +99,14 @@ let Token = Token_1 = class Token extends UI5Element {
     }
     _delete() {
         this.toBeDeleted = true;
-        this.fireEvent("delete");
+        this.fireDecoratorEvent("delete");
     }
     _keydown(e) {
         const isBackSpacePressed = isBackSpace(e);
         const isDeletePressed = isDelete(e);
         if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
             e.preventDefault();
-            this.fireEvent("delete", {
+            this.fireDecoratorEvent("delete", {
                 backSpace: isBackSpacePressed,
                 "delete": isDeletePressed,
             });
@@ -186,7 +186,9 @@ Token = Token_1 = __decorate([
      * @private
      */
     ,
-    event("select")
+    event("select", {
+        bubbles: true,
+    })
     /**
      * Fired when the backspace, delete or close icon of the token is pressed
      * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
@@ -199,6 +201,7 @@ Token = Token_1 = __decorate([
             "backSpace": { type: Boolean },
             "delete": { type: Boolean },
         },
+        bubbles: true,
     })
 ], Token);
 Token.define();
