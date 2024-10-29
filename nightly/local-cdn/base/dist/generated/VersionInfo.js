@@ -5,7 +5,7 @@ const VersionInfo = {
     patch: 0,
     suffix: "-rc.1",
     isNext: false,
-    buildTime: 1730077996,
+    buildTime: 1730164326,
 };
 export default VersionInfo;
 //# sourceMappingURL=VersionInfo.js.map
