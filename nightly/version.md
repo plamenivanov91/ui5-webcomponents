@@ -1,5 +1,5 @@
-commit c994743998197d28522cecdbbc585c3f9ae4341a
+commit 07369e4a2f4b0f17ba0590dfe2d317696e4b9695
 Author: ilhan orhan <ilhan.orhan007@gmail.com>
-Date:   Mon Nov 4 09:40:20 2024 +0200
+Date:   Tue Nov 5 11:03:07 2024 +0200
 
-    chore: sort alphabetically merged releases
+    docs: fix documentation of event bubbling (#10138)
