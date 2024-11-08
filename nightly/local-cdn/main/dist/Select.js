@@ -468,6 +468,8 @@ let Select = Select_1 = class Select extends UI5Element {
         const changePrevented = !this.fireDecoratorEvent("change", { selectedOption });
         //  Angular two way data binding
         this.fireDecoratorEvent("selected-item-changed");
+        // Fire input event for Vue.js two-way binding
+        this.fireDecoratorEvent("input");
         if (changePrevented) {
             this._select(this._selectedIndexBeforeOpen);
         }
@@ -743,6 +745,14 @@ Select = Select_1 = __decorate([
      */
     ,
     event("selected-item-changed", {
+        bubbles: true,
+    })
+    /**
+     * Fired to make Vue.js two way data binding work properly.
+     * @private
+     */
+    ,
+    event("input", {
         bubbles: true,
     })
 ], Select);
