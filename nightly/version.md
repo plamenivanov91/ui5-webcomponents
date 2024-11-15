@@ -1,17 +1,5 @@
-commit 4382d4e280ffcf01a924163b9b719887c17f529a
-Author: ilhan orhan <ilhan.orhan007@gmail.com>
-Date:   Wed Nov 13 13:23:49 2024 +0200
+commit cff55e270785bc2e83d4956c12a00e4ac0ed1665
+Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
+Date:   Thu Nov 14 08:08:08 2024 +0000
 
-    feat(ui5-form): update to latest accessibility spec (#10152)
-    
-    The following accessibility changes are applied to the Form web component to full-fill the latest spec.
-    Form
-    form with groups has role="region"
-    form without groups have role="form"
-    form are referenced with the form header text (via aria-labelledby)
-    FormGroup
-    form groups are referenced with their form group header texts (via aria-labelledby)
-    form groups have role="form"
-    form groups create a fast navigation group - to jump from one group to another with F6
-    
-    Fixes: #9952
+    chore(release): publish v2.5.0-rc.0 [ci skip]
