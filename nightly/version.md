@@ -1,5 +1,5 @@
-commit cff55e270785bc2e83d4956c12a00e4ac0ed1665
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Thu Nov 14 08:08:08 2024 +0000
+commit 5fa257c1c5446d4bee1acfdb277bf6a1acd98255
+Author: ilhan orhan <ilhan.orhan007@gmail.com>
+Date:   Fri Nov 15 11:41:23 2024 +0200
 
-    chore(release): publish v2.5.0-rc.0 [ci skip]
+    chore: update chromedriver to 131 (#10190)
