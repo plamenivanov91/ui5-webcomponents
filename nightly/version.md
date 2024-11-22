@@ -1,9 +1,14 @@
-commit c5dff6e231fe7522455465b9702960670f5ee865
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Nov 19 23:50:41 2024 -0800
+commit 7059e0987960f62cd5b8740594b907fa98e1f11c
+Author: Nikola Anachkov <87311182+NakataCode@users.noreply.github.com>
+Date:   Thu Nov 21 14:06:23 2024 +0200
 
-    Translation Delivery (#10218)
+    feat(ui5-list): add Home and End key handling for Load More button (#10206)
     
-    [INTERNAL] Translation delivery: commit by LX Lab
+    Improving the keyboard navigation for the ui5-list when the Load More button is present:
     
-    Change-Id: I12b827a7cdd99e94cdfaf4d1fe488f9edf33fe92
+    Home Key:
+    - If the focus is on the Load More button and the Home key is pressed, the focus moves to the first item in the list.
+    
+    End Key:
+    - When pressed once, the focus moves to the last item in the list.
+    - When pressed again while the focus is already on the last item, the focus moves to the Load More button.
