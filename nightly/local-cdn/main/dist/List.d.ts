@@ -323,11 +323,13 @@ declare class List extends UI5Element {
     _onLoadMoreMousedown(): void;
     _onLoadMoreMouseup(): void;
     _onLoadMoreClick(): void;
+    _handleLodeMoreUp(e: KeyboardEvent): void;
     checkListInViewport(): void;
     loadMore(): void;
     _handleTabNext(e: KeyboardEvent): void;
     _handleHome(): void;
     _handleEnd(): void;
+    _handleDown(): void;
     _onfocusin(e: FocusEvent): void;
     _ondragenter(e: DragEvent): void;
     _ondragleave(e: DragEvent): void;
