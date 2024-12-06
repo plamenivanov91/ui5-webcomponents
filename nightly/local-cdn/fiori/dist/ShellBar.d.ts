@@ -100,6 +100,14 @@ interface IShelBarItemInfo {
  * @since 0.8.0
  */
 declare class ShellBar extends UI5Element {
+    eventDetails: {
+        "notifications-click": ShellBarNotificationsClickEventDetail;
+        "profile-click": ShellBarProfileClickEventDetail;
+        "product-switch-click": ShellBarProductSwitchClickEventDetail;
+        "logo-click": ShellBarLogoClickEventDetail;
+        "menu-item-click": ShellBarMenuItemClickEventDetail;
+        "search-button-click": ShellBarSearchButtonEventDetail;
+    };
     /**
      * Defines the `primaryTitle`.
      *

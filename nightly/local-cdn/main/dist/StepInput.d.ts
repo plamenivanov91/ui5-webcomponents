@@ -53,6 +53,10 @@ type StepInputValueStateChangeEventDetail = {
  * @public
  */
 declare class StepInput extends UI5Element implements IFormInputElement {
+    eventDetails: {
+        change: void;
+        "value-state-change": StepInputValueStateChangeEventDetail;
+    };
     /**
      * Defines a value of the component.
      * @default 0

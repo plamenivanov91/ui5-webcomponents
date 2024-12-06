@@ -10,7 +10,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -849,12 +849,6 @@ ShellBar = ShellBar_1 = __decorate([
      */
     ,
     event("notifications-click", {
-        detail: {
-            /**
-             * @public
-             */
-            targetRef: { type: HTMLElement },
-        },
         cancelable: true,
         bubbles: true,
     })
@@ -865,12 +859,6 @@ ShellBar = ShellBar_1 = __decorate([
      */
     ,
     event("profile-click", {
-        detail: {
-            /**
-             * @public
-             */
-            targetRef: { type: HTMLElement },
-        },
         bubbles: true,
     })
     /**
@@ -882,12 +870,6 @@ ShellBar = ShellBar_1 = __decorate([
      */
     ,
     event("product-switch-click", {
-        detail: {
-            /**
-             * @public
-             */
-            targetRef: { type: HTMLElement },
-        },
         cancelable: true,
         bubbles: true,
     })
@@ -899,12 +881,6 @@ ShellBar = ShellBar_1 = __decorate([
      */
     ,
     event("logo-click", {
-        detail: {
-            /**
-             * @public
-             */
-            targetRef: { type: HTMLElement },
-        },
         bubbles: true,
     })
     /**
@@ -917,12 +893,6 @@ ShellBar = ShellBar_1 = __decorate([
      */
     ,
     event("menu-item-click", {
-        detail: {
-            /**
-             * @public
-             */
-            item: { type: HTMLElement },
-        },
         bubbles: true,
         cancelable: true,
     })
@@ -936,10 +906,6 @@ ShellBar = ShellBar_1 = __decorate([
      */
     ,
     event("search-button-click", {
-        detail: {
-            targetRef: { type: HTMLElement },
-            searchFieldVisible: { type: Boolean },
-        },
         cancelable: true,
         bubbles: true,
     })

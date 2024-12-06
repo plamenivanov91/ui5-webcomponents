@@ -8,7 +8,7 @@ var Button_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -321,6 +321,9 @@ let Button = Button_1 = class Button extends UI5Element {
     get ariaDescribedbyText() {
         return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
     }
+    get ariaDescriptionText() {
+        return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+    }
     get _isSubmit() {
         return this.type === ButtonType.Submit || this.submits;
     }
@@ -355,6 +358,9 @@ __decorate([
 __decorate([
     property({ type: Object })
 ], Button.prototype, "accessibilityAttributes", void 0);
+__decorate([
+    property()
+], Button.prototype, "accessibleDescription", void 0);
 __decorate([
     property()
 ], Button.prototype, "type", void 0);

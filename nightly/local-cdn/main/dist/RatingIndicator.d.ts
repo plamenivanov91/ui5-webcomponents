@@ -42,6 +42,9 @@ type Star = {
  * @since 1.0.0-rc.8
  */
 declare class RatingIndicator extends UI5Element {
+    eventDetails: {
+        change: void;
+    };
     /**
      * The indicated value of the rating.
      *
@@ -123,6 +126,7 @@ declare class RatingIndicator extends UI5Element {
     _onkeydown(e: KeyboardEvent): void;
     _onfocusin(): void;
     _onfocusout(): void;
+    get halfStarIconName(): "favorite" | "unfavorite";
     get effectiveTabIndex(): string;
     get ratingTooltip(): string | undefined;
     get defaultTooltip(): string;

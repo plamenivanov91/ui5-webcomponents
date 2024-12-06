@@ -47,6 +47,10 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  * @public
  */
 declare class Button extends UI5Element implements IButton {
+    eventDetails: {
+        "_active-state-change": void;
+        click: void;
+    };
     /**
      * Defines the component design.
      * @default "Default"
@@ -136,6 +140,13 @@ declare class Button extends UI5Element implements IButton {
      * @default {}
      */
     accessibilityAttributes: ButtonAccessibilityAttributes;
+    /**
+     * Defines the accessible description of the component.
+     * @default undefined
+     * @public
+     * @since 2.5.0
+     */
+    accessibleDescription?: string;
     /**
      * Defines whether the button has special form-related functionality.
      *
@@ -233,6 +244,7 @@ declare class Button extends UI5Element implements IButton {
     get showIconTooltip(): boolean;
     get ariaLabelText(): string | undefined;
     get ariaDescribedbyText(): "ui5-button-hiddenText-type" | undefined;
+    get ariaDescriptionText(): string | undefined;
     get _isSubmit(): boolean;
     get _isReset(): boolean;
 }

@@ -54,6 +54,9 @@ type LinkAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "h
  * **Note:** Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
  */
 declare class Link extends UI5Element implements ITabbable {
+    eventDetails: {
+        "click": LinkClickEventDetail;
+    };
     /**
      * Defines whether the component is disabled.
      *
@@ -148,6 +151,13 @@ declare class Link extends UI5Element implements ITabbable {
      */
     accessibilityAttributes: LinkAccessibilityAttributes;
     /**
+     * Defines the accessible description of the component.
+     * @default undefined
+     * @public
+     * @since 2.5.0
+     */
+    accessibleDescription?: string;
+    /**
      * Defines the icon, displayed as graphical element within the component before the link's text.
      * The SAP-icons font provides numerous options.
      *
@@ -190,6 +200,7 @@ declare class Link extends UI5Element implements ITabbable {
     get linkTypeText(): string;
     get parsedRef(): string | undefined;
     get effectiveAccRole(): string;
+    get ariaDescriptionText(): string | undefined;
     get _hasPopup(): ("dialog" | "grid" | "listbox" | "menu" | "tree") | undefined;
     _onclick(e: MouseEvent | KeyboardEvent): void;
     _onkeydown(e: KeyboardEvent): void;

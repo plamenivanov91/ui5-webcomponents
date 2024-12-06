@@ -10,7 +10,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -176,10 +176,13 @@ let Table = Table_1 = class Table extends UI5Element {
         this._refreshPopinState();
     }
     onAfterRendering() {
-        this.features.forEach(feature => feature.onTableRendered?.());
+        this.features.forEach(feature => feature.onTableAfterRendering?.());
     }
     _getSelection() {
         return this.features.find(feature => isFeature(feature, "TableSelection"));
+    }
+    _getVirtualizer() {
+        return this.features.find(feature => isFeature(feature, "TableVirtualizer"));
     }
     _onEvent(e) {
         const composedPath = e.composedPath();
@@ -228,6 +231,9 @@ let Table = Table_1 = class Table extends UI5Element {
         }
     }
     _onfocusin(e) {
+        if (e.target === this) {
+            return;
+        }
         // Handles focus in the table, when the focus is below a sticky element
         scrollElementIntoView(this._scrollContainer, e.target, this._stickyElements, this.effectiveDir === "rtl");
     }
@@ -269,7 +275,7 @@ let Table = Table_1 = class Table extends UI5Element {
         });
     }
     _isFeature(feature) {
-        return Boolean(feature.onTableActivate && feature.onTableRendered);
+        return Boolean(feature.onTableActivate && feature.onTableAfterRendering);
     }
     _isGrowingFeature(feature) {
         return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
@@ -278,6 +284,7 @@ let Table = Table_1 = class Table extends UI5Element {
         this.fireDecoratorEvent("row-click", { row });
     }
     get styles() {
+        const virtualizer = this._getVirtualizer();
         const headerStyleMap = this.headerRow?.[0]?.cells?.reduce((headerStyles, headerCell) => {
             if (headerCell.horizontalAlign !== undefined && !headerCell._popin) {
                 headerStyles[`--horizontal-align-${headerCell._individualSlot}`] = headerCell.horizontalAlign;
@@ -287,7 +294,12 @@ let Table = Table_1 = class Table extends UI5Element {
         return {
             table: {
                 "grid-template-columns": this._gridTemplateColumns,
+                "--row-height": virtualizer ? `${virtualizer.rowHeight}px` : "auto",
                 ...headerStyleMap,
+            },
+            spacer: {
+                "transform": virtualizer?._getTransform(),
+                "will-change": virtualizer && "transform",
             },
         };
     }
@@ -339,6 +351,9 @@ let Table = Table_1 = class Table extends UI5Element {
     get _ariaLabel() {
         return getEffectiveAriaLabelText(this) || undefined;
     }
+    get _ariaRowCount() {
+        return this._getVirtualizer()?.rowCount || undefined;
+    }
     get _ariaMultiSelectable() {
         const selection = this._getSelection();
         return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
@@ -355,7 +370,7 @@ let Table = Table_1 = class Table extends UI5Element {
         return [...stickyRows, ...stickyColumns];
     }
     get _scrollContainer() {
-        return findVerticalScrollContainer(this._tableElement);
+        return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
     }
     get isTable() {
         return true;
@@ -366,7 +381,7 @@ __decorate([
         type: HTMLElement,
         "default": true,
         invalidateOnChildChange: {
-            properties: ["navigated"],
+            properties: ["navigated", "position"],
             slots: false,
         },
     })
@@ -432,12 +447,6 @@ Table = Table_1 = __decorate([
      */
     ,
     event("row-click", {
-        detail: {
-            /**
-             * @public
-             */
-            row: { type: TableRow },
-        },
         bubbles: true,
     })
 ], Table);

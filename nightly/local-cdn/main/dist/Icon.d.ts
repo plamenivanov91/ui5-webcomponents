@@ -79,6 +79,9 @@ interface IIcon extends HTMLElement {
  * @public
  */
 declare class Icon extends UI5Element implements IIcon {
+    eventDetails: {
+        click: void;
+    };
     /**
      * Defines the component semantic design.
      * @default "Default"
