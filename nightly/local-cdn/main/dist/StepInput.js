@@ -20,7 +20,7 @@ import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 import Icon from "./Icon.js";
-import Input from "./Input.js";
+import Input, {} from "./Input.js";
 import InputType from "./types/InputType.js";
 // Styles
 import StepInputCss from "./generated/themes/StepInput.css.js";
@@ -198,6 +198,12 @@ let StepInput = StepInput_1 = class StepInput extends UI5Element {
                 this.inputOuter.removeAttribute("focused");
             }
         }, 0);
+    }
+    _onInput(e) {
+        const prevented = !this.fireDecoratorEvent("input", { inputType: e.detail.inputType });
+        if (prevented) {
+            e.preventDefault();
+        }
     }
     _onInputFocusIn() {
         this._inputFocused = true;
@@ -525,6 +531,16 @@ StepInput = StepInput_1 = __decorate([
      */
     ,
     event("change", {
+        bubbles: true,
+    })
+    /**
+     * Fired when the value of the component changes at each keystroke.
+     * @public
+     * @since 2.6.0
+     */
+    ,
+    event("input", {
+        cancelable: true,
         bubbles: true,
     })
     /**

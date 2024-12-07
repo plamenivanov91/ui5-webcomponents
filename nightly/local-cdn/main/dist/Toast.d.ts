@@ -87,6 +87,7 @@ declare class Toast extends UI5Element {
     _ontransitionendFn: () => void;
     constructor();
     onBeforeRendering(): void;
+    onAfterRendering(): void;
     _onfocusin(): void;
     _onfocusout(): void;
     /**

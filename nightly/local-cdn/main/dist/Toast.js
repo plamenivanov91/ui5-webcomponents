@@ -144,6 +144,14 @@ let Toast = class Toast extends UI5Element {
             globalListenerAdded = true;
         }
     }
+    onAfterRendering() {
+        if (!this.hasAttribute("popover")) {
+            this.setAttribute("popover", "manual");
+        }
+        if (this.open) {
+            this.showPopover();
+        }
+    }
     _onfocusin() {
         if (this.focusable) {
             this.focused = true;
@@ -168,6 +176,7 @@ let Toast = class Toast extends UI5Element {
         this.focusable = false;
         this.focused = false;
         this.fireDecoratorEvent("close");
+        this.hidePopover();
     }
     _onmouseover() {
         this.hover = true;

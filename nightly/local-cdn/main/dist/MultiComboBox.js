@@ -1596,9 +1596,7 @@ MultiComboBox = MultiComboBox_1 = __decorate([
      * @public
      */
     ,
-    event("open", {
-        bubbles: true,
-    })
+    event("open")
     /**
      * Fired when the dropdown is closed.
      * @since 2.0.0

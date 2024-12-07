@@ -1,5 +1,9 @@
-commit 6d8535057949b238314b61e509a5f8b5204d54f8
-Author: Duc Vo Ngoc <duc.vo.ngoc@sap.com>
-Date:   Thu Dec 5 11:10:49 2024 +0100
+commit 84cf7b2bbdc7eff3c969dff27ff7c4be8ad359a3
+Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
+Date:   Fri Dec 6 14:36:37 2024 +0200
 
-    chore(ui5-table-growing): remove disabled property (#10311)
+    feat(ui5-step-input): add input event (#10294)
+    
+    We're proxying the Input event from the ui5-input. We're providing same details and keeping the preventable and bubling behaviour.
+    
+    fixes: #5177
