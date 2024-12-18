@@ -137,5 +137,5 @@ const isInstanceOfSideNavigationSelectableItemBase = (object) => {
     return "isSideNavigationSelectableItemBase" in object;
 };
 export default SideNavigationSelectableItemBase;
-export { isInstanceOfSideNavigationSelectableItemBase };
+export { isInstanceOfSideNavigationSelectableItemBase, };
 //# sourceMappingURL=SideNavigationSelectableItemBase.js.map

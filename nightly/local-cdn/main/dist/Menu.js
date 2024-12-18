@@ -14,7 +14,7 @@ import { isLeft, isRight, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js"
 import { isPhone, isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -23,7 +23,7 @@ import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import MenuItem from "./MenuItem.js";
 import MenuSeparator from "./MenuSeparator.js";
-import menuTemplate from "./generated/templates/MenuTemplate.lit.js";
+import menuTemplate from "./MenuTemplate.js";
 import { MENU_CLOSE_BUTTON_ARIA_LABEL, MENU_POPOVER_ACCESSIBLE_NAME, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import menuCss from "./generated/themes/Menu.css.js";
@@ -250,7 +250,7 @@ __decorate([
 Menu = Menu_1 = __decorate([
     customElement({
         tag: "ui5-menu",
-        renderer: litRender,
+        renderer: jsxRenderer,
         styles: menuCss,
         template: menuTemplate,
         dependencies: [

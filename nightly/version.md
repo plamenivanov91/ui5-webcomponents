@@ -1,9 +1,7 @@
-commit 84cf7b2bbdc7eff3c969dff27ff7c4be8ad359a3
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Dec 6 14:36:37 2024 +0200
+commit e6556440aae4a1200902776a2450f9e1b9997633
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Tue Dec 17 16:52:35 2024 +0200
 
-    feat(ui5-step-input): add input event (#10294)
+    fix(ui5-carousel): hideNavigationArrows property works on touch devices (#10397)
     
-    We're proxying the Input event from the ui5-input. We're providing same details and keeping the preventable and bubling behaviour.
-    
-    fixes: #5177
+    * fix(ui5-carousel): hideNavigationArrows property works on touch devices

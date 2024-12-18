@@ -1,4 +1,5 @@
-import UI5Element, { type InvalidationInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { InvalidationInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ITableFeature } from "./Table.js";
 import type Table from "./Table.js";
 declare enum TabBlocking {
