@@ -358,6 +358,11 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
     }
     _openMoreColorsDialog() {
         const dialog = this._getDialog();
+        const colorPicker = this.getColorPicker();
+        const value = this._currentlySelected ? this._currentlySelected.value : undefined;
+        if (value) {
+            colorPicker.value = value;
+        }
         dialog.open = true;
     }
     _onDefaultColorClick() {

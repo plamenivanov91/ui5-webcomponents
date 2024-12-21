@@ -259,6 +259,7 @@ let Input = Input_1 = class Input extends UI5Element {
         this.isTyping = false;
         // Indicates whether the value of the input is comming from a suggestion item
         this._isLatestValueFromSuggestions = false;
+        this._isChangeTriggeredBySuggestion = false;
         this._handleResizeBound = this._handleResize.bind(this);
         this._keepInnerValue = false;
         this._focusedAfterClear = false;
@@ -513,6 +514,7 @@ let Input = Input_1 = class Input extends UI5Element {
         }
         this._keepInnerValue = false;
         this.focused = false; // invalidating property
+        this._isChangeTriggeredBySuggestion = false;
         if (this.showClearIcon && !this._effectiveShowClearIcon) {
             this._clearIconClicked = false;
             this._handleChange();
@@ -546,9 +548,12 @@ let Input = Input_1 = class Input extends UI5Element {
             return;
         }
         const fireChange = () => {
-            this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
+            if (!this._isChangeTriggeredBySuggestion) {
+                this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
+            }
             this.previousValue = this.value;
             this.typedInValue = this.value;
+            this._isChangeTriggeredBySuggestion = false;
         };
         if (this.previousValue !== this.getInputDOMRefSync().value) {
             // if picker is open there might be a selected item, wait next tick to get the value applied
@@ -758,6 +763,7 @@ let Input = Input_1 = class Input extends UI5Element {
             this.lastConfirmedValue = itemText;
             this._performTextSelection = true;
             this.fireDecoratorEvent(INPUT_EVENTS.CHANGE);
+            this._isChangeTriggeredBySuggestion = true;
             // value might change in the change event handler
             this.typedInValue = this.value;
             this.previousValue = this.value;

@@ -117,6 +117,13 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
          * @private
          */
         this._activeArrowButton = false;
+        /**
+         * Defines the visibility of the arrow button of the component.
+         *
+         * @default false
+         * @private
+         */
+        this._hideArrowButton = false;
         this._isDefaultActionPressed = false;
         this._isKeyDownOperation = false;
     }
@@ -284,10 +291,11 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
         }
         else {
             this._textButtonActive = true;
-            this._fireClick();
             if (wasSpacePressed) {
                 this._spacePressed = true;
+                return;
             }
+            this._fireClick();
         }
     }
     _handleShiftOrEscapePressed() {
@@ -317,9 +325,10 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
                 "keyboardHint": SplitButton_1.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
             },
             arrowButton: {
-                title: this.arrowButtonTooltip,
-                accessibilityAttributes: {
-                    hasPopup: "menu",
+                "title": this.arrowButtonTooltip,
+                "accessibilityAttributes": {
+                    "hasPopup": "menu",
+                    "expanded": this.effectiveActiveArrowButton,
                 },
             },
         };
@@ -361,6 +370,12 @@ __decorate([
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], SplitButton.prototype, "_activeArrowButton", void 0);
+__decorate([
+    property({ type: String })
+], SplitButton.prototype, "_endIcon", void 0);
+__decorate([
+    property({ type: Boolean })
+], SplitButton.prototype, "_hideArrowButton", void 0);
 __decorate([
     slot({ type: Node, "default": true })
 ], SplitButton.prototype, "text", void 0);

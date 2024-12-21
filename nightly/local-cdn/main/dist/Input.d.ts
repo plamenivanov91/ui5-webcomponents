@@ -344,6 +344,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     _changeToBeFired?: boolean;
     _performTextSelection?: boolean;
     _isLatestValueFromSuggestions: boolean;
+    _isChangeTriggeredBySuggestion: boolean;
     static i18nBundle: I18nBundle;
     get formValidityMessage(): string;
     get _effectiveShowSuggestions(): boolean;
