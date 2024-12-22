@@ -76,6 +76,13 @@ let RatingIndicator = RatingIndicator_1 = class RatingIndicator extends UI5Eleme
          */
         this.max = 5;
         /**
+         * Defines the size of the component.
+         * @default "M"
+         * @public
+         * @since 2.6.0
+         */
+        this.size = "M";
+        /**
          * Defines whether the component is disabled.
          *
          * **Note:** A disabled component is completely noninteractive.
@@ -233,6 +240,9 @@ __decorate([
 __decorate([
     property({ type: Number })
 ], RatingIndicator.prototype, "max", void 0);
+__decorate([
+    property()
+], RatingIndicator.prototype, "size", void 0);
 __decorate([
     property({ type: Boolean })
 ], RatingIndicator.prototype, "disabled", void 0);
