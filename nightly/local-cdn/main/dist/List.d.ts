@@ -9,10 +9,10 @@ import ListGrowingMode from "./types/ListGrowingMode.js";
 import type ListAccessibleRole from "./types/ListAccessibleRole.js";
 import type ListItemBase from "./ListItemBase.js";
 import type { ListItemBasePressEventDetail } from "./ListItemBase.js";
-import DropIndicator from "./DropIndicator.js";
+import type DropIndicator from "./DropIndicator.js";
 import type { SelectionRequestEventDetail } from "./ListItem.js";
 import ListSeparator from "./types/ListSeparator.js";
-import ListItemGroup from "./ListItemGroup.js";
+import type ListItemGroup from "./ListItemGroup.js";
 type ListItemFocusEventDetail = {
     item: ListItemBase;
 };

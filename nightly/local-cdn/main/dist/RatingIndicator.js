@@ -16,7 +16,6 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Acc
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { RATING_INDICATOR_TEXT, RATING_INDICATOR_TOOLTIP_TEXT, RATING_INDICATOR_ARIA_DESCRIPTION, } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./RatingIndicatorTemplate.js";
-import Icon from "./Icon.js";
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
 /**
@@ -277,7 +276,6 @@ RatingIndicator = RatingIndicator_1 = __decorate([
         renderer: jsxRenderer,
         styles: RatingIndicatorCss,
         template: RatingIndicatorTemplate,
-        dependencies: [Icon],
     })
     /**
      * The event is fired when the value changes.

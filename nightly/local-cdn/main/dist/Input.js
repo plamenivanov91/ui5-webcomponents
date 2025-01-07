@@ -25,8 +25,6 @@ import { getAssociatedLabelForTexts, getAllAccessibleNameRefTexts, registerUI5El
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import InputType from "./types/InputType.js";
-import Popover from "./Popover.js";
-import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./InputTemplate.js";
 import { StartsWith } from "./Filters.js";
@@ -36,7 +34,6 @@ import inputStyles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
-import ResponsivePopover from "./ResponsivePopover.js";
 // all sementic events
 var INPUT_EVENTS;
 (function (INPUT_EVENTS) {
@@ -743,8 +740,8 @@ let Input = Input_1 = class Input extends UI5Element {
             return;
         }
         const Suggestions = getComponentFeature("InputSuggestions");
-        Suggestions.i18nBundle = Input_1.i18nBundle;
         if (Suggestions) {
+            Suggestions.i18nBundle = Input_1.i18nBundle;
             this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
         }
     }
@@ -1241,10 +1238,6 @@ Input = Input_1 = __decorate([
             SuggestionsCss,
         ],
         features: ["InputSuggestions"],
-        get dependencies() {
-            const Suggestions = getComponentFeature("InputSuggestions");
-            return [Popover, ResponsivePopover, Icon].concat(Suggestions ? Suggestions.dependencies : []);
-        },
     })
     /**
      * Fired when the input operation has finished by pressing Enter or on focusout.

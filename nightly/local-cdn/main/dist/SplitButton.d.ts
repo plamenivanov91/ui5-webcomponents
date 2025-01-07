@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { AriaHasPopup } from "@ui5/webcomponents-base";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
-import Button from "./Button.js";
+import type Button from "./Button.js";
 /**
  * @class
  *

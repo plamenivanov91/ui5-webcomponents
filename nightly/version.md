@@ -1,5 +1,9 @@
-commit a01eccb150e631cb5609ccef1579b52f2399975e
-Author: Stefan Dimitrov <115184100+StefanDimitrov04@users.noreply.github.com>
-Date:   Fri Dec 20 16:52:47 2024 +0200
+commit 374d4d82239f1309231c8516c20be8c160e81e40
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Jan 6 10:37:37 2025 +0200
 
-    feat(ui5-rating-indicator): provide the possibility to set size of the icons (#10406)
+    fix(f6navigation): skip hidden elements (#10325)
+    
+    F6 navigation was finding hidden elements, and this was stopping the navigation between groups.
+    
+    Fixes: #10236

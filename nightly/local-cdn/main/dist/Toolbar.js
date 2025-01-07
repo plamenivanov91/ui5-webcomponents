@@ -22,9 +22,7 @@ import ToolbarTemplate from "./ToolbarTemplate.js";
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
-import { getRegisteredToolbarItem, getRegisteredStyles, getRegisteredDependencies, } from "./ToolbarRegistry.js";
-import Button from "./Button.js";
-import Popover from "./Popover.js";
+import { getRegisteredToolbarItem, getRegisteredStyles, } from "./ToolbarRegistry.js";
 function calculateCSSREMValue(styleSet, propertyName) {
     return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
 }
@@ -59,14 +57,6 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
             ToolbarCss,
             ToolbarPopoverCss,
             ...styles,
-        ];
-    }
-    static get dependencies() {
-        const deps = getRegisteredDependencies();
-        return [
-            Popover,
-            Button,
-            ...deps,
         ];
     }
     constructor() {

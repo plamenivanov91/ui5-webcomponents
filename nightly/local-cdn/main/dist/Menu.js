@@ -17,12 +17,8 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import DOMReferenceConverter from "@ui5/webcomponents-base/dist/converters/DOMReference.js";
-import ResponsivePopover from "./ResponsivePopover.js";
-import Button from "./Button.js";
-import List from "./List.js";
-import BusyIndicator from "./BusyIndicator.js";
-import MenuItem from "./MenuItem.js";
-import MenuSeparator from "./MenuSeparator.js";
+import "./MenuItem.js";
+import "./MenuSeparator.js";
 import menuTemplate from "./MenuTemplate.js";
 import { MENU_CLOSE_BUTTON_ARIA_LABEL, MENU_POPOVER_ACCESSIBLE_NAME, } from "./generated/i18n/i18n-defaults.js";
 // Styles
@@ -253,14 +249,6 @@ Menu = Menu_1 = __decorate([
         renderer: jsxRenderer,
         styles: menuCss,
         template: menuTemplate,
-        dependencies: [
-            ResponsivePopover,
-            Button,
-            List,
-            MenuItem,
-            MenuSeparator,
-            BusyIndicator,
-        ],
     })
     /**
      * Fired when an item is being clicked.

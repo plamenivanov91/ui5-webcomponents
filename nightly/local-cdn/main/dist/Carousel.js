@@ -24,8 +24,6 @@ import { CAROUSEL_OF_TEXT, CAROUSEL_DOT_TEXT, CAROUSEL_PREVIOUS_ARROW_TEXT, CARO
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
 import CarouselTemplate from "./CarouselTemplate.js";
-import Button from "./Button.js";
-import Label from "./Label.js";
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
 /**
@@ -587,10 +585,6 @@ Carousel = Carousel_1 = __decorate([
         renderer: jsxRenderer,
         styles: CarouselCss,
         template: CarouselTemplate,
-        dependencies: [
-            Button,
-            Label,
-        ],
     })
     /**
      * Fired whenever the page changes due to user interaction,

@@ -12,9 +12,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
-import Icon from "@ui5/webcomponents/dist/Icon.js";
-import ButtonState from "./ButtonState.js";
 import ButtonTemplate from "./ButtonTemplate.js";
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
@@ -245,7 +242,6 @@ Button = __decorate([
         renderer: jsxRenderer,
         template: ButtonTemplate,
         styles: ButtonCss,
-        dependencies: [SplitButton, Icon, ButtonState],
         shadowRootOptions: { delegatesFocus: true },
     })
     /**

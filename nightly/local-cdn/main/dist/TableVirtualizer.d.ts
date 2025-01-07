@@ -79,9 +79,8 @@ declare class TableVirtualizer extends UI5Element implements ITableFeature {
     _onRowInvalidateBound: (invalidationInfo: InvalidationInfo) => void;
     _onScrollBound: () => void;
     constructor();
-    onTableActivate(table: Table): void;
     onAfterRendering(): void;
-    onTableAfterRendering(): void;
+    onTableAfterRendering(table: Table): void;
     onExitDOM(): void;
     /**
      * Resets the virtualizer to its initial state and triggers the `range-change` event.

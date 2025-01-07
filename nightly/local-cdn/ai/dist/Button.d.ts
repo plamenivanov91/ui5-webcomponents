@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
+import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
 import type ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
-import ButtonState from "./ButtonState.js";
+import type ButtonState from "./ButtonState.js";
 /**
  * @class
  *

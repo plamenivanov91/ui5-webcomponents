@@ -13,7 +13,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { isEscape, isSpace, isEnter, isDown, isUp, isDownAlt, isUpAlt, isF4, isShift, isTabNext, isTabPrevious, } from "@ui5/webcomponents-base/dist/Keys.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import Button from "./Button.js";
 import { SPLIT_BUTTON_DESCRIPTION, SPLIT_BUTTON_KEYBOARD_HINT, SPLIT_BUTTON_ARROW_BUTTON_TOOLTIP, } from "./generated/i18n/i18n-defaults.js";
 // Template
 import SplitButtonTemplate from "./SplitButtonTemplate.js";
@@ -388,7 +387,6 @@ SplitButton = SplitButton_1 = __decorate([
         renderer: jsxRenderer,
         styles: SplitButtonCss,
         template: SplitButtonTemplate,
-        dependencies: [Button],
     })
     /**
      * Fired when the user clicks on the default action.

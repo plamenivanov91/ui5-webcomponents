@@ -30,16 +30,14 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
-import DropIndicator from "./DropIndicator.js";
 import ListSeparator from "./types/ListSeparator.js";
-import BusyIndicator from "./BusyIndicator.js";
 // Template
 import ListTemplate from "./ListTemplate.js";
 // Styles
 import listCss from "./generated/themes/List.css.js";
 // Texts
 import { LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE, ARIA_LABEL_LIST_MULTISELECTABLE, ARIA_LABEL_LIST_DELETABLE, } from "./generated/i18n/i18n-defaults.js";
-import ListItemGroup, { isInstanceOfListItemGroup } from "./ListItemGroup.js";
+import { isInstanceOfListItemGroup } from "./ListItemGroup.js";
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 const PAGE_UP_DOWN_SIZE = 10;
 /**
@@ -956,7 +954,6 @@ List = List_1 = __decorate([
             listCss,
             getEffectiveScrollbarStyle(),
         ],
-        dependencies: [BusyIndicator, DropIndicator, ListItemGroup],
     })
     /**
      * Fired when an item is activated, unless the item's `type` property

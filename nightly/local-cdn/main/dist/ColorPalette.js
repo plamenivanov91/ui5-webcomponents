@@ -18,8 +18,6 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { isSpace, isEnter, isDown, isUp, isTabNext, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import ColorPaletteTemplate from "./ColorPaletteTemplate.js";
-import ColorPaletteItem from "./ColorPaletteItem.js";
-import Button from "./Button.js";
 import { COLORPALETTE_CONTAINER_LABEL, COLOR_PALETTE_MORE_COLORS_TEXT, COLOR_PALETTE_DEFAULT_COLOR_TEXT, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
@@ -101,8 +99,8 @@ let ColorPalette = ColorPalette_1 = class ColorPalette extends UI5Element {
         });
         if (this.showMoreColors) {
             const ColorPaletteMoreColorsClass = getComponentFeature("ColorPaletteMoreColors");
-            ColorPaletteMoreColorsClass.i18nBundle = ColorPalette_1.i18nBundle;
             if (ColorPaletteMoreColorsClass) {
+                ColorPaletteMoreColorsClass.i18nBundle = ColorPalette_1.i18nBundle;
                 this.moreColorsFeature = new ColorPaletteMoreColorsClass();
             }
         }
@@ -511,10 +509,6 @@ ColorPalette = ColorPalette_1 = __decorate([
         features: ["ColorPaletteMoreColors"],
         template: ColorPaletteTemplate,
         styles: [ColorPaletteCss, ColorPaletteDialogCss],
-        get dependencies() {
-            const colorPaletteMoreColors = getComponentFeature("ColorPaletteMoreColors");
-            return [ColorPaletteItem, Button].concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
-        },
     })
     /**
      * Fired when the user selects a color.

@@ -15,9 +15,6 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getRGBColor, getAlpha, HSLToRGB, HEXToRGB, RGBToHSL, } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import ColorPickerTemplate from "./ColorPickerTemplate.js";
-import Input from "./Input.js";
-import Slider from "./Slider.js";
-import Label from "./Label.js";
 import { COLORPICKER_ALPHA_SLIDER, COLORPICKER_HUE_SLIDER, COLORPICKER_HEX, COLORPICKER_RED, COLORPICKER_GREEN, COLORPICKER_BLUE, COLORPICKER_ALPHA, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
@@ -461,11 +458,6 @@ ColorPicker = ColorPicker_1 = __decorate([
         formAssociated: true,
         styles: ColorPickerCss,
         template: ColorPickerTemplate,
-        dependencies: [
-            Input,
-            Slider,
-            Label,
-        ],
         shadowRootOptions: { delegatesFocus: true },
     })
     /**
