@@ -1,9 +1,5 @@
-commit 374d4d82239f1309231c8516c20be8c160e81e40
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Jan 6 10:37:37 2025 +0200
+commit 8921f408802a1d668f09cfc99f2ed4fbaab9e4de
+Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
+Date:   Wed Jan 8 11:10:02 2025 +0000
 
-    fix(f6navigation): skip hidden elements (#10325)
-    
-    F6 navigation was finding hidden elements, and this was stopping the navigation between groups.
-    
-    Fixes: #10236
+    chore(release): publish v2.6.1 [ci skip]

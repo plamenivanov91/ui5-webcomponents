@@ -45,6 +45,7 @@ let TableRow = class TableRow extends TableRowBase {
          * Defines the position of the row respect to the total number of rows within the table when the <code>ui5-table-virtualizer</code> feature is used.
          *
          * @default -1
+         * @since 2.5.0
          * @public
          */
         this.position = -1;
@@ -66,6 +67,7 @@ let TableRow = class TableRow extends TableRowBase {
          * Defines whether the row is movable.
          *
          * @default false
+         * @since 2.6.0
          * @public
          */
         this.movable = false;

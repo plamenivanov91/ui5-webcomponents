@@ -37,6 +37,7 @@ declare class TableRow extends TableRowBase {
      * Defines the position of the row respect to the total number of rows within the table when the <code>ui5-table-virtualizer</code> feature is used.
      *
      * @default -1
+     * @since 2.5.0
      * @public
      */
     position: number;
@@ -58,6 +59,7 @@ declare class TableRow extends TableRowBase {
      * Defines whether the row is movable.
      *
      * @default false
+     * @since 2.6.0
      * @public
      */
     movable: boolean;
