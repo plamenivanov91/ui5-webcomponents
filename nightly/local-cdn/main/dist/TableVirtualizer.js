@@ -48,7 +48,7 @@ let TableVirtualizer = class TableVirtualizer extends UI5Element {
         /**
          * Defines the height of the rows in the table.
          *
-         * **Note:** This property is mandatory for the virtualization to work properly.
+         * **Note:** For virtualization to work properly, this property is mandatory.
          *
          * @default 45
          * @public
@@ -57,7 +57,7 @@ let TableVirtualizer = class TableVirtualizer extends UI5Element {
         /**
          * Defines the total count of rows in the table.
          *
-         * **Note:** This property is mandatory for the virtualization to work properly.
+         * **Note:** For virtualization to work properly, this property is mandatory.
          *
          * @default 100
          * @public

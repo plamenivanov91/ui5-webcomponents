@@ -327,6 +327,7 @@ declare abstract class UI5Element extends HTMLElement {
      * @default true
      */
     get isUI5Element(): boolean;
+    get isUI5AbstractElement(): boolean;
     get classes(): ClassMap;
     /**
      * Returns the component accessibility info.

@@ -1,5 +1,7 @@
-commit 8921f408802a1d668f09cfc99f2ed4fbaab9e4de
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Wed Jan 8 11:10:02 2025 +0000
+commit dd2d45d4c3947f52773272f6a77be294f240d28f
+Author: ilhan orhan <ilhan.orhan007@gmail.com>
+Date:   Mon Jan 13 13:12:44 2025 +0200
 
-    chore(release): publish v2.6.1 [ci skip]
+    feat(create-package): generate jsx component template (#10531)
+    
+    Running npm init @ui5/webcomponents-package will generate jsx component template (previously hbs template).

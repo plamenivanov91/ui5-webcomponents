@@ -76,6 +76,7 @@ declare const getClassCopy: (klass: typeof UI5Element, constructorCallback: () =
         detachComponentStateFinalized(callback: () => void): void;
         readonly effectiveDir: string | undefined;
         readonly isUI5Element: boolean;
+        readonly isUI5AbstractElement: boolean;
         readonly classes: import("../types.js").ClassMap;
         readonly accessibilityInfo: import("../types.js").AccessibilityInfo;
         readonly validity: ValidityState;
