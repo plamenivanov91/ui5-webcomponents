@@ -1,7 +1,5 @@
-commit dd2d45d4c3947f52773272f6a77be294f240d28f
+commit ad8f08f1a1b8d2e02b3a929afa46a38ae708feb3
 Author: ilhan orhan <ilhan.orhan007@gmail.com>
-Date:   Mon Jan 13 13:12:44 2025 +0200
+Date:   Tue Jan 14 19:37:38 2025 +0200
 
-    feat(create-package): generate jsx component template (#10531)
-    
-    Running npm init @ui5/webcomponents-package will generate jsx component template (previously hbs template).
+    fix(ui5-toast): fix template and remove additional text (#10559)
