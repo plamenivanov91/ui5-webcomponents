@@ -1,13 +1,9 @@
-commit b54175afc51e85309e9aabca699318f42b551fb9
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Wed Jan 15 06:25:49 2025 -0300
+commit 8d0e5a492c9705499571ef223524f051454e766c
+Author: Diana <diana.petcheva@sap.com>
+Date:   Thu Jan 16 16:08:41 2025 +0200
 
-    Translation Delivery (#10563)
+    feat(ui5-color-picker): add HSL color selection (#10157)
     
-    * [INTERNAL] Translation delivery: commit by LX Lab
+    This change introduces the ability to select colors using HSL color channels. Users can now toggle between viewing color values as RGB or HSL by selecting the < > button.
     
-    Change-Id: I1b93a37c9e7e43388d255194a64e472724ca91bd
-    
-    * [INTERNAL] Translation delivery: commit by LX Lab
-    
-    Change-Id: I33e0f6f050e008bc9fd818c7c0d2d64c1124d52b
+    Fixes: #10275
