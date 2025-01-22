@@ -8,10 +8,10 @@ export default function TimelineItemTemplate() {
                     "ui5-tli-indicator-short-line": this.forcedLineWidth === "ShortLineWidth",
                     "ui5-tli-indicator-large-line": this.forcedLineWidth === "LargeLineWidth",
                 }, children: _jsx("div", { class: "ui5-tli-icon-outer", children: this.icon ?
-                        _jsx(Icon, { class: "ui5-tli-icon", name: this.icon })
+                        _jsx(Icon, { class: "ui5-tli-icon", name: this.icon, mode: "Decorative" })
                         :
                             _jsx("div", { class: "ui5-tli-dummy-icon-container" }) }) }), !this.hideBubble &&
-                _jsxs("div", { "data-sap-focus-ref": true, class: "ui5-tli-bubble", tabindex: parseInt(this.forcedTabIndex), children: [_jsxs("div", { class: "ui5-tli-title", children: [this.name && name.call(this), _jsx("span", { children: this.titleText })] }), _jsx("div", { class: "ui5-tli-subtitle", children: this.subtitleText }), this.content &&
+                _jsxs("div", { "data-sap-focus-ref": true, class: "ui5-tli-bubble", tabindex: parseInt(this.forcedTabIndex), "aria-description": this.timelineItemStateText, children: [_jsxs("div", { class: "ui5-tli-title", children: [this.name && name.call(this), _jsx("span", { children: this.titleText })] }), _jsx("div", { class: "ui5-tli-subtitle", children: this.subtitleText }), this.content &&
                             _jsx("div", { class: "ui5-tli-desc", children: _jsx("slot", {}) }), _jsx("span", { class: {
                                 "ui5-tli-bubble-arrow": true,
                                 "ui5-tli-bubble-arrow--left": this.layout === TimelineLayout.Vertical,
