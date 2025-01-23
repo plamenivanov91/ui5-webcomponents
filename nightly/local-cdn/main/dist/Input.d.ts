@@ -289,6 +289,10 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
      */
     _accessibleLabelsRefTexts?: string;
     /**
+     * @private
+     */
+    Suggestions?: InputSuggestions;
+    /**
      * Defines the suggestion items.
      *
      * **Note:** The suggestions would be displayed only if the `showSuggestions`
@@ -337,7 +341,6 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     _shouldAutocomplete?: boolean;
     _keyDown?: boolean;
     _isKeyNavigation?: boolean;
-    Suggestions?: InputSuggestions;
     _selectedText?: string;
     _clearIconClicked?: boolean;
     _focusedAfterClear: boolean;
@@ -532,6 +535,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
      * @param value the numeric value of Input of type "Number"
      */
     removeFractionalPart(value: string): string;
+    static SuggestionsClass?: typeof InputSuggestions;
 }
 export default Input;
 export type { InputAccInfo, IInputSuggestionItem, IInputSuggestionItemSelectable, InputSuggestionScrollEventDetail, InputSelectionChangeEventDetail, InputEventDetail, };

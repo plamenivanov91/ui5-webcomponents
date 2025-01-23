@@ -1,20 +1,19 @@
-import { ComponentFeature, registerComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import "../SuggestionItem.js";
 import "../SuggestionItemGroup.js";
 import InputSuggestionsTemplate from "./InputSuggestionsTemplate.js";
+import Input from "../Input.js";
 import { LIST_ITEM_POSITION, LIST_ITEM_GROUP_HEADER, } from "../generated/i18n/i18n-defaults.js";
 /**
  * A class to manage the `Input` suggestion items.
  * @class
  * @private
  */
-class Suggestions extends ComponentFeature {
+class Suggestions {
     get template() {
         return InputSuggestionsTemplate;
     }
     constructor(component, slotName, highlight, handleFocus) {
-        super();
         // The component, that the suggestion would plug into.
         this.component = component;
         // Defines the items` slot name.
@@ -399,7 +398,6 @@ class Suggestions extends ComponentFeature {
     }
 }
 Suggestions.SCROLL_STEP = 60;
-// Add suggestions support to the global features registry so that Input.js can use it
-registerComponentFeature("InputSuggestions", Suggestions);
+Input.SuggestionsClass = Suggestions;
 export default Suggestions;
 //# sourceMappingURL=InputSuggestions.js.map

@@ -261,21 +261,13 @@ declare class ShellBar extends UI5Element {
      */
     midContent: Array<HTMLElement>;
     /**
-     * Define the items displayed in the start of the additional content area.
-     * **Note:** The `startContent` slot is in an experimental state and is a subject to change.
+     * Define the items displayed in the additional content area.
+     * **Note:** The `content` slot is in an experimental state and is a subject to change.
      *
      * @public
      * @since 2.7.0
      */
-    startContent: Array<HTMLElement>;
-    /**
-     * Define the items displayed in the end of the additional content area.
-     * **Note:** The `endContent` slot is in an experimental state and is a subject to change.
-     *
-     * @public
-     * @since 2.7.0
-     */
-    endContent: Array<HTMLElement>;
+    content: Array<HTMLElement>;
     static i18nBundle: I18nBundle;
     overflowPopover?: Popover | null;
     menuPopover?: Popover | null;
@@ -432,6 +424,8 @@ declare class ShellBar extends UI5Element {
     get _searchFieldDescription(): string;
     get _additionalContextRole(): "group" | undefined;
     get additionalContext(): HTMLElement[];
+    get startContent(): HTMLElement[];
+    get endContent(): HTMLElement[];
     get _rightChildRole(): "toolbar" | undefined;
     get _searchFieldExpanded(): boolean;
     get _searchFieldText(): string;
@@ -444,7 +438,6 @@ declare class ShellBar extends UI5Element {
     get _searchText(): string;
     get _overflowText(): string;
     get hasAdditionalContext(): boolean;
-    get showAdditionalContext(): boolean;
     get _hasVisibleStartContent(): boolean;
     get _hasVisibleEndContent(): boolean;
     get itemsToOverflow(): HTMLElement[];

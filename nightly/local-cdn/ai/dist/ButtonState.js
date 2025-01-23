@@ -38,7 +38,7 @@ let ButtonState = class ButtonState extends UI5Element {
          * @since 2.6.0
          * @public
          */
-        this.splitMode = false;
+        this.showArrowButton = false;
     }
 };
 __decorate([
@@ -55,7 +55,7 @@ __decorate([
 ], ButtonState.prototype, "endIcon", void 0);
 __decorate([
     property({ type: Boolean })
-], ButtonState.prototype, "splitMode", void 0);
+], ButtonState.prototype, "showArrowButton", void 0);
 ButtonState = __decorate([
     customElement("ui5-ai-button-state")
 ], ButtonState);

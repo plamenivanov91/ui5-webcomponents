@@ -1,5 +1,4 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { ComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type List from "../List.js";
 import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
@@ -33,7 +32,7 @@ type SuggestionsAccInfo = {
  * @class
  * @private
  */
-declare class Suggestions extends ComponentFeature {
+declare class Suggestions {
     component: SuggestionComponent;
     slotName: string;
     handleFocus: boolean;

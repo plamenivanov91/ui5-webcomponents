@@ -62,6 +62,6 @@ declare class ButtonState extends UI5Element {
      * @since 2.6.0
      * @public
      */
-    splitMode: boolean;
+    showArrowButton: boolean;
 }
 export default ButtonState;

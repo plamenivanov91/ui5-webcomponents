@@ -17,7 +17,6 @@ import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsSco
 import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 import { isPhone, isAndroid, } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getComponentFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { isUp, isDown, isSpace, isEnter, isBackSpace, isDelete, isEscape, isTabNext, isPageUp, isPageDown, isHome, isEnd, } from "@ui5/webcomponents-base/dist/Keys.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
@@ -739,10 +738,19 @@ let Input = Input_1 = class Input extends UI5Element {
         if (this.Suggestions) {
             return;
         }
-        const Suggestions = getComponentFeature("InputSuggestions");
-        if (Suggestions) {
+        const setup = (Suggestions) => {
             Suggestions.i18nBundle = Input_1.i18nBundle;
             this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
+        };
+        // If the feature is preloaded (the user manually imported InputSuggestions.js), it is already available on the constructor
+        if (Input_1.SuggestionsClass) {
+            setup(Input_1.SuggestionsClass);
+            // If feature is not preloaded, load it dynamically
+        }
+        else {
+            import("./features/InputSuggestions.js").then(SuggestionsModule => {
+                setup(SuggestionsModule.default);
+            });
         }
     }
     acceptSuggestion(item, keyboardUsed) {
@@ -1210,6 +1218,9 @@ __decorate([
     property({ noAttribute: true })
 ], Input.prototype, "_accessibleLabelsRefTexts", void 0);
 __decorate([
+    property({ type: Object })
+], Input.prototype, "Suggestions", void 0);
+__decorate([
     slot({ type: HTMLElement, "default": true })
 ], Input.prototype, "suggestionItems", void 0);
 __decorate([
@@ -1237,7 +1248,6 @@ Input = Input_1 = __decorate([
             ValueStateMessageCss,
             SuggestionsCss,
         ],
-        features: ["InputSuggestions"],
     })
     /**
      * Fired when the input operation has finished by pressing Enter or on focusout.
@@ -1317,14 +1327,6 @@ Input = Input_1 = __decorate([
         bubbles: true,
     })
 ], Input);
-// declare module "@ui5/webcomponents-base/jsx-runtime" {
-// 	// eslint-disable-next-line @typescript-eslint/no-namespace
-// 	namespace JSX {
-// 		interface IntrinsicElements {
-// 			"ui5-input": Input["_jsxProps"];
-// 		}
-// 	}
-// }
 Input.define();
 export default Input;
 //# sourceMappingURL=Input.js.map

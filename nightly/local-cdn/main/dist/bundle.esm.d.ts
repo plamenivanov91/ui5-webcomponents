@@ -1,6 +1,4 @@
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-import "./features/ColorPaletteMoreColors.js";
-import "./features/InputSuggestions.js";
 declare const testAssets: {
     getAcceptIconPathData: () => Promise<string>;
     generateHighlightedMarkup: typeof generateHighlightedMarkup;
