@@ -3,12 +3,12 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
-import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import type Popover from "./Popover.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import type Input from "./Input.js";
 import type { InputAccInfo } from "./Input.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
+type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type TimePickerChangeInputEventDetail = {
     value: string;
     valid: boolean;
@@ -279,8 +279,28 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
      */
     _hideMobileKeyboard(): void;
     _onfocusin(e: FocusEvent): void;
+    get valueStateDefaultText(): string | undefined;
+    get valueStateTextMappings(): ValueStateAnnouncement;
+    get shouldDisplayDefaultValueStateMessage(): boolean;
     get submitButtonLabel(): string;
     get cancelButtonLabel(): string;
+    get hasValueStateText(): boolean;
+    get hasValueState(): boolean;
+    get classes(): {
+        popover: {
+            "ui5-suggestions-popover": boolean;
+            "ui5-popover-with-value-state-header-phone": boolean;
+            "ui5-popover-with-value-state-header": boolean;
+        };
+        popoverValueState: {
+            "ui5-valuestatemessage-header": boolean;
+            "ui5-valuestatemessage-root": boolean;
+            "ui5-valuestatemessage--success": boolean;
+            "ui5-valuestatemessage--error": boolean;
+            "ui5-valuestatemessage--warning": boolean;
+            "ui5-valuestatemessage--information": boolean;
+        };
+    };
     /**
      * @protected
      */

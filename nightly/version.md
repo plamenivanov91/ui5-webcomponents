@@ -1,34 +1,7 @@
-commit 7c4575622c52faf398321e44efb58f82b2213598
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Wed Jan 22 14:12:23 2025 +0200
+commit 4b2ab63cae9b175f07d266e4150a587756cd7f6c
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jan 23 15:22:42 2025 +0200
 
-    refactor(ui5-ai-button): change api names (#10572)
+    fix(f6navigation): fast navigation in certain container only (#10485)
     
-    We're improving API naming. We have 3 changes in the API.
-    CHANGE: In the ButtonState we change the splitMode property to showArrowButton.
-    BEFORE:
-    
-    <ui5-ai-button-state name="revise" text="Revise" icon="ai" split-mode></ui5-ai-button-state>
-    NOW:
-    
-    <ui5-ai-button-state name="revise" text="Revise" icon="ai" show-arrow-button></ui5-ai-button-state>
-    CHANGE: In the Button, we change the activeArrowButton to arrowButtonPressed following the convention in the framework.
-    
-    function menuOpenHandler() {
-            var button = menu.opener;
-    
-            button.activeArrowButton = true;
-    }
-    NOW:
-    
-    function menuOpenHandler() {
-            var button = menu.opener;
-    
-            button.arrowButtonPressed = true;
-    }
-    CHANGE: In the Button we also change the arrow-click event name to arrow-button-click, so the event name is easier to understand and we ensure that it might not be mistaken with the arrow icon when the arrow button is not shown.
-    
-    myAiButtonSplit.addEventListener("arrow-click", aiButtonSplitArrowClickHandler);
-    NOW:
-    
-    myAiButtonSplit.addEventListener("arrow-button-click", aiButtonSplitArrowClickHandler);
+    Fast navigation includes two main modes: default and scoped. The default mode is used for navigating across all defined groups, while the scoped mode limits navigation to a specific group, such as within a container like a modal dialog.

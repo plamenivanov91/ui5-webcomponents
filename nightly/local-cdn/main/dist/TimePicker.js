@@ -13,6 +13,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -21,14 +22,14 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; //
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import { isShow, isEnter, isPageUp, isPageDown, isPageUpShift, isPageDownShift, isPageUpShiftCtrl, isPageDownShiftCtrl, isTabNext, isTabPrevious, isF6Next, isF6Previous, } from "@ui5/webcomponents-base/dist/Keys.js";
-import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
 import TimePickerTemplate from "./TimePickerTemplate.js";
-import { TIMEPICKER_SUBMIT_BUTTON, TIMEPICKER_CANCEL_BUTTON, TIMEPICKER_INPUT_DESCRIPTION, TIMEPICKER_POPOVER_ACCESSIBLE_NAME, FORM_TEXTFIELD_REQUIRED, } from "./generated/i18n/i18n-defaults.js";
+import { TIMEPICKER_SUBMIT_BUTTON, TIMEPICKER_CANCEL_BUTTON, TIMEPICKER_INPUT_DESCRIPTION, TIMEPICKER_POPOVER_ACCESSIBLE_NAME, FORM_TEXTFIELD_REQUIRED, VALUE_STATE_ERROR, VALUE_STATE_INFORMATION, VALUE_STATE_SUCCESS, VALUE_STATE_WARNING, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 /**
  * @class
  *
@@ -474,11 +475,51 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
             e.preventDefault();
         }
     }
+    get valueStateDefaultText() {
+        if (this.valueState === ValueState.None) {
+            return;
+        }
+        return this.valueStateTextMappings[this.valueState];
+    }
+    get valueStateTextMappings() {
+        return {
+            [ValueState.Positive]: TimePicker_1.i18nBundle.getText(VALUE_STATE_SUCCESS),
+            [ValueState.Negative]: TimePicker_1.i18nBundle.getText(VALUE_STATE_ERROR),
+            [ValueState.Critical]: TimePicker_1.i18nBundle.getText(VALUE_STATE_WARNING),
+            [ValueState.Information]: TimePicker_1.i18nBundle.getText(VALUE_STATE_INFORMATION),
+        };
+    }
+    get shouldDisplayDefaultValueStateMessage() {
+        return !willShowContent(this.valueStateMessage) && this.hasValueStateText;
+    }
     get submitButtonLabel() {
         return TimePicker_1.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
     }
     get cancelButtonLabel() {
         return TimePicker_1.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+    }
+    get hasValueStateText() {
+        return this.hasValueState && this.valueState !== ValueState.Positive;
+    }
+    get hasValueState() {
+        return this.valueState !== ValueState.None;
+    }
+    get classes() {
+        return {
+            popover: {
+                "ui5-suggestions-popover": true,
+                "ui5-popover-with-value-state-header-phone": this._isPhone && this.hasValueStateText,
+                "ui5-popover-with-value-state-header": !this._isPhone && this.hasValueStateText,
+            },
+            popoverValueState: {
+                "ui5-valuestatemessage-header": true,
+                "ui5-valuestatemessage-root": true,
+                "ui5-valuestatemessage--success": this.valueState === ValueState.Positive,
+                "ui5-valuestatemessage--error": this.valueState === ValueState.Negative,
+                "ui5-valuestatemessage--warning": this.valueState === ValueState.Critical,
+                "ui5-valuestatemessage--information": this.valueState === ValueState.Information,
+            },
+        };
     }
     /**
      * @protected
@@ -541,6 +582,7 @@ TimePicker = TimePicker_1 = __decorate([
             TimePickerCss,
             ResponsivePopoverCommonCss,
             TimePickerPopoverCss,
+            ValueStateMessageCss,
         ],
     })
     /**

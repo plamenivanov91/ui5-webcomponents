@@ -20,7 +20,7 @@ export default function TimelineItemTemplate() {
 }
 function name() {
     return (_jsx(_Fragment, { children: this.nameClickable ?
-            _jsxs(Link, { class: "ui5-tli-title-name-clickable", wrappingType: "None", onClick: this.onNamePress, children: [this.name, "\u00A0"] })
+            _jsxs(Link, { class: "ui5-tli-title-name-clickable", wrappingType: this.layout === TimelineLayout.Horizontal ? "None" : "Normal", onClick: this.onNamePress, children: [this.name, "\u00A0"] })
             :
                 _jsxs("span", { class: "ui5-tli-title-name", children: [this.name, "\u00A0"] }) }));
 }

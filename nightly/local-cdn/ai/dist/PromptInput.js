@@ -94,8 +94,6 @@ let PromptInput = PromptInput_1 = class PromptInput extends UI5Element {
         /**
          * Defines whether the component should show suggestions, if such are present.
          *
-         * **Note:** You need to import the `InputSuggestions` module
-         * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
          * @default false
          * @public
          */

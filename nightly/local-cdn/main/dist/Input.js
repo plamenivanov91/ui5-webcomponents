@@ -61,11 +61,6 @@ var INPUT_ACTIONS;
  * When the user makes changes to the text, the change event is fired,
  * which enables you to react on any text change.
  *
- * **Note:** If you are using the `ui5-input` as a single npm module,
- * don't forget to import the `InputSuggestions` module from
- * "@ui5/webcomponents/dist/features/InputSuggestions.js"
- * to enable the suggestions functionality.
- *
  * ### Keyboard Handling
  * The `ui5-input` provides the following keyboard shortcuts:
  *
@@ -81,8 +76,6 @@ var INPUT_ACTIONS;
  * ### ES6 Module Import
  *
  * `import "@ui5/webcomponents/dist/Input.js";`
- *
- * `import "@ui5/webcomponents/dist/features/InputSuggestions.js";` (optional - for input suggestions support)
  *
  * @constructor
  * @extends UI5Element
@@ -190,8 +183,6 @@ let Input = Input_1 = class Input extends UI5Element {
         /**
          * Defines whether the component should show suggestions, if such are present.
          *
-         * **Note:** You need to import the `InputSuggestions` module
-         * from `"@ui5/webcomponents/dist/features/InputSuggestions.js"` to enable this functionality.
          * @default false
          * @public
          */

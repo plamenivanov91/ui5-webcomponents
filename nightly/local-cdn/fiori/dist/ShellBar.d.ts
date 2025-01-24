@@ -5,11 +5,6 @@ import Popover from "@ui5/webcomponents/dist/Popover.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import "@ui5/webcomponents-icons/dist/search.js";
-import "@ui5/webcomponents-icons/dist/bell.js";
-import "@ui5/webcomponents-icons/dist/overflow.js";
-import "@ui5/webcomponents-icons/dist/grid.js";
-import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import type { ClassMap, AccessibilityAttributes, AriaRole } from "@ui5/webcomponents-base";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
@@ -195,7 +190,6 @@ declare class ShellBar extends UI5Element {
      */
     withLogo: boolean;
     _itemsInfo: Array<IShelBarItemInfo>;
-    _menuPopoverItems: Array<HTMLElement>;
     _menuPopoverExpanded: boolean;
     _overflowPopoverExpanded: boolean;
     hasVisibleStartContent: boolean;
@@ -267,13 +261,12 @@ declare class ShellBar extends UI5Element {
      * @public
      * @since 2.7.0
      */
-    content: Array<HTMLElement>;
+    content: Array<UI5Element>;
     static i18nBundle: I18nBundle;
     overflowPopover?: Popover | null;
     menuPopover?: Popover | null;
     _isInitialRendering: boolean;
     _defaultItemPressPrevented: boolean;
-    menuItemsObserver: MutationObserver;
     additionalContextObserver: MutationObserver;
     _hiddenIcons: Array<IShelBarItemInfo>;
     _handleResize: ResizeObserverCallback;
@@ -377,9 +370,7 @@ declare class ShellBar extends UI5Element {
     _getAllItems(showOverflowButton: boolean, showSearchButton?: boolean): Array<IShelBarItemInfo>;
     _updateItemsInfo(newItems: Array<IShelBarItemInfo>): void;
     _updateOverflowNotifications(): void;
-    _updateClonedMenuItems(): void;
     _updateAdditionalContextItems(): void;
-    _observeMenuItems(): void;
     _observeAdditionalContextItems(): false | undefined;
     _getOverflowPopover(): Popover;
     _getMenuPopover(): Popover;
@@ -423,9 +414,9 @@ declare class ShellBar extends UI5Element {
     get _additionalContextText(): string;
     get _searchFieldDescription(): string;
     get _additionalContextRole(): "group" | undefined;
-    get additionalContext(): HTMLElement[];
-    get startContent(): HTMLElement[];
-    get endContent(): HTMLElement[];
+    get additionalContext(): UI5Element[];
+    get startContent(): UI5Element[];
+    get endContent(): UI5Element[];
     get _rightChildRole(): "toolbar" | undefined;
     get _searchFieldExpanded(): boolean;
     get _searchFieldText(): string;
@@ -444,7 +435,7 @@ declare class ShellBar extends UI5Element {
     get separatorsWidth(): number;
     get searchFieldActualWidth(): number;
     get separators(): HTMLElement[];
-    get additionalContextHidden(): HTMLElement[];
+    get additionalContextHidden(): UI5Element[];
     get _lessSearchSpace(): boolean;
     get accInfo(): {
         notifications: {
@@ -482,7 +473,7 @@ declare class ShellBar extends UI5Element {
             };
         };
     };
-    get accLogoRole(): string;
+    get accLogoRole(): "link" | "button";
     get isSBreakPoint(): boolean;
 }
 export default ShellBar;

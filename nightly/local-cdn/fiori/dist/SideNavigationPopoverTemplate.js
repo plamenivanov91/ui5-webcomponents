@@ -1,6 +1,6 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "@ui5/webcomponents-base/jsx-runtime";
-import NavigationMenu from "@ui5/webcomponents/dist/NavigationMenu.js";
-import NavigationMenuItem from "@ui5/webcomponents/dist/NavigationMenuItem.js";
+import NavigationMenu from "./NavigationMenu.js";
+import NavigationMenuItem from "./NavigationMenuItem.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import SideNavigation from "./SideNavigation.js";
 import SideNavigationItem from "./SideNavigationItem.js";
