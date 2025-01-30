@@ -5,8 +5,9 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import type Popover from "./Popover.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-import type Input from "./Input.js";
+import type DateTimeInput from "./DateTimeInput.js";
 import type { InputAccInfo } from "./Input.js";
+import type TimeSelectionClocks from "./TimeSelectionClocks.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type TimePickerChangeInputEventDetail = {
@@ -181,6 +182,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
      * @public
      */
     valueStateMessage: Array<HTMLElement>;
+    _timeSelectionClocks?: TimeSelectionClocks;
     tempValue?: string;
     static i18nBundle: I18nBundle;
     get formValidityMessage(): string;
@@ -214,6 +216,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     _togglePicker(): void;
     submitPickers(): void;
     onResponsivePopoverAfterClose(): void;
+    onResponsivePopoverBeforeOpen(): void;
     onResponsivePopoverAfterOpen(): void;
     /**
      * Opens the Inputs popover.
@@ -245,8 +248,8 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     _canOpenInputsPopover(): boolean;
     _getPopover(): ResponsivePopover;
     _getInputsPopover(): Popover;
-    _getInput(): Input;
-    _getInputField(): HTMLInputElement | Input | null;
+    _getDateTimeInput(): DateTimeInput;
+    _getInputField(): HTMLInputElement | import("./Input.js").default | null;
     _onkeydown(e: KeyboardEvent): void;
     get _isPattern(): boolean;
     getFormat(): import("sap/ui/core/format/DateFormat").default;

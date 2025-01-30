@@ -9,6 +9,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
 import NavigationMenu from "./NavigationMenu.js";
+// Templates
 import NavigationMenuItemTemplate from "./NavigationMenuItemTemplate.js";
 // Styles
 import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js";
@@ -36,6 +37,10 @@ import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT, } from "./generated/i18n/i18n-defa
  * @private
  */
 let NavigationMenuItem = class NavigationMenuItem extends MenuItem {
+    constructor() {
+        super(...arguments);
+        this.design = "Default";
+    }
     get isExternalLink() {
         return this.href && this.target === "_blank";
     }
@@ -63,6 +68,9 @@ __decorate([
 __decorate([
     property()
 ], NavigationMenuItem.prototype, "target", void 0);
+__decorate([
+    property()
+], NavigationMenuItem.prototype, "design", void 0);
 NavigationMenuItem = __decorate([
     customElement({
         renderer: jsxRenderer,

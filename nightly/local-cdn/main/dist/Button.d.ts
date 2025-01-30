@@ -6,6 +6,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import type ButtonAccessibleRole from "./types/ButtonAccessibleRole.js";
+import type ButtonBadge from "./ButtonBadge.js";
 /**
  * Interface for components that may be used as a button inside numerous higher-order components
  * @public
@@ -218,12 +219,19 @@ declare class Button extends UI5Element implements IButton {
      * @public
      */
     text: Array<Node>;
+    /**
+     * Adds a badge to the button.
+     * @since 2.7.0
+     * @public
+     */
+    badge: Array<ButtonBadge>;
     _deactivate: () => void;
     static i18nBundle: I18nBundle;
     constructor();
     _ontouchstart(): void;
     onEnterDOM(): void;
     onBeforeRendering(): Promise<void>;
+    _setBadgeOverlayStyle(): void;
     _onclick(): void;
     _onmousedown(): void;
     _ontouchend(e: TouchEvent): void;
@@ -245,6 +253,7 @@ declare class Button extends UI5Element implements IButton {
     get ariaDescriptionText(): string | undefined;
     get _isSubmit(): boolean;
     get _isReset(): boolean;
+    get shouldRenderBadge(): boolean;
 }
 export default Button;
 export type { ButtonAccessibilityAttributes, IButton, };

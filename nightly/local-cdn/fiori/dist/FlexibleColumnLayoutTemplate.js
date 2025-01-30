@@ -1,7 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs } from "@ui5/webcomponents-base/jsx-runtime";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
-import { getAnimationMode } from "@ui5/webcomponents-base/dist/InitialConfiguration.js";
-import verticalGrip from "@ui5/webcomponents-icons/dist/vertical-grip.js";
+import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
+import verticalGripIcon from "@ui5/webcomponents-icons/dist/vertical-grip.js";
+import slimdArrowRightIcon from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+import slimdArrowLefttIcon from "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 export default function FlexibleColumnLayoutTemplate() {
@@ -21,12 +23,12 @@ export default function FlexibleColumnLayoutTemplate() {
                 }, "aria-hidden": this._accAttributes.columns.end.ariaHidden, "aria-labelledby": `${this._id}-endColumnText`, children: [_jsx("span", { id: `${this._id}-endColumnText`, class: "ui5-hidden-text", children: this.accEndColumnText }), _jsx("slot", { name: "endColumn", "aria-hidden": this._accAttributes.columns.middle.ariaHidden })] })] }));
 }
 function arrowStart() {
-    return (_jsx(Button, { icon: this.startArrowDirection === "backward" ? "slim-arrow-left" : "slim-arrow-right", design: "Transparent", onClick: this.switchLayoutOnArrowPress, onKeyDown: this._onArrowKeydown, class: "ui5-fcl-arrow ui5-fcl-arrow--start" }));
+    return (_jsx(Button, { icon: this.startArrowDirection === "backward" ? slimdArrowLefttIcon : slimdArrowRightIcon, design: "Transparent", onClick: this.switchLayoutOnArrowPress, onKeyDown: this._onArrowKeydown, class: "ui5-fcl-arrow ui5-fcl-arrow--start" }));
 }
 function gripStart() {
-    return (_jsx(Icon, { name: verticalGrip, class: "ui5-fcl-grip ui5-fcl-grip--start", style: { display: this.showStartSeparatorGrip ? "inline-block" : "none" } }));
+    return (_jsx(Icon, { name: verticalGripIcon, class: "ui5-fcl-grip ui5-fcl-grip--start", style: { display: this.showStartSeparatorGrip ? "inline-block" : "none" } }));
 }
 function gripEnd() {
-    return (_jsx(Icon, { name: verticalGrip, class: "ui5-fcl-grip ui5-fcl-grip--end", style: { display: this.showEndSeparatorGrip ? "inline-block" : "none" } }));
+    return (_jsx(Icon, { name: verticalGripIcon, class: "ui5-fcl-grip ui5-fcl-grip--end", style: { display: this.showEndSeparatorGrip ? "inline-block" : "none" } }));
 }
 //# sourceMappingURL=FlexibleColumnLayoutTemplate.js.map

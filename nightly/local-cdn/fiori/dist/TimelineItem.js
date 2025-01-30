@@ -14,7 +14,6 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import TimelineItemTemplate from "./TimelineItemTemplate.js";
 import { TIMELINE_ITEM_INFORMATION_STATE_TEXT, TIMELINE_ITEM_POSITIVE_STATE_TEXT, TIMELINE_ITEM_NEGATIVE_STATE_TEXT, TIMELINE_ITEM_CRITICAL_STATE_TEXT, } from "./generated/i18n/i18n-defaults.js";
-// Styles
 import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 /**
  * @class

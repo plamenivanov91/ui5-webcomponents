@@ -10,7 +10,7 @@ export default function SideNavigationSubItemTemplate() {
                         _jsx(Icon, { class: "ui5-sn-item-icon", name: this.icon }), _jsx("div", { class: "ui5-sn-item-text", children: this.text }), this.isExternalLink &&
                         _jsx(Icon, { class: "ui5-sn-item-external-link-icon", name: arrowRight })] })
             :
-                _jsxs("div", { class: `ui5-sn-item ui5-sn-item-level2 ${this._classes}`, role: "treeitem", "data-sap-focus-ref": true, onKeyDown: this._onkeydown, onKeyUp: this._onkeyup, onClick: this._onclick, onFocusIn: this._onfocusin, tabIndex: this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined, "aria-current": this._ariaCurrent, "aria-selected": this.selected, title: this._tooltip, children: [this.icon &&
+                _jsxs("div", { class: `ui5-sn-item ui5-sn-item-level2 ${this._classes}`, role: "treeitem", "data-sap-focus-ref": true, onKeyDown: this._onkeydown, onKeyUp: this._onkeyup, onClick: this._onclick, onFocusIn: this._onfocusin, tabIndex: this.effectiveTabIndex ? parseInt(this.effectiveTabIndex) : undefined, "aria-current": this._ariaCurrent, "aria-haspopup": this.accessibilityAttributes?.hasPopup, "aria-selected": this.selected, title: this._tooltip, children: [this.icon &&
                             _jsx(Icon, { class: "ui5-sn-item-icon", name: this.icon }), _jsx("div", { class: "ui5-sn-item-text", children: this.text }), this.isExternalLink &&
                             _jsx(Icon, { class: "ui5-sn-item-external-link-icon", name: arrowRight })] }) }));
 }

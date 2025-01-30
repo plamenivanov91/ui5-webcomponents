@@ -66,6 +66,14 @@ let UserMenu = UserMenu_1 = class UserMenu extends UI5Element {
          */
         this.showAddAccount = false;
         /**
+         * Defines if the User menu shows edit button.
+         *
+         * @default false
+         * @public
+         * @since 2.7.0
+         */
+        this.showEditButton = false;
+        /**
          * @default false
          * @private
          */
@@ -252,6 +260,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], UserMenu.prototype, "showAddAccount", void 0);
+__decorate([
+    property({ type: Boolean })
+], UserMenu.prototype, "showEditButton", void 0);
 __decorate([
     slot({
         type: HTMLElement,

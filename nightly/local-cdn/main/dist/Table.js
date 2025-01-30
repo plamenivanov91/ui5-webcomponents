@@ -329,7 +329,7 @@ let Table = Table_1 = class Table extends UI5Element {
         const widths = [];
         const visibleHeaderCells = this.headerRow[0]._visibleCells;
         if (this._getSelection()?.hasRowSelector()) {
-            widths.push(`var(${getScopedVarName("--_ui5_checkbox_width_height")})`);
+            widths.push("min-content");
         }
         widths.push(...visibleHeaderCells.map(cell => {
             const minWidth = cell.minWidth === "auto" ? "3rem" : cell.minWidth;

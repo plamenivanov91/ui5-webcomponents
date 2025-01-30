@@ -394,7 +394,7 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
         return result;
     }
     _selectItem(item) {
-        if (item.disabled) {
+        if (!item.isSelectable) {
             return;
         }
         if (!this.fireDecoratorEvent("selection-change", { item })) {

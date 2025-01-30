@@ -11,6 +11,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
@@ -222,6 +223,13 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
         this.open = false;
         this.fireDecoratorEvent("close");
     }
+    onResponsivePopoverBeforeOpen() {
+        const clocks = this._timeSelectionClocks;
+        if (clocks) {
+            clocks._activeIndex = 0;
+            clocks._skipAnimation = true;
+        }
+    }
     onResponsivePopoverAfterOpen() {
         this.fireDecoratorEvent("open");
     }
@@ -335,11 +343,11 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
     _getInputsPopover() {
         return this.shadowRoot.querySelector("[ui5-popover]");
     }
-    _getInput() {
-        return this.shadowRoot.querySelector("[ui5-input]");
+    _getDateTimeInput() {
+        return this.shadowRoot.querySelector("[ui5-datetime-input]");
     }
     _getInputField() {
-        const input = this._getInput();
+        const input = this._getDateTimeInput();
         return input && input.getInputDOMRef();
     }
     _onkeydown(e) {
@@ -351,7 +359,7 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
             this._togglePicker();
         }
         const target = e.target;
-        if (target && this.open && this._getInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+        if (target && this.open && this._getDateTimeInput().id === target.id && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
             this._togglePicker();
         }
         if (this.open) {
@@ -462,8 +470,8 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
      * Hides mobile device keyboard by temporary setting the input to readonly state.
      */
     _hideMobileKeyboard() {
-        this._getInput().readonly = true;
-        setTimeout(() => { this._getInput().readonly = false; }, 0);
+        this._getDateTimeInput().readonly = true;
+        setTimeout(() => { this._getDateTimeInput().readonly = false; }, 0);
     }
     _onfocusin(e) {
         if (this._isMobileDevice) {
@@ -567,6 +575,9 @@ __decorate([
 __decorate([
     slot()
 ], TimePicker.prototype, "valueStateMessage", void 0);
+__decorate([
+    query("[ui5-time-selection-clocks]")
+], TimePicker.prototype, "_timeSelectionClocks", void 0);
 __decorate([
     i18n("@ui5/webcomponents")
 ], TimePicker, "i18nBundle", void 0);

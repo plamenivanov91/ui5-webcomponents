@@ -1,5 +1,6 @@
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
+import type SideNavigationItemDesign from "./types/SideNavigationItemDesign.js";
 /**
  * @class
  *
@@ -50,6 +51,7 @@ declare class NavigationMenuItem extends MenuItem {
      * @since 1.22.0
      */
     target?: string;
+    design: `${SideNavigationItemDesign}`;
     get isExternalLink(): boolean | "" | undefined;
     get _href(): string | undefined;
     get _accInfo(): {
