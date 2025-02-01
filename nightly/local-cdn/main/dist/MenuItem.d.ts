@@ -1,4 +1,4 @@
-import type { AccessibilityAttributes } from "@ui5/webcomponents-base";
+import type { AccessibilityAttributes, AriaHasPopup, AriaRole } from "@ui5/webcomponents-base";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -180,10 +180,10 @@ declare class MenuItem extends ListItem implements IMenuItem {
     focus(focusOptions?: FocusOptions): Promise<void>;
     get _focusable(): boolean;
     get _accInfo(): {
-        role: import("@ui5/webcomponents-base/dist/thirdparty/preact/jsx.js").JSXInternal.AriaRole;
-        ariaHaspopup: "menu" | undefined;
-        ariaKeyShortcuts: string | undefined;
-        ariaHidden: boolean | undefined;
+        role: AriaRole;
+        ariaHaspopup?: `${AriaHasPopup}`;
+        ariaKeyShortcuts?: string;
+        ariaHidden?: boolean;
         ariaExpanded?: boolean;
         ariaLevel?: number;
         ariaLabel: string;

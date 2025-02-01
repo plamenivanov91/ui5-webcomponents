@@ -48,10 +48,12 @@ let NavigationMenuItem = class NavigationMenuItem extends MenuItem {
         return (!this.disabled && this.href) ? this.href : undefined;
     }
     get _accInfo() {
-        const accInfoSettings = {
-            role: this.href ? "none" : "treeitem",
-        };
-        return { ...super._accInfo, ...accInfoSettings };
+        const accInfo = super._accInfo;
+        accInfo.role = this.href ? "none" : "treeitem";
+        if (!accInfo.ariaHaspopup) {
+            accInfo.ariaHaspopup = this.accessibilityAttributes.hasPopup;
+        }
+        return accInfo;
     }
     get classes() {
         const result = super.classes;

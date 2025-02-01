@@ -55,10 +55,10 @@ declare class NavigationMenuItem extends MenuItem {
     get isExternalLink(): boolean | "" | undefined;
     get _href(): string | undefined;
     get _accInfo(): {
-        role: "none" | "treeitem";
-        ariaHaspopup: "menu" | undefined;
-        ariaKeyShortcuts: string | undefined;
-        ariaHidden: boolean | undefined;
+        role: import("@ui5/webcomponents-base/dist/types.js").AriaRole;
+        ariaHaspopup?: `${import("@ui5/webcomponents-base/dist/types.js").AriaHasPopup}`;
+        ariaKeyShortcuts?: string;
+        ariaHidden?: boolean;
         ariaExpanded?: boolean;
         ariaLevel?: number;
         ariaLabel: string;

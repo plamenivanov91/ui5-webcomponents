@@ -57,6 +57,8 @@ let SideNavigationSelectableItemBase = class SideNavigationSelectableItemBase ex
          * - **hasPopup**: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button.
          * Accepts the following string values: `dialog`, `grid`, `listbox`, `menu` or `tree`.
          *
+         * **Note:** Do not use it on parent items, as it will be overridden if the item is in the overflow menu.
+         *
          * @public
          * @default {}
          * @since 2.7.0
