@@ -23,6 +23,6 @@ export default function SelectPopoverTemplate() {
 function valueStateMessage() {
     return (_jsx(_Fragment, { children: this.shouldDisplayDefaultValueStateMessage
             ? this.valueStateText
-            : _jsx("slot", { name: "valueStateMessage" }) }));
+            : _jsx("slot", { onClick: this._applyFocus, name: "valueStateMessage" }) }));
 }
 //# sourceMappingURL=SelectPopoverTemplate.js.map

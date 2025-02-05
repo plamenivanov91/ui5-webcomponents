@@ -47,8 +47,8 @@ declare class Suggestions {
     static SCROLL_STEP: number;
     get template(): typeof InputSuggestionsTemplate;
     constructor(component: SuggestionComponent, slotName: string, highlight: boolean, handleFocus: boolean);
-    onUp(e: KeyboardEvent): boolean;
-    onDown(e: KeyboardEvent): boolean;
+    onUp(e: KeyboardEvent, indexOfItem: number): boolean;
+    onDown(e: KeyboardEvent, indexOfItem: number): boolean;
     onSpace(e: KeyboardEvent): boolean;
     onEnter(e: KeyboardEvent): boolean;
     onPageUp(e: KeyboardEvent): boolean;
@@ -72,7 +72,7 @@ declare class Suggestions {
     _isItemOnTarget(): boolean;
     get _isGroupItem(): boolean;
     isOpened(): boolean;
-    _handleItemNavigation(forward: boolean): void;
+    _handleItemNavigation(forward: boolean, index: number): void;
     _selectNextItem(): void;
     _selectPreviousItem(): void;
     _moveItemSelection(previousIdx: number, nextIdx: number): void;

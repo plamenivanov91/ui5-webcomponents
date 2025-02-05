@@ -26,14 +26,16 @@ class Suggestions {
         // that changes due to user interaction.
         this.selectedItemIndex = -1;
     }
-    onUp(e) {
+    onUp(e, indexOfItem) {
         e.preventDefault();
-        this._handleItemNavigation(false /* forward */);
+        const index = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+        this._handleItemNavigation(false /* forward */, index);
         return true;
     }
-    onDown(e) {
+    onDown(e, indexOfItem) {
         e.preventDefault();
-        this._handleItemNavigation(true /* forward */);
+        const index = !this.isOpened && this._hasValueState && indexOfItem === -1 ? 0 : indexOfItem;
+        this._handleItemNavigation(true /* forward */, index);
         return true;
     }
     onSpace(e) {
@@ -196,7 +198,8 @@ class Suggestions {
     isOpened() {
         return !!(this._getPicker()?.open);
     }
-    _handleItemNavigation(forward) {
+    _handleItemNavigation(forward, index) {
+        this.selectedItemIndex = index;
         if (!this._getItems().length) {
             return;
         }

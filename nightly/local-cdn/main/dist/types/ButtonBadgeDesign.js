@@ -13,7 +13,7 @@ var ButtonBadgeDesign;
     /**
      * The badge is displayed at the top-end corner of the button.
      *
-     * **Note:** It's highly recommended to use the OverlayText design mode only in cozy density.
+     * **Note:** According to design guidance, the OverlayText design mode is best used in cozy density to avoid potential visual issues in compact.
      * @public
      */
     ButtonBadgeDesign["OverlayText"] = "OverlayText";

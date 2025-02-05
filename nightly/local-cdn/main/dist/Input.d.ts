@@ -327,6 +327,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     _shouldAutocomplete?: boolean;
     _keyDown?: boolean;
     _isKeyNavigation?: boolean;
+    _indexOfSelectedItem: number;
     _selectedText?: string;
     _clearIconClicked?: boolean;
     _focusedAfterClear: boolean;
@@ -349,6 +350,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     onAfterRendering(): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
+    get currentItemIndex(): number;
     _handleUp(e: KeyboardEvent): void;
     _handleDown(e: KeyboardEvent): void;
     _handleSpace(e: KeyboardEvent): void;
@@ -379,6 +381,7 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     _startsWithMatchingItems(str: string): Array<IInputSuggestionItemSelectable>;
     _getFirstMatchingItem(current: string): IInputSuggestionItemSelectable | undefined;
     _handleSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>): void;
+    _selectMatchingItem(item: IInputSuggestionItemSelectable): void;
     _handleTypeAhead(item: IInputSuggestionItemSelectable): void;
     _handleResize(): void;
     _updateAssociatedLabelsTexts(): void;

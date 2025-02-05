@@ -176,6 +176,9 @@ let Select = Select_1 = class Select extends UI5Element {
             }
         }
     }
+    _applyFocus() {
+        this.focus();
+    }
     _onfocusin() {
         this.focused = true;
     }

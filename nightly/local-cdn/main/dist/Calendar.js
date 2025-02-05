@@ -271,6 +271,10 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
                 : true;
             return isTypeMatch && dateValue && this._isValidCalendarDate(dateValue);
         });
+        validSpecialDates.forEach(date => {
+            const refLegendItem = this.calendarLegend.length ? this.calendarLegend[0].items.find(item => item.type === date.type) : undefined;
+            date._tooltip = refLegendItem?.text || "";
+        });
         const uniqueDates = new Set();
         const uniqueSpecialDates = [];
         validSpecialDates.forEach(date => {
@@ -280,7 +284,8 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
                 uniqueDates.add(timestamp);
                 const specialDateTimestamp = CalendarDateComponent.fromLocalJSDate(dateFromValue).valueOf() / 1000;
                 const type = date.type;
-                uniqueSpecialDates.push({ specialDateTimestamp, type });
+                const tooltip = date._tooltip;
+                uniqueSpecialDates.push({ specialDateTimestamp, type, tooltip });
             }
         });
         return uniqueSpecialDates;
@@ -613,7 +618,7 @@ __decorate([
     property({ noAttribute: true })
 ], Calendar.prototype, "_pickersMode", void 0);
 __decorate([
-    slot({ type: HTMLElement })
+    slot({ type: HTMLElement, invalidateOnChildChange: true })
 ], Calendar.prototype, "calendarLegend", void 0);
 __decorate([
     slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
