@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
+import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 /**
  * @class
  *
@@ -26,10 +26,11 @@ declare class ButtonBadge extends UI5Element {
     /**
      * Defines the text of the component.
      *
-     * **Note:** Text is not needed when the `design` property is set to `AttentionDot`.
+     * **Note:** Text is not applied when the `design` property is set to `AttentionDot`.
      * @since 2.7.0
      * @public
     */
     text: string;
+    get effectiveText(): string;
 }
 export default ButtonBadge;

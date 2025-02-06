@@ -12,7 +12,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isTabNext, isTabPrevious, isSpace, isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isTabNext, isTabPrevious, isSpace, isEnter, isUp, isDown, isLeft, isRight, } from "@ui5/webcomponents-base/dist/Keys.js";
 import "./TimelineItem.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -227,6 +227,16 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
     }
     _onkeydown(e) {
         const target = e.target;
+        if (isDown(e) || isRight(e)) {
+            this._handleDown();
+            e.preventDefault();
+            return;
+        }
+        if (isUp(e) || isLeft(e)) {
+            this._handleUp(e);
+            e.preventDefault();
+            return;
+        }
         if (target.nameClickable && !target.getFocusDomRef().matches(":has(:focus-within)")) {
             return;
         }
@@ -253,6 +263,37 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
             nextTarget.focus();
             this._itemNavigation.setCurrentItem(nextTarget);
         }
+    }
+    _handleDown() {
+        if (this.growsWithButton) {
+            this.focusGrowingButton();
+        }
+    }
+    focusGrowingButton() {
+        const items = this._navigableItems;
+        const lastIndex = items.length - 1;
+        const currentIndex = this._itemNavigation._currentIndex;
+        if (currentIndex !== -1 && currentIndex === lastIndex) {
+            this.growingButton?.focus();
+        }
+    }
+    _handleUp(e) {
+        if (this.growingButton === e.target) {
+            const items = this._navigableItems;
+            const lastItem = items[items.length - 1];
+            this.focusItem(lastItem);
+            e.preventDefault();
+            e.stopImmediatePropagation();
+        }
+    }
+    /**
+     * Focuses a list item and sets its tabindex to "0" via the ItemNavigation
+     * @protected
+     * @param item
+     */
+    focusItem(item) {
+        this._itemNavigation.setCurrentItem(item);
+        item.focus();
     }
     get _navigableItems() {
         const navigatableItems = [];
@@ -301,6 +342,9 @@ __decorate([
 __decorate([
     query(".ui5-timeline-end-marker")
 ], Timeline.prototype, "timelineEndMarker", void 0);
+__decorate([
+    query((`[id="ui5-timeline-growing-btn"]`))
+], Timeline.prototype, "growingButton", void 0);
 __decorate([
     i18n("@ui5/webcomponents-fiori")
 ], Timeline, "i18nBundle", void 0);

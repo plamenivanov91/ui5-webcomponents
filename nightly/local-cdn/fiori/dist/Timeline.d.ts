@@ -99,6 +99,7 @@ declare class Timeline extends UI5Element {
      */
     items: Array<ITimelineItem>;
     timelineEndMarker: HTMLElement;
+    growingButton: HTMLElement;
     static i18nBundle: I18nBundle;
     _itemNavigation: ItemNavigation;
     growingIntersectionObserver?: IntersectionObserver | null;
@@ -126,6 +127,15 @@ declare class Timeline extends UI5Element {
     _setIsNextItemGroup(): void;
     _onkeydown(e: KeyboardEvent): void;
     _handleNextOrPreviousItem(e: KeyboardEvent, isNext?: boolean): void;
+    _handleDown(): void;
+    focusGrowingButton(): void;
+    _handleUp(e: KeyboardEvent): void;
+    /**
+     * Focuses a list item and sets its tabindex to "0" via the ItemNavigation
+     * @protected
+     * @param item
+     */
+    focusItem(item: ITimelineItem | ToggleButton): void;
     get _navigableItems(): (ToggleButton | ITimelineItem)[];
 }
 export default Timeline;

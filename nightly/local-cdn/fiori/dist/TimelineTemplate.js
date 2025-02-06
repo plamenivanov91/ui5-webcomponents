@@ -5,7 +5,7 @@ export default function TimelineTemplate() {
     return (_jsx("div", { class: "ui5-timeline-root", onFocusIn: this._onfocusin, onKeyDown: this._onkeydown, children: _jsx(BusyIndicator, { id: `${this._id}-busyIndicator`, delay: this.loadingDelay, active: this.showBusyIndicatorOverlay, class: "ui5-timeline-busy-indicator", children: _jsx("div", { class: "ui5-timeline-scroll-container", children: _jsxs("ul", { class: "ui5-timeline-list", "aria-live": "polite", "aria-label": this.ariaLabel, children: [this.items.map(item => _jsx("li", { class: "ui5-timeline-list-item", children: _jsx("slot", { name: item._individualSlot }) })), this.growsWithButton && moreRow.call(this), this.growsOnScroll && endRow.call(this)] }) }) }) }));
 }
 function moreRow() {
-    return (_jsxs("li", { class: "ui5-timeline-list-item ui5-timeline-list-growing", children: [_jsx("div", { class: "ui5-tli-icon-outer", children: _jsx(Button, { icon: this.growingButtonIcon, id: `${this._id}-growing-btn`, class: {
+    return (_jsxs("li", { class: "ui5-timeline-list-item ui5-timeline-list-growing", children: [_jsx("div", { class: "ui5-tli-icon-outer", children: _jsx(Button, { icon: this.growingButtonIcon, id: "ui5-timeline-growing-btn", class: {
                         "ui5-timeline-growing-row-inner": true,
                         "ui5-timeline-growing-row-inner--active": this._loadMoreActive
                     }, tabindex: 0, onClick: this._onLoadMoreClick, onKeyDown: this._onLoadMoreKeydown, onKeyUp: this._onLoadMoreKeyup }) }), this.loading &&

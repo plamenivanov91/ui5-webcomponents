@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ButtonBadgeTemplate from "./ButtonBadgeTemplate.js";
 // Styles
@@ -39,11 +40,14 @@ let ButtonBadge = class ButtonBadge extends UI5Element {
         /**
          * Defines the text of the component.
          *
-         * **Note:** Text is not needed when the `design` property is set to `AttentionDot`.
+         * **Note:** Text is not applied when the `design` property is set to `AttentionDot`.
          * @since 2.7.0
          * @public
         */
         this.text = "";
+    }
+    get effectiveText() {
+        return this.design === ButtonBadgeDesign.AttentionDot ? "" : this.text;
     }
 };
 __decorate([
