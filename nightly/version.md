@@ -1,5 +1,7 @@
-commit 99faaa82ee1d18ab05cd9173975c0cbd7a4977a9
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Tue Feb 4 16:43:28 2025 +0200
+commit 469cc9d6238ce4bbc3c593f93ae7fe92bbe804df
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Mon Feb 10 17:12:37 2025 +0200
 
-    chore: add link test (#10763)
+    fix(ui5-side-navigation): remove inappropriate exclamation mark usage (#10769)
+    
+    fixes: #10714

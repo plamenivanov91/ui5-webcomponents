@@ -27,6 +27,8 @@ declare class ButtonBadge extends UI5Element {
      * Defines the text of the component.
      *
      * **Note:** Text is not applied when the `design` property is set to `AttentionDot`.
+     *
+     * **Note:** The badge component only accepts numeric values and the "+" symbol. Using other characters or formats may result in unpredictable behavior, which is not guaranteed or supported.
      * @since 2.7.0
      * @public
     */

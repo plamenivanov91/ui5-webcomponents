@@ -148,7 +148,10 @@ let Select = Select_1 = class Select extends UI5Element {
     get formFormattedValue() {
         const selectedOption = this.selectedOption;
         if (selectedOption) {
-            return selectedOption.hasAttribute("value") ? selectedOption.value : selectedOption.textContent;
+            if ("value" in selectedOption && selectedOption.value) {
+                return selectedOption.value;
+            }
+            return selectedOption.hasAttribute("value") ? selectedOption.getAttribute("value") : selectedOption.textContent;
         }
         return "";
     }
