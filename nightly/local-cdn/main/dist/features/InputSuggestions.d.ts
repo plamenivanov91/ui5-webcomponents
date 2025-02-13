@@ -66,9 +66,7 @@ declare class Suggestions {
     onItemSelected(selectedItem: IInputSuggestionItemSelectable | null, keyboardUsed: boolean): void;
     onItemSelect(item: IInputSuggestionItem): void;
     onItemPress(e: CustomEvent<ListItemClickEventDetail | ListSelectionChangeEventDetail>): void;
-    _onOpen(): void;
     _onClose(): void;
-    _applyFocus(): void;
     _isItemOnTarget(): boolean;
     get _isGroupItem(): boolean;
     isOpened(): boolean;

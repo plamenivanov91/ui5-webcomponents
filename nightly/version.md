@@ -1,7 +1,7 @@
-commit 469cc9d6238ce4bbc3c593f93ae7fe92bbe804df
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Mon Feb 10 17:12:37 2025 +0200
+commit a02f51918a12085d97a1e971a4360435ebeb1c5e
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Feb 12 16:34:02 2025 +0200
 
-    fix(ui5-side-navigation): remove inappropriate exclamation mark usage (#10769)
+    chore(ui5-input): fix failing tests (#10838)
     
-    fixes: #10714
+    FIXES: #10830

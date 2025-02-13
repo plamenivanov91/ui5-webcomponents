@@ -174,16 +174,8 @@ class Suggestions {
         }
         this.onItemSelected(pressedItem, false /* keyboardUsed */);
     }
-    _onOpen() {
-        this._applyFocus();
-    }
     _onClose() {
         this._handledPress = false;
-    }
-    _applyFocus() {
-        if (this.selectedItemIndex) {
-            this._getItems()[this.selectedItemIndex]?.focus();
-        }
     }
     _isItemOnTarget() {
         return this.isOpened() && this.selectedItemIndex !== null && this.selectedItemIndex !== -1 && !this._isGroupItem;

@@ -1,5 +1,5 @@
 import TableCellBase from "./TableCellBase.js";
-import TableSortOrder from "./types/TableSortOrder.js";
+import SortOrder from "@ui5/webcomponents-base/dist/types/SortOrder.js";
 import type TableHeaderCellActionBase from "./TableHeaderCellActionBase.js";
 import "@ui5/webcomponents-icons/dist/sort-ascending.js";
 import "@ui5/webcomponents-icons/dist/sort-descending.js";
@@ -76,7 +76,7 @@ declare class TableHeaderCell extends TableCellBase {
      * @since 2.8.0
      * @public
      */
-    sortIndicator: `${TableSortOrder}`;
+    sortIndicator: `${SortOrder}`;
     /**
      * Defines the action of the column.
      *

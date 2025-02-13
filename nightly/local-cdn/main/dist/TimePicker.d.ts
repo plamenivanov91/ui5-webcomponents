@@ -4,7 +4,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import type Popover from "./Popover.js";
-import type ResponsivePopover from "./ResponsivePopover.js";
 import type DateTimeInput from "./DateTimeInput.js";
 import type { InputAccInfo } from "./Input.js";
 import type TimeSelectionClocks from "./TimeSelectionClocks.js";
@@ -183,6 +182,8 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
      */
     valueStateMessage: Array<HTMLElement>;
     _timeSelectionClocks?: TimeSelectionClocks;
+    _inputsPopover: Popover;
+    _dateTimeInput: DateTimeInput;
     tempValue?: string;
     static i18nBundle: I18nBundle;
     get formValidityMessage(): string;
@@ -212,6 +213,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     get _timeSelectionValue(): string | undefined;
     get _isPhone(): boolean;
     get _isMobileDevice(): boolean;
+    get shouldDisplayValueStateMessageInResponsivePopover(): boolean;
     onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>): void;
     _togglePicker(): void;
     submitPickers(): void;
@@ -246,9 +248,6 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     _handleInputLiveChange(e: CustomEvent): void;
     _canOpenPicker(): boolean;
     _canOpenInputsPopover(): boolean;
-    _getPopover(): ResponsivePopover;
-    _getInputsPopover(): Popover;
-    _getDateTimeInput(): DateTimeInput;
     _getInputField(): HTMLInputElement | import("./Input.js").default | null;
     _onkeydown(e: KeyboardEvent): void;
     get _isPattern(): boolean;
@@ -289,6 +288,7 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     get cancelButtonLabel(): string;
     get hasValueStateText(): boolean;
     get hasValueState(): boolean;
+    get shouldDisplayValueStateMessageOnDesktop(): boolean;
     get classes(): {
         popover: {
             "ui5-suggestions-popover": boolean;

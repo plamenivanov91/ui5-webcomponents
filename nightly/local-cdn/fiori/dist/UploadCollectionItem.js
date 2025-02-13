@@ -63,6 +63,12 @@ let UploadCollectionItem = UploadCollectionItem_1 = class UploadCollectionItem e
          */
         this.fileNameClickable = false;
         /**
+         * Disables the delete button.
+         * @default false
+         * @public
+         */
+        this.disableDeleteButton = false;
+        /**
          * Hides the delete button.
          * @default false
          * @public

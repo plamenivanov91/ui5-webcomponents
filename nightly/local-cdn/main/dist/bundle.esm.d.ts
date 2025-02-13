@@ -3,6 +3,7 @@ declare const testAssets: {
     getAcceptIconPathData: () => Promise<string>;
     generateHighlightedMarkup: typeof generateHighlightedMarkup;
     getExportedIconsValues: () => ("accept" | "SAP-icons-v4/accept" | "SAP-icons-v5/accept" | "tnt/actor" | "tnt-v2/actor" | "tnt-v3/actor" | "business-suite/3d" | "business-suite-v1/3d" | "business-suite-v2/3d")[];
+    getAllRegisteredTags: () => string[];
     resetConfiguration: (testEnv?: boolean) => void;
     configuration: {
         getAnimationMode: () => `${import("@ui5/webcomponents-base/dist/types/AnimationMode.js").default}`;

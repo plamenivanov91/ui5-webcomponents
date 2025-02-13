@@ -9,7 +9,7 @@ import TableCellBase from "./TableCellBase.js";
 import TableHeaderCellTemplate from "./generated/templates/TableHeaderCellTemplate.lit.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
 import Icon from "./Icon.js";
-import TableSortOrder from "./types/TableSortOrder.js";
+import SortOrder from "@ui5/webcomponents-base/dist/types/SortOrder.js";
 import "@ui5/webcomponents-icons/dist/sort-ascending.js";
 import "@ui5/webcomponents-icons/dist/sort-descending.js";
 /**
@@ -96,7 +96,7 @@ let TableHeaderCell = class TableHeaderCell extends TableCellBase {
             // overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
             this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
         }
-        if (this.sortIndicator !== TableSortOrder.None) {
+        if (this.sortIndicator !== SortOrder.None) {
             this.setAttribute("aria-sort", this.sortIndicator.toLowerCase());
         }
         else if (this.hasAttribute("aria-sort")) {
@@ -104,7 +104,7 @@ let TableHeaderCell = class TableHeaderCell extends TableCellBase {
         }
     }
     get _sortIcon() {
-        if (this.sortIndicator !== TableSortOrder.None) {
+        if (this.sortIndicator !== SortOrder.None) {
             return `sort-${this.sortIndicator.toLowerCase()}`;
         }
     }

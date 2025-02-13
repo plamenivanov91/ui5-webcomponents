@@ -9,7 +9,7 @@ import TableRowBase from "./TableRowBase.js";
 import TableHeaderRowTemplate from "./generated/templates/TableHeaderRowTemplate.lit.js";
 import TableHeaderRowStyles from "./generated/themes/TableHeaderRow.css.js";
 import TableHeaderCell from "./TableHeaderCell.js";
-import { TABLE_SELECTION, TABLE_ROW_POPIN, TABLE_ROW_ACTIONS, } from "./generated/i18n/i18n-defaults.js";
+import { TABLE_SELECTION, TABLE_ROW_POPIN, TABLE_ROW_ACTIONS, TABLE_COLUMN_HEADER_ROW, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
@@ -49,6 +49,10 @@ class TableHeaderRow extends TableRowBase {
          * @public
          */
         this.sticky = false;
+    }
+    onEnterDOM() {
+        super.onEnterDOM();
+        this.setAttribute("aria-roledescription", TableRowBase.i18nBundle.getText(TABLE_COLUMN_HEADER_ROW));
     }
     onBeforeRendering() {
         super.onBeforeRendering();

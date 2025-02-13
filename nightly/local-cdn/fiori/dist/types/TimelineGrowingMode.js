@@ -1,3 +1,8 @@
+/**
+ * Timeline growing modes.
+ * @public
+ * @since 2.7.0
+ */
 var TimelineGrowingMode;
 (function (TimelineGrowingMode) {
     /**

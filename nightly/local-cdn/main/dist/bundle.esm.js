@@ -15,6 +15,7 @@ import icon3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
 import icon3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
 import icon3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
+import { getAllRegisteredTags } from "@ui5/webcomponents-base/dist/CustomElementsRegistry.js";
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,
 // but it's configurable:
 // import { setDefaultIconCollection } from  "@ui5/webcomponents-base/dist/config/Icons.js";
@@ -118,6 +119,7 @@ const testAssets = {
     getAcceptIconPathData: getPathData,
     generateHighlightedMarkup,
     getExportedIconsValues: () => icons,
+    getAllRegisteredTags,
 };
 registerIconLoader("my-icons", () => {
     return Promise.resolve([{
