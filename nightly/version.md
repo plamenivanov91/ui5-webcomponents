@@ -1,7 +1,10 @@
-commit a02f51918a12085d97a1e971a4360435ebeb1c5e
-Author: Martin <martin.r.hristov@gmail.com>
-Date:   Wed Feb 12 16:34:02 2025 +0200
+commit ca74d1368a3df589cad7ba916939434646ca3be5
+Author: ilhan orhan <ilhan.orhan007@gmail.com>
+Date:   Thu Feb 13 16:35:44 2025 +0200
 
-    chore(ui5-input): fix failing tests (#10838)
+    refactor(ui5-select): stop  bubbling of the `open` event (#10831)
     
-    FIXES: #10830
+    Stop bubbling of the open event as it causes issues when the Select is used inside Dialog.
+    It's likely for consumers to listen for the Select's open on the Select level, not on a parent of the Select.
+    
+    Fixes: #10422

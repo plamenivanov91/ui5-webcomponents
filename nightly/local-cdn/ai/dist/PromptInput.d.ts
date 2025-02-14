@@ -12,7 +12,7 @@ import type { IInputSuggestionItem, InputEventDetail } from "@ui5/webcomponents/
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents-ai/dist/PromptInput.js
+ * `import "@ui5/webcomponents-ai/dist/PromptInput.js"`
  * @class
  * @constructor
  * @public

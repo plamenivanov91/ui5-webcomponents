@@ -722,9 +722,7 @@ Select = Select_1 = __decorate([
      * @public
      */
     ,
-    event("open", {
-        bubbles: true,
-    })
+    event("open")
     /**
      * Fired after the component's dropdown menu closes.
      * @public
