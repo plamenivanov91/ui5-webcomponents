@@ -1327,9 +1327,7 @@ Input = Input_1 = __decorate([
      * @since 2.0.0
      */
     ,
-    event("close", {
-        bubbles: true,
-    })
+    event("close")
 ], Input);
 Input.define();
 export default Input;
