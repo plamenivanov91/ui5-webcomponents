@@ -45,15 +45,17 @@ let TableRowBase = TableRowBase_1 = class TableRowBase extends UI5Element {
     getFocusDomRef() {
         return this;
     }
-    _informSelectionChange() {
-        this._tableSelection?.informSelectionChange(this);
-    }
     isHeaderRow() {
         return false;
     }
+    _onSelectionChange() {
+        const tableSelection = this._tableSelection;
+        const selected = tableSelection.isMultiSelectable() ? !this._isSelected : true;
+        tableSelection.setSelected(this, selected, true);
+    }
     _onkeydown(e, eventOrigin) {
         if ((eventOrigin === this && this._isSelectable && isSpace(e)) || (eventOrigin === this._selectionCell && (isSpace(e) || isEnter(e)))) {
-            this._informSelectionChange();
+            this._onSelectionChange();
             e.preventDefault();
         }
     }
@@ -74,10 +76,10 @@ let TableRowBase = TableRowBase_1 = class TableRowBase extends UI5Element {
         return this._tableSelection?.isSelectable();
     }
     get _isMultiSelect() {
-        return this._tableSelection?.isMultiSelect();
+        return this._tableSelection?.isMultiSelectable();
     }
     get _hasRowSelector() {
-        return this._tableSelection?.hasRowSelector();
+        return this._tableSelection?.isRowSelectorRequired();
     }
     get _selectionCell() {
         return this.shadowRoot.getElementById("selection-cell");

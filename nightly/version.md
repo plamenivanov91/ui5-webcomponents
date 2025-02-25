@@ -1,5 +1,5 @@
-commit 7e7b8ad2dfa6bace21310697fac8c87f96689574
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Fri Feb 21 14:16:46 2025 +0200
+commit 6f02955f409e2087c8d51ee01103d108611bfff8
+Author: Lukas Harbarth <lukas.harbarth@sap.com>
+Date:   Mon Feb 24 14:32:13 2025 +0100
 
-    fix(ui5-text): provide more optimal truncation for single line text (#10794)
+    docs(AI): fix typo in README (#10941)

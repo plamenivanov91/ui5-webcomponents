@@ -37,14 +37,7 @@ let TableRow = class TableRow extends TableRowBase {
     constructor() {
         super(...arguments);
         /**
-         * Unique identifier of the row.
-         *
-         * @default ""
-         * @public
-         */
-        this.rowKey = "";
-        /**
-         * Defines the position of the row respect to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
+         * Defines the position of the row related to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
          *
          * @default -1
          * @since 2.5.0

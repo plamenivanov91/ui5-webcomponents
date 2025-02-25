@@ -155,7 +155,6 @@ let Table = Table_1 = class Table extends UI5Element {
         this._events = ["keydown", "keyup", "click", "focusin", "focusout", "dragenter", "dragleave", "dragover", "drop"];
         this._poppedIn = [];
         this._containerWidth = 0;
-        this._rowsLength = 0;
         this._onResizeBound = this._onResize.bind(this);
         this._onEventBound = this._onEvent.bind(this);
     }
@@ -180,10 +179,6 @@ let Table = Table_1 = class Table extends UI5Element {
         this._renderNavigated = this.rows.some(row => row.navigated);
         if (this.headerRow[0]) {
             this.headerRow[0]._rowActionCount = this.rowActionCount;
-            if (this._getSelection()?.isMultiSelect() && this._rowsLength !== this.rows.length) {
-                this._rowsLength = this.rows.length;
-                this.headerRow[0]._invalidate++;
-            }
         }
         this.rows.forEach(row => {
             row._renderNavigated = this._renderNavigated;
@@ -191,15 +186,19 @@ let Table = Table_1 = class Table extends UI5Element {
         });
         this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
         this._refreshPopinState();
+        this.features.forEach(feature => feature.onTableBeforeRendering?.(this));
     }
     onAfterRendering() {
         this.features.forEach(feature => feature.onTableAfterRendering?.(this));
     }
+    _findFeature(featureName) {
+        return this.features.find(feature => isFeature(feature, featureName));
+    }
     _getSelection() {
-        return this.features.find(feature => isFeature(feature, "TableSelection"));
+        return this._findFeature("TableSelectionBase") || this._findFeature("TableSelection");
     }
     _getVirtualizer() {
-        return this.features.find(feature => isFeature(feature, "TableVirtualizer"));
+        return this._findFeature("TableVirtualizer");
     }
     _onEvent(e) {
         const composedPath = e.composedPath();
@@ -293,11 +292,8 @@ let Table = Table_1 = class Table extends UI5Element {
             row.cells[headerIndex]._popin = inPopin;
         });
     }
-    _isFeature(feature) {
-        return Boolean(feature.onTableActivate || feature.onTableAfterRendering);
-    }
     _isGrowingFeature(feature) {
-        return Boolean(feature.loadMore && feature.hasGrowingComponent && this._isFeature(feature));
+        return Boolean(feature.loadMore && feature.hasGrowingComponent && isFeature(feature, "TableGrowing"));
     }
     _onRowClick(row) {
         this.fireDecoratorEvent("row-click", { row });
@@ -332,7 +328,7 @@ let Table = Table_1 = class Table extends UI5Element {
         }
         const widths = [];
         const visibleHeaderCells = this.headerRow[0]._visibleCells;
-        if (this._getSelection()?.hasRowSelector()) {
+        if (this._getSelection()?.isRowSelectorRequired()) {
             widths.push("min-content");
         }
         widths.push(...visibleHeaderCells.map(cell => {
@@ -382,13 +378,13 @@ let Table = Table_1 = class Table extends UI5Element {
     }
     get _ariaMultiSelectable() {
         const selection = this._getSelection();
-        return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelect() : undefined;
+        return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
     }
     get _shouldRenderGrowing() {
         return this.rows.length && this._growing?.hasGrowingComponent();
     }
     get _growing() {
-        return this.features.find(feature => this._isGrowingFeature(feature));
+        return this._findFeature("TableGrowing");
     }
     get _stickyElements() {
         const stickyRows = this.headerRow.filter(row => row.sticky);

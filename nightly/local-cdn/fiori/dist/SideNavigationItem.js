@@ -98,7 +98,7 @@ let SideNavigationItem = class SideNavigationItem extends SideNavigationSelectab
     }
     get classesArray() {
         const classes = super.classesArray;
-        if (!this.disabled && this.parentNode.collapsed && this.items.length) {
+        if (!this.disabled && this.sideNavigation?.collapsed && this.items.length) {
             classes.push("ui5-sn-item-with-expander");
         }
         if (this._fixed) {

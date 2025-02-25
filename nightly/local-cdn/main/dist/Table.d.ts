@@ -9,6 +9,7 @@ import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delega
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
 import type TableSelection from "./TableSelection.js";
+import type TableSelectionBase from "./TableSelectionBase.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
 import type TableVirtualizer from "./TableVirtualizer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -22,11 +23,17 @@ interface ITableFeature extends UI5Element {
     readonly identifier: string;
     /**
      * Called when the table is activated.
-     * @param table table instance
+     * @param table Table instance
      */
     onTableActivate?(table: Table): void;
     /**
-     * Called when the table finished rendering.
+     * Called every time before the table renders.
+     * @param table Table instance
+     */
+    onTableBeforeRendering?(table?: Table): void;
+    /**
+     * Called every time after the table renders.
+     * @param table Table instance
      */
     onTableAfterRendering?(table?: Table): void;
 }
@@ -260,13 +267,13 @@ declare class Table extends UI5Element {
         width: float;
     }>;
     _containerWidth: number;
-    _rowsLength: number;
     constructor();
     onEnterDOM(): void;
     onExitDOM(): void;
     onBeforeRendering(): void;
     onAfterRendering(): void;
-    _getSelection(): TableSelection | undefined;
+    _findFeature<T>(featureName: string): T;
+    _getSelection(): TableSelectionBase | TableSelection | undefined;
     _getVirtualizer(): TableVirtualizer | undefined;
     _onEvent(e: Event): void;
     _onResize(): void;
@@ -281,7 +288,6 @@ declare class Table extends UI5Element {
      */
     _refreshPopinState(): void;
     _setHeaderPopinState(headerCell: TableHeaderCell, inPopin: boolean, popinWidth: number): void;
-    _isFeature(feature: any): boolean;
     _isGrowingFeature(feature: any): boolean;
     _onRowClick(row: TableRow): void;
     _onRowActionClick(action: TableRowActionBase): void;
