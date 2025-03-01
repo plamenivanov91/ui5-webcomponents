@@ -1,5 +1,7 @@
-commit a9e28689eb80c225244ee5a1f7587fdd6ec48319
-Author: Dobromira Boycheva <dobromira.boycheva@sap.com>
-Date:   Thu Feb 27 16:01:28 2025 +0200
+commit 16af941257c42d91d8dd098ccd9404d952d47d4d
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Fri Feb 28 15:08:02 2025 +0200
 
-    fix(user-menu): focus on user menu when it is opened (#10967)
+    fix(ui5-token): align selected token height with non selected (#10868)
+    
+    FIXES: #10444

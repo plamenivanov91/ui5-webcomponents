@@ -377,10 +377,11 @@ declare class ShellBar extends UI5Element {
     _updateContentInfo(newContentInfo: Array<IShellBarContentItem>): void;
     _fireContentItemVisibilityChangeEvent(): void;
     _updateOverflowNotifications(): void;
-    _observeContentItems(): false | undefined;
+    _observeContentItems(): void;
     _getOverflowPopover(): Popover;
     _getMenuPopover(): Popover;
     isIconHidden(name: string): boolean;
+    get hasMatchingContent(): boolean;
     get contentItemsSorted(): UI5Element[];
     get contentItemsWrappersSorted(): HTMLElement[];
     get autoSearchField(): boolean;
