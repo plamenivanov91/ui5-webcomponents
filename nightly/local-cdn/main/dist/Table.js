@@ -7,18 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var Table_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { customElement, slot, property, eventStrict, i18n, } from "@ui5/webcomponents-base/dist/decorators.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import TableTemplate from "./generated/templates/TableTemplate.lit.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import TableTemplate from "./TableTemplate.js";
 import TableStyles from "./generated/themes/Table.css.js";
-import TableHeaderRow from "./TableHeaderRow.js";
-import TableRow from "./TableRow.js";
-import TableCell from "./TableCell.js";
 import TableExtension from "./TableExtension.js";
 import TableNavigation from "./TableNavigation.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
-import DropIndicator from "./DropIndicator.js";
-import BusyIndicator from "./BusyIndicator.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
@@ -200,6 +195,9 @@ let Table = Table_1 = class Table extends UI5Element {
     _getVirtualizer() {
         return this._findFeature("TableVirtualizer");
     }
+    _getGrowing() {
+        return this._findFeature("TableGrowing");
+    }
     _onEvent(e) {
         const composedPath = e.composedPath();
         const eventOrigin = composedPath[0];
@@ -254,7 +252,7 @@ let Table = Table_1 = class Table extends UI5Element {
         scrollElementIntoView(this._scrollContainer, e.target, this._stickyElements, this.effectiveDir === "rtl");
     }
     _onGrow() {
-        this._growing?.loadMore();
+        this._getGrowing()?.loadMore();
     }
     _getPopinOrderedColumns(reverse) {
         let headers = [...this.headerRow[0].cells];
@@ -380,12 +378,6 @@ let Table = Table_1 = class Table extends UI5Element {
         const selection = this._getSelection();
         return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
     }
-    get _shouldRenderGrowing() {
-        return this.rows.length && this._growing?.hasGrowingComponent();
-    }
-    get _growing() {
-        return this._findFeature("TableGrowing");
-    }
     get _stickyElements() {
         const stickyRows = this.headerRow.filter(row => row.sticky);
         const stickyColumns = this.headerRow[0]._stickyCells;
@@ -459,17 +451,10 @@ __decorate([
 Table = Table_1 = __decorate([
     customElement({
         tag: "ui5-table",
-        renderer: litRender,
+        renderer: jsxRenderer,
         styles: TableStyles,
         template: TableTemplate,
         fastNavigation: true,
-        dependencies: [
-            BusyIndicator,
-            TableHeaderRow,
-            TableCell,
-            TableRow,
-            DropIndicator,
-        ],
     })
     /**
      * Fired when an interactive row is clicked.

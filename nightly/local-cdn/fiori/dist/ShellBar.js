@@ -271,7 +271,7 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
     }
     _menuItemPress(e) {
         const shouldContinue = this.fireDecoratorEvent("menu-item-click", {
-            item: e.detail.selectedItems[0],
+            item: e.detail.item,
         });
         if (shouldContinue) {
             this.menuPopover.open = false;

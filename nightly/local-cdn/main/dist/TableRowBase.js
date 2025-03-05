@@ -7,12 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var TableRowBase_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import TableRowBaseCss from "./generated/themes/TableRowBase.css.js";
-import CheckBox from "./CheckBox.js";
 import { isInstanceOfTable } from "./TableUtils.js";
 import { TABLE_ROW_SELECTOR, } from "./generated/i18n/i18n-defaults.js";
 /**
@@ -76,10 +75,10 @@ let TableRowBase = TableRowBase_1 = class TableRowBase extends UI5Element {
         return this._tableSelection?.isSelectable();
     }
     get _isMultiSelect() {
-        return this._tableSelection?.isMultiSelectable();
+        return !!this._tableSelection?.isMultiSelectable();
     }
     get _hasRowSelector() {
-        return this._tableSelection?.isRowSelectorRequired();
+        return !!this._tableSelection?.isRowSelectorRequired();
     }
     get _selectionCell() {
         return this.shadowRoot.getElementById("selection-cell");
@@ -110,9 +109,8 @@ __decorate([
 ], TableRowBase, "i18nBundle", void 0);
 TableRowBase = TableRowBase_1 = __decorate([
     customElement({
-        renderer: litRender,
+        renderer: jsxRenderer,
         styles: TableRowBaseCss,
-        dependencies: [CheckBox],
     })
 ], TableRowBase);
 export default TableRowBase;

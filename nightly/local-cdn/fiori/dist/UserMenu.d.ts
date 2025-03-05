@@ -35,7 +35,7 @@ declare class UserMenu extends UI5Element {
     eventDetails: {
         "avatar-click": void;
         "manage-account-click": void;
-        "add-account-click": void;
+        "edit-accounts-click": void;
         "change-account": UserMenuOtherAccountClickEventDetail;
         "item-click": UserMenuItemClickEventDetail;
         "sign-out-click": void;
@@ -72,12 +72,12 @@ declare class UserMenu extends UI5Element {
      */
     showOtherAccounts: boolean;
     /**
-     * Defines if the User Menu shows the Add Account option.
+     * Defines if the User Menu shows the Edit Accounts option.
      *
      * @default false
      * @public
      */
-    showAddAccount: boolean;
+    showEditAccounts: boolean;
     /**
      * Defines if the User menu shows edit button.
      *
@@ -136,7 +136,7 @@ declare class UserMenu extends UI5Element {
     _handleIntersection(entries: IntersectionObserverEntry[]): void;
     _handleAvatarClick(e: CustomEvent): void;
     _handleManageAccountClick(): void;
-    _handleAddAccountClick(): void;
+    _handleEditAccountsClick(): void;
     _handleAccountSwitch(e: CustomEvent<ListItemClickEventDetail>): void;
     _handleSignOutClick(): void;
     _handleMenuItemClick(e: CustomEvent<ListItemClickEventDetail>): void;
@@ -151,7 +151,7 @@ declare class UserMenu extends UI5Element {
     get _otherAccountsButtonText(): string;
     get _signOutButtonText(): string;
     get _editAvatarTooltip(): string;
-    get _addAccountTooltip(): string;
+    get _editAccountsTooltip(): string;
     get _closeDialogAriaLabel(): string;
     get accessibleNameText(): string;
     getAccountByRefId(refId: string): UserMenuAccount;

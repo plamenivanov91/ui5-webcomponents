@@ -1,10 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import TableHeaderRow from "./TableHeaderRow.js";
-import TableRow from "./TableRow.js";
 import TableNavigation from "./TableNavigation.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
-import DropIndicator from "./DropIndicator.js";
+import type DropIndicator from "./DropIndicator.js";
+import type TableHeaderRow from "./TableHeaderRow.js";
+import type TableRow from "./TableRow.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type TableHeaderCell from "./TableHeaderCell.js";
@@ -12,6 +12,7 @@ import type TableSelection from "./TableSelection.js";
 import type TableSelectionBase from "./TableSelectionBase.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
 import type TableVirtualizer from "./TableVirtualizer.js";
+import type TableGrowing from "./TableGrowing.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 /**
  * Interface for components that can be slotted inside the `features` slot of the `ui5-table`.
@@ -275,6 +276,7 @@ declare class Table extends UI5Element {
     _findFeature<T>(featureName: string): T;
     _getSelection(): TableSelectionBase | TableSelection | undefined;
     _getVirtualizer(): TableVirtualizer | undefined;
+    _getGrowing(): TableGrowing | undefined;
     _onEvent(e: Event): void;
     _onResize(): void;
     _onfocusin(e: FocusEvent): void;
@@ -313,9 +315,7 @@ declare class Table extends UI5Element {
     get _ariaLabel(): string | undefined;
     get _ariaRowCount(): number | undefined;
     get _ariaMultiSelectable(): boolean | undefined;
-    get _shouldRenderGrowing(): boolean | 0;
-    get _growing(): ITableGrowing;
-    get _stickyElements(): (TableHeaderCell | TableHeaderRow)[];
+    get _stickyElements(): (TableHeaderRow | TableHeaderCell)[];
     get _scrollContainer(): HTMLElement;
     get isTable(): boolean;
     get dropIndicatorDOM(): DropIndicator | null;

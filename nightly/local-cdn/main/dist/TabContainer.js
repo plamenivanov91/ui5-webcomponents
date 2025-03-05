@@ -143,6 +143,16 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
          * @private
          */
         this.tabsPlacement = "Top";
+        /**
+         * Defines if automatic tab selection is deactivated.
+         *
+         * **Note:** By default, if none of the child tabs have the `selected` property set, the first tab will be automatically selected.
+         * Setting this property to `true` allows preventing this behavior.
+         * @default false
+         * @public
+         * @since 2.9.0
+         */
+        this.noAutoSelection = false;
         this._animationRunning = false;
         this._contentCollapsed = false;
         this._startOverflowText = "0";
@@ -167,8 +177,11 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         if (selectedTab) {
             this._selectedTab = selectedTab;
         }
-        else {
+        else if (!this.noAutoSelection) {
             this._selectedTab = this._itemsFlat[0];
+        }
+        else {
+            this._selectedTab = undefined;
         }
         walk(this.items, item => {
             if (!item.isSeparator) {
@@ -658,9 +671,6 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
     _setItemsForStrip() {
         const tabStrip = this._getTabStrip();
         let allItemsWidth = 0;
-        if (!this._selectedTab) {
-            return;
-        }
         const itemsDomRefs = this.items.map(item => item.getDomRefInStrip());
         // make sure the overflows are hidden
         this._getStartOverflow().setAttribute("hidden", "");
@@ -1011,6 +1021,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
             root: {
                 "ui5-tc-root": true,
                 "ui5-tc--textOnly": this.textOnly,
+                "ui5-tc--noTabSelected": !this._selectedTab,
                 "ui5-tc--withAdditionalText": this.withAdditionalText,
                 "ui5-tc--standardTabLayout": this.standardTabLayout,
             },
@@ -1093,6 +1104,9 @@ __decorate([
 __decorate([
     property()
 ], TabContainer.prototype, "tabsPlacement", void 0);
+__decorate([
+    property({ type: Boolean })
+], TabContainer.prototype, "noAutoSelection", void 0);
 __decorate([
     property()
 ], TabContainer.prototype, "mediaRange", void 0);

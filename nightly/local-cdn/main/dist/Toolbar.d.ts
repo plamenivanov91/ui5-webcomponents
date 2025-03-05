@@ -135,6 +135,9 @@ declare class Toolbar extends UI5Element {
                 hasPopup: "menu";
             };
         };
+        popover: {
+            accessibleName: string;
+        };
     };
     /**
      * Toolbar Overflow Popover

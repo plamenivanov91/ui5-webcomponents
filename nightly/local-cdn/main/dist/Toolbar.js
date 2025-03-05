@@ -17,7 +17,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Acc
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
-import { TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL, } from "./generated/i18n/i18n-defaults.js";
+import { TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL, TOOLBAR_POPOVER_AVAILABLE_VALUES, } from "./generated/i18n/i18n-defaults.js";
 import ToolbarTemplate from "./ToolbarTemplate.js";
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
@@ -144,6 +144,9 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
                     expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
                     hasPopup: "menu",
                 },
+            },
+            popover: {
+                accessibleName: Toolbar_1.i18nBundle.getText(TOOLBAR_POPOVER_AVAILABLE_VALUES),
             },
         };
     }

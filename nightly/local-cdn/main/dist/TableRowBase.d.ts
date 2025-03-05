@@ -27,8 +27,8 @@ declare abstract class TableRowBase extends UI5Element {
     get _tableSelection(): import("./TableSelectionBase.js").default | import("./TableSelection.js").default | undefined;
     get _isSelected(): boolean | undefined;
     get _isSelectable(): boolean | undefined;
-    get _isMultiSelect(): boolean | undefined;
-    get _hasRowSelector(): boolean | undefined;
+    get _isMultiSelect(): boolean;
+    get _hasRowSelector(): boolean;
     get _selectionCell(): HTMLElement | null;
     get _visibleCells(): TableCellBase[];
     get _popinCells(): TableCellBase[];

@@ -16,7 +16,7 @@ import personPlaceholder from "@ui5/webcomponents-icons/dist/person-placeholder.
 import userSettings from "@ui5/webcomponents-icons/dist/user-settings.js";
 import log from "@ui5/webcomponents-icons/dist/log.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
-import addEmployee from "@ui5/webcomponents-icons/dist/add-employee.js";
+import userEdit from "@ui5/webcomponents-icons/dist/user-edit.js";
 export default function UserMenuTemplate() {
     return (_jsxs(ResponsivePopover, { id: "user-menu-rp", class: "ui5-pm-rp", tabIndex: -1, placement: "Bottom", verticalAlign: "Bottom", horizontalAlign: "End", accessibleName: this.accessibleNameText, open: this.open, opener: this.opener, onClose: this._handlePopoverAfterClose, onOpen: this._handlePopoverAfterOpen, children: [this._isPhone ?
                 _jsxs(_Fragment, { children: [_jsxs(Bar, { class: "ui5-pm-phone-header", slot: "header", children: [this._manageAccountVisibleInHeader &&
@@ -24,8 +24,8 @@ export default function UserMenuTemplate() {
                                     _jsx(Title, { level: "H1", wrappingType: "None", children: this._selectedAccount.titleText }), _jsx(Button, { icon: decline, design: "Transparent", accessibleName: this._closeDialogAriaLabel, onClick: this._closeUserMenu, slot: "endContent" })] }), _jsx("div", { class: "ui5-pm-header", children: headerContent.call(this) })] })
                 :
                     _jsx("div", { class: "ui5-pm-header", slot: "header", children: headerContent.call(this) }), this.showOtherAccounts &&
-                _jsxs(Panel, { collapsed: true, class: "ui5-pm-other-accounts", children: [_jsxs("div", { slot: "header", class: "ui5-user-menu-account-header", children: [_jsxs(Title, { slot: "header", level: "H4", children: [this._otherAccountsButtonText, " (", this._otherAccounts.length, ")"] }), this.showAddAccount &&
-                                    _jsx(Button, { slot: "header", class: "ui5-pm-add-account-btn", design: "Transparent", icon: addEmployee, onClick: this._handleAddAccountClick, tooltip: this._addAccountTooltip })] }), this._otherAccounts.length > 0 &&
+                _jsxs(Panel, { collapsed: true, class: "ui5-pm-other-accounts", children: [_jsxs("div", { slot: "header", class: "ui5-user-menu-account-header", children: [_jsxs(Title, { slot: "header", level: "H4", children: [this._otherAccountsButtonText, " (", this._otherAccounts.length, ")"] }), this.showEditAccounts &&
+                                    _jsx(Button, { slot: "header", class: "ui5-pm-add-account-btn", design: "Transparent", icon: userEdit, onClick: this._handleEditAccountsClick, tooltip: this._editAccountsTooltip })] }), this._otherAccounts.length > 0 &&
                             _jsx(List, { onItemClick: this._handleAccountSwitch, children: this._otherAccounts.map(account => _jsx(ListItemCustom, { ref: this.captureRef.bind(account), children: _jsxs("div", { class: "ui5-pm-other-accounts-content", children: [_jsx(Avatar, { slot: "image", size: "S", initials: account._initials, fallbackIcon: personPlaceholder, children: account.avatarSrc &&
                                                     _jsx("img", { src: account.avatarSrc }) }), _jsxs("div", { children: [account.titleText &&
                                                         _jsx(Title, { children: account.titleText }), account.subtitleText &&

@@ -1,5 +1,5 @@
 import TableRowBase from "./TableRowBase.js";
-import TableCell from "./TableCell.js";
+import type TableCell from "./TableCell.js";
 import type TableRowActionBase from "./TableRowActionBase.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 /**
@@ -83,7 +83,7 @@ declare class TableRow extends TableRowBase {
     _onclick(): void;
     _onkeyup(): void;
     _onfocusout(): void;
-    _onOverflowButtonClick(e: PointerEvent): void;
+    _onOverflowButtonClick(e: MouseEvent): void;
     get _isInteractive(): boolean;
     get _hasRowActions(): boolean;
     get _hasOverflowActions(): boolean;

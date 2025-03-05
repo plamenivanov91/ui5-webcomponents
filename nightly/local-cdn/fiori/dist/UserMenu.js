@@ -15,7 +15,7 @@ import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import UserMenuTemplate from "./UserMenuTemplate.js";
 import UserMenuCss from "./generated/themes/UserMenu.css.js";
 // Texts
-import { USER_MENU_OTHER_ACCOUNT_BUTTON_TXT, USER_MENU_MANAGE_ACCOUNT_BUTTON_TXT, USER_MENU_SIGN_OUT_BUTTON_TXT, USER_MENU_POPOVER_ACCESSIBLE_NAME, USER_MENU_EDIT_AVATAR_TXT, USER_MENU_ADD_ACCOUNT_TXT, USER_MENU_CLOSE_DIALOG_BUTTON, } from "./generated/i18n/i18n-defaults.js";
+import { USER_MENU_OTHER_ACCOUNT_BUTTON_TXT, USER_MENU_MANAGE_ACCOUNT_BUTTON_TXT, USER_MENU_SIGN_OUT_BUTTON_TXT, USER_MENU_POPOVER_ACCESSIBLE_NAME, USER_MENU_EDIT_AVATAR_TXT, USER_MENU_EDIT_ACCOUNTS_TXT, USER_MENU_CLOSE_DIALOG_BUTTON, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  * ### Overview
@@ -59,12 +59,12 @@ let UserMenu = UserMenu_1 = class UserMenu extends UI5Element {
          */
         this.showOtherAccounts = false;
         /**
-         * Defines if the User Menu shows the Add Account option.
+         * Defines if the User Menu shows the Edit Accounts option.
          *
          * @default false
          * @public
          */
-        this.showAddAccount = false;
+        this.showEditAccounts = false;
         /**
          * Defines if the User menu shows edit button.
          *
@@ -133,8 +133,8 @@ let UserMenu = UserMenu_1 = class UserMenu extends UI5Element {
     _handleManageAccountClick() {
         this.fireDecoratorEvent("manage-account-click");
     }
-    _handleAddAccountClick() {
-        this.fireDecoratorEvent("add-account-click");
+    _handleEditAccountsClick() {
+        this.fireDecoratorEvent("edit-accounts-click");
     }
     _handleAccountSwitch(e) {
         const item = e.detail.item;
@@ -208,8 +208,8 @@ let UserMenu = UserMenu_1 = class UserMenu extends UI5Element {
     get _editAvatarTooltip() {
         return UserMenu_1.i18nBundle.getText(USER_MENU_EDIT_AVATAR_TXT);
     }
-    get _addAccountTooltip() {
-        return UserMenu_1.i18nBundle.getText(USER_MENU_ADD_ACCOUNT_TXT);
+    get _editAccountsTooltip() {
+        return UserMenu_1.i18nBundle.getText(USER_MENU_EDIT_ACCOUNTS_TXT);
     }
     get _closeDialogAriaLabel() {
         return UserMenu_1.i18nBundle.getText(USER_MENU_CLOSE_DIALOG_BUTTON);
@@ -243,7 +243,7 @@ __decorate([
 ], UserMenu.prototype, "showOtherAccounts", void 0);
 __decorate([
     property({ type: Boolean })
-], UserMenu.prototype, "showAddAccount", void 0);
+], UserMenu.prototype, "showEditAccounts", void 0);
 __decorate([
     property({ type: Boolean })
 ], UserMenu.prototype, "showEditButton", void 0);
@@ -301,11 +301,11 @@ UserMenu = UserMenu_1 = __decorate([
     ,
     event("manage-account-click")
     /**
-     * Fired when the "Add Account" button is selected.
+     * Fired when the "Edit Accounts" button is selected.
      * @public
      */
     ,
-    event("add-account-click")
+    event("edit-accounts-click")
     /**
      * Fired when the account is switched to a different one.
      * @param {UserMenuAccount} prevSelectedAccount The previously selected account.

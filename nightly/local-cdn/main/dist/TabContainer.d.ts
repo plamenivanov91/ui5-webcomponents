@@ -158,6 +158,16 @@ declare class TabContainer extends UI5Element {
      */
     tabsPlacement: `${TabContainerTabsPlacement}`;
     /**
+     * Defines if automatic tab selection is deactivated.
+     *
+     * **Note:** By default, if none of the child tabs have the `selected` property set, the first tab will be automatically selected.
+     * Setting this property to `true` allows preventing this behavior.
+     * @default false
+     * @public
+     * @since 2.9.0
+     */
+    noAutoSelection: boolean;
+    /**
      * Defines the current media query size.
      * @private
      */
@@ -293,6 +303,7 @@ declare class TabContainer extends UI5Element {
         root: {
             "ui5-tc-root": boolean;
             "ui5-tc--textOnly": boolean;
+            "ui5-tc--noTabSelected": boolean;
             "ui5-tc--withAdditionalText": boolean;
             "ui5-tc--standardTabLayout": boolean;
         };
