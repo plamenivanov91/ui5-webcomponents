@@ -321,6 +321,9 @@ let AvatarGroup = AvatarGroup_1 = class AvatarGroup extends UI5Element {
                 // based on RTL the browser automatically sets left or right margin to avatars
                 avatar.style.marginInlineEnd = offsets[avatar.effectiveSize][this.type];
             }
+            else {
+                avatar.style.marginInlineEnd = "";
+            }
         });
     }
     _onfocusin(e) {

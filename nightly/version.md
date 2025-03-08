@@ -1,9 +1,9 @@
-commit 8ad378d64e075068cf85f5e6ef6184cdafd9fc0f
-Author: Nikola Anachkov <87311182+NakataCode@users.noreply.github.com>
-Date:   Thu Mar 6 10:30:04 2025 +0200
+commit 0662fc2c87df0a92f14a2cfe463d6bae1ae3f598
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Fri Mar 7 02:38:27 2025 -0800
 
-    fix(ui5-toolbar-button): add hidden property (#10915)
+    fix(ui5-icon): revert default mode to decorative (#10969)
     
-    - The ToolbarButton component had no hidden property implemented, which meant that buttons could not be dynamically shown or hidden after the initial render.
+    Fixes: #10835
     
-    Fixes: #10585
+    With v2 the default mode was changed to "Image" unintentionally, which results in many app reports for icons with no labels.

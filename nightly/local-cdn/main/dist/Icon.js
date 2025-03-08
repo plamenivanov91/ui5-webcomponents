@@ -109,11 +109,11 @@ let Icon = class Icon extends UI5Element {
         this.showTooltip = false;
         /**
          * Defines the mode of the component.
-         * @default "Image"
+         * @default "Decorative"
          * @public
          * @since 2.0.0
          */
-        this.mode = "Image";
+        this.mode = "Decorative";
         /**
          * @private
          */
