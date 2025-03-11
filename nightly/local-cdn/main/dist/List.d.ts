@@ -296,6 +296,8 @@ declare class List extends UI5Element {
     get ariaLabelledBy(): string | undefined;
     get ariaLabelTxt(): string | undefined;
     get ariaDescriptionText(): string;
+    get scrollContainer(): HTMLElement | null;
+    hasGrowingComponent(): boolean;
     _getDescriptionForGroups(): string;
     get ariaLabelModeText(): string;
     get grows(): boolean;

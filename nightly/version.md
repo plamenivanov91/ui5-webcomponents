@@ -1,9 +1,9 @@
-commit 0662fc2c87df0a92f14a2cfe463d6bae1ae3f598
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Fri Mar 7 02:38:27 2025 -0800
+commit 078d44c92d32c10756ddf848907386ccecd3d354
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Mon Mar 10 12:16:52 2025 +0200
 
-    fix(ui5-icon): revert default mode to decorative (#10969)
+    fix(ui5-slider): fire 'change' event on keyup (#10803)
     
-    Fixes: #10835
+    * fix(ui5-slider): fire 'change' event on keyup
     
-    With v2 the default mode was changed to "Image" unintentionally, which results in many app reports for icons with no labels.
+    fixes: #10770
