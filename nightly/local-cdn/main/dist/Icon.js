@@ -169,8 +169,7 @@ let Icon = class Icon extends UI5Element {
     async onBeforeRendering() {
         const name = this.name;
         if (!name) {
-            /* eslint-disable-next-line */
-            return console.warn("Icon name property is required", this);
+            return;
         }
         let iconData = getIconDataSync(name);
         if (!iconData) {
