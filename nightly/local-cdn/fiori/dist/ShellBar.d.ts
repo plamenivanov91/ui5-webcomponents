@@ -9,6 +9,7 @@ import type { ClassMap, AccessibilityAttributes, AriaRole } from "@ui5/webcompon
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
+import type { ShellBarItemAccessibilityAttributes } from "./ShellBarItem.js";
 type ShellBarLogoAccessibilityAttributes = {
     role?: Extract<AriaRole, "button" | "link">;
     name?: string;
@@ -62,6 +63,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
     order?: number;
     profile?: boolean;
     tooltip?: string;
+    accessibilityAttributes?: ShellBarItemAccessibilityAttributes;
 }
 interface IShellBarContentItem extends IShellBarHidableItem {
     hideOrder: number;

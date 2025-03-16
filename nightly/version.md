@@ -1,7 +1,9 @@
-commit 2810da6c54dc099eb693a804adfa7a6bb9d26048
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Thu Mar 13 15:41:49 2025 +0100
+commit 3eec3bbbfc2fcaf6a5b4c6e70c7fcb7cd7e1bcec
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Fri Mar 14 21:05:09 2025 +0200
 
-    fix(ui5-shellbar): sap home no longer hard coded in title readings (#11034)
+    fix(ui5-tag): fix click event (#11102)
     
-    Fixes: #10970
+    Fix firing click event twice
+    
+    fixes #11096
