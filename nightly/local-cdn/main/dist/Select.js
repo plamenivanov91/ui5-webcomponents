@@ -631,6 +631,9 @@ __decorate([
 ], Select.prototype, "disabled", void 0);
 __decorate([
     property()
+], Select.prototype, "icon", void 0);
+__decorate([
+    property()
 ], Select.prototype, "name", void 0);
 __decorate([
     property()

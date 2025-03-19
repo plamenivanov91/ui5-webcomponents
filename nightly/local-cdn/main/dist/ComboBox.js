@@ -708,7 +708,8 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         }
         const matchingItems = this._startsWithMatchingItems(current);
         if (matchingItems.length) {
-            return matchingItems[0];
+            const exactMatch = matchingItems.find(item => item.text === current);
+            return exactMatch ?? matchingItems[0];
         }
     }
     _applyAtomicValueAndSelection(item, filterValue) {

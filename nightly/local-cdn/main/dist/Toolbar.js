@@ -79,10 +79,10 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
          * @since 2.0.0
          */
         this.design = "Solid";
+        this.popoverOpen = false;
         this.itemsToOverflow = [];
         this.itemsWidth = 0;
         this.minContentWidth = 0;
-        this.popoverOpen = false;
         this.itemsWidthMeasured = false;
         this.ITEMS_WIDTH_MAP = new Map();
         this._onResize = this.onResize.bind(this);
@@ -141,7 +141,7 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
                 accessibleName: Toolbar_1.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
                 tooltip: Toolbar_1.i18nBundle.getText(TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL),
                 accessibilityAttributes: {
-                    expanded: this.overflowButtonDOM?.accessibilityAttributes.expanded,
+                    expanded: this.popoverOpen,
                     hasPopup: "menu",
                 },
             },
@@ -313,18 +313,12 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
      */
     onOverflowPopoverClosed() {
         this.popoverOpen = false;
-        if (this.overflowButtonDOM) {
-            this.overflowButtonDOM.accessibilityAttributes.expanded = false;
-        }
     }
     onBeforeClose(e) {
         e.preventDefault();
     }
     onOverflowPopoverOpened() {
         this.popoverOpen = true;
-        if (this.overflowButtonDOM) {
-            this.overflowButtonDOM.accessibilityAttributes.expanded = true;
-        }
     }
     onResize() {
         if (!this.itemsWidth) {
@@ -418,6 +412,9 @@ __decorate([
 __decorate([
     property()
 ], Toolbar.prototype, "design", void 0);
+__decorate([
+    property({ type: Boolean })
+], Toolbar.prototype, "popoverOpen", void 0);
 __decorate([
     slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 ], Toolbar.prototype, "items", void 0);
