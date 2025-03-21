@@ -41,7 +41,6 @@ declare class TableHeaderRow extends TableRowBase {
     onEnterDOM(): void;
     onBeforeRendering(): void;
     isHeaderRow(): boolean;
-    get _hasRowActions(): boolean;
     get _isSelectable(): boolean;
     get _i18nSelection(): string;
     get _i18nRowPopin(): string;

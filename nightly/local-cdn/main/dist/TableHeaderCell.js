@@ -5,6 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { customElement, property, slot } from "@ui5/webcomponents-base/dist/decorators.js";
+import { toggleAttribute } from "./TableUtils.js";
 import TableCellBase from "./TableCellBase.js";
 import TableHeaderCellTemplate from "./TableHeaderCellTemplate.js";
 import TableHeaderCellStyles from "./generated/themes/TableHeaderCell.css.js";
@@ -104,12 +105,7 @@ let TableHeaderCell = class TableHeaderCell extends TableCellBase {
             // overwrite setting of TableCellBase so that the TableHeaderCell always uses the slot variable
             this.style.justifyContent = `var(--horizontal-align-${this._individualSlot})`;
         }
-        if (this.sortIndicator !== SortOrder.None) {
-            this.setAttribute("aria-sort", this.sortIndicator.toLowerCase());
-        }
-        else if (this.hasAttribute("aria-sort")) {
-            this.removeAttribute("aria-sort");
-        }
+        toggleAttribute(this, "aria-sort", this.sortIndicator !== SortOrder.None, this.sortIndicator.toLowerCase());
     }
 };
 __decorate([

@@ -98,14 +98,15 @@ let SearchField = SearchField_1 = class SearchField extends UI5Element {
     _onfocusout() {
         this.focusedInnerInput = false;
     }
+    _onFocusOutSearch() { }
     _handleEnter() {
         if (this.value.length) {
-            this.fireDecoratorEvent("search");
+            this._handleSearchEvent();
         }
     }
     _handleSearchIconPress() {
         if (this.value.length) {
-            this.fireDecoratorEvent("search");
+            this._handleSearchEvent();
             return;
         }
         if (this.fixed) {
@@ -115,6 +116,9 @@ let SearchField = SearchField_1 = class SearchField extends UI5Element {
         setTimeout(() => {
             this.focus();
         }, 0);
+    }
+    _handleSearchEvent() {
+        this.fireDecoratorEvent("search");
     }
     _handleInput(e) {
         this.value = e.target.value;
@@ -221,6 +225,7 @@ SearchField = SearchField_1 = __decorate([
     ,
     event("search", {
         bubbles: true,
+        cancelable: true,
     })
 ], SearchField);
 SearchField.define();

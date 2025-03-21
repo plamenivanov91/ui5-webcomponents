@@ -27,6 +27,10 @@ import "@ui5/webcomponents-icons/dist/ai.js";
  * @experimental
  */
 let TableHeaderCellActionAI = TableHeaderCellActionAI_1 = class TableHeaderCellActionAI extends TableHeaderCellActionBase {
+    onAfterRendering() {
+        super.onAfterRendering();
+        this.toggleAttribute("_popin", !this.parentElement?.hasAttribute("ui5-table-header-cell"));
+    }
     getRenderInfo() {
         return {
             icon: "ai",

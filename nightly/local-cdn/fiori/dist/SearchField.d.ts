@@ -38,7 +38,7 @@ type SearchFieldScopeSelectionChangeDetails = {
  */
 declare class SearchField extends UI5Element {
     eventDetails: {
-        search: void;
+        search: object;
         input: void;
         "scope-change": SearchFieldScopeSelectionChangeDetails;
     };
@@ -107,8 +107,10 @@ declare class SearchField extends UI5Element {
     _onkeydown(e: KeyboardEvent): void;
     _onfocusin(): void;
     _onfocusout(): void;
+    _onFocusOutSearch(): void;
     _handleEnter(): void;
     _handleSearchIconPress(): void;
+    _handleSearchEvent(): void;
     _handleInput(e: InputEvent): void;
     _handleClear(): void;
     _handleScopeChange(e: CustomEvent<SelectChangeEventDetail>): void;

@@ -387,8 +387,11 @@ declare class ShellBar extends UI5Element {
     get contentItemsSorted(): UI5Element[];
     get contentItemsWrappersSorted(): HTMLElement[];
     get autoSearchField(): boolean;
-    get showStartSeparatorInWrapper(): boolean;
-    get showEndSeparatorInWrapper(): boolean;
+    get startContentInfoSorted(): IShellBarContentItem[];
+    get endContentInfoSorted(): IShellBarContentItem[];
+    get showStartSeparator(): boolean;
+    get showEndSeparator(): boolean;
+    shouldIncludeSeparator(itemInfo: IShellBarContentItem | undefined, contentInfo: IShellBarContentItem[]): boolean;
     get classes(): ClassMap;
     get styles(): {
         searchField: {

@@ -49,11 +49,11 @@ declare class TableRow extends TableRowBase {
     /**
      * Defines the position of the row related to the total number of rows within the table when the `ui5-table-virtualizer` feature is used.
      *
-     * @default -1
+     * @default undefined
      * @since 2.5.0
      * @public
      */
-    position: number;
+    position?: number;
     /**
      * Defines the interactive state of the row.
      *
@@ -76,7 +76,6 @@ declare class TableRow extends TableRowBase {
      * @public
      */
     movable: boolean;
-    _renderNavigated: boolean;
     onBeforeRendering(): void;
     focus(focusOptions?: FocusOptions | undefined): Promise<void>;
     _onkeydown(e: KeyboardEvent, eventOrigin: HTMLElement): void;
@@ -85,7 +84,6 @@ declare class TableRow extends TableRowBase {
     _onfocusout(): void;
     _onOverflowButtonClick(e: MouseEvent): void;
     get _isInteractive(): boolean;
-    get _hasRowActions(): boolean;
     get _hasOverflowActions(): boolean;
     get _flexibleActions(): TableRowActionBase[];
     get _fixedActions(): TableRowActionBase[];

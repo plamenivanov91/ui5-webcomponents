@@ -15,6 +15,9 @@ declare abstract class TableRowBase extends UI5Element {
     cells: Array<TableCellBase>;
     _invalidate: number;
     _rowActionCount: number;
+    _renderNavigated: boolean;
+    _selectionCell?: HTMLElement;
+    _navigatedCell?: HTMLElement;
     static i18nBundle: I18nBundle;
     onEnterDOM(): void;
     onBeforeRendering(): void;
@@ -29,10 +32,9 @@ declare abstract class TableRowBase extends UI5Element {
     get _isSelectable(): boolean | undefined;
     get _isMultiSelect(): boolean;
     get _hasRowSelector(): boolean;
-    get _selectionCell(): HTMLElement | null;
     get _visibleCells(): TableCellBase[];
     get _popinCells(): TableCellBase[];
-    get _stickyCells(): (Element | null | undefined)[];
+    get _stickyCells(): (HTMLElement | undefined)[];
     get _i18nRowSelector(): string;
 }
 export default TableRowBase;

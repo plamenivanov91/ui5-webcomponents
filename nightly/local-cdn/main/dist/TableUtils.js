@@ -70,5 +70,18 @@ const throttle = (callback) => {
         });
     };
 };
-export { isInstanceOfTable, isSelectionCheckbox, isHeaderSelector, findRowInPath, findVerticalScrollContainer, scrollElementIntoView, isFeature, throttle, };
+const toggleAttribute = (element, attribute, condition, value) => {
+    if (condition) {
+        if (value === undefined) {
+            element.toggleAttribute(attribute, true);
+        }
+        else {
+            element.setAttribute(attribute, value);
+        }
+    }
+    else if (element.hasAttribute(attribute)) {
+        element.removeAttribute(attribute);
+    }
+};
+export { isInstanceOfTable, isSelectionCheckbox, isHeaderSelector, findRowInPath, findVerticalScrollContainer, scrollElementIntoView, isFeature, throttle, toggleAttribute, };
 //# sourceMappingURL=TableUtils.js.map

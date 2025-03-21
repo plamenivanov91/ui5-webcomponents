@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var Table_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { customElement, slot, property, eventStrict, i18n, } from "@ui5/webcomponents-base/dist/decorators.js";
+import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import TableTemplate from "./TableTemplate.js";
 import TableStyles from "./generated/themes/Table.css.js";
@@ -109,7 +110,6 @@ let Table = Table_1 = class Table extends UI5Element {
          * Available options are:
          *
          * <code>Scroll</code> - Columns are shown as regular columns and horizontal scrolling is enabled.
-         *
          * <code>Popin</code> - Columns are shown as pop-ins instead of regular columns.
          *
          * @default "Scroll"
@@ -120,6 +120,7 @@ let Table = Table_1 = class Table extends UI5Element {
          * Defines if the loading indicator should be shown.
          *
          * **Note:** When the component is loading, it is not interactive.
+         *
          * @default false
          * @public
          */
@@ -132,10 +133,6 @@ let Table = Table_1 = class Table extends UI5Element {
          */
         this.loadingDelay = 1000;
         /**
-         * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
-         */
-        this.stickyTop = "0";
-        /**
          * Defines the maximum number of row actions that is displayed, which determines the width of the row action column.
          *
          * **Note:** It is recommended to use a maximum of 3 row actions, as exceeding this limit may take up too much space on smaller screens.
@@ -145,6 +142,10 @@ let Table = Table_1 = class Table extends UI5Element {
          * @public
          */
         this.rowActionCount = 0;
+        /**
+         * Defines the sticky top offset of the table, if other sticky elements outside of the table exist.
+         */
+        this.stickyTop = "0";
         this._invalidate = 0;
         this._renderNavigated = false;
         this._events = ["keydown", "keyup", "click", "focusin", "focusout", "dragenter", "dragleave", "dragover", "drop"];
@@ -172,10 +173,7 @@ let Table = Table_1 = class Table extends UI5Element {
     }
     onBeforeRendering() {
         this._renderNavigated = this.rows.some(row => row.navigated);
-        if (this.headerRow[0]) {
-            this.headerRow[0]._rowActionCount = this.rowActionCount;
-        }
-        this.rows.forEach(row => {
+        [...this.headerRow, ...this.rows].forEach(row => {
             row._renderNavigated = this._renderNavigated;
             row._rowActionCount = this.rowActionCount;
         });
@@ -344,26 +342,13 @@ let Table = Table_1 = class Table extends UI5Element {
         }
         return widths.join(" ");
     }
-    get _tableOverflowX() {
-        return (this.overflowMode === TableOverflowMode.Popin) ? "clip" : "auto";
+    get _scrollContainer() {
+        return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
     }
-    get _tableOverflowY() {
-        return "auto";
-    }
-    get _nodataRow() {
-        return this.shadowRoot.getElementById("nodata-row");
-    }
-    get _beforeElement() {
-        return this.shadowRoot.getElementById("before");
-    }
-    get _afterElement() {
-        return this.shadowRoot.getElementById("after");
-    }
-    get _tableElement() {
-        return this.shadowRoot.getElementById("table");
-    }
-    get _loadingElement() {
-        return this.shadowRoot.getElementById("loading");
+    get _stickyElements() {
+        const stickyRows = this.headerRow.filter(row => row.sticky);
+        const stickyColumns = this.headerRow[0]._stickyCells;
+        return [...stickyRows, ...stickyColumns];
     }
     get _effectiveNoDataText() {
         return this.noDataText || Table_1.i18nBundle.getText(TABLE_NO_DATA);
@@ -378,22 +363,8 @@ let Table = Table_1 = class Table extends UI5Element {
         const selection = this._getSelection();
         return (selection?.isSelectable() && this.rows.length) ? selection.isMultiSelectable() : undefined;
     }
-    get _stickyElements() {
-        const stickyRows = this.headerRow.filter(row => row.sticky);
-        const stickyColumns = this.headerRow[0]._stickyCells;
-        return [...stickyRows, ...stickyColumns];
-    }
-    get _scrollContainer() {
-        return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
-    }
     get isTable() {
         return true;
-    }
-    get dropIndicatorDOM() {
-        return this.shadowRoot.querySelector("[ui5-drop-indicator]");
-    }
-    get _hasRowActions() {
-        return this.rowActionCount > 0;
     }
 };
 __decorate([
@@ -434,17 +405,38 @@ __decorate([
     property({ type: Number })
 ], Table.prototype, "loadingDelay", void 0);
 __decorate([
-    property()
-], Table.prototype, "stickyTop", void 0);
-__decorate([
     property({ type: Number })
 ], Table.prototype, "rowActionCount", void 0);
+__decorate([
+    property()
+], Table.prototype, "stickyTop", void 0);
 __decorate([
     property({ type: Number, noAttribute: true })
 ], Table.prototype, "_invalidate", void 0);
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], Table.prototype, "_renderNavigated", void 0);
+__decorate([
+    query("[ui5-drop-indicator]")
+], Table.prototype, "dropIndicatorDOM", void 0);
+__decorate([
+    query("#nodata-row")
+], Table.prototype, "_nodataRow", void 0);
+__decorate([
+    query("#table-end-row")
+], Table.prototype, "_endRow", void 0);
+__decorate([
+    query("#table")
+], Table.prototype, "_tableElement", void 0);
+__decorate([
+    query("#before")
+], Table.prototype, "_beforeElement", void 0);
+__decorate([
+    query("#after")
+], Table.prototype, "_afterElement", void 0);
+__decorate([
+    query("#loading")
+], Table.prototype, "_loadingElement", void 0);
 __decorate([
     i18n("@ui5/webcomponents")
 ], Table, "i18nBundle", void 0);

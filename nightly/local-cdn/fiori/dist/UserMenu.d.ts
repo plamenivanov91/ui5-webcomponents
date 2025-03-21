@@ -4,6 +4,7 @@ import type Button from "@ui5/webcomponents/dist/Button.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { PopupScrollEventDetail } from "@ui5/webcomponents/dist/Popup.js";
 import type UserMenuAccount from "./UserMenuAccount.js";
 import type UserMenuItem from "./UserMenuItem.js";
 type UserMenuItemClickEventDetail = {
@@ -111,6 +112,11 @@ declare class UserMenu extends UI5Element {
      */
     _manageAccountMovedToHeader: boolean;
     /**
+     * @default false
+     * @private
+     */
+    _isScrolled: boolean;
+    /**
      * @private
      */
     _selectedAccount: UserMenuAccount;
@@ -133,6 +139,7 @@ declare class UserMenu extends UI5Element {
     onBeforeRendering(): void;
     onAfterRendering(): void;
     get _isPhone(): boolean;
+    _handleScroll(e: CustomEvent<PopupScrollEventDetail>): void;
     _handleIntersection(entries: IntersectionObserverEntry[]): void;
     _handleAvatarClick(e: CustomEvent): void;
     _handleManageAccountClick(): void;
@@ -154,6 +161,9 @@ declare class UserMenu extends UI5Element {
     get _editAccountsTooltip(): string;
     get _closeDialogAriaLabel(): string;
     get accessibleNameText(): string;
+    get _ariaLabelledByAccountInformationText(): string;
+    get _ariaLabelledByActions(): string;
+    getAccountDescriptionText(account: UserMenuAccount): string;
     getAccountByRefId(refId: string): UserMenuAccount;
     captureRef(ref: HTMLElement & {
         associatedAccount?: UI5Element;

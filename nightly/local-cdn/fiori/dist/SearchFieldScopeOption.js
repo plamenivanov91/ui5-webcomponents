@@ -15,6 +15,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  * @abstract
  * @implements {ISearchFieldScopeOption}
  * @public
+ * @since 2.9.0
  */
 let SearchFieldScopeOption = class SearchFieldScopeOption extends UI5Element {
     get stableDomRef() {

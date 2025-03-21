@@ -27,12 +27,12 @@ declare class TableRowActionNavigation extends TableRowActionBase {
      */
     interactive: boolean;
     static i18nBundle: I18nBundle;
+    isFixedAction(): boolean;
     getRenderInfo(): {
         text: string;
         icon: string;
         interactive: boolean;
     };
-    isFixedAction(): boolean;
     get _i18nNavigation(): string;
 }
 export default TableRowActionNavigation;

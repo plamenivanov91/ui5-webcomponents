@@ -209,6 +209,9 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
     _afterPopoverClose() {
         this.fireDecoratorEvent("close");
     }
+    get isMenuItem() {
+        return true;
+    }
 };
 __decorate([
     property()
