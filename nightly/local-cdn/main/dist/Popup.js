@@ -166,12 +166,12 @@ let Popup = Popup_1 = class Popup extends UI5Element {
             this.open = false;
             return;
         }
-        this._opened = true;
         if (this.isModal) {
             Popup_1.blockPageScrolling(this);
         }
         this._focusedElementBeforeOpen = getFocusedElement();
         this._show();
+        this._opened = true;
         if (this.getDomRef()) {
             this._updateMediaRange();
         }

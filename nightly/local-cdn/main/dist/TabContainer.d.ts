@@ -299,28 +299,6 @@ declare class TabContainer extends UI5Element {
     _closePopover(): void;
     get dropIndicatorDOM(): DropIndicator | null;
     _findSiblings(tab: Tab): ITab[];
-    get classes(): {
-        root: {
-            "ui5-tc-root": boolean;
-            "ui5-tc--textOnly": boolean;
-            "ui5-tc--noTabSelected": boolean;
-            "ui5-tc--withAdditionalText": boolean;
-            "ui5-tc--standardTabLayout": boolean;
-        };
-        header: {
-            "ui5-tc__header": boolean;
-        };
-        tabStrip: {
-            "ui5-tc__tabStrip": boolean;
-        };
-        separator: {
-            "ui5-tc__separator": boolean;
-        };
-        content: {
-            "ui5-tc__content": boolean;
-            "ui5-tc__content--collapsed": boolean;
-        };
-    };
     get mixedMode(): boolean;
     get textOnly(): boolean;
     get withAdditionalText(): boolean;

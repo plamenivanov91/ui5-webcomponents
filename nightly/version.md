@@ -1,11 +1,5 @@
-commit e1c152cbec16a47dd42e9813c68c0052828d6cdf
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Thu Mar 20 13:42:47 2025 +0100
+commit e64c1246364e4319017f61bcf35d28f39ea4ca09
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Mar 24 10:38:06 2025 +0200
 
-    fix(ui5-tree): noDataText is now properly rendered (#11095)
-    
-    There was a problem where noDataText wasn't rendered even if there are no tree items in the tree. This is because there was a an internal element counted as a child of the tree in its tsx template.
-    
-    With this fix, the noDataText is now properly rendered when there are no tree items in the tree.
-    
-    Fixes: #11073
+    chore: describe correct types for mount function (#11136)

@@ -1016,30 +1016,6 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         });
         return (parent ?? this).items;
     }
-    get classes() {
-        return {
-            root: {
-                "ui5-tc-root": true,
-                "ui5-tc--textOnly": this.textOnly,
-                "ui5-tc--noTabSelected": !this._selectedTab,
-                "ui5-tc--withAdditionalText": this.withAdditionalText,
-                "ui5-tc--standardTabLayout": this.standardTabLayout,
-            },
-            header: {
-                "ui5-tc__header": true,
-            },
-            tabStrip: {
-                "ui5-tc__tabStrip": true,
-            },
-            separator: {
-                "ui5-tc__separator": true,
-            },
-            content: {
-                "ui5-tc__content": true,
-                "ui5-tc__content--collapsed": this._contentCollapsed,
-            },
-        };
-    }
     get mixedMode() {
         const tabs = this._getTabs();
         return tabs.some(item => item.icon) && tabs.some(item => item.text);
