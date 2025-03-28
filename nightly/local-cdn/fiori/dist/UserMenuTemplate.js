@@ -21,9 +21,8 @@ import selectedAccount from "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 export default function UserMenuTemplate() {
     return (_jsxs(ResponsivePopover, { id: "user-menu-rp", class: "ui5-user-menu-rp", placement: "Bottom", verticalAlign: "Bottom", horizontalAlign: "End", tabindex: -1, accessibleName: this.accessibleNameText, "aria-labelledby": this.accessibleNameText, open: this.open, opener: this.opener, onClose: this._handlePopoverAfterClose, onOpen: this._handlePopoverAfterOpen, onScroll: this._handleScroll, children: [_jsxs(_Fragment, { children: [_jsxs(Bar, { class: {
                             "ui5-user-menu-fixed-header": true,
-                            "ui5-user-menu-rp-scrolled": this._isScrolled || this._titleMovedToHeader || this._manageAccountVisibleInHeader
-                        }, slot: "header", children: [this._manageAccountVisibleInHeader &&
-                                _jsx(Button, { icon: userSettings, onClick: this._handleManageAccountClick, slot: "startContent" }), this._titleMovedToHeader &&
+                            "ui5-user-menu-rp-scrolled": this._isScrolled || this._titleMovedToHeader
+                        }, slot: "header", children: [this._titleMovedToHeader &&
                                 _jsx(Title, { level: "H1", wrappingType: "None", children: this._selectedAccount.titleText }), this._isPhone && _jsx(Button, { icon: decline, design: "Transparent", accessibleName: this._closeDialogAriaLabel, onClick: this._closeUserMenu, slot: "endContent" })] }), _jsx("div", { class: "ui5-user-menu-header", children: headerContent.call(this) })] }), this.showOtherAccounts &&
                 _jsx(_Fragment, { children: otherAccountsContent.call(this) }), this.menuItems.length > 0 &&
                 _jsx(List, { id: "ui5-user-menu-list", class: "ui5-user-menu-list", selectionMode: "None", separators: "None", accessibleRole: "Menu", onItemClick: this._handleMenuItemClick, "onui5-close-menu": this._handleMenuItemClose, children: _jsx("slot", {}) }), _jsx("div", { slot: "footer", class: "ui5-user-menu-footer", children: _jsx(Button, { class: "ui5-user-menu-sign-out-btn", design: "Transparent", icon: log, onClick: this._handleSignOutClick, children: this._signOutButtonText }) })] }));

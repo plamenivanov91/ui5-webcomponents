@@ -82,11 +82,6 @@ let UserMenu = UserMenu_1 = class UserMenu extends UI5Element {
          * @default false
          * @private
          */
-        this._manageAccountMovedToHeader = false;
-        /**
-         * @default false
-         * @private
-         */
         this._isScrolled = false;
     }
     onBeforeRendering() {
@@ -119,16 +114,10 @@ let UserMenu = UserMenu_1 = class UserMenu extends UI5Element {
                 if (entry.target.id === "selected-account-title") {
                     this._titleMovedToHeader = false;
                 }
-                else if (entry.target.id === "selected-account-manage-btn") {
-                    this._manageAccountMovedToHeader = false;
-                }
                 return;
             }
             if (entry.target.id === "selected-account-title") {
                 this._titleMovedToHeader = true;
-            }
-            else if (entry.target.id === "selected-account-manage-btn") {
-                this._manageAccountMovedToHeader = true;
             }
         }, this);
     }
@@ -197,9 +186,6 @@ let UserMenu = UserMenu_1 = class UserMenu extends UI5Element {
     }
     _closeUserMenu() {
         this.open = false;
-    }
-    get _manageAccountVisibleInHeader() {
-        return this.showManageAccount && this._manageAccountMovedToHeader;
     }
     get _otherAccounts() {
         return this.accounts;
@@ -282,9 +268,6 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], UserMenu.prototype, "_titleMovedToHeader", void 0);
-__decorate([
-    property({ type: Boolean })
-], UserMenu.prototype, "_manageAccountMovedToHeader", void 0);
 __decorate([
     property({ type: Boolean })
 ], UserMenu.prototype, "_isScrolled", void 0);

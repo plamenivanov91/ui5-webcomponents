@@ -48,17 +48,18 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  *
  * There are two main usages of the `ui5-select>`.
  *
- * 1. With Option (`ui5-option`) web component:
+ * - With Option (`ui5-option`) web component:
  *
  * The available options of the Select are defined by using the Option component.
  * The Option comes with predefined design and layout, including `icon`, `text` and `additional-text`.
  *
- * 2. With OptionCustom (`ui5-option-custom`) web component.
+ * - With OptionCustom (`ui5-option-custom`) web component.
  *
  * Options with custom content are defined by using the OptionCustom component
  * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
  *
  * ### Keyboard Handling
+ *
  * The `ui5-select` provides advanced keyboard handling.
  *
  * - [F4] / [Alt] + [Up] / [Alt] + [Down] / [Space] or [Enter] - Opens/closes the drop-down.
@@ -69,6 +70,7 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
  * - [End] - Navigates to the last option
  *
  * ### ES6 Module Import
+ *
  * `import "@ui5/webcomponents/dist/Select";`
  *
  * `import "@ui5/webcomponents/dist/Option";`

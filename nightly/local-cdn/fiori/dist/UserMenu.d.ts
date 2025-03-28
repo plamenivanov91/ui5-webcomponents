@@ -110,11 +110,6 @@ declare class UserMenu extends UI5Element {
      * @default false
      * @private
      */
-    _manageAccountMovedToHeader: boolean;
-    /**
-     * @default false
-     * @private
-     */
     _isScrolled: boolean;
     /**
      * @private
@@ -152,7 +147,6 @@ declare class UserMenu extends UI5Element {
     _handlePopoverAfterClose(): void;
     _openItemSubMenu(item: UserMenuItem): void;
     _closeUserMenu(): void;
-    get _manageAccountVisibleInHeader(): boolean;
     get _otherAccounts(): UserMenuAccount[];
     get _manageAccountButtonText(): string;
     get _otherAccountsButtonText(): string;
