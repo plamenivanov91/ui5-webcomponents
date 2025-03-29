@@ -47,8 +47,21 @@ type SelectLiveChangeEventDetail = {
  *
  * - With OptionCustom (`ui5-option-custom`) web component.
  *
- * Options with custom content are defined by using the OptionCustom component
+ * Options with custom content are defined by using the OptionCustom component.
  * The OptionCustom component comes with no predefined layout and it expects consumers to define it.
+ *
+ * ### Selection
+ *
+ * The options can be selected via user interaction (click or with the use of the Space and Enter keys)
+ * and programmatically - the Select component supports two distinct selection APIs, though mixing them is not supported:
+ * - The "value" property of the Select component
+ * - The "selected" property on individual options
+ *
+ * **Note:** If the "value" property is set but does not match any option,
+ * no option will be selected and the Select component will be displayed as empty.
+ *
+ * **Note:** when both "value" and "selected" are both used (although discouraged),
+ * the "value" property will take precedence.
  *
  * ### Keyboard Handling
  *
@@ -181,6 +194,7 @@ declare class Select extends UI5Element implements IFormInputElement {
     _typingTimeoutID?: Timeout | number;
     responsivePopover: ResponsivePopover;
     valueStatePopover?: Popover;
+    _valueStorage: string | undefined;
     /**
      * Defines the component options.
      *
@@ -223,7 +237,24 @@ declare class Select extends UI5Element implements IFormInputElement {
     get formFormattedValue(): string | null;
     onBeforeRendering(): void;
     onAfterRendering(): void;
-    _ensureSingleSelection(): void;
+    /**
+     * Selects an option, based on the Select's "value" property,
+     * or the options' "selected" property.
+     */
+    _applySelection(): void;
+    /**
+     * Selects an option by given value.
+     */
+    _applySelectionByValue(value: string): void;
+    /**
+     * Selects the first option if no option is selected,
+     * or selects the last option if multiple options are selected.
+     */
+    _applyAutoSelection(): void;
+    /**
+     * Sets value by given option.
+     */
+    _setValueByOption(option: IOption): void;
     _applyFocus(): void;
     _onfocusin(): void;
     _onfocusout(): void;
@@ -232,12 +263,14 @@ declare class Select extends UI5Element implements IFormInputElement {
     /**
      * Defines the value of the component:
      *
-     * - when get - returns the value of the component, e.g. the `value` property of the selected option or its text content.
-     *
+     * - when get - returns the value of the component or the value/text content of the selected option.
      * - when set - selects the option with matching `value` property or text content.
      *
+     * **Note:** Use either the Select's value or the Options' selected property.
+     * Mixed usage could result in unexpected behavior.
+     *
      * **Note:** If the given value does not match any existing option,
-     * the first option will get selected.
+     * no option will be selected and the Select component will be displayed as empty.
      * @public
      * @default ""
      * @since 1.20.0

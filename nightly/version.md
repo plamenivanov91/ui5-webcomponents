@@ -1,7 +1,7 @@
-commit 17044d4eb41da4de398378abca688cdbf1781fde
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Thu Mar 27 15:12:48 2025 +0200
+commit 87eaa359d2a643868f0e4a6f399376601ea32e94
+Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
+Date:   Fri Mar 28 10:04:10 2025 +0200
 
-    chore(ui5-calendar): make tests stable (#11194)
+    fix(ui5-date-picker): display value state message in the value help (#10919)
     
-    fixes: #11178
+    Previously, the valueStateMessage was displayed only below or above the input field, making it less clear when a valueState was active. With this enhancement, the valueStateMessage and its associated valueState styling now also appear in the header of the time selection popover, providing better visibility of the valueState and its provided message.
