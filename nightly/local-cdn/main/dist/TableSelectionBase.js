@@ -60,7 +60,6 @@ class TableSelectionBase extends UI5Element {
      * Returns the unique key associated with the table row.
      *
      * @param row The row instance
-     * @public
      */
     getRowKey(row) {
         return row.rowKey || "";

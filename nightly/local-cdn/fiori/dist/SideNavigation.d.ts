@@ -10,7 +10,6 @@ import type SideNavigationSelectableItemBase from "./SideNavigationSelectableIte
 import type SideNavigationItem from "./SideNavigationItem.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 import type SideNavigationGroup from "./SideNavigationGroup.js";
-import type SideNavigationDesign from "./types/SideNavigationDesign.js";
 type SideNavigationPopoverContents = {
     item: SideNavigationItem;
     subItems: Array<SideNavigationSubItem>;
@@ -79,14 +78,6 @@ declare class SideNavigation extends UI5Element {
      * @default false
      */
     collapsed: boolean;
-    /**
-     * Defines whether the control should have container styling or not.
-     * **Note** In order to achieve the best user experience, it is recommended to use "Plain" value if SideNavigation is placed inside a responsive popover.
-     *
-     * @public
-     * @default "Decorated"
-     */
-    design: `${SideNavigationDesign}`;
     /**
      * Defines the accessible ARIA name of the component.
      * @default undefined

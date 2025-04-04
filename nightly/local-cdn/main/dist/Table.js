@@ -382,7 +382,7 @@ __decorate([
 ], Table.prototype, "headerRow", void 0);
 __decorate([
     slot()
-], Table.prototype, "nodata", void 0);
+], Table.prototype, "noData", void 0);
 __decorate([
     slot({ type: HTMLElement, individualSlots: true })
 ], Table.prototype, "features", void 0);
@@ -420,8 +420,8 @@ __decorate([
     query("[ui5-drop-indicator]")
 ], Table.prototype, "dropIndicatorDOM", void 0);
 __decorate([
-    query("#nodata-row")
-], Table.prototype, "_nodataRow", void 0);
+    query("#no-data-row")
+], Table.prototype, "_noDataRow", void 0);
 __decorate([
     query("#table-end-row")
 ], Table.prototype, "_endRow", void 0);

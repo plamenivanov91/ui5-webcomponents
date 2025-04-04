@@ -64,6 +64,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
     profile?: boolean;
     tooltip?: string;
     accessibilityAttributes?: ShellBarItemAccessibilityAttributes;
+    accessibleName?: string;
 }
 interface IShellBarContentItem extends IShellBarHidableItem {
     hideOrder: number;

@@ -149,11 +149,6 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
     get _headerExpanded() {
         return !this._headerSnapped;
     }
-    get _accAttributesForHeaderActions() {
-        return {
-            controls: `${this._id}-header`,
-        };
-    }
     get headerTabIndex() {
         return (this._headerSnapped || this.showHeaderInStickArea) ? -1 : 0;
     }

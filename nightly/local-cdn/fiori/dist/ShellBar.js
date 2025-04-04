@@ -617,6 +617,7 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
                     stableDomRef: item.stableDomRef,
                     tooltip: item.title || item.text,
                     accessibilityAttributes: item.accessibilityAttributes,
+                    accessibleName: item.count ? `${item.title || item.text}, ${item.count}` : (item.title || item.text),
                 };
             }),
             {

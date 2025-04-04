@@ -59,7 +59,7 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
         const rowKey = this.getRowKey(row);
         return this.getSelectedAsSet().has(rowKey);
     }
-    setSelected(row, selected, _fireEvent = false) {
+    setSelected(row, selected, fireEvent = false) {
         if (this._rangeSelection?.isMouse && this._rangeSelection.shiftPressed) {
             return;
         }
@@ -70,7 +70,7 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
             selectedSet[selected ? "add" : "delete"](rowKey);
         });
         this.setSelectedAsSet(selectedSet);
-        _fireEvent && this.fireDecoratorEvent("change");
+        fireEvent && this.fireDecoratorEvent("change");
     }
     /**
      * Returns an array of the selected rows.
@@ -82,8 +82,6 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
     }
     /**
      * Determines whether all rows are selected.
-     *
-     * @public
      */
     areAllRowsSelected() {
         if (!this._table || !this._table.rows.length) {

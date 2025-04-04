@@ -82,14 +82,6 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
          * @default false
          */
         this.collapsed = false;
-        /**
-         * Defines whether the control should have container styling or not.
-         * **Note** In order to achieve the best user experience, it is recommended to use "Plain" value if SideNavigation is placed inside a responsive popover.
-         *
-         * @public
-         * @default "Decorated"
-         */
-        this.design = "Decorated";
         this.inPopover = false;
         this._menuPopoverItems = [];
         /**
@@ -457,9 +449,6 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
 __decorate([
     property({ type: Boolean })
 ], SideNavigation.prototype, "collapsed", void 0);
-__decorate([
-    property()
-], SideNavigation.prototype, "design", void 0);
 __decorate([
     property()
 ], SideNavigation.prototype, "accessibleName", void 0);

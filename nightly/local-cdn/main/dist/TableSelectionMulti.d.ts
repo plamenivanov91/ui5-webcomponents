@@ -43,7 +43,7 @@ declare class TableSelectionMulti extends TableSelectionBase {
     onTableBeforeRendering(): void;
     isMultiSelectable(): boolean;
     isSelected(row: TableRowBase): boolean;
-    setSelected(row: TableRowBase, selected: boolean, _fireEvent?: boolean): void;
+    setSelected(row: TableRowBase, selected: boolean, fireEvent?: boolean): void;
     /**
      * Returns an array of the selected rows.
      *
@@ -52,8 +52,6 @@ declare class TableSelectionMulti extends TableSelectionBase {
     getSelectedRows(): TableRow[];
     /**
      * Determines whether all rows are selected.
-     *
-     * @public
      */
     areAllRowsSelected(): boolean;
     /**
