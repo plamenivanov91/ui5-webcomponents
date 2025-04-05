@@ -15,7 +15,7 @@ import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
 import { isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import { SEARCH_FIELD_SCOPE_SELECT_LABEL, SEARCH_FIELD_CLEAR_ICON, SEARCH_FIELD_SEARCH_ICON, SEARCH_FIELD_SEARCH_COLLAPSED, SEARCH_FIELD_SEARCH_EXPANDED, } from "./generated/i18n/i18n-defaults.js";
+import { SEARCH_FIELD_SCOPE_SELECT_LABEL, SEARCH_FIELD_CLEAR_ICON, SEARCH_FIELD_SEARCH_ICON, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
@@ -28,7 +28,6 @@ import { SEARCH_FIELD_SCOPE_SELECT_LABEL, SEARCH_FIELD_CLEAR_ICON, SEARCH_FIELD_
  * - Input field - for user input value
  * - Clear button - gives the possibility for deleting the entered value
  * - Search button - a primary button for performing search, when the user has entered a search term
- * - Expand/Collapse button - when there is no search term, the search button behaves as an expand/collapse button for the `ui5-search-field` component
  *
  * ### ES6 Module Import
  *
@@ -42,31 +41,18 @@ let SearchField = SearchField_1 = class SearchField extends UI5Element {
     constructor() {
         super(...arguments);
         /**
-         * Defines the mode of the component.
-         * @default "Default"
-         * @public
-         */
-        this.mode = "Default";
-        /**
          * Defines whether the clear icon of the search will be shown.
          * @default false
          * @public
          */
         this.showClearIcon = false;
         /**
-         * Defines whether the component is expanded.
+         * Defines whether the component is collapsed.
          *
          * @default false
          * @public
          */
-        this.expanded = false;
-        /**
-         * Determines whether the component is in a fixed state that is not
-         * expandable/collapsible by user interaction.
-         * @default false
-         * @public
-         */
-        this.fixed = false;
+        this.collapsed = false;
         /**
          * Defines the value of the component.
          *
@@ -98,21 +84,15 @@ let SearchField = SearchField_1 = class SearchField extends UI5Element {
     _onfocusout() {
         this.focusedInnerInput = false;
     }
-    _onFocusOutSearch() { }
+    _onFocusOutSearch(e) { } // eslint-disable-line
     _handleEnter() {
         if (this.value.length) {
             this._handleSearchEvent();
         }
     }
+    _handleInnerClick() { } // eslint-disable-line
     _handleSearchIconPress() {
-        if (this.value.length) {
-            this._handleSearchEvent();
-            return;
-        }
-        if (this.fixed) {
-            return;
-        }
-        this.expanded = !this.expanded;
+        this._handleSearchEvent();
         setTimeout(() => {
             this.focus();
         }, 0);
@@ -140,16 +120,18 @@ let SearchField = SearchField_1 = class SearchField extends UI5Element {
     }
     get _searchButtonAccessibilityAttributes() {
         return {
-            expanded: this.expanded,
+            expanded: !this.collapsed,
         };
     }
     get _translations() {
         return {
             scope: SearchField_1.i18nBundle.getText(SEARCH_FIELD_SCOPE_SELECT_LABEL),
+            searchIcon: SearchField_1.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON),
             clearIcon: SearchField_1.i18nBundle.getText(SEARCH_FIELD_CLEAR_ICON),
-            searchIcon: this._isSearchIcon ? SearchField_1.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON) : SearchField_1.i18nBundle.getText(SEARCH_FIELD_SEARCH_EXPANDED),
-            collapsedSearch: SearchField_1.i18nBundle.getText(SEARCH_FIELD_SEARCH_COLLAPSED),
         };
+    }
+    get _effectiveIconTooltip() {
+        return this.searchIconTooltip || this._translations.searchIcon;
     }
     captureRef(ref) {
         if (ref) {
@@ -158,17 +140,11 @@ let SearchField = SearchField_1 = class SearchField extends UI5Element {
     }
 };
 __decorate([
-    property()
-], SearchField.prototype, "mode", void 0);
-__decorate([
     property({ type: Boolean })
 ], SearchField.prototype, "showClearIcon", void 0);
 __decorate([
     property({ type: Boolean })
-], SearchField.prototype, "expanded", void 0);
-__decorate([
-    property({ type: Boolean })
-], SearchField.prototype, "fixed", void 0);
+], SearchField.prototype, "collapsed", void 0);
 __decorate([
     property()
 ], SearchField.prototype, "value", void 0);
@@ -179,8 +155,11 @@ __decorate([
     property()
 ], SearchField.prototype, "accessibleName", void 0);
 __decorate([
+    property()
+], SearchField.prototype, "searchIconTooltip", void 0);
+__decorate([
     slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
-], SearchField.prototype, "scopeOptions", void 0);
+], SearchField.prototype, "scopes", void 0);
 __decorate([
     property({ type: Boolean })
 ], SearchField.prototype, "focusedInnerInput", void 0);

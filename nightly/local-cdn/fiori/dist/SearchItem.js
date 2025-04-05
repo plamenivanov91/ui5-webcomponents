@@ -36,7 +36,7 @@ let SearchItem = class SearchItem extends ListItemBase {
          * Defines the heading text of the search item.
          * @public
          */
-        this.headingText = "";
+        this.text = "";
         /**
          * Defines the icon name of the search item.
          * @public
@@ -64,12 +64,12 @@ let SearchItem = class SearchItem extends ListItemBase {
     onBeforeRendering() {
         super.onBeforeRendering();
         // bold the matched text
-        this._markupText = this.highlightText ? generateHighlightedMarkup(this.headingText, this.highlightText) : this.headingText;
+        this._markupText = this.highlightText ? generateHighlightedMarkup(this.text, this.highlightText) : this.text;
     }
 };
 __decorate([
     property()
-], SearchItem.prototype, "headingText", void 0);
+], SearchItem.prototype, "text", void 0);
 __decorate([
     property()
 ], SearchItem.prototype, "icon", void 0);
