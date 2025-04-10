@@ -128,7 +128,8 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
         }
         if (!this._rangeSelection) {
             // If no range selection is active, start one
-            this._startRangeSelection(focusedElement);
+            const row = focusedElement;
+            this._startRangeSelection(row, this.isSelected(row));
         }
         else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
             const change = isUpShift(e) ? -1 : 1;
@@ -171,6 +172,7 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
             // Therefore, we need to manually set the checked attribute again, as clicking it would deselect it and leads to
             // a visual inconsistency.
             row.shadowRoot?.querySelector("#selection-component")?.toggleAttribute("checked", true);
+            e.stopImmediatePropagation();
             if (startIndex === -1 || endIndex === -1 || row.rowKey === startRow.rowKey || row.rowKey === this._rangeSelection.rows[this._rangeSelection.rows.length - 1].rowKey) {
                 return;
             }
@@ -178,7 +180,7 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
             this._handleRangeSelection(row, change);
         }
         else if (row) {
-            this._startRangeSelection(row, true);
+            this._startRangeSelection(row, !this.isSelected(row), true);
         }
     }
     /**
@@ -186,12 +188,7 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
      * @param row starting row
      * @private
      */
-    _startRangeSelection(row, isMouse = false) {
-        const selected = this.isSelected(row);
-        if (isMouse && !selected) {
-            // Do not initiate range selection if the row is not selected
-            return;
-        }
+    _startRangeSelection(row, selected, isMouse = false) {
         this._rangeSelection = {
             selected,
             isUp: null,

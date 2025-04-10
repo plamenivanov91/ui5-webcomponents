@@ -125,6 +125,7 @@ declare class DynamicPage extends UI5Element {
     onBeforeRendering(): void;
     get dynamicPageTitle(): DynamicPageTitle | null;
     get dynamicPageHeader(): DynamicPageHeader | null;
+    get footerWrapper(): Element | null | undefined;
     get actionsInTitle(): boolean;
     get headerInTitle(): boolean;
     get headerInContent(): boolean;

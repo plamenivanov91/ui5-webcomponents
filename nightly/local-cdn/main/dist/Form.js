@@ -393,13 +393,16 @@ let Form = class Form extends UI5Element {
         return this.items.some((item) => item.isGroup);
     }
     get hasHeader() {
-        return this.hasCustomHeader || !!this.headerText;
+        return this.hasCustomHeader || this.hasHeaderText;
+    }
+    get hasHeaderText() {
+        return !!this.headerText;
     }
     get hasCustomHeader() {
         return !!this.header.length;
     }
     get effectiveАccessibleNameRef() {
-        return this.hasCustomHeader ? undefined : `${this._id}-header-text`;
+        return this.hasHeaderText && !this.hasCustomHeader ? `${this._id}-header-text` : undefined;
     }
     get effectiveAccessibleRole() {
         return this.hasGroupItems ? "region" : "form";

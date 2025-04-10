@@ -96,7 +96,7 @@ declare class TableSelection extends UI5Element implements ITableFeature {
      * @param row starting row
      * @private
      */
-    _startRangeSelection(row: TableRow, isMouse?: boolean): void;
+    _startRangeSelection(row: TableRow, selected: boolean, isMouse?: boolean): void;
     /**
      * Handles the range selection
      * @param targetRow row that is currently focused

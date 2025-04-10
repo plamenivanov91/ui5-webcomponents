@@ -76,7 +76,7 @@ declare class TableSelectionMulti extends TableSelectionBase {
      * @param row starting row
      * @private
      */
-    _startRangeSelection(row: TableRow, isMouse?: boolean): void;
+    _startRangeSelection(row: TableRow, selected: boolean, isMouse?: boolean): void;
     /**
      * Handles the range selection
      * @param targetRow Row that is currently focused
