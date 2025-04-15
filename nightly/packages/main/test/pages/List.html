@@ -15,7 +15,7 @@
 		object-fit: contain;
 	}
 </style>
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-pRtFt0f3.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-ChIoBBL3.js"></script>
   <link rel="stylesheet" crossorigin href="/ui5-webcomponents/nightly/assets/List-D7pIXfnk.css">
 </head>
 
@@ -184,45 +184,25 @@
 	<br/><br/>
 
 	<ui5-list header-text="API: icon">
-		<ui5-li  icon="navigation-right-arrow">Option 1</ui5-li>
+		<ui5-li icon="navigation-right-arrow">Option 1</ui5-li>
 	</ui5-list>
 
 	<br/><br/>
 	<hr />
 	<br/><br/>
 
-	<ui5-list header-text="API: image">
-		<ui5-li>Laptop HP
+	<ui5-list header-text="API: image slot">
+		<ui5-li>Avatar with src inside image slot
 			<ui5-avatar slot="image">
 				<img src="/ui5-webcomponents/nightly/assets/HT-1000-BiqZozDV.jpg" alt="Woman image">
 			</ui5-avatar>
 		</ui5-li>
-		<ui5-li>laptop Lenovo
-			<ui5-avatar slot="image">
-				<img src="/ui5-webcomponents/nightly/assets/HT-1010-CLTht4yo.jpg" alt="Woman image">
-			</ui5-avatar>
+		<ui5-li>Icon inside image slot
+			<ui5-icon slot="image" name="bell"> </ui5-icon>
 		</ui5-li>
-		<ui5-li>IPhone 3
-			<ui5-avatar slot="image">
-				<img src="/ui5-webcomponents/nightly/assets/HT-1022-B7LJUf_K.jpg" alt="Woman image">
-			</ui5-avatar>
-		</ui5-li>
-	</ui5-list>
-
-	<br/><br/>
-
-	<ui5-list header-text="API: image">
-		<ui5-li> Avatar inside image slot
-			<div slot="image">
-				<ui5-avatar shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
-			</div>
-		</ui5-li>
-		<ui5-li> Avatar inside image slot
-			<div slot="image">
-				<ui5-avatar >
-					<img src="/ui5-webcomponents/nightly/assets/woman_avatar_5-C3UK-oZV.png" alt="Woman image">
-				</ui5-avatar>
-			</div>
+		<ui5-li>Icon and Avatar with initials inside image slot
+			<ui5-icon slot="image" name="bell"> </ui5-icon>
+			<ui5-avatar slot="image" initials="AB"></ui5-avatar>
 		</ui5-li>
 	</ui5-list>
 
