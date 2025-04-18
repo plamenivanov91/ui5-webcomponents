@@ -16,6 +16,7 @@ type ShellBarLogoAccessibilityAttributes = {
 };
 type ShellBarProfileAccessibilityAttributes = Pick<AccessibilityAttributes, "name" | "expanded" | "hasPopup">;
 type ShellBarAreaAccessibilityAttributes = Pick<AccessibilityAttributes, "hasPopup" | "expanded">;
+type ShellBarBrandingAccessibilityAttributes = Pick<AccessibilityAttributes, "name">;
 type ShellBarAccessibilityAttributes = {
     logo?: ShellBarLogoAccessibilityAttributes;
     notifications?: ShellBarAreaAccessibilityAttributes;
@@ -23,6 +24,7 @@ type ShellBarAccessibilityAttributes = {
     product?: ShellBarAreaAccessibilityAttributes;
     search?: ShellBarAreaAccessibilityAttributes;
     overflow?: ShellBarAreaAccessibilityAttributes;
+    branding?: ShellBarBrandingAccessibilityAttributes;
 };
 type ShellBarNotificationsClickEventDetail = {
     targetRef: HTMLElement;
@@ -178,6 +180,7 @@ declare class ShellBar extends UI5Element {
      * - **product** - `product.expanded` and `product.hasPopup`.
      * - **search** - `search.hasPopup`.
      * - **overflow** - `overflow.expanded` and `overflow.hasPopup`.
+     * - **branding** - `branding.name`.
      *
      * The accessibility attributes support the following values:
      *
@@ -334,7 +337,7 @@ declare class ShellBar extends UI5Element {
      * Use this method to change the state of the search filed according to internal logic.
      * An event is fired to notify the change.
      */
-    setSearchState(expanded: boolean): void;
+    setSearchState(expanded: boolean): Promise<void>;
     onAfterRendering(): void;
     onInitialRendering(): Promise<void>;
     /**
@@ -399,11 +402,11 @@ declare class ShellBar extends UI5Element {
     get productSwitchDomRef(): HTMLElement | null;
     /**
      * Returns the `search` icon DOM ref.
+     * @returns The search icon DOM ref
      * @public
-     * @default null
      * @since 2.10.0
      */
-    get searchButtonDomRef(): HTMLElement | null;
+    getSearchButtonDomRef(): Promise<HTMLElement | null>;
     _getContentInfo(): Array<IShellBarContentItem>;
     /**
      * Returns all items that will be placed in the right of the bar as icons / dom elements.
@@ -462,6 +465,7 @@ declare class ShellBar extends UI5Element {
     get _productsText(): string;
     get _searchText(): string;
     get _overflowText(): string;
+    get _brandingText(): string | undefined;
     get hasContentItems(): boolean;
     get hidableDomElements(): HTMLElement[];
     get contentItemsHidden(): HTMLElement[];
@@ -501,6 +505,12 @@ declare class ShellBar extends UI5Element {
             accessibilityAttributes: {
                 hasPopup: import("@ui5/webcomponents-base").AriaHasPopup;
                 expanded: boolean | "true" | "false";
+            };
+        };
+        branding: {
+            title: string | undefined;
+            accessibilityAttributes: {
+                name: string | undefined;
             };
         };
     };

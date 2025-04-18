@@ -3,6 +3,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import type MenuItem from "./MenuItem.js";
 import "./MenuItem.js";
 import "./MenuSeparator.js";
@@ -82,12 +83,18 @@ declare class Menu extends UI5Element {
      */
     headerText?: string;
     /**
-     * Indicates if the menu is open
+     * Indicates if the menu is open.
      * @public
      * @default false
      * @since 1.10.0
      */
     open: boolean;
+    /**
+     * Determines the horizontal alignment of the menu relative to its opener control.
+     * @default "Start"
+     * @public
+     */
+    horizontalAlign: `${PopoverHorizontalAlign}`;
     /**
      * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
      * @default false
@@ -96,7 +103,7 @@ declare class Menu extends UI5Element {
      */
     loading: boolean;
     /**
-     * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
+     * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
      * @default 1000
      * @public
      * @since 1.13.0

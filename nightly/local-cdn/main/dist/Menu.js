@@ -68,12 +68,18 @@ let Menu = Menu_1 = class Menu extends UI5Element {
     constructor() {
         super(...arguments);
         /**
-         * Indicates if the menu is open
+         * Indicates if the menu is open.
          * @public
          * @default false
          * @since 1.10.0
          */
         this.open = false;
+        /**
+         * Determines the horizontal alignment of the menu relative to its opener control.
+         * @default "Start"
+         * @public
+         */
+        this.horizontalAlign = "Start";
         /**
          * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
          * @default false
@@ -82,7 +88,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
          */
         this.loading = false;
         /**
-         * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover..
+         * Defines the delay in milliseconds, after which the loading indicator will be displayed inside the corresponding ui5-menu popover.
          * @default 1000
          * @public
          * @since 1.13.0
@@ -252,6 +258,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Menu.prototype, "open", void 0);
+__decorate([
+    property()
+], Menu.prototype, "horizontalAlign", void 0);
 __decorate([
     property({ type: Boolean })
 ], Menu.prototype, "loading", void 0);

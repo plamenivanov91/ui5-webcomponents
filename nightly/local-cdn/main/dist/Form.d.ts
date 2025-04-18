@@ -271,6 +271,7 @@ declare class Form extends UI5Element {
     setFastNavGroup(): void;
     setGroupsColSpan(): void;
     getGroupsColSpan(cols: number, groups: number, index: number, group: IFormItem): number;
+    setItemSpacing(): void;
     get hasGroupItems(): boolean;
     get hasHeader(): boolean;
     get hasHeaderText(): boolean;

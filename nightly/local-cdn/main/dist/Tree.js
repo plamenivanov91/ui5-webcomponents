@@ -194,6 +194,9 @@ let Tree = class Tree extends UI5Element {
         }
     }
     _onListSelectionChange(e) {
+        if (!e.detail || !e.detail.previouslySelectedItems || !e.detail.selectedItems) {
+            return;
+        }
         const previouslySelectedItems = e.detail.previouslySelectedItems;
         const selectedItems = e.detail.selectedItems;
         const targetItem = e.detail.targetItem;

@@ -32,6 +32,7 @@ import ListSelectionMode from "./types/ListSelectionMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
 import ListAccessibleRole from "./types/ListAccessibleRole.js";
 import ListSeparator from "./types/ListSeparator.js";
+import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 // Template
 import ListTemplate from "./ListTemplate.js";
 // Styles
@@ -160,11 +161,15 @@ let List = List_1 = class List extends UI5Element {
          * @private
          */
         this._loadMoreActive = false;
+        /**
+         * Defines the current media query size.
+         * @default "S"
+         * @private
+         */
+        this.mediaRange = "S";
         this._previouslyFocusedItem = null;
         // Indicates that the List is forwarding the focus before or after the internal ul.
         this._forwardingFocus = false;
-        // Indicates that the List has already subscribed for resize.
-        this.resizeListenerAttached = false;
         // Indicates if the IntersectionObserver started observing the List
         this.listEndObserved = false;
         this._itemNavigation = new ItemNavigation(this, {
@@ -172,8 +177,7 @@ let List = List_1 = class List extends UI5Element {
             navigationMode: NavigationMode.Vertical,
             getItemsCallback: () => this.getEnabledItems(),
         });
-        this._handleResize = this.checkListInViewport.bind(this);
-        this._handleResize = this.checkListInViewport.bind(this);
+        this._handleResizeCallback = this._handleResize.bind(this);
         // Indicates the List bottom most part has been detected by the IntersectionObserver
         // for the first time.
         this.initialIntersection = true;
@@ -200,12 +204,12 @@ let List = List_1 = class List extends UI5Element {
     onEnterDOM() {
         registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
         DragRegistry.subscribe(this);
+        ResizeHandler.register(this.getDomRef(), this._handleResizeCallback);
     }
     onExitDOM() {
         deregisterUI5Element(this);
         this.unobserveListEnd();
-        this.resizeListenerAttached = false;
-        ResizeHandler.deregister(this.getDomRef(), this._handleResize);
+        ResizeHandler.deregister(this.getDomRef(), this._handleResizeCallback);
         DragRegistry.unsubscribe(this);
     }
     onBeforeRendering() {
@@ -222,7 +226,6 @@ let List = List_1 = class List extends UI5Element {
         }
         if (this.grows) {
             this.checkListInViewport();
-            this.attachForResize();
         }
     }
     attachGroupHeaderEvents() {
@@ -244,12 +247,6 @@ let List = List_1 = class List extends UI5Element {
                 item.removeEventListener("ui5-forward-before", this.onForwardBeforeBound);
             }
         });
-    }
-    attachForResize() {
-        if (!this.resizeListenerAttached) {
-            this.resizeListenerAttached = true;
-            ResizeHandler.register(this.getDomRef(), this._handleResize);
-        }
     }
     get shouldRenderH1() {
         return !this.header.length && this.headerText;
@@ -375,6 +372,7 @@ let List = List_1 = class List extends UI5Element {
                 item._selectionMode = this.selectionMode;
             }
             item.hasBorder = showBottomBorder;
+            item.mediaRange = this.mediaRange;
         });
     }
     async observeListEnd() {
@@ -613,6 +611,11 @@ let List = List_1 = class List extends UI5Element {
         if (this.hasGrowingComponent()) {
             this.fireDecoratorEvent("load-more");
         }
+    }
+    _handleResize() {
+        this.checkListInViewport();
+        const width = this.getBoundingClientRect().width;
+        this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
     }
     /*
     * KEYBOARD SUPPORT
@@ -961,6 +964,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], List.prototype, "_loadMoreActive", void 0);
+__decorate([
+    property()
+], List.prototype, "mediaRange", void 0);
 __decorate([
     slot({
         type: HTMLElement,

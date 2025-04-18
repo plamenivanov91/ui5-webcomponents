@@ -91,6 +91,7 @@ let TableRow = class TableRow extends TableRowBase {
     _onOverflowButtonClick(e) {
         const ctor = this.actions[0].constructor;
         ctor.showMenu(this._overflowActions, e.target);
+        e.stopPropagation();
     }
     get _isInteractive() {
         return this.interactive;

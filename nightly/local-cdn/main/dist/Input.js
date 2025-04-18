@@ -928,6 +928,7 @@ let Input = Input_1 = class Input extends UI5Element {
     fireResetSelectionChange() {
         if (this._isLatestValueFromSuggestions) {
             this.fireSelectionChange(null, false);
+            this.valueBeforeItemSelection = this.value;
         }
     }
     get _readonly() {

@@ -16,7 +16,7 @@ import TableNavigation from "./TableNavigation.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { findVerticalScrollContainer, scrollElementIntoView, isFeature } from "./TableUtils.js";
+import { findVerticalScrollContainer, scrollElementIntoView, isFeature, isValidColumnWidth, } from "./TableUtils.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { TABLE_NO_DATA, } from "./generated/i18n/i18n-defaults.js";
@@ -155,9 +155,6 @@ let Table = Table_1 = class Table extends UI5Element {
         this._onEventBound = this._onEvent.bind(this);
     }
     onEnterDOM() {
-        if (this.overflowMode === TableOverflowMode.Popin) {
-            ResizeHandler.register(this, this._onResizeBound);
-        }
         this._events.forEach(eventType => this.addEventListener(eventType, this._onEventBound, { capture: true }));
         this.features.forEach(feature => feature.onTableActivate?.(this));
         this._tableNavigation = new TableNavigation(this);
@@ -167,9 +164,6 @@ let Table = Table_1 = class Table extends UI5Element {
         this._tableNavigation = undefined;
         this._tableDragAndDrop = undefined;
         this._events.forEach(eventType => this.removeEventListener(eventType, this._onEventBound));
-        if (this.overflowMode === TableOverflowMode.Popin) {
-            ResizeHandler.deregister(this, this._onResizeBound);
-        }
     }
     onBeforeRendering() {
         this._renderNavigated = this.rows.some(row => row.navigated);
@@ -180,9 +174,15 @@ let Table = Table_1 = class Table extends UI5Element {
         this.style.setProperty(getScopedVarName("--ui5_grid_sticky_top"), this.stickyTop);
         this._refreshPopinState();
         this.features.forEach(feature => feature.onTableBeforeRendering?.(this));
+        if (this.getDomRef()) {
+            ResizeHandler.deregister(this, this._onResizeBound);
+        }
     }
     onAfterRendering() {
         this.features.forEach(feature => feature.onTableAfterRendering?.(this));
+        if (this.overflowMode === TableOverflowMode.Popin) {
+            ResizeHandler.register(this, this._onResizeBound);
+        }
     }
     _findFeature(featureName) {
         return this.features.find(feature => isFeature(feature, featureName));
@@ -269,23 +269,20 @@ let Table = Table_1 = class Table extends UI5Element {
      * @private
      */
     _refreshPopinState() {
-        this.headerRow[0]?.cells.forEach((header, index) => {
-            this.rows.forEach(row => {
-                const cell = row.cells[index];
-                if (cell) {
-                    cell._popinHidden = header.popinHidden;
-                    cell._popin = header._popin;
-                }
-            });
+        this.headerRow[0]?.cells.forEach(header => {
+            this._setHeaderPopinState(header, header._popin, header._popinWidth);
         });
     }
     _setHeaderPopinState(headerCell, inPopin, popinWidth) {
         const headerIndex = this.headerRow[0].cells.indexOf(headerCell);
-        headerCell._popin = inPopin;
+        headerCell._popin = inPopin && this.overflowMode === TableOverflowMode.Popin;
         headerCell._popinWidth = popinWidth;
         this.rows.forEach(row => {
-            row.cells[headerIndex]._popinHidden = headerCell.popinHidden;
-            row.cells[headerIndex]._popin = inPopin;
+            const cell = row.cells[headerIndex];
+            if (cell) {
+                row.cells[headerIndex]._popinHidden = headerCell.popinHidden;
+                row.cells[headerIndex]._popin = headerCell._popin;
+            }
         });
     }
     _isGrowingFeature(feature) {
@@ -324,19 +321,24 @@ let Table = Table_1 = class Table extends UI5Element {
         }
         const widths = [];
         const visibleHeaderCells = this.headerRow[0]._visibleCells;
+        // Selection Cell Width
         if (this._getSelection()?.isRowSelectorRequired()) {
             widths.push("min-content");
         }
+        // Column Widths
         widths.push(...visibleHeaderCells.map(cell => {
-            const minWidth = cell.minWidth === "auto" ? "3rem" : cell.minWidth;
-            if (cell.width === "auto" || cell.width.includes("%") || cell.width.includes("fr") || cell.width.includes("vw")) {
-                return `minmax(${minWidth}, ${cell.maxWidth})`;
+            const minWidth = cell.minWidth ?? "3rem";
+            let width = `minmax(${minWidth}, 1fr)`; // default width
+            if (isValidColumnWidth(cell.width)) {
+                width = cell.width.includes("%") ? `max(${minWidth}, ${cell.width})` : cell.width;
             }
-            return `minmax(${cell.width}, ${cell.width})`;
+            return width;
         }));
+        // Row Action Cell Width
         if (this.rowActionCount > 0) {
             widths.push(`calc(var(${getScopedVarName("--_ui5_button_base_min_width")}) * ${this.rowActionCount} + var(${getScopedVarName("--_ui5_table_row_actions_gap")}) * ${this.rowActionCount - 1} + var(${getScopedVarName("--_ui5_table_cell_horizontal_padding")}) * 2)`);
         }
+        // Navigated Cell Width
         if (this._renderNavigated) {
             widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
         }

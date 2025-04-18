@@ -167,6 +167,10 @@ declare class Tokenizer extends UI5Element {
     hidePopoverArrow: boolean;
     _nMoreCount: number;
     _tokensCount: number;
+    /**
+     * Defines the tokens to be displayed.
+     * @public
+     */
     tokens: Array<Token>;
     static i18nBundle: I18nBundle;
     _resizeHandler: ResizeObserverCallback;
