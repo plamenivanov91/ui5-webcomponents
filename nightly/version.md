@@ -1,12 +1,7 @@
-commit d07b0891ef3f3e6c60354e07c9c12433ce1f14d5
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Thu Apr 17 16:41:38 2025 +0200
+commit 3ce13c8b6a985523399daebff3c9ee618886b89c
+Author: Siyana Todorova <72251110+s-todorova@users.noreply.github.com>
+Date:   Tue Apr 22 08:49:50 2025 +0300
 
-    fix(ui5-breadcrumbs): dropdown arrow focused color fixed (#11362)
+    fix(ui5-side-navigation): correct hover styles of selected items (#11319)
     
-    Bug description: When we have dropdown arrow (when there is not enough
-    space for all the links) and we focus it, the color of the arrow and
-    triple dots remains bluish. It should become white.
-    
-    This change fixes the issue by improving the CSS selector for making
-    the focused color to be bright.
+    fixes: #11297
