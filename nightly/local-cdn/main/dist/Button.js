@@ -24,7 +24,7 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED, BUTTON_ARIA_TYPE_ATTENTION, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
 let isGlobalHandlerAttached = false;
@@ -192,7 +192,8 @@ let Button = Button_1 = class Button extends UI5Element {
         this.hasIcon = !!this.icon;
         this.hasEndIcon = !!this.endIcon;
         this.iconOnly = this.isIconOnly;
-        this.buttonTitle = this.tooltip || await this.getDefaultTooltip();
+        const defaultTooltip = await this.getDefaultTooltip();
+        this.buttonTitle = this.iconOnly ? this.tooltip ?? defaultTooltip : this.tooltip;
     }
     _setBadgeOverlayStyle() {
         const needsOverflowVisible = this.badge.length && (this.badge[0].design === ButtonBadgeDesign.AttentionDot || this.badge[0].design === ButtonBadgeDesign.OverlayText);
@@ -284,6 +285,7 @@ let Button = Button_1 = class Button extends UI5Element {
             "Positive": BUTTON_ARIA_TYPE_ACCEPT,
             "Negative": BUTTON_ARIA_TYPE_REJECT,
             "Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
+            "Attention": BUTTON_ARIA_TYPE_ATTENTION,
         };
     }
     getDefaultTooltip() {
@@ -308,17 +310,14 @@ let Button = Button_1 = class Button extends UI5Element {
         }
         return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
     }
-    get showIconTooltip() {
-        return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
-    }
     get ariaLabelText() {
         return getEffectiveAriaLabelText(this);
     }
-    get ariaDescribedbyText() {
-        return this.hasButtonType ? "ui5-button-hiddenText-type" : undefined;
-    }
     get ariaDescriptionText() {
-        return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+        const ariaDescribedByText = this.hasButtonType ? this.buttonTypeText : "";
+        const accessibleDescription = this.accessibleDescription || "";
+        const ariaDescriptionText = `${ariaDescribedByText} ${accessibleDescription}`.trim();
+        return ariaDescriptionText || undefined;
     }
     get _isSubmit() {
         return this.type === ButtonType.Submit || this.submits;

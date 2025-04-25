@@ -1,3 +1,4 @@
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
@@ -41,6 +42,7 @@ declare class SideNavigationItem extends SideNavigationSelectableItemBase {
      * @public
      */
     items: Array<SideNavigationSubItem>;
+    static i18nBundle: I18nBundle;
     get overflowItems(): Array<SideNavigationItem>;
     get selectableItems(): Array<SideNavigationSelectableItemBase>;
     get focusableItems(): Array<SideNavigationItemBase>;
@@ -52,6 +54,7 @@ declare class SideNavigationItem extends SideNavigationSelectableItemBase {
     get _expanded(): boolean | undefined;
     get classesArray(): string[];
     get _selected(): boolean;
+    get _arrowTooltip(): string;
     applyInitialFocusInPopover(): void;
     _onToggleClick(e: CustomEvent): void;
     _onkeydown(e: KeyboardEvent): void;

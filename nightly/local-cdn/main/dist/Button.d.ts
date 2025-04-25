@@ -247,9 +247,7 @@ declare class Button extends UI5Element implements IButton {
     get buttonTypeText(): string;
     get effectiveAccRole(): AriaRole;
     get tabIndexValue(): number | undefined;
-    get showIconTooltip(): boolean;
     get ariaLabelText(): string | undefined;
-    get ariaDescribedbyText(): "ui5-button-hiddenText-type" | undefined;
     get ariaDescriptionText(): string | undefined;
     get _isSubmit(): boolean;
     get _isReset(): boolean;

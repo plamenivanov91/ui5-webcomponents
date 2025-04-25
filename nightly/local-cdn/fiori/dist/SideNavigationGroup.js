@@ -13,7 +13,7 @@ import { isLeft, isRight, isMinus, isPlus, } from "@ui5/webcomponents-base/dist/
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationGroupTemplate from "./SideNavigationGroupTemplate.js";
-import { SIDE_NAVIGATION_GROUP_HEADER_DESC, } from "./generated/i18n/i18n-defaults.js";
+import { SIDE_NAVIGATION_GROUP_HEADER_DESC, SIDE_NAVIGATION_ICON_COLLAPSE, SIDE_NAVIGATION_ICON_EXPAND, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import SideNavigationGroupCss from "./generated/themes/SideNavigationGroup.css.js";
 /**
@@ -94,6 +94,10 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
     }
     get accDescription() {
         return SideNavigationGroup_1.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
+    }
+    get _arrowTooltip() {
+        return this.expanded ? SideNavigationGroup_1.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
+            : SideNavigationGroup_1.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
     }
     _onkeydown(e) {
         if (isLeft(e) || isMinus(e)) {

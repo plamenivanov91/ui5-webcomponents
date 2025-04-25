@@ -1,7 +1,5 @@
-commit 3ce13c8b6a985523399daebff3c9ee618886b89c
-Author: Siyana Todorova <72251110+s-todorova@users.noreply.github.com>
-Date:   Tue Apr 22 08:49:50 2025 +0300
+commit b898559a591c2febe8dbd0cb99a15c88eac293b2
+Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
+Date:   Thu Apr 24 08:09:45 2025 +0000
 
-    fix(ui5-side-navigation): correct hover styles of selected items (#11319)
-    
-    fixes: #11297
+    chore(release): publish v2.10.0-rc.2 [ci skip]

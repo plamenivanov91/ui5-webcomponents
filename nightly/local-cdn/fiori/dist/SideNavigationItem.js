@@ -4,12 +4,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var SideNavigationItem_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRender from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isLeft, isRight, isSpace, isEnter, isMinus, isPlus, } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationSelectableItemBase from "./SideNavigationSelectableItemBase.js";
+import { SIDE_NAVIGATION_ICON_COLLAPSE, SIDE_NAVIGATION_ICON_EXPAND, } from "./generated/i18n/i18n-defaults.js";
 // Templates
 import SideNavigationItemTemplate from "./SideNavigationItemTemplate.js";
 // Styles
@@ -32,7 +35,7 @@ import SideNavigationItemCss from "./generated/themes/SideNavigationItem.css.js"
  * @public
  * @since 1.0.0-rc.8
  */
-let SideNavigationItem = class SideNavigationItem extends SideNavigationSelectableItemBase {
+let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends SideNavigationSelectableItemBase {
     constructor() {
         super(...arguments);
         /**
@@ -124,6 +127,10 @@ let SideNavigationItem = class SideNavigationItem extends SideNavigationSelectab
         }
         return this.selected;
     }
+    get _arrowTooltip() {
+        return this.expanded ? SideNavigationItem_1.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
+            : SideNavigationItem_1.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
+    }
     applyInitialFocusInPopover() {
         if (this.unselectable && this.items.length) {
             this.items[0]?.focus();
@@ -207,7 +214,10 @@ __decorate([
 __decorate([
     slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 ], SideNavigationItem.prototype, "items", void 0);
-SideNavigationItem = __decorate([
+__decorate([
+    i18n("@ui5/webcomponents-fiori")
+], SideNavigationItem, "i18nBundle", void 0);
+SideNavigationItem = SideNavigationItem_1 = __decorate([
     customElement({
         tag: "ui5-side-navigation-item",
         renderer: jsxRender,
