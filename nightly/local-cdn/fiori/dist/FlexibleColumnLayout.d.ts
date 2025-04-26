@@ -223,7 +223,9 @@ declare class FlexibleColumnLayout extends UI5Element {
     syncLayout(): void;
     toggleColumns(): void;
     toggleColumn(column: string): void;
-    columnResizeHandler: (e: Event) => void;
+    expandColumn(columnDOM: HTMLElement, columnWidth: string | number): void;
+    collapseColumn(columnDOM: HTMLElement): void;
+    onColumnCollapseAnimationEnd: (e: Event) => void;
     nextColumnLayout(layout: `${FCLLayout}`): FlexibleColumnLayoutColumnLayout;
     calcVisibleColumns(colLayout: FlexibleColumnLayoutColumnLayout): number;
     fireLayoutChange(separatorUsed: boolean, resized: boolean): void;
@@ -313,7 +315,7 @@ declare class FlexibleColumnLayout extends UI5Element {
     get startSeparatorDOM(): HTMLElement;
     get endSeparatorDOM(): HTMLElement;
     get startSeparatorTabIndex(): 0 | undefined;
-    get endSeparatorTabIndex(): 0 | -1;
+    get endSeparatorTabIndex(): 0 | undefined;
     get media(): MEDIA;
     get widthDOM(): number;
     get startColumnDOM(): HTMLElement;

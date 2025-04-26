@@ -1,5 +1,11 @@
-commit b898559a591c2febe8dbd0cb99a15c88eac293b2
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Thu Apr 24 08:09:45 2025 +0000
+commit 996de9498bf6b4f4befaf0e15f0489c2d6cc47b9
+Author: Diana Pazheva <diana.pazheva@sap.com>
+Date:   Fri Apr 25 16:46:41 2025 +0300
 
-    chore(release): publish v2.10.0-rc.2 [ci skip]
+    fix(ui5-flexible-column-layout): column visibility issue fixed (#11416)
+    
+    * fix(ui5-flexible-column-layout): collumn visibility issue fixed
+    
+    * fix(ui5-flexible-column-layout): apply feedback and other improvements
+    
+    * fix(ui5-flexible-column-layout): remove obsolete comment
