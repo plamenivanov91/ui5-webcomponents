@@ -1,11 +1,13 @@
-commit 996de9498bf6b4f4befaf0e15f0489c2d6cc47b9
-Author: Diana Pazheva <diana.pazheva@sap.com>
-Date:   Fri Apr 25 16:46:41 2025 +0300
+commit d672c15db8eb8843a2ce899bbb8af6b7561fd37a
+Author: Petya Markova <petya.markova-bogdanova@sap.com>
+Date:   Mon Apr 28 10:35:01 2025 +0300
 
-    fix(ui5-flexible-column-layout): column visibility issue fixed (#11416)
+    fix(ui5-shellbar): fixed avatar font-size (#11316)
     
-    * fix(ui5-flexible-column-layout): collumn visibility issue fixed
+    * fix(ui5-shellbar): fixed avatar font-size
     
-    * fix(ui5-flexible-column-layout): apply feedback and other improvements
+    * Update ShellBar_evolution.html
     
-    * fix(ui5-flexible-column-layout): remove obsolete comment
+    ---------
+    
+    Co-authored-by: PetyaMarkovaBogdanova <petya.markova@sap.com>
