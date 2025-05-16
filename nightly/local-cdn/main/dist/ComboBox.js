@@ -14,7 +14,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { isPhone, isAndroid } from "@ui5/webcomponents-base/dist/Device.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
@@ -923,7 +923,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         return undefined;
     }
     get ariaLabelText() {
-        return getEffectiveAriaLabelText(this);
+        return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
     }
     get clearIconAccessibleName() {
         return ComboBox_1.i18nBundle.getText(INPUT_CLEAR_ICON_ACC_NAME);

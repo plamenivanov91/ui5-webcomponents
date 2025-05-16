@@ -13,6 +13,10 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  * Fired when the component is activated either with a click/tap or by using the [Enter] or [Space] keys.
  *
  * @public
+ * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
  */
 let SideNavigationSelectableItemBase = class SideNavigationSelectableItemBase extends SideNavigationItemBase {
     constructor() {
@@ -142,9 +146,18 @@ let SideNavigationSelectableItemBase = class SideNavigationSelectableItemBase ex
         this.sideNavigation?.focusItem(this);
     }
     _activate(e) {
+        const { altKey, ctrlKey, metaKey, shiftKey, } = e;
         e.stopPropagation();
         if (this.isOverflow) {
-            this.fireDecoratorEvent("click");
+            const executeEvent = this.fireDecoratorEvent("click", {
+                altKey,
+                ctrlKey,
+                metaKey,
+                shiftKey,
+            });
+            if (!executeEvent) {
+                e.preventDefault();
+            }
         }
         else {
             this.sideNavigation?._handleItemClick(e, this);
@@ -181,6 +194,7 @@ __decorate([
 SideNavigationSelectableItemBase = __decorate([
     event("click", {
         bubbles: true,
+        cancelable: true,
     })
     /**
      * @class

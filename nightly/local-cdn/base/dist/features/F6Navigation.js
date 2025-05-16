@@ -1,4 +1,4 @@
-import { registerFeature } from "../FeaturesRegistry.js";
+import { getFeature, registerFeature } from "../FeaturesRegistry.js";
 import { isF6Next, isF6Previous } from "../Keys.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
 import { getFirstFocusableElement } from "../util/FocusableElements.js";
@@ -103,6 +103,12 @@ class F6Navigation {
         return elementToFocus;
     }
     async _keydownHandler(event) {
+        const openUI5Support = getFeature("OpenUI5Support");
+        const isOpenUI5Detected = openUI5Support && openUI5Support.isOpenUI5Detected();
+        if (isOpenUI5Detected) {
+            this.destroy();
+            return;
+        }
         const forward = isF6Next(event);
         const backward = isF6Previous(event);
         if (!(forward || backward)) {

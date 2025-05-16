@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { AriaHasPopup } from "@ui5/webcomponents-base";
+import type { AriaHasPopup, UI5CustomEvent } from "@ui5/webcomponents-base";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type ButtonDesign from "./types/ButtonDesign.js";
 import type Button from "./Button.js";
@@ -152,7 +152,7 @@ declare class SplitButton extends UI5Element {
     _isKeyDownOperation: boolean;
     static i18nBundle: I18nBundle;
     onBeforeRendering(): void;
-    _handleMouseClick(e: MouseEvent): void;
+    _handleMouseClick(e: UI5CustomEvent<Button, "click">): void;
     _onFocusOut(): void;
     _onFocusIn(): void;
     handleTouchStart(e: TouchEvent | MouseEvent): void;
@@ -189,7 +189,7 @@ declare class SplitButton extends UI5Element {
      * @param e - keyboard event
      * @private
      */
-    _handleArrowButtonAction(e: KeyboardEvent | MouseEvent): void;
+    _handleArrowButtonAction(e: UI5CustomEvent<Button, "click"> | KeyboardEvent): void;
     /**
      * Handles the default action and the active state of the respective button.
      * @param e - keyboard event

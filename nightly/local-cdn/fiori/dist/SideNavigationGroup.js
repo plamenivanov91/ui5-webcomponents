@@ -13,7 +13,7 @@ import { isLeft, isRight, isMinus, isPlus, } from "@ui5/webcomponents-base/dist/
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationGroupTemplate from "./SideNavigationGroupTemplate.js";
-import { SIDE_NAVIGATION_GROUP_HEADER_DESC, SIDE_NAVIGATION_ICON_COLLAPSE, SIDE_NAVIGATION_ICON_EXPAND, } from "./generated/i18n/i18n-defaults.js";
+import { SIDE_NAVIGATION_ICON_COLLAPSE, SIDE_NAVIGATION_ICON_EXPAND, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import SideNavigationGroupCss from "./generated/themes/SideNavigationGroup.css.js";
 /**
@@ -44,6 +44,26 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
          * @default false
          */
         this.expanded = false;
+        this.belowGroup = false;
+        this._initialChildDisabledStates = new Map();
+    }
+    onBeforeRendering() {
+        this.allItems.forEach(item => {
+            if (!this._initialChildDisabledStates.has(item)) {
+                this._initialChildDisabledStates.set(item, item.disabled);
+            }
+        });
+        this._updateChildItemsDisabledState();
+    }
+    _updateChildItemsDisabledState() {
+        this.allItems.forEach(item => {
+            if (this.disabled) {
+                item.disabled = true;
+            }
+            else {
+                item.disabled = this._initialChildDisabledStates.get(item);
+            }
+        });
     }
     get overflowItems() {
         const separator1 = this.shadowRoot.querySelector(".ui5-sn-item-separator:first-child");
@@ -87,13 +107,7 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
         return this.expanded;
     }
     get belowGroupClassName() {
-        if (isInstanceOfSideNavigationGroup(this.previousElementSibling)) {
-            return "ui5-sn-item-group-below-group";
-        }
-        return "";
-    }
-    get accDescription() {
-        return SideNavigationGroup_1.i18nBundle.getText(SIDE_NAVIGATION_GROUP_HEADER_DESC);
+        return this.belowGroup ? "ui5-sn-item-group-below-group" : "";
     }
     get _arrowTooltip() {
         return this.expanded ? SideNavigationGroup_1.i18nBundle.getText(SIDE_NAVIGATION_ICON_COLLAPSE)
@@ -116,7 +130,9 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
         this.sideNavigation?.focusItem(this);
     }
     _toggle() {
-        this.expanded = !this.expanded;
+        if (!this.disabled) {
+            this.expanded = !this.expanded;
+        }
     }
     get isSideNavigationGroup() {
         return true;

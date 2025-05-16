@@ -187,6 +187,8 @@ declare class Calendar extends CalendarPart {
     _headerMonthButtonText?: string;
     _headerYearButtonText?: string;
     _headerYearButtonTextSecType?: string;
+    _headerYearRangeButtonText?: string;
+    _headerYearRangeButtonTextSecType?: string;
     _pickersMode: `${CalendarPickersMode}`;
     _valueIsProcessed: boolean;
     /**
@@ -271,6 +273,7 @@ declare class Calendar extends CalendarPart {
     get _isDayPickerHidden(): boolean;
     get _isMonthPickerHidden(): boolean;
     get _isYearPickerHidden(): boolean;
+    get _isHeaderYearRangeButtonHidden(): boolean;
     _fireEventAndUpdateSelectedDates(selectedDates: Array<number>): void;
     onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>): void;
     onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>): void;

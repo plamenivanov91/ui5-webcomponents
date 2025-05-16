@@ -34,7 +34,7 @@ import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/Search.js";`
+ * `import "@ui5/webcomponents-fiori/dist/Search.js";`
  *
  * @constructor
  * @extends SearchField
@@ -115,11 +115,10 @@ let Search = Search_1 = class Search extends SearchField {
     }
     _handleMobileInput(e) {
         this.value = e.target.value;
-        this._performItemSelectionOnMobile = this._shouldPerformSelectionOnMobile(e);
+        this._performItemSelectionOnMobile = this._shouldPerformSelectionOnMobile(e.detail.inputType);
         this.fireDecoratorEvent("input");
     }
-    _shouldPerformSelectionOnMobile(e) {
-        const eventType = e.detail.inputType;
+    _shouldPerformSelectionOnMobile(inputType) {
         const allowedEventTypes = [
             "deleteWordBackward",
             "deleteWordForward",
@@ -135,7 +134,7 @@ let Search = Search_1 = class Search extends SearchField {
             "deleteContentForward",
             "historyUndo",
         ];
-        return !this.noTypeahead && !allowedEventTypes.includes(eventType || "");
+        return !this.noTypeahead && !allowedEventTypes.includes(inputType || "");
     }
     _handleTypeAhead(item) {
         const originalValue = item.text || "";
@@ -233,7 +232,10 @@ let Search = Search_1 = class Search extends SearchField {
     }
     _handleInput(e) {
         super._handleInput(e);
-        this.open = !isPhone() && (e.currentTarget.value.length > 0) && this._popoupHasAnyContent();
+        if (isPhone()) {
+            return;
+        }
+        this.open = (e.currentTarget.value.length > 0) && this._popoupHasAnyContent();
     }
     _popoupHasAnyContent() {
         return this.items.length > 0 || this.illustration.length > 0 || this.messageArea.length > 0 || this.loading || this.action.length > 0;
@@ -371,7 +373,7 @@ let Search = Search_1 = class Search extends SearchField {
     }
     get nativeInput() {
         const domRef = this.getDomRef();
-        return domRef ? domRef.querySelector(`input`) : null;
+        return domRef?.querySelector(`input`);
     }
     get mobileInput() {
         const domRef = this.shadowRoot;

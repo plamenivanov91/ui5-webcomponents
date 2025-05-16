@@ -21,8 +21,9 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import { isInstanceOfSideNavigationSelectableItemBase } from "./SideNavigationSelectableItemBase.js";
 import { isInstanceOfSideNavigationItemBase } from "./SideNavigationItemBase.js";
 import { isInstanceOfSideNavigationItem } from "./SideNavigationItem.js";
+import { isInstanceOfSideNavigationGroup } from "./SideNavigationGroup.js";
 import SideNavigationTemplate from "./SideNavigationTemplate.js";
-import { SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT, SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC, SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC, SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME, } from "./generated/i18n/i18n-defaults.js";
+import { SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT, SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC, SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC, SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME, SIDE_NAVIGATION_FLEXIBLE_LIST_LABEL, SIDE_NAVIGATION_FIXED_LIST_LABEL, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
@@ -116,6 +117,18 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
             item.inPopover = this.inPopover;
             item.sideNavigation = this;
         });
+        this.initGroupsSettings(this.items);
+        this.initGroupsSettings(this.fixedItems);
+    }
+    initGroupsSettings(items) {
+        let isPreviousItemGroup = false;
+        items.forEach(item => {
+            const isGroup = isInstanceOfSideNavigationGroup(item);
+            if (isGroup) {
+                item.belowGroup = isPreviousItemGroup;
+            }
+            isPreviousItemGroup = isGroup;
+        });
     }
     _onAfterPopoverOpen() {
         // as the tree/list inside the popover is never destroyed,
@@ -156,6 +169,12 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
         }
         return SideNavigation_1.i18nBundle.getText(key);
     }
+    get navigationMenuPrimaryHiddenText() {
+        return SideNavigation_1.i18nBundle.getText(SIDE_NAVIGATION_FLEXIBLE_LIST_LABEL);
+    }
+    get navigationMenuFooterHiddenText() {
+        return SideNavigation_1.i18nBundle.getText(SIDE_NAVIGATION_FIXED_LIST_LABEL);
+    }
     get overflowAccessibleName() {
         return SideNavigation_1.i18nBundle.getText(SIDE_NAVIGATION_OVERFLOW_ACCESSIBLE_NAME);
     }
@@ -165,7 +184,17 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
             return;
         }
         e.stopPropagation();
-        associatedItem.fireEvent("click");
+        const altKey = e.detail?.altKey, ctrlKey = e.detail?.ctrlKey, metaKey = e.detail?.metaKey, shiftKey = e.detail?.shiftKey;
+        const executeEvent = associatedItem.fireDecoratorEvent("click", {
+            altKey,
+            ctrlKey,
+            metaKey,
+            shiftKey,
+        });
+        if (!executeEvent) {
+            e.preventDefault();
+            return;
+        }
         if (associatedItem.selected) {
             this.closePicker();
             return;
@@ -173,26 +202,6 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
         this._selectItem(associatedItem);
         this.closePicker();
         this._popoverContents.item?.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
-    }
-    handleOverflowItemClick(e) {
-        const associatedItem = e.detail?.item.associatedItem;
-        associatedItem.fireEvent("click");
-        if (associatedItem.selected) {
-            this.closeMenu();
-            return;
-        }
-        this._selectItem(associatedItem);
-        this.closeMenu();
-        // When subitem is selected in collapsed mode parent element should be focused
-        if (associatedItem.nodeName.toLowerCase() === "ui5-side-navigation-sub-item") {
-            const parent = associatedItem.parentElement;
-            this.focusItem(parent);
-            parent?.focus();
-        }
-        else {
-            this.focusItem(associatedItem);
-            associatedItem?.focus();
-        }
     }
     getOverflowPopover() {
         return this.shadowRoot.querySelector(".ui5-side-navigation-overflow-menu");
@@ -369,7 +378,16 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
     }
     _handleItemClick(e, item) {
         if (item.selected && !this.collapsed) {
-            item.fireDecoratorEvent("click");
+            const { altKey, ctrlKey, metaKey, shiftKey, } = e;
+            const executeEvent = item.fireDecoratorEvent("click", {
+                altKey,
+                ctrlKey,
+                metaKey,
+                shiftKey,
+            });
+            if (!executeEvent) {
+                e.preventDefault();
+            }
             return;
         }
         if (this.collapsed && isInstanceOfSideNavigationItem(item) && item.items.length) {
@@ -382,7 +400,17 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
             this.openPicker(item.getFocusDomRef());
         }
         else {
-            item.fireDecoratorEvent("click");
+            const { altKey, ctrlKey, metaKey, shiftKey, } = e;
+            const executeEvent = item.fireDecoratorEvent("click", {
+                altKey,
+                ctrlKey,
+                metaKey,
+                shiftKey,
+            });
+            if (!executeEvent) {
+                e.preventDefault();
+                return;
+            }
             if (!item.selected) {
                 this._selectItem(item);
             }

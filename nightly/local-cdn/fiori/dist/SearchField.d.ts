@@ -28,7 +28,7 @@ type SearchFieldScopeSelectionChangeDetails = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/SearchField.js";`
+ * `import "@ui5/webcomponents-fiori/dist/SearchField.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -50,7 +50,7 @@ declare class SearchField extends UI5Element {
      * Defines whether the component is collapsed.
      *
      * @default false
-     * @public
+     * @private
      */
     collapsed: boolean;
     /**
@@ -75,11 +75,11 @@ declare class SearchField extends UI5Element {
      */
     accessibleName?: string;
     /**
-     * Defines the tooltip of the search icon component.
+     * Defines the accessible ARIA description of the field.
      * @public
      * @default undefined
      */
-    searchIconTooltip?: string;
+    accessibleDescription?: string;
     /**
      * Defines the component scope options.
      * @public
@@ -114,6 +114,7 @@ declare class SearchField extends UI5Element {
         scope: string;
         searchIcon: string;
         clearIcon: string;
+        searchFieldAriaLabel: string;
     };
     get _effectiveIconTooltip(): string;
     captureRef(ref: HTMLElement & {

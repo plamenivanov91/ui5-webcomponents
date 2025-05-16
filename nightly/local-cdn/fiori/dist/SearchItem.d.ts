@@ -8,7 +8,7 @@ import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/SearchItem.js";`
+ * `import "@ui5/webcomponents-fiori/dist/SearchItem.js";`
  *
  * @constructor
  * @extends ListItemBase

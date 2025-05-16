@@ -15,6 +15,13 @@ interface IButton extends HTMLElement, ITabbable {
     nonInteractive: boolean;
 }
 type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | "hasPopup" | "controls">;
+type ButtonClickEventDetail = {
+    originalEvent: MouseEvent;
+    altKey: boolean;
+    ctrlKey: boolean;
+    metaKey: boolean;
+    shiftKey: boolean;
+};
 /**
  * @class
  *
@@ -50,6 +57,7 @@ type ButtonAccessibilityAttributes = Pick<AccessibilityAttributes, "expanded" | 
  */
 declare class Button extends UI5Element implements IButton {
     eventDetails: {
+        "click": ButtonClickEventDetail;
         "active-state-change": void;
     };
     /**
@@ -232,7 +240,7 @@ declare class Button extends UI5Element implements IButton {
     onEnterDOM(): void;
     onBeforeRendering(): Promise<void>;
     _setBadgeOverlayStyle(): void;
-    _onclick(): void;
+    _onclick(e: MouseEvent): void;
     _onmousedown(): void;
     _ontouchend(e: TouchEvent): void;
     _onkeydown(e: KeyboardEvent): void;
@@ -247,11 +255,12 @@ declare class Button extends UI5Element implements IButton {
     get buttonTypeText(): string;
     get effectiveAccRole(): AriaRole;
     get tabIndexValue(): number | undefined;
-    get ariaLabelText(): string | undefined;
+    get ariaLabelText(): string;
     get ariaDescriptionText(): string | undefined;
+    get effectiveBadgeDescriptionText(): string;
     get _isSubmit(): boolean;
     get _isReset(): boolean;
     get shouldRenderBadge(): boolean;
 }
 export default Button;
-export type { ButtonAccessibilityAttributes, IButton, };
+export type { ButtonAccessibilityAttributes, ButtonClickEventDetail, IButton, };

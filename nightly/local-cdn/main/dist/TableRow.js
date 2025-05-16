@@ -6,8 +6,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { customElement, slot, property } from "@ui5/webcomponents-base/dist/decorators.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { toggleAttribute } from "./TableUtils.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
+import { toggleAttribute } from "./TableUtils.js";
 import TableRowTemplate from "./TableRowTemplate.js";
 import TableRowBase from "./TableRowBase.js";
 import TableRowCss from "./generated/themes/TableRow.css.js";

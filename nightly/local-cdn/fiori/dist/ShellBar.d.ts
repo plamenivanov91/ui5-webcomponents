@@ -2,10 +2,11 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import type { IButton } from "@ui5/webcomponents/dist/Button.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ClassMap, AccessibilityAttributes, AriaRole } from "@ui5/webcomponents-base";
+import type { ClassMap, AccessibilityAttributes, AriaRole, UI5CustomEvent } from "@ui5/webcomponents-base";
 import type ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type PopoverHorizontalAlign from "@ui5/webcomponents/dist/types/PopoverHorizontalAlign.js";
 import type ShellBarItem from "./ShellBarItem.js";
@@ -64,7 +65,7 @@ interface IShelBarItemInfo extends IShellBarHidableItem {
     title?: string;
     stableDomRef?: string;
     refItemid?: string;
-    press: (e: MouseEvent) => void;
+    press: (e: UI5CustomEvent<Button, "click">) => void;
     order?: number;
     profile?: boolean;
     tooltip?: string;
@@ -128,11 +129,11 @@ declare class ShellBar extends UI5Element {
     /**
      * Disables the automatic search field expansion/collapse when the available space is not enough.
      *
-     * **Note:** The `disableAutoSearchField` property is in an experimental state and is a subject to change.
+     * **Note:** The `disableSearchCollapse` property is in an experimental state and is a subject to change.
      * @default false
      * @public
      */
-    disableAutoSearchField: boolean;
+    disableSearchCollapse: boolean;
     /**
      * Defines the `primaryTitle`.
      *
@@ -168,6 +169,14 @@ declare class ShellBar extends UI5Element {
      * @public
      */
     showProductSwitch: boolean;
+    /**
+     * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
+     *
+     * **Note:** By default the Search Field is not displayed.
+     * @default false
+     * @public
+     */
+    showSearchField: boolean;
     /**
      * Defines additional accessibility attributes on different areas of the component.
      *
@@ -301,7 +310,9 @@ declare class ShellBar extends UI5Element {
     _observableContent: Array<HTMLElement>;
     _autoRestoreSearchField: boolean;
     _headerPress: () => void;
-    _showSearchField: boolean;
+    onSearchOpen: () => void;
+    onSearchClose: () => void;
+    onSearch: () => void;
     static get FIORI_3_BREAKPOINTS(): number[];
     static get FIORI_3_BREAKPOINTS_MAP(): Record<string, string>;
     constructor();
@@ -324,15 +335,6 @@ declare class ShellBar extends UI5Element {
     _calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number;
     domCalculatedValues(cssVar: string): number;
     onBeforeRendering(): void;
-    /**
-     * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
-     *
-     * **Note:** By default the Search Field is not displayed.
-     * @default false
-     * @public
-     */
-    set showSearchField(value: boolean);
-    get showSearchField(): boolean;
     /**
      * Use this method to change the state of the search filed according to internal logic.
      * An event is fired to notify the change.
@@ -359,12 +361,12 @@ declare class ShellBar extends UI5Element {
     onExitDOM(): void;
     _handleSearchIconPress(): void;
     _handleActionListClick(): Promise<void>;
-    _handleCustomActionPress(e: MouseEvent): void;
+    _handleCustomActionPress(e: UI5CustomEvent<Button, "click">): void;
     _handleOverflowPress(): void;
-    _handleNotificationsPress(e: MouseEvent): void;
+    _handleNotificationsPress(e: UI5CustomEvent<Button, "click">): void;
     _handleProfilePress(): void;
     _handleCancelButtonPress(): void;
-    _handleProductSwitchPress(e: MouseEvent): void;
+    _handleProductSwitchPress(e: UI5CustomEvent<Button, "click">): void;
     /**
      * Returns the `logo` DOM ref.
      * @public
@@ -521,6 +523,7 @@ declare class ShellBar extends UI5Element {
 }
 interface IShellBarSelfCollapsibleSearch {
     collapsed: boolean;
+    open: boolean;
 }
 export default ShellBar;
 export type { ShellBarContentItemVisibilityChangeEventDetail, ShellBarNotificationsClickEventDetail, ShellBarProfileClickEventDetail, ShellBarProductSwitchClickEventDetail, ShellBarLogoClickEventDetail, ShellBarMenuItemClickEventDetail, ShellBarAccessibilityAttributes, ShellBarSearchButtonEventDetail, ShellBarSearchFieldToggleEventDetail, IShellBarSelfCollapsibleSearch, };

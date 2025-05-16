@@ -122,7 +122,7 @@ let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends
         return classes;
     }
     get _selected() {
-        if (this.sideNavCollapsed) {
+        if (this.sideNavCollapsed || !this.expanded) {
             return this.selected || this.items.some(item => item.selected);
         }
         return this.selected;

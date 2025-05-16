@@ -24,7 +24,7 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonType from "./types/ButtonType.js";
 import ButtonBadgeDesign from "./types/ButtonBadgeDesign.js";
 import ButtonTemplate from "./ButtonTemplate.js";
-import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED, BUTTON_ARIA_TYPE_ATTENTION, } from "./generated/i18n/i18n-defaults.js";
+import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED, BUTTON_ARIA_TYPE_ATTENTION, BUTTON_BADGE_ONE_ITEM, BUTTON_BADGE_MANY_ITEMS, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
 let isGlobalHandlerAttached = false;
@@ -204,8 +204,20 @@ let Button = Button_1 = class Button extends UI5Element {
             this._internals.states.delete("has-overlay-badge");
         }
     }
-    _onclick() {
+    _onclick(e) {
+        e.stopImmediatePropagation();
         if (this.nonInteractive) {
+            return;
+        }
+        const { altKey, ctrlKey, metaKey, shiftKey, } = e;
+        const prevented = !this.fireDecoratorEvent("click", {
+            originalEvent: e,
+            altKey,
+            ctrlKey,
+            metaKey,
+            shiftKey,
+        });
+        if (prevented) {
             return;
         }
         if (this._isSubmit) {
@@ -311,13 +323,31 @@ let Button = Button_1 = class Button extends UI5Element {
         return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
     }
     get ariaLabelText() {
-        return getEffectiveAriaLabelText(this);
+        const ariaLabelText = getEffectiveAriaLabelText(this) || "";
+        const typeLabelText = this.hasButtonType ? this.buttonTypeText : "";
+        const internalLabelText = this.effectiveBadgeDescriptionText || "";
+        const labelParts = [ariaLabelText, typeLabelText, internalLabelText].filter(part => part);
+        return labelParts.join(" ");
     }
     get ariaDescriptionText() {
-        const ariaDescribedByText = this.hasButtonType ? this.buttonTypeText : "";
-        const accessibleDescription = this.accessibleDescription || "";
-        const ariaDescriptionText = `${ariaDescribedByText} ${accessibleDescription}`.trim();
-        return ariaDescriptionText || undefined;
+        return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+    }
+    get effectiveBadgeDescriptionText() {
+        if (!this.shouldRenderBadge) {
+            return "";
+        }
+        const badgeEffectiveText = this.badge[0].effectiveText;
+        // Use distinct i18n keys for singular and plural badge values to ensure proper localization.
+        // Some languages have different grammatical rules for singular and plural forms,
+        // so separate keys (BUTTON_BADGE_ONE_ITEM and BUTTON_BADGE_MANY_ITEMS) are necessary.
+        switch (badgeEffectiveText) {
+            case "":
+                return badgeEffectiveText;
+            case "1":
+                return Button_1.i18nBundle.getText(BUTTON_BADGE_ONE_ITEM, badgeEffectiveText);
+            default:
+                return Button_1.i18nBundle.getText(BUTTON_BADGE_MANY_ITEMS, badgeEffectiveText);
+        }
     }
     get _isSubmit() {
         return this.type === ButtonType.Submit || this.submits;
@@ -413,6 +443,24 @@ Button = Button_1 = __decorate([
         template: ButtonTemplate,
         styles: buttonCss,
         shadowRootOptions: { delegatesFocus: true },
+    })
+    /**
+     * Fired when the component is activated either with a mouse/tap or by using the Enter or Space key.
+     *
+     * **Note:** The event will not be fired if the `disabled` property is set to `true`.
+     *
+     * @since 2.10.0
+     * @public
+     * @param {Event} originalEvent Returns original event that comes from user's **click** interaction
+     * @param {boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+     * @param {boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+     * @param {boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+     * @param {boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
+     */
+    ,
+    event("click", {
+        bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired whenever the active state of the component changes.

@@ -36,7 +36,7 @@ type SearchEventDetails = {
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/Search.js";`
+ * `import "@ui5/webcomponents-fiori/dist/Search.js";`
  *
  * @constructor
  * @extends SearchField
@@ -141,7 +141,7 @@ declare class Search extends SearchField {
     onBeforeRendering(): void;
     onAfterRendering(): void;
     _handleMobileInput(e: CustomEvent<InputEventDetail>): void;
-    _shouldPerformSelectionOnMobile(e: CustomEvent<InputEventDetail>): boolean;
+    _shouldPerformSelectionOnMobile(inputType: string): boolean;
     _handleTypeAhead(item: ISearchSuggestionItem): void;
     _startsWithMatchingItems(str: string): Array<ISearchSuggestionItem>;
     _startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem>;
@@ -176,7 +176,7 @@ declare class Search extends SearchField {
     _getItemsList(): List;
     _getFooterButton(): Button;
     get _flattenItems(): Array<ISearchSuggestionItem>;
-    get nativeInput(): HTMLInputElement | null;
+    get nativeInput(): HTMLInputElement | null | undefined;
     get mobileInput(): Input | null;
     get cancelButtonText(): string;
     get suggestionsText(): string;

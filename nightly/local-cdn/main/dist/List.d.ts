@@ -286,6 +286,7 @@ declare class List extends UI5Element {
     onAfterRendering(): void;
     attachGroupHeaderEvents(): void;
     detachGroupHeaderEvents(): void;
+    getFocusDomRef(): HTMLElement | undefined;
     get shouldRenderH1(): string | false | undefined;
     get headerID(): string;
     get modeLabelID(): string;

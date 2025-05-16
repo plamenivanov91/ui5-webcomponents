@@ -22,7 +22,7 @@ import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Menu from "@ui5/webcomponents/dist/Menu.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import { isDesktop, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import search from "@ui5/webcomponents-icons/dist/search.js";
 import da from "@ui5/webcomponents-icons/dist/da.js";
 import bell from "@ui5/webcomponents-icons/dist/bell.js";
@@ -104,11 +104,11 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         /**
          * Disables the automatic search field expansion/collapse when the available space is not enough.
          *
-         * **Note:** The `disableAutoSearchField` property is in an experimental state and is a subject to change.
+         * **Note:** The `disableSearchCollapse` property is in an experimental state and is a subject to change.
          * @default false
          * @public
          */
-        this.disableAutoSearchField = false;
+        this.disableSearchCollapse = false;
         /**
          * Defines, if the notification icon would be displayed.
          * @default false
@@ -121,6 +121,14 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
          * @public
          */
         this.showProductSwitch = false;
+        /**
+         * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
+         *
+         * **Note:** By default the Search Field is not displayed.
+         * @default false
+         * @public
+         */
+        this.showSearchField = false;
         /**
          * Defines additional accessibility attributes on different areas of the component.
          *
@@ -173,7 +181,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         this._lastOffsetWidth = 0;
         this._observableContent = [];
         this._autoRestoreSearchField = false;
-        this._showSearchField = false;
         this._hiddenIcons = [];
         this._isInitialRendering = true;
         this._overflowNotifications = null;
@@ -187,6 +194,21 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
                 const menuPopover = this._getMenuPopover();
                 menuPopover.opener = this.shadowRoot.querySelector(".ui5-shellbar-menu-button");
                 menuPopover.open = true;
+            }
+        };
+        this.onSearchOpen = () => {
+            if (isPhone()) {
+                this.setSearchState(true);
+            }
+        };
+        this.onSearchClose = () => {
+            if (isPhone()) {
+                this.setSearchState(false);
+            }
+        };
+        this.onSearch = () => {
+            if (!isPhone() && !this.search?.value) {
+                this.setSearchState(!this.showSearchField);
             }
         };
         this._handleResize = throttle(() => {
@@ -342,31 +364,28 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
             return isHidden && isSet && !shouldStayOnScreen;
         });
         this._observeContentItems();
-    }
-    /**
-     * Defines, if the Search Field would be displayed when there is a valid `searchField` slot.
-     *
-     * **Note:** By default the Search Field is not displayed.
-     * @default false
-     * @public
-     */
-    set showSearchField(value) {
-        if (isSelfCollapsibleSearch(this.search)) {
-            this.search.collapsed = !value;
+        // search field shouldn't be expanded initially in full width mode
+        if (this.showFullWidthSearch && this._isInitialRendering) {
+            this.setSearchState(false);
+            this._autoRestoreSearchField = true;
         }
-        this._showSearchField = value;
-    }
-    get showSearchField() {
         if (isSelfCollapsibleSearch(this.search)) {
-            return !this.search.collapsed;
+            if (isPhone()) {
+                this.search.open = this.showSearchField;
+            }
+            else {
+                this.search.collapsed = !this.showSearchField;
+            }
         }
-        return this._showSearchField;
     }
     /**
      * Use this method to change the state of the search filed according to internal logic.
      * An event is fired to notify the change.
      */
     async setSearchState(expanded) {
+        if (expanded === this.showSearchField) {
+            return;
+        }
         this.showSearchField = expanded;
         await renderFinished();
         this.fireDecoratorEvent("search-field-toggle", { expanded });
@@ -461,6 +480,11 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
     }
     onEnterDOM() {
         ResizeHandler.register(this, this._handleResize);
+        if (isSelfCollapsibleSearch(this.search)) {
+            this.search.addEventListener("ui5-open", this.onSearchOpen);
+            this.search.addEventListener("ui5-close", this.onSearchClose);
+            this.search.addEventListener("ui5-search", this.onSearch);
+        }
         if (isDesktop()) {
             this.setAttribute("desktop", "");
         }
@@ -469,6 +493,11 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         this.contentItemsObserver.disconnect();
         this._observableContent = [];
         ResizeHandler.deregister(this, this._handleResize);
+        if (isSelfCollapsibleSearch(this.search)) {
+            this.search.removeEventListener("ui5-open", this.onSearchOpen);
+            this.search.removeEventListener("ui5-close", this.onSearchClose);
+            this.search.removeEventListener("ui5-search", this.onSearch);
+        }
     }
     _handleSearchIconPress() {
         const searchButtonRef = this.shadowRoot.querySelector(".ui5-shellbar-search-button");
@@ -781,8 +810,8 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
     get autoSearchField() {
         const onFocus = document.activeElement === this.searchField[0];
         const hasValue = this.searchField[0]?.value?.length > 0;
-        const disableAutoSearchField = this.disableAutoSearchField || onFocus || hasValue;
-        if (disableAutoSearchField) {
+        const disableSearchCollapse = this.disableSearchCollapse || onFocus || hasValue;
+        if (disableSearchCollapse) {
             return false;
         }
         return this.showSearchField || this._autoRestoreSearchField;
@@ -1087,7 +1116,7 @@ __decorate([
 ], ShellBar.prototype, "hideSearchButton", void 0);
 __decorate([
     property({ type: Boolean })
-], ShellBar.prototype, "disableAutoSearchField", void 0);
+], ShellBar.prototype, "disableSearchCollapse", void 0);
 __decorate([
     property()
 ], ShellBar.prototype, "primaryTitle", void 0);
@@ -1103,6 +1132,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], ShellBar.prototype, "showProductSwitch", void 0);
+__decorate([
+    property({ type: Boolean })
+], ShellBar.prototype, "showSearchField", void 0);
 __decorate([
     property({ type: Object })
 ], ShellBar.prototype, "accessibilityAttributes", void 0);
@@ -1157,9 +1189,6 @@ __decorate([
 __decorate([
     slot({ type: HTMLElement, individualSlots: true })
 ], ShellBar.prototype, "content", void 0);
-__decorate([
-    property({ type: Boolean })
-], ShellBar.prototype, "showSearchField", null);
 __decorate([
     i18n("@ui5/webcomponents-fiori")
 ], ShellBar, "i18nBundle", void 0);
@@ -1273,7 +1302,7 @@ ShellBar = ShellBar_1 = __decorate([
 ], ShellBar);
 const isSelfCollapsibleSearch = (searchField) => {
     if (searchField) {
-        return "collapsed" in searchField;
+        return "collapsed" in searchField && "open" in searchField;
     }
     return false;
 };

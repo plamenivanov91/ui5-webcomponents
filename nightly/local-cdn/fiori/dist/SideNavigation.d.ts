@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
 import type NavigationMenu from "./NavigationMenu.js";
-import type { MenuItemClickEventDetail } from "@ui5/webcomponents/dist/Menu.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -16,11 +15,6 @@ type SideNavigationPopoverContents = {
 };
 type SideNavigationSelectionChangeEventDetail = {
     item: SideNavigationItemBase;
-};
-type NavigationMenuClickEventDetail = MenuItemClickEventDetail & {
-    item: Pick<MenuItemClickEventDetail, "item"> & {
-        associatedItem: SideNavigationSelectableItemBase;
-    };
 };
 /**
  * @class
@@ -130,6 +124,7 @@ declare class SideNavigation extends UI5Element {
     constructor();
     _handleResizeBound: () => void;
     onBeforeRendering(): void;
+    initGroupsSettings(items: Array<SideNavigationItemBase>): void;
     _onAfterPopoverOpen(): void;
     _onBeforePopoverOpen(): void;
     _onBeforePopoverClose(): void;
@@ -137,9 +132,10 @@ declare class SideNavigation extends UI5Element {
     _onBeforeMenuClose(): void;
     get accSideNavigationPopoverHiddenText(): string;
     get ariaRoleDescNavigationList(): string;
+    get navigationMenuPrimaryHiddenText(): string;
+    get navigationMenuFooterHiddenText(): string;
     get overflowAccessibleName(): string;
     handlePopupItemClick(e: KeyboardEvent | PointerEvent): void;
-    handleOverflowItemClick(e: CustomEvent<NavigationMenuClickEventDetail>): void;
     getOverflowPopover(): NavigationMenu;
     getPicker(): ResponsivePopover;
     openPicker(opener: HTMLElement): void;

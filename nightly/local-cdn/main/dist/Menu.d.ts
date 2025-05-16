@@ -3,9 +3,8 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import type MenuItem from "./MenuItem.js";
-import "./MenuItem.js";
+import type PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import "./MenuSeparator.js";
 import type { ListItemClickEventDetail } from "./List.js";
 /**
@@ -136,18 +135,17 @@ declare class Menu extends UI5Element {
     onBeforeRendering(): void;
     _close(): void;
     _openItemSubMenu(item: MenuItem): void;
-    _closeItemSubMenu(item: MenuItem): void;
     _itemMouseOver(e: MouseEvent): void;
     focus(focusOptions?: FocusOptions): Promise<void>;
+    _closeOtherSubMenus(item: MenuItem): void;
     _startOpenTimeout(item: MenuItem): void;
     _itemClick(e: CustomEvent<ListItemClickEventDetail>): void;
     _itemKeyDown(e: KeyboardEvent): void;
-    _navigateOutOfEndContent(menuItem: MenuItem, isDownwards?: boolean): void;
+    _navigateOutOfEndContent(e: CustomEvent): void;
     _beforePopoverOpen(e: CustomEvent): void;
     _afterPopoverOpen(): void;
     _beforePopoverClose(e: CustomEvent): void;
     _afterPopoverClose(): void;
-    _isInstanceOfMenuItem(object: any): object is MenuItem;
 }
 export default Menu;
 export type { MenuItemClickEventDetail, MenuBeforeCloseEventDetail, MenuBeforeOpenEventDetail, IMenuItem, };

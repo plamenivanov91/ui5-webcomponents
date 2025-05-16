@@ -325,15 +325,13 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         const yearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.primaryCalendarType });
         const localeData = getCachedLocaleDataInstance(getLocale());
         this._headerMonthButtonText = localeData.getMonthsStandAlone("wide", this.primaryCalendarType)[this._calendarDate.getMonth()];
+        this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
         if (this._currentPicker === "year") {
             const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
             const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
             rangeStart.setYear(this._currentPickerDOM._firstYear);
             rangeEnd.setYear(this._currentPickerDOM._lastYear);
-            this._headerYearButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
-        }
-        else {
-            this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
+            this._headerYearRangeButtonText = `${yearFormat.format(rangeStart.toLocalJSDate())} - ${yearFormat.format(rangeEnd.toLocalJSDate())}`;
         }
         this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
     }
@@ -388,6 +386,7 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
     }
     _setSecondaryCalendarTypeButtonText() {
         const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
+        this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
         if (this._currentPicker === "year") {
             const rangeStart = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
             const rangeEnd = new CalendarDateComponent(this._calendarDate, this._primaryCalendarType);
@@ -397,10 +396,7 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
                 .firstDate;
             const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
                 .lastDate;
-            this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
-        }
-        else {
-            this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
+            this._headerYearRangeButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate())} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate())}`;
         }
     }
     get secondaryCalendarTypeButtonText() {
@@ -439,6 +435,9 @@ let Calendar = Calendar_1 = class Calendar extends CalendarPart {
         return this._currentPicker !== "month";
     }
     get _isYearPickerHidden() {
+        return this._currentPicker !== "year";
+    }
+    get _isHeaderYearRangeButtonHidden() {
         return this._currentPicker !== "year";
     }
     _fireEventAndUpdateSelectedDates(selectedDates) {
@@ -614,6 +613,12 @@ __decorate([
 __decorate([
     property()
 ], Calendar.prototype, "_headerYearButtonTextSecType", void 0);
+__decorate([
+    property()
+], Calendar.prototype, "_headerYearRangeButtonText", void 0);
+__decorate([
+    property()
+], Calendar.prototype, "_headerYearRangeButtonTextSecType", void 0);
 __decorate([
     property({ noAttribute: true })
 ], Calendar.prototype, "_pickersMode", void 0);

@@ -15,7 +15,7 @@ import SearchFieldTemplate from "./SearchFieldTemplate.js";
 import SearchFieldCss from "./generated/themes/SearchField.css.js";
 import { isEnter, } from "@ui5/webcomponents-base/dist/Keys.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import { SEARCH_FIELD_SCOPE_SELECT_LABEL, SEARCH_FIELD_CLEAR_ICON, SEARCH_FIELD_SEARCH_ICON, } from "./generated/i18n/i18n-defaults.js";
+import { SEARCH_FIELD_SCOPE_SELECT_LABEL, SEARCH_FIELD_CLEAR_ICON, SEARCH_FIELD_SEARCH_ICON, SEARCH_FIELD_LABEL, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
@@ -31,7 +31,7 @@ import { SEARCH_FIELD_SCOPE_SELECT_LABEL, SEARCH_FIELD_CLEAR_ICON, SEARCH_FIELD_
  *
  * ### ES6 Module Import
  *
- * `import "@ui5/webcomponents/fiori/dist/SearchField.js";`
+ * `import "@ui5/webcomponents-fiori/dist/SearchField.js";`
  *
  * @constructor
  * @extends UI5Element
@@ -50,7 +50,7 @@ let SearchField = SearchField_1 = class SearchField extends UI5Element {
          * Defines whether the component is collapsed.
          *
          * @default false
-         * @public
+         * @private
          */
         this.collapsed = false;
         /**
@@ -128,10 +128,11 @@ let SearchField = SearchField_1 = class SearchField extends UI5Element {
             scope: SearchField_1.i18nBundle.getText(SEARCH_FIELD_SCOPE_SELECT_LABEL),
             searchIcon: SearchField_1.i18nBundle.getText(SEARCH_FIELD_SEARCH_ICON),
             clearIcon: SearchField_1.i18nBundle.getText(SEARCH_FIELD_CLEAR_ICON),
+            searchFieldAriaLabel: SearchField_1.i18nBundle.getText(SEARCH_FIELD_LABEL),
         };
     }
     get _effectiveIconTooltip() {
-        return this.searchIconTooltip || this._translations.searchIcon;
+        return this._translations.searchIcon;
     }
     captureRef(ref) {
         if (ref) {
@@ -156,7 +157,7 @@ __decorate([
 ], SearchField.prototype, "accessibleName", void 0);
 __decorate([
     property()
-], SearchField.prototype, "searchIconTooltip", void 0);
+], SearchField.prototype, "accessibleDescription", void 0);
 __decorate([
     slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
 ], SearchField.prototype, "scopes", void 0);
