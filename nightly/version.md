@@ -1,14 +1,11 @@
-commit e46b867f77412ff2a4b57a025dda13799bc9ac16
-Author: Nikola Anachkov <87311182+NakataCode@users.noreply.github.com>
-Date:   Thu May 15 14:15:49 2025 +0200
+commit 93066c6036360c0c28262586bce138ff9ceb5bc5
+Author: Konstantin Gogov <konstantin.gogov@sap.com>
+Date:   Mon May 19 09:58:35 2025 +0300
 
-    fix(ui5-list): adjust observer to handle sticky headers (#11526)
+    fix(ui5-li-custom): correct padding for ListItemCustom (#11487)
     
-    Problem:
-    The list's onLoadMore event is not triggered in Firefox at certain zoom levels when a sticky header is present. This is due to how Firefox calculates intersections with sticky positioned elements, causing subpixel rendering issues.
-    
-    Solution:
-    Use the proper scroll container as the root for the IntersectionObserver and add a rootMargin of 5px.
-    
-    Similar to: #11242
-    Fixes: #11461
+    Increase the specificity of selection mode padding rules by including
+    [wrapping-type] in the selectors, ensuring they override the generic
+    [wrapping-type="None"][description] padding rule. Remove unnecessary
+    [ui5-li] and [ui5-li-custom] selectors to prevent CSS leakage and
+    unnecessary bundling.

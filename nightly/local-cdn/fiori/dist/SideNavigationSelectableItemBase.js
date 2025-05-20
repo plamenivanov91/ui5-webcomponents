@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isLeft, isRight, } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 /**
  * Fired when the component is activated either with a click/tap or by using the [Enter] or [Space] keys.
@@ -115,11 +115,18 @@ let SideNavigationSelectableItemBase = class SideNavigationSelectableItemBase ex
         return "page";
     }
     _onkeydown(e) {
-        if (isSpace(e)) {
+        const isRTL = this.effectiveDir === "rtl";
+        if (isSpace(e) || isRight(e) || isLeft(e)) {
             e.preventDefault();
         }
         if (isEnter(e)) {
             this._activate(e);
+        }
+        if ((isRTL ? isLeft(e) : isRight(e)) && this.sideNavCollapsed && this.hasSubItems) {
+            this._activate(e);
+        }
+        if ((isRTL ? isRight(e) : isLeft(e)) && this.inPopover) {
+            this.associatedItem?.sideNavigation?.closePicker();
         }
     }
     _onkeyup(e) {

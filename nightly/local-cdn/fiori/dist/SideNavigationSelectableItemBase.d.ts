@@ -107,6 +107,12 @@ declare class SideNavigationSelectableItemBase extends SideNavigationItemBase {
      * @default false
      */
     isOverflow: boolean;
+    /**
+     * Reference to the original side navigation item that opened the popover.
+     *
+     * @private
+     */
+    associatedItem?: SideNavigationItemBase;
     get ariaRole(): "menuitem" | "menuitemradio" | "treeitem";
     get isSelectable(): boolean;
     get _href(): string | undefined;

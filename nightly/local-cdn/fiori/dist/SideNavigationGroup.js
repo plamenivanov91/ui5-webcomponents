@@ -114,11 +114,23 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
             : SideNavigationGroup_1.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
     }
     _onkeydown(e) {
-        if (isLeft(e) || isMinus(e)) {
+        const isRTL = this.effectiveDir === "rtl";
+        if (isLeft(e)) {
+            e.preventDefault();
+            this.expanded = isRTL;
+            return;
+        }
+        if (isRight(e)) {
+            e.preventDefault();
+            this.expanded = !isRTL;
+        }
+        if (isMinus(e)) {
+            e.preventDefault();
             this.expanded = false;
             return;
         }
-        if (isRight(e) || isPlus(e)) {
+        if (isPlus(e)) {
+            e.preventDefault();
             this.expanded = true;
         }
     }

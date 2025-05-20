@@ -42,6 +42,9 @@ class SideNavigationItemBase extends UI5Element {
     get _tooltip() {
         return this.tooltip || undefined;
     }
+    get hasSubItems() {
+        return false;
+    }
     get classesArray() {
         const classes = [];
         if (this.disabled) {
