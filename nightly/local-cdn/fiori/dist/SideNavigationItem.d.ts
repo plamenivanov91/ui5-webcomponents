@@ -56,6 +56,7 @@ declare class SideNavigationItem extends SideNavigationSelectableItemBase {
     get classesArray(): string[];
     get _selected(): boolean;
     get _arrowTooltip(): string;
+    get _ariaLabel(): string | undefined;
     applyInitialFocusInPopover(): void;
     _onToggleClick(e: CustomEvent): void;
     _onkeydown(e: KeyboardEvent): void;
