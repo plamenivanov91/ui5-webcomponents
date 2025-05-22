@@ -1,5 +1,5 @@
-commit 6fbd0e2341e322331745f7a9dc80992ac07fac46
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Tue May 20 16:19:36 2025 +0300
+commit 5d0a924137ec81017db2797cb1ffde5b57b35bf0
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed May 21 17:17:59 2025 +0300
 
-    fix(popups): fix header styles according to the specification (#11513)
+    chore: update link for commit style in PR template (#11546)
