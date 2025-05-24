@@ -67,7 +67,6 @@ declare class TableSelectionMulti extends TableSelectionBase {
      * @public
      */
     setSelectedAsSet(selectedSet: Set<string>): void;
-    _invalidateTableAndRows(): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement): void;
     _onclick(e: MouseEvent): void;

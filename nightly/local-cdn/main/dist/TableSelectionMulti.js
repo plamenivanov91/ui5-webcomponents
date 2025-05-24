@@ -112,11 +112,6 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
     setSelectedAsSet(selectedSet) {
         this.selected = [...selectedSet].join(" ");
     }
-    _invalidateTableAndRows() {
-        super._invalidateTableAndRows();
-        const headerRow = this._table?.headerRow[0];
-        headerRow && headerRow._invalidate++;
-    }
     _onkeydown(e) {
         if (!this._table || !e.shiftKey) {
             return;

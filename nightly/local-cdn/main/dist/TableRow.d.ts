@@ -85,7 +85,7 @@ declare class TableRow extends TableRowBase {
     _onkeyup(): void;
     _onfocusout(): void;
     _onOverflowButtonClick(e: UI5CustomEvent<Button, "click">): void;
-    get _isInteractive(): boolean;
+    get _isInteractive(): boolean | undefined;
     get _hasOverflowActions(): boolean;
     get _flexibleActions(): TableRowActionBase[];
     get _fixedActions(): TableRowActionBase[];

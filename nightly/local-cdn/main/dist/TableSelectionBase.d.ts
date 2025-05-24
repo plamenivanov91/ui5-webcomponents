@@ -3,6 +3,7 @@ import type Table from "./Table.js";
 import type TableRowBase from "./TableRowBase.js";
 import type TableRow from "./TableRow.js";
 import type { ITableFeature } from "./Table.js";
+import TableSelectionBehavior from "./types/TableSelectionBehavior.js";
 /**
  * Fired when selection is changed by user interaction.
  *
@@ -25,6 +26,14 @@ declare abstract class TableSelectionBase extends UI5Element implements ITableFe
      * @public
      */
     selected?: string;
+    /**
+     * Defines the selection behavior.
+     *
+     * @default "RowSelector"
+     * @public
+     * @since 2.11
+     */
+    behavior: `${TableSelectionBehavior}`;
     readonly identifier = "TableSelection";
     protected _table?: Table;
     onTableActivate(table: Table): void;
@@ -68,8 +77,6 @@ declare abstract class TableSelectionBase extends UI5Element implements ITableFe
     abstract setSelected(row: TableRowBase, selected: boolean, fireEvent: boolean): void;
     /**
      * Invalidates the table and its rows to re-evaluate the selection.
-     *
-     * @protected
      */
     protected _invalidateTableAndRows(): void;
 }

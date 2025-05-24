@@ -74,12 +74,17 @@ let TableRow = class TableRow extends TableRowBase {
         }
         if (eventOrigin === this && this._isInteractive && isEnter(e)) {
             this.toggleAttribute("_active", true);
-            this._table?._onRowClick(this);
+            this._onclick();
         }
     }
     _onclick() {
-        if (this._isInteractive && this === getActiveElement()) {
-            this._table?._onRowClick(this);
+        if (this === getActiveElement()) {
+            if (this._isSelectable && !this._hasRowSelector) {
+                this._onSelectionChange();
+            }
+            else if (this.interactive) {
+                this._table?._onRowClick(this);
+            }
         }
     }
     _onkeyup() {
@@ -94,7 +99,7 @@ let TableRow = class TableRow extends TableRowBase {
         e.stopPropagation();
     }
     get _isInteractive() {
-        return this.interactive;
+        return this.interactive || (this._isSelectable && !this._hasRowSelector);
     }
     get _hasOverflowActions() {
         let renderedActionsCount = 0;
