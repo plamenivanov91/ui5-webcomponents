@@ -331,10 +331,10 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
      * Private members
      */
     attachListeners() {
-        this.addEventListener("close-overflow", this._onCloseOverflow);
+        this.addEventListener("ui5-close-overflow", this._onCloseOverflow);
     }
     detachListeners() {
-        this.removeEventListener("close-overflow", this._onCloseOverflow);
+        this.removeEventListener("ui5-close-overflow", this._onCloseOverflow);
     }
     onToolbarItemChange() {
         // some items were updated reset the cache and trigger a re-render

@@ -325,12 +325,12 @@ let Search = Search_1 = class Search extends SearchField {
         this.fireDecoratorEvent("close");
     }
     _handleBeforeOpen() {
+        this._valueBeforeOpen = this.value;
         if (isPhone() && this.mobileInput) {
             this.mobileInput.value = this.value;
         }
     }
     _handleOpen() {
-        this._valueBeforeOpen = this.value;
         this.fireDecoratorEvent("open");
     }
     _handleActionKeydown(e) {
