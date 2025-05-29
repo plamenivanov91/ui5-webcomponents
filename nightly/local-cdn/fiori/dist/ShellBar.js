@@ -20,6 +20,7 @@ import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import ButtonBadge from "@ui5/webcomponents/dist/ButtonBadge.js";
 import Menu from "@ui5/webcomponents/dist/Menu.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import { isDesktop, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -692,7 +693,6 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
                     stableDomRef: item.stableDomRef,
                     tooltip: item.title || item.text,
                     accessibilityAttributes: item.accessibilityAttributes,
-                    accessibleName: item.count ? `${item.title || item.text}, ${item.count}` : (item.title || item.text),
                 };
             }),
             {
@@ -750,7 +750,7 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         const notificationsArr = [];
         let overflowNotifications = null;
         this._itemsInfo.forEach(item => {
-            if (item.count && this.isIconHidden(item.icon)) {
+            if (item.count && item.classes.includes("ui5-shellbar-hidden-button")) {
                 notificationsArr.push(item.count);
             }
         });
@@ -1207,6 +1207,7 @@ ShellBar = ShellBar_1 = __decorate([
             Popover,
             ListItemStandard,
             Menu,
+            ButtonBadge,
         ],
     })
     /**
