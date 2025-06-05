@@ -180,6 +180,11 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
     }
     handlePopupItemClick(e) {
         const associatedItem = e.target.associatedItem;
+        if (associatedItem.effectiveDisabled) {
+            e.stopPropagation();
+            e.preventDefault();
+            return;
+        }
         if (isInstanceOfSideNavigationItem(associatedItem) && associatedItem.unselectable) {
             return;
         }
@@ -261,9 +266,7 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
             if (this.collapsed && item.classList.contains("ui5-sn-item-hidden")) {
                 return;
             }
-            if (!item.disabled) {
-                result.push(item);
-            }
+            result.push(item);
         });
         return result;
     }
@@ -377,6 +380,11 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
         }, new Array());
     }
     _handleItemClick(e, item) {
+        if (item.effectiveDisabled) {
+            e.stopPropagation();
+            e.preventDefault();
+            return;
+        }
         if (item.selected && !this.collapsed) {
             const { altKey, ctrlKey, metaKey, shiftKey, } = e;
             const executeEvent = item.fireDecoratorEvent("click", {

@@ -207,6 +207,7 @@ declare class FlexibleColumnLayout extends UI5Element {
     _handleResize: () => void;
     _onSeparatorMove: (e: TouchEvent | MouseEvent) => void;
     _onSeparatorMoveEnd: (e: TouchEvent | MouseEvent) => void;
+    onColumnCollapseAnimationEndRef: (e: TransitionEvent) => void;
     static i18nBundle: I18nBundle;
     _prevLayout: `${FCLLayout}` | null;
     _userDefinedColumnLayouts: UserDefinedColumnLayouts;
@@ -303,6 +304,8 @@ declare class FlexibleColumnLayout extends UI5Element {
     get startSeparatorGripVisibility(): boolean | undefined;
     get endSeparatorGripVisibility(): boolean | undefined;
     get startSeparatorArrowVisibility(): boolean | undefined;
+    get startSeparatorValue(): number;
+    get endSeparatorValue(): number;
     get startArrowDirection(): "forward" | "backward" | undefined;
     get startArrowDOM(): HTMLElement;
     get effectiveSeparatorsInfo(): {

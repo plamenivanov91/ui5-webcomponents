@@ -53,9 +53,17 @@ declare class SideNavigationItemBase extends UI5Element implements ITabbable {
     sideNavCollapsed: boolean;
     inPopover: boolean;
     _sideNavigation: SideNavigation;
+    /**
+     * Defines if the item's group is disabled.
+     * @private
+     * @default false
+     * @since 2.10.0
+     */
+    _groupDisabled: boolean;
     onEnterDOM(): void;
     get _tooltip(): string | undefined;
     get hasSubItems(): boolean;
+    get effectiveDisabled(): boolean;
     get classesArray(): string[];
     get _classes(): string;
     get effectiveTabIndex(): string | undefined;

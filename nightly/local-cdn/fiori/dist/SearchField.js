@@ -163,7 +163,7 @@ __decorate([
 ], SearchField.prototype, "scopes", void 0);
 __decorate([
     slot()
-], SearchField.prototype, "advancedFilter", void 0);
+], SearchField.prototype, "filterButton", void 0);
 __decorate([
     property({ type: Boolean })
 ], SearchField.prototype, "focusedInnerInput", void 0);

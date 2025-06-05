@@ -54,11 +54,19 @@ let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends
          */
         this._fixed = false;
     }
+    onBeforeRendering() {
+        this.items.forEach(item => {
+            item._parentDisabled = this.effectiveDisabled;
+        });
+    }
     get overflowItems() {
         return [this];
     }
     get hasSubItems() {
         return this.items.length > 0;
+    }
+    get effectiveDisabled() {
+        return this.disabled || this._groupDisabled;
     }
     get selectableItems() {
         if (this.inPopover && this.unselectable && this.items.length) {
@@ -91,7 +99,7 @@ let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends
         if (this.inPopover && this.accessibilityAttributes?.hasPopup) {
             return this.accessibilityAttributes.hasPopup;
         }
-        if (!this.disabled && this.sideNavCollapsed && this.items.length) {
+        if (!this.effectiveDisabled && this.sideNavCollapsed && this.items.length) {
             return "tree";
         }
         return undefined;
@@ -116,7 +124,7 @@ let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends
     }
     get classesArray() {
         const classes = super.classesArray;
-        if (!this.disabled && this.sideNavigation?.collapsed && this.items.length) {
+        if (!this.effectiveDisabled && this.sideNavigation?.collapsed && this.items.length) {
             classes.push("ui5-sn-item-with-expander");
         }
         if (this._fixed) {
@@ -153,6 +161,9 @@ let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends
         this._toggle();
     }
     _onkeydown(e) {
+        if (this.effectiveDisabled) {
+            return;
+        }
         const isRTL = this.effectiveDir === "rtl";
         if (this.sideNavigation.classList.contains("ui5-side-navigation-in-popover") || this.sideNavCollapsed) {
             super._onkeydown(e);
@@ -226,7 +237,7 @@ let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends
         return true;
     }
     _toggle() {
-        if (this.items.length) {
+        if (this.items.length && !this.effectiveDisabled) {
             this.expanded = !this.expanded;
         }
     }

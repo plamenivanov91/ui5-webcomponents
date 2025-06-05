@@ -36,9 +36,7 @@ declare class SideNavigationGroup extends SideNavigationItemBase {
      */
     items: Array<SideNavigationItem>;
     static i18nBundle: I18nBundle;
-    _initialChildDisabledStates: Map<SideNavigationItemBase, boolean>;
     onBeforeRendering(): void;
-    _updateChildItemsDisabledState(): void;
     get overflowItems(): Array<HTMLElement>;
     get selectableItems(): Array<SideNavigationSelectableItemBase>;
     get focusableItems(): Array<SideNavigationItemBase>;

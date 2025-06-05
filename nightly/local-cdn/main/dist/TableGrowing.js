@@ -52,7 +52,6 @@ import { findVerticalScrollContainer } from "./TableUtils.js";
  * @extends UI5Element
  * @since 2.0.0
  * @public
- * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 let TableGrowing = TableGrowing_1 = class TableGrowing extends UI5Element {
     constructor() {

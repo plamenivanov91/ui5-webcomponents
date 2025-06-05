@@ -43,8 +43,10 @@ declare class SideNavigationItem extends SideNavigationSelectableItemBase {
      */
     items: Array<SideNavigationSubItem>;
     static i18nBundle: I18nBundle;
+    onBeforeRendering(): void;
     get overflowItems(): Array<SideNavigationItem>;
     get hasSubItems(): boolean;
+    get effectiveDisabled(): boolean;
     get selectableItems(): Array<SideNavigationSelectableItemBase>;
     get focusableItems(): Array<SideNavigationItemBase>;
     get allItems(): Array<SideNavigationItemBase>;

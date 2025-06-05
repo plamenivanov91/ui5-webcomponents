@@ -44,6 +44,10 @@ const COLUMN = {
     MID: 1,
     END: 2,
 };
+const SEPARATOR_DEFAULT_VALUES = {
+    START: 50,
+    END: 75,
+};
 const COLUMN_MIN_WIDTH = 248;
 /**
  * @class
@@ -167,13 +171,14 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
             const columnDOM = e.target;
             columnDOM.classList.add("ui5-fcl-column--hidden");
             columnDOM.classList.remove("ui5-fcl-column-collapse-animation");
-            columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEnd);
+            columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEndRef);
         };
         this._prevLayout = null;
         this.initialRendering = true;
         this._handleResize = this.handleResize.bind(this);
         this._onSeparatorMove = this.onSeparatorMove.bind(this);
         this._onSeparatorMoveEnd = this.onSeparatorMoveEnd.bind(this);
+        this.onColumnCollapseAnimationEndRef = this.onColumnCollapseAnimationEnd.bind(this);
         const handleTouchStartEvent = (e) => {
             this.onSeparatorPress(e);
         };
@@ -270,6 +275,7 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
         }
     }
     expandColumn(columnDOM, columnWidth) {
+        columnDOM.removeEventListener("transitionend", this.onColumnCollapseAnimationEndRef);
         columnDOM.classList.remove("ui5-fcl-column--hidden");
         columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
     }
@@ -279,7 +285,7 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
         if (hasAnimation) {
             // hide column with delay to allow the animation runs entirely
             columnDOM.classList.add("ui5-fcl-column-collapse-animation");
-            columnDOM.addEventListener("transitionend", this.onColumnCollapseAnimationEnd);
+            columnDOM.addEventListener("transitionend", this.onColumnCollapseAnimationEndRef);
         }
         else {
             columnDOM.classList.add("ui5-fcl-column--hidden");
@@ -774,6 +780,22 @@ let FlexibleColumnLayout = FlexibleColumnLayout_1 = class FlexibleColumnLayout e
     }
     get startSeparatorArrowVisibility() {
         return this.effectiveSeparatorsInfo[0].arrowVisible;
+    }
+    get startSeparatorValue() {
+        const startColumnWidth = this.startColumnWidth;
+        if (typeof startColumnWidth === "string" && startColumnWidth.endsWith("%")) {
+            return parseInt(startColumnWidth);
+        }
+        return SEPARATOR_DEFAULT_VALUES.START;
+    }
+    get endSeparatorValue() {
+        const startColumnWidth = this.startColumnWidth;
+        const midColumnWidth = this.midColumnWidth;
+        if (typeof startColumnWidth === "string" && startColumnWidth.endsWith("%")
+            && typeof midColumnWidth === "string" && midColumnWidth.endsWith("%")) {
+            return parseInt(startColumnWidth) + parseInt(midColumnWidth);
+        }
+        return SEPARATOR_DEFAULT_VALUES.END;
     }
     get startArrowDirection() {
         return this.effectiveSeparatorsInfo[0].arrowDirection;

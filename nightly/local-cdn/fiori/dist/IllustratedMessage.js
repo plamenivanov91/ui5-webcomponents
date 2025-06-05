@@ -275,6 +275,15 @@ let IllustratedMessage = IllustratedMessage_1 = class IllustratedMessage extends
             case IllustrationMessageDesign.Dialog:
                 this.media = IllustratedMessage_1.MEDIA.DIALOG;
                 return;
+            case IllustrationMessageDesign.ExtraSmall:
+                this.media = IllustratedMessage_1.MEDIA.DOT;
+                return;
+            case IllustrationMessageDesign.Small:
+                this.media = IllustratedMessage_1.MEDIA.SPOT;
+                return;
+            case IllustrationMessageDesign.Medium:
+                this.media = IllustratedMessage_1.MEDIA.DIALOG;
+                return;
             default:
                 this.media = IllustratedMessage_1.MEDIA.SCENE;
         }

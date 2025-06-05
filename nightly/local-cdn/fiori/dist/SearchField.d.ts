@@ -87,12 +87,14 @@ declare class SearchField extends UI5Element {
      */
     scopes: Array<ISearchScope>;
     /**
-     * Defines the advanced filter slot, used to display an additional filtering button.
+     * Defines the filter button slot, used to display an additional filtering button.
      * This slot is intended for passing a `ui5-button` with a filter icon to provide extended filtering options.
+     *
+     * **Note:** Scope button and Filter button are mutually exclusive.
      * @public
      * @since 2.11.0
      */
-    advancedFilter: Array<Button>;
+    filterButton: Array<Button>;
     /**
      * @private
      */

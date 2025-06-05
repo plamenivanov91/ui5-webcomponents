@@ -39,7 +39,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
  * @extends UI5Element
  * @since 2.0.0
  * @public
- * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 declare class TableGrowing extends UI5Element implements ITableGrowing {
     eventDetails: {

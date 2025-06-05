@@ -6,6 +6,7 @@ import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 import isElementClickable from "../util/isElementClickable.js";
 import { getCurrentRuntimeIndex, compareRuntimes } from "../Runtimes.js";
 import getSharedResource from "../getSharedResource.js";
+import getParentElement from "../util/getParentElement.js";
 const currentRuntimeINdex = getCurrentRuntimeIndex();
 const shouldUpdate = (runtimeIndex) => {
     if (runtimeIndex === undefined) {
@@ -149,7 +150,7 @@ class F6Navigation {
             if (closestScopeEl) {
                 return closestScopeEl;
             }
-            element = element.parentElement ? element.parentElement : element.parentNode.host;
+            element = getParentElement(element);
         }
         return document.body;
     }
@@ -157,7 +158,7 @@ class F6Navigation {
         const htmlElement = window.document.querySelector("html");
         let element = this.deepActive(root);
         while (element && element.getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== htmlElement) {
-            element = element.parentElement ? element.parentNode : element.parentNode.host;
+            element = getParentElement(element);
         }
         this.selectedGroup = element;
     }

@@ -1,5 +1,9 @@
-commit 2a60bc09d76d08a6d168ae2041d8c472d38e7cc1
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed May 28 09:34:01 2025 +0300
+commit 48483179d43b5c94f003584d03fe8809f7e5be31
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Wed Jun 4 13:14:26 2025 +0300
 
-    fix: create new package script on windows (#11555)
+    fix(ui5-side-navigation): group name is now announced by screen reader (#11600)
+    
+    Group name is read out when accessing group item.
+    
+    fixes: #11599

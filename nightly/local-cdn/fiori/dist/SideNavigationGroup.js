@@ -45,24 +45,10 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
          */
         this.expanded = false;
         this.belowGroup = false;
-        this._initialChildDisabledStates = new Map();
     }
     onBeforeRendering() {
         this.allItems.forEach(item => {
-            if (!this._initialChildDisabledStates.has(item)) {
-                this._initialChildDisabledStates.set(item, item.disabled);
-            }
-        });
-        this._updateChildItemsDisabledState();
-    }
-    _updateChildItemsDisabledState() {
-        this.allItems.forEach(item => {
-            if (this.disabled) {
-                item.disabled = true;
-            }
-            else {
-                item.disabled = this._initialChildDisabledStates.get(item);
-            }
+            item._groupDisabled = this.disabled;
         });
     }
     get overflowItems() {
@@ -114,6 +100,9 @@ let SideNavigationGroup = SideNavigationGroup_1 = class SideNavigationGroup exte
             : SideNavigationGroup_1.i18nBundle.getText(SIDE_NAVIGATION_ICON_EXPAND);
     }
     _onkeydown(e) {
+        if (this.disabled) {
+            return;
+        }
         const isRTL = this.effectiveDir === "rtl";
         if (isLeft(e)) {
             e.preventDefault();
