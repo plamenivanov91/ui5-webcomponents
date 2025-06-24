@@ -179,7 +179,7 @@ declare class Popover extends Popup {
      * @returns The adjusted top in px.
      */
     _adjustForIOSKeyboard(top: number): number;
-    getPopoverSize(): PopoverSize;
+    getPopoverSize(calcScrollHeight?: boolean): PopoverSize;
     _showOutsideViewport(): void;
     _isUI5AbstractElement(el: HTMLElement): el is UI5Element;
     get arrowDOM(): Element;
@@ -209,7 +209,7 @@ declare class Popover extends Popup {
      * @private
      */
     fallbackPlacement(clientWidth: number, clientHeight: number, targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacement | undefined;
-    getActualPlacement(targetRect: DOMRect, popoverSize: PopoverSize): `${PopoverPlacement}`;
+    getActualPlacement(targetRect: DOMRect): `${PopoverPlacement}`;
     getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number;
     getHorizontalTop(targetRect: DOMRect, popoverSize: PopoverSize): number;
     get isModal(): boolean;

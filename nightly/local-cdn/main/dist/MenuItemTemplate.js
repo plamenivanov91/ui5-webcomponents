@@ -5,6 +5,7 @@ import List from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import navBackIcon from "@ui5/webcomponents-icons/dist/nav-back.js";
 import declineIcon from "@ui5/webcomponents-icons/dist/decline.js";
+import checkIcon from "@ui5/webcomponents-icons/dist/accept.js";
 import slimArrowRight from "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Icon from "./Icon.js";
 import ListItemTemplate from "./ListItemTemplate.js";
@@ -17,7 +18,10 @@ export default function MenuItemTemplate(hooks) {
     return _jsxs(_Fragment, { children: [ListItemTemplate.call(this, currentHooks), listItemPostContent.call(this)] });
 }
 function listItemContent() {
-    return (_jsxs(_Fragment, { children: [this.text && _jsx("div", { class: "ui5-menu-item-text", children: this.text }), rightContent.call(this)] }));
+    return (_jsxs(_Fragment, { children: [this.text && _jsx("div", { class: "ui5-menu-item-text", children: this.text }), rightContent.call(this), checkmarkContent.call(this)] }));
+}
+function checkmarkContent() {
+    return !this._markChecked ? "" : (_jsx("div", { class: "ui5-menu-item-checked", children: _jsx(Icon, { name: checkIcon, class: "ui5-menu-item-icon-checked" }) }));
 }
 function rightContent() {
     switch (true) {

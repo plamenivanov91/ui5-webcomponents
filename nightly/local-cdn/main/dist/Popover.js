@@ -320,8 +320,22 @@ let Popover = Popover_1 = class Popover extends Popup {
         const actualTop = Math.ceil(this.getBoundingClientRect().top);
         return top + (Number.parseInt(this.style.top || "0") - actualTop);
     }
-    getPopoverSize() {
-        const rect = this.getBoundingClientRect(), width = rect.width, height = rect.height;
+    getPopoverSize(calcScrollHeight = false) {
+        const rect = this.getBoundingClientRect();
+        const width = rect.width;
+        let height;
+        const domRef = this.getDomRef();
+        if (calcScrollHeight && domRef) {
+            const header = domRef.querySelector(".ui5-popup-header-root");
+            const content = domRef.querySelector(".ui5-popup-content");
+            const footer = domRef.querySelector(".ui5-popup-footer-root");
+            height = content?.scrollHeight || 0;
+            height += header?.scrollHeight || 0;
+            height += footer?.scrollHeight || 0;
+        }
+        else {
+            height = rect.height;
+        }
         return { width, height };
     }
     _showOutsideViewport() {
@@ -353,7 +367,7 @@ let Popover = Popover_1 = class Popover extends Popup {
         const clientHeight = document.documentElement.clientHeight;
         let maxHeight = clientHeight;
         let maxWidth = clientWidth;
-        const placement = this.getActualPlacement(targetRect, popoverSize);
+        const placement = this.getActualPlacement(targetRect);
         this._preventRepositionAndClose = this.shouldCloseDueToNoOpener(targetRect) || this.shouldCloseDueToOverflow(placement, targetRect);
         const isVertical = placement === PopoverPlacement.Top
             || placement === PopoverPlacement.Bottom;
@@ -498,20 +512,28 @@ let Popover = Popover_1 = class Popover extends Popup {
             return PopoverPlacement.Top;
         }
     }
-    getActualPlacement(targetRect, popoverSize) {
+    getActualPlacement(targetRect) {
         const placement = this.placement;
         let actualPlacement = placement;
+        const isVertical = placement === PopoverPlacement.Top
+            || placement === PopoverPlacement.Bottom;
+        const popoverSize = this.getPopoverSize(!this.allowTargetOverlap);
         const clientWidth = document.documentElement.clientWidth;
-        const clientHeight = document.documentElement.clientHeight;
+        let clientHeight = document.documentElement.clientHeight;
+        let popoverHeight = popoverSize.height;
+        if (isVertical) {
+            popoverHeight += this.hideArrow ? 0 : ARROW_SIZE;
+            clientHeight -= Popover_1.VIEWPORT_MARGIN;
+        }
         switch (placement) {
             case PopoverPlacement.Top:
-                if (targetRect.top < popoverSize.height
+                if (targetRect.top < popoverHeight
                     && targetRect.top < clientHeight - targetRect.bottom) {
                     actualPlacement = PopoverPlacement.Bottom;
                 }
                 break;
             case PopoverPlacement.Bottom:
-                if (clientHeight - targetRect.bottom < popoverSize.height
+                if (clientHeight - targetRect.bottom < popoverHeight
                     && clientHeight - targetRect.bottom < targetRect.top) {
                     actualPlacement = PopoverPlacement.Top;
                 }

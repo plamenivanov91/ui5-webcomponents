@@ -179,6 +179,12 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
     get hasSnappedTitleOnMobile() {
         return isPhone() && this.headerSnapped && this.dynamicPageTitle?.snappedTitleOnMobile.length;
     }
+    get headerAriaLabel() {
+        return this.hasHeading ? this._headerLabel : undefined;
+    }
+    get headerAriaExpanded() {
+        return this.hasHeading ? this._headerExpanded : undefined;
+    }
     /**
      * Defines if the header is snapped.
      *

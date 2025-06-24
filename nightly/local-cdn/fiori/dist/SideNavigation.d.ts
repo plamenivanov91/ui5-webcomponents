@@ -130,6 +130,8 @@ declare class SideNavigation extends UI5Element {
     _onBeforePopoverClose(): void;
     _onBeforeMenuOpen(): void;
     _onBeforeMenuClose(): void;
+    _bn?: SideNavigationSelectableItemBase;
+    _onMenuClose(): void;
     get accSideNavigationPopoverHiddenText(): string;
     get ariaRoleDescNavigationList(): string;
     get navigationMenuPrimaryHiddenText(): string;
@@ -141,7 +143,7 @@ declare class SideNavigation extends UI5Element {
     openPicker(opener: HTMLElement): void;
     openOverflowMenu(opener: HTMLElement): void;
     closePicker(): void;
-    closeMenu(): void;
+    closeMenu(preventFocusRestore?: boolean): void;
     getPickerTree(): SideNavigation;
     get hasHeader(): boolean;
     get showHeader(): boolean;

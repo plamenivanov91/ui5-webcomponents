@@ -309,21 +309,24 @@ declare class ShellBar extends UI5Element {
     _lastOffsetWidth: number;
     _observableContent: Array<HTMLElement>;
     _autoRestoreSearchField: boolean;
+    _onSearchOpenBound: (e: Event) => void;
+    _onSearchCloseBound: (e: Event) => void;
+    _onSearchBound: (e: Event) => void;
     _headerPress: () => void;
-    onSearchOpen: () => void;
-    onSearchClose: () => void;
-    onSearch: () => void;
     static get FIORI_3_BREAKPOINTS(): number[];
     static get FIORI_3_BREAKPOINTS_MAP(): Record<string, string>;
     constructor();
+    _onSearchOpen(e: Event): void;
+    _onSearchClose(e: Event): void;
+    _onSearch(e: Event): void;
     _updateSearchFieldState(): void;
     _onKeyDown(e: KeyboardEvent): void;
+    private _allowChildNavigation;
+    private _allowInputNavigation;
     _focusNextItem(items: HTMLElement[], currentIndex: number): void;
     _focusPreviousItem(items: HTMLElement[], currentIndex: number): void;
     _isVisible(element: HTMLElement): boolean;
-    _getNavigableContent(): HTMLElement[];
     _getRightChildItems(): HTMLElement[];
-    _getVisibleAndInteractiveItems(): HTMLElement[];
     _menuItemPress(e: CustomEvent<ListItemClickEventDetail>): void;
     _logoPress(): void;
     _menuPopoverBeforeOpen(): void;
@@ -359,6 +362,8 @@ declare class ShellBar extends UI5Element {
     _toggleActionPopover(): void;
     onEnterDOM(): void;
     onExitDOM(): void;
+    _attachSearchFieldListeners(searchField: HTMLElement | null): void;
+    _detachSearchFieldListeners(searchField: HTMLElement | null): void;
     _handleSearchIconPress(): void;
     _handleActionListClick(): Promise<void>;
     _handleCustomActionPress(e: UI5CustomEvent<Button, "click">): void;
@@ -521,7 +526,7 @@ declare class ShellBar extends UI5Element {
     get hasSelfCollapsibleSearch(): boolean;
     get search(): Input | null;
 }
-interface IShellBarSelfCollapsibleSearch {
+interface IShellBarSelfCollapsibleSearch extends UI5Element {
     collapsed: boolean;
     open: boolean;
 }

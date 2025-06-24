@@ -256,6 +256,8 @@ declare class Tokenizer extends UI5Element {
     get contentDom(): HTMLElement;
     get moreLink(): HTMLElement | null;
     get tokenizerLabel(): string;
+    get _okButtonText(): string;
+    get _cancelButtonText(): string;
     get tokenizerAriaDescription(): string | undefined;
     get _ariaDisabled(): true | undefined;
     get _ariaReadonly(): true | undefined;

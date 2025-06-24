@@ -153,11 +153,23 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
     }
     _onBeforeMenuOpen() {
         const popover = this.getOverflowPopover();
+        popover._popover.preventFocusRestore = false;
         popover?.opener?.classList.add("ui5-sn-item-active");
     }
     _onBeforeMenuClose() {
         const popover = this.getOverflowPopover();
         popover?.opener?.classList.remove("ui5-sn-item-active");
+    }
+    _onMenuClose() {
+        const menu = this.getOverflowPopover();
+        if (!menu._popover.preventFocusRestore) {
+            return;
+        }
+        const selectedItem = this._findSelectedItem(this.items);
+        if (selectedItem) {
+            this.focusItem(selectedItem);
+            selectedItem.focus();
+        }
     }
     get accSideNavigationPopoverHiddenText() {
         return SideNavigation_1.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT);
@@ -205,8 +217,10 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
             return;
         }
         this._selectItem(associatedItem);
-        this.closePicker();
-        this._popoverContents.item?.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
+        setTimeout(() => {
+            this.closePicker();
+            this._popoverContents.item?.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
+        });
     }
     getOverflowPopover() {
         return this.shadowRoot.querySelector(".ui5-side-navigation-overflow-menu");
@@ -230,8 +244,9 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
         const responsivePopover = this.getPicker();
         responsivePopover.open = false;
     }
-    closeMenu() {
+    closeMenu(preventFocusRestore = false) {
         const menu = this.getOverflowPopover();
+        menu._popover.preventFocusRestore = preventFocusRestore;
         menu.open = false;
     }
     getPickerTree() {
@@ -427,7 +442,7 @@ let SideNavigation = SideNavigation_1 = class SideNavigation extends UI5Element 
     _handleOverflowClick() {
         this._isOverflow = true;
         this._menuPopoverItems = this._getOverflowItems();
-        this.openOverflowMenu(this._overflowItem.getFocusDomRef());
+        this.openOverflowMenu(this._overflowItem);
     }
     _getOverflowItems() {
         const overflowClass = "ui5-sn-item-hidden";

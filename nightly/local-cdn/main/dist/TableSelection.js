@@ -47,6 +47,7 @@ import { isSelectionCheckbox, isHeaderSelector, findRowInPath } from "./TableUti
  * @since 2.0.0
  * @public
  * @deprecated This component is deprecated and will be removed in future releases. Use the `ui5-table-selection-single` or `ui5-table-selection-multi` components instead.
+ * @experimental This web component is available since 2.0 with an experimental flag and its API and behavior are subject to change.
  */
 let TableSelection = class TableSelection extends UI5Element {
     constructor() {

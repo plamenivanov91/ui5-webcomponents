@@ -295,6 +295,7 @@ declare class Wizard extends UI5Element {
     get activeStepText(): string;
     get inactiveStepText(): string;
     get ariaLabelText(): string;
+    get _dialogCancelButtonText(): string;
     get effectiveStepSwitchThreshold(): number;
     /**
      * Returns an array of data objects, based on the user defined steps

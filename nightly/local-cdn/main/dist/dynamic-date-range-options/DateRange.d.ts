@@ -5,7 +5,7 @@ import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
  * @class
  * @constructor
  * @public
- * @since 2.0.0
+ * @since 2.11.0
  */
 declare class DateRangeRange implements IDynamicDateRangeOption {
     template: JsxTemplate;

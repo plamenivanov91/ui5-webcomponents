@@ -234,10 +234,13 @@ declare class Button extends UI5Element implements IButton {
      */
     badge: Array<ButtonBadge>;
     _deactivate: () => void;
+    _onclickBound: (e: MouseEvent) => void;
+    _clickHandlerAttached: boolean;
     static i18nBundle: I18nBundle;
     constructor();
     _ontouchstart(): void;
     onEnterDOM(): void;
+    onExitDOM(): void;
     onBeforeRendering(): Promise<void>;
     _setBadgeOverlayStyle(): void;
     _onclick(e: MouseEvent): void;

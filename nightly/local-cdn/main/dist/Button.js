@@ -166,11 +166,22 @@ let Button = Button_1 = class Button extends UI5Element {
          */
         this._isTouch = false;
         this._cancelAction = false;
+        this._clickHandlerAttached = false;
         this._deactivate = () => {
             if (activeButton) {
                 activeButton._setActiveState(false);
             }
         };
+        this._onclickBound = e => {
+            if (e instanceof CustomEvent) {
+                return;
+            }
+            this._onclick(e);
+        };
+        if (!this._clickHandlerAttached) {
+            this.addEventListener("click", this._onclickBound);
+            this._clickHandlerAttached = true;
+        }
         if (!isGlobalHandlerAttached) {
             document.addEventListener("mouseup", this._deactivate);
             isGlobalHandlerAttached = true;
@@ -185,6 +196,16 @@ let Button = Button_1 = class Button extends UI5Element {
     onEnterDOM() {
         if (isDesktop()) {
             this.setAttribute("desktop", "");
+        }
+        if (!this._clickHandlerAttached) {
+            this.addEventListener("click", this._onclickBound);
+            this._clickHandlerAttached = true;
+        }
+    }
+    onExitDOM() {
+        if (this._clickHandlerAttached) {
+            this.removeEventListener("click", this._onclickBound);
+            this._clickHandlerAttached = false;
         }
     }
     async onBeforeRendering() {
@@ -218,6 +239,7 @@ let Button = Button_1 = class Button extends UI5Element {
             shiftKey,
         });
         if (prevented) {
+            e.preventDefault();
             return;
         }
         if (this._isSubmit) {
