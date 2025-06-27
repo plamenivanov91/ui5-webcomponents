@@ -8,7 +8,7 @@
 
 
 
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-7ki0cFJW.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-CyPffspx.js"></script>
   <link rel="stylesheet" crossorigin href="/ui5-webcomponents/nightly/assets/Menu-sPjmkmzl.css">
 </head>
 
@@ -356,9 +356,10 @@
 
 		});
 
-		menuGroups.addEventListener("ui5-check-change", function(event) {
+		menuGroups.addEventListener("ui5-check", function(event) {
+			console.warn("Check event fired for item: " + event.target.text);
+			console.warn("Checked state: " + event.target.checked);
 			console.warn(event.target);
-			console.warn("Checked items: " + event.detail.checkedItems.map(item => item.text).join(", "));
 		});
 
 	</script>

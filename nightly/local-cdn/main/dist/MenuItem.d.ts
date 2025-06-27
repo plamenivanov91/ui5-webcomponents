@@ -49,7 +49,7 @@ declare class MenuItem extends ListItem implements IMenuItem {
         "before-close": MenuBeforeCloseEventDetail;
         "close": void;
         "close-menu": void;
-        "item-check": void;
+        "check": void;
         "exit-end-content": MenuNavigateOutOfEndContentEventDetail;
     };
     /**

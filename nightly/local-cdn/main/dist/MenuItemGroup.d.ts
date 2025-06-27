@@ -2,9 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type MenuItem from "./MenuItem.js";
 import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
 import type { IMenuItem } from "./Menu.js";
-type MenuItemGroupCheckChangeEventDetail = {
-    checkedItems: Array<MenuItem>;
-};
 /**
  * @class
  *
@@ -36,9 +33,6 @@ type MenuItemGroupCheckChangeEventDetail = {
  * @public
  */
 declare class MenuItemGroup extends UI5Element implements IMenuItem {
-    eventDetails: UI5Element["eventDetails"] & {
-        "check-change": MenuItemGroupCheckChangeEventDetail;
-    };
     /**
      * Defines the component's check mode.
      * @default "None"

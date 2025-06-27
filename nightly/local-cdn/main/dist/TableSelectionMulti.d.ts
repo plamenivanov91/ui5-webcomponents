@@ -1,6 +1,7 @@
 import TableSelectionBase from "./TableSelectionBase.js";
 import type TableRow from "./TableRow.js";
 import type TableRowBase from "./TableRowBase.js";
+import type TableSelectionMultiHeaderSelector from "./types/TableSelectionMultiHeaderSelector.js";
 /**
  * @class
  *
@@ -38,6 +39,14 @@ declare class TableSelectionMulti extends TableSelectionBase {
      * @public
      */
     selected?: string;
+    /**
+     * Defines the selector of the header row.
+     *
+     * @default "SelectAll"
+     * @public
+     * @since 2.12
+     */
+    headerSelector: `${TableSelectionMultiHeaderSelector}`;
     private _rowsLength;
     private _rangeSelection?;
     onTableBeforeRendering(): void;

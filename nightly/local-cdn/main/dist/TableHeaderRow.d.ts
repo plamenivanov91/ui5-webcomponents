@@ -41,8 +41,12 @@ declare class TableHeaderRow extends TableRowBase {
     onBeforeRendering(): void;
     isHeaderRow(): boolean;
     get _isSelectable(): boolean;
+    get _hasSelectedRows(): boolean;
+    get _shouldRenderClearAll(): boolean;
     get _i18nSelection(): string;
     get _i18nRowPopin(): string;
     get _i18nRowActions(): string;
+    get _i18nSelectAllRows(): string;
+    get _i18nDeselectAllRows(): string;
 }
 export default TableHeaderRow;

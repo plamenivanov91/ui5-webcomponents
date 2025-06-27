@@ -5,7 +5,7 @@ import RadioButton from "./RadioButton.js";
 import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 export default function TableRowTemplate() {
-    return (_jsxs(_Fragment, { children: [this._hasRowSelector &&
+    return (_jsxs(_Fragment, { children: [this._hasSelector &&
                 _jsx(TableCell, { id: "selection-cell", "aria-selected": this._isSelected, "data-ui5-table-cell-fixed": true, "data-ui5-table-selection-component": true, children: this._isMultiSelect ?
                         _jsx(CheckBox, { id: "selection-component", tabindex: -1, checked: this._isSelected, onChange: this._onSelectionChange, accessibleName: this._i18nRowSelector })
                         :

@@ -8,7 +8,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isInstanceOfMenuItem } from "./MenuItem.js";
 import MenuItemGroupTemplate from "./MenuItemGroupTemplate.js";
@@ -104,9 +103,6 @@ let MenuItemGroup = class MenuItemGroup extends UI5Element {
             this._clearCheckedItems();
             clickedItem.checked = isChecked;
         }
-        this.fireDecoratorEvent("check-change", {
-            checkedItems: this._menuItems.filter((item) => item.checked),
-        });
     }
 };
 __decorate([
@@ -120,15 +116,6 @@ MenuItemGroup = __decorate([
         tag: "ui5-menu-item-group",
         renderer: jsxRenderer,
         template: MenuItemGroupTemplate,
-    })
-    /**
-     * Fired when an item in the group is checked or unchecked.
-     * @public
-     * @since 2.12.0
-     */
-    ,
-    event("check-change", {
-        bubbles: true,
     })
 ], MenuItemGroup);
 const isInstanceOfMenuItemGroup = (object) => {

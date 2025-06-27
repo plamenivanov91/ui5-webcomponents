@@ -348,7 +348,7 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
         }
         const newState = !this.checked;
         this.checked = newState;
-        this.fireDecoratorEvent("item-check");
+        this.fireDecoratorEvent("check");
     }
 };
 __decorate([
@@ -456,11 +456,11 @@ MenuItem = MenuItem_1 = __decorate([
     event("close")
     /**
      * Fired when an item is checked or unchecked.
-     * @private
+     * @public
      * @since 2.12.0
      */
     ,
-    event("item-check", {
+    event("check", {
         bubbles: true,
     })
 ], MenuItem);

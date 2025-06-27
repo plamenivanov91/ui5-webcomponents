@@ -19,7 +19,7 @@
 
 
 
-  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-7ki0cFJW.js"></script>
+  <script type="module" crossorigin src="/ui5-webcomponents/nightly/assets/bundle.esm-CyPffspx.js"></script>
   <link rel="stylesheet" crossorigin href="/ui5-webcomponents/nightly/assets/Dialog-DzCSS3AM.css">
 </head>
 
@@ -677,6 +677,15 @@
 				text="Close"
 			/>
 		</ui5-toolbar>
+	</ui5-dialog>
+	<br>
+	<br>
+	<ui5-button onclick="dialogWithTokenizer.open = true;">Open Dialog With Tokenizer</ui5-button>
+	<ui5-dialog id="dialogWithTokenizer" header-text="Tokens">
+		<ui5-tokenizer id="tokenizer">
+			<ui5-token text="Token 1"></ui5-token>
+			<ui5-token text="Token 2"></ui5-token>
+		</ui5-tokenizer>
 	</ui5-dialog>
 	<br>
 	<br>

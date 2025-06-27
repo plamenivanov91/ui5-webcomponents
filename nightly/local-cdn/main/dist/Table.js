@@ -316,7 +316,7 @@ let Table = Table_1 = class Table extends UI5Element {
         const widths = [];
         const visibleHeaderCells = this.headerRow[0]._visibleCells;
         // Selection Cell Width
-        if (this._getSelection()?.isRowSelectorRequired()) {
+        if (this._isRowSelectorRequired) {
             widths.push("min-content");
         }
         // Column Widths
@@ -337,6 +337,9 @@ let Table = Table_1 = class Table extends UI5Element {
             widths.push(`var(${getScopedVarName("--_ui5_table_navigated_cell_width")})`);
         }
         return widths.join(" ");
+    }
+    get _isRowSelectorRequired() {
+        return this.rows.length > 0 && this._getSelection()?.isRowSelectorRequired();
     }
     get _scrollContainer() {
         return this._getVirtualizer() ? this._tableElement : findVerticalScrollContainer(this);
