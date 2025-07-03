@@ -97,6 +97,7 @@ var TableFocusTargetElement;
  * @constructor
  * @extends UI5Element
  * @public
+ * @deprecated Deprecated as of version 2.12.0, use `@ui5/webcomponents/dist/Table.js` instead.
  */
 let Table = Table_1 = class Table extends UI5Element {
     constructor() {

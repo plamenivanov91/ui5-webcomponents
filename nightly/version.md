@@ -1,5 +1,5 @@
-commit 72aae89c43412b585e17f5d552810cad8564d656
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Thu Jun 26 08:10:11 2025 +0000
+commit 0263a981a7d68e4fd567def528bdf29c269b63de
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Wed Jul 2 11:40:24 2025 +0300
 
-    chore(release): publish v2.12.0-rc.2 [ci skip]
+    chore(ui5-tab-container): migrate tests to Cypress (#11737)

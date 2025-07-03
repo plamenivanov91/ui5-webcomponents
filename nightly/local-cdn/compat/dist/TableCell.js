@@ -26,6 +26,7 @@ import { ARIA_LABEL_EMPTY_CELL, } from "./generated/i18n/i18n-defaults.js";
  * @extends UI5Element
  * @public
  * @csspart cell - Used to style the native `td` element
+ * @deprecated Deprecated as of version 2.12.0, use `@ui5/webcomponents/dist/TableCell.js` instead.
  */
 let TableCell = TableCell_1 = class TableCell extends UI5Element {
     constructor() {
