@@ -1,5 +1,5 @@
-commit 0263a981a7d68e4fd567def528bdf29c269b63de
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Wed Jul 2 11:40:24 2025 +0300
+commit 265a23baed1c1b4788f32888cc2dbd234f57426d
+Author: Adrian Bobev <adrian.bobev@sap.com>
+Date:   Thu Jul 3 11:11:44 2025 +0300
 
-    chore(ui5-tab-container): migrate tests to Cypress (#11737)
+    chore(ui5-user-menu-item-group): add experimental tag (#11840)
