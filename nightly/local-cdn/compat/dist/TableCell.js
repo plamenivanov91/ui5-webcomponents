@@ -16,6 +16,7 @@ import TableCellTemplate from "./TableCellTemplate.js";
 import tableCellStyles from "./generated/themes/TableCell.css.js";
 // Texts
 import { ARIA_LABEL_EMPTY_CELL, } from "./generated/i18n/i18n-defaults.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 /**
  * @class
  *
@@ -74,6 +75,7 @@ TableCell = TableCell_1 = __decorate([
         styles: tableCellStyles,
     })
 ], TableCell);
+patchScopingSuffix(TableCell);
 TableCell.define();
 export default TableCell;
 //# sourceMappingURL=TableCell.js.map

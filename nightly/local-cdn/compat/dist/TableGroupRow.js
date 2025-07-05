@@ -17,6 +17,7 @@ import TableMode from "./types/TableMode.js";
 import { TABLE_GROUP_ROW_ARIA_LABEL, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 /**
  * @class
  *
@@ -103,6 +104,7 @@ TableGroupRow = TableGroupRow_1 = __decorate([
         bubbles: true,
     })
 ], TableGroupRow);
+patchScopingSuffix(TableGroupRow);
 TableGroupRow.define();
 export default TableGroupRow;
 //# sourceMappingURL=TableGroupRow.js.map

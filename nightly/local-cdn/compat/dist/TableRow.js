@@ -22,6 +22,7 @@ import TableRowTemplate from "./TableRowTemplate.js";
 import { ARIA_LABEL_ROW_SELECTION, LIST_ITEM_NOT_SELECTED, LIST_ITEM_SELECTED, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import tableRowStyles from "./generated/themes/TableRow.css.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 /**
  * @class
  *
@@ -377,6 +378,7 @@ TableRow = TableRow_1 = __decorate([
         bubbles: true,
     })
 ], TableRow);
+patchScopingSuffix(TableRow);
 TableRow.define();
 export default TableRow;
 //# sourceMappingURL=TableRow.js.map

@@ -11,6 +11,7 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import TableColumnTemplate from "./TableColumnTemplate.js";
 // Styles
 import tableColumnStyles from "./generated/themes/TableColumn.css.js";
+import { patchScopingSuffix } from "./utils/CompatCustomElementsScope.js";
 /**
  * @class
  *
@@ -95,6 +96,7 @@ TableColumn = __decorate([
         template: TableColumnTemplate,
     })
 ], TableColumn);
+patchScopingSuffix(TableColumn);
 TableColumn.define();
 export default TableColumn;
 //# sourceMappingURL=TableColumn.js.map
