@@ -1,7 +1,12 @@
-commit aa99f55f68159823c574a6562b9b638805b9d88c
-Author: Diana <diana.petcheva@sap.com>
-Date:   Fri Jul 4 11:17:32 2025 +0200
+commit 1c38b603987bb48e511eadbaa095574bc2b17fe3
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Jul 10 11:14:34 2025 +0300
 
-    fix(ui5-date-picker, ui5-calendar): use correct year format (#11712)
+    fix(ui5-tokenizer): sync popover list items with token text changes (#11854)
     
-    To represent the year in a format pattern, the lowercase `y` symbol should be used as the capital `Y` means something else. More information can be found here: https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+    * fix(ui5-tokenizer): sync popover list items with token text changes
+    
+    - add invalidateOnChildChange config to tokens slot to watch for text property changes
+    to ensure popover list items automatically update when token text is modified
+    
+    - use the StandardListItem 'text' property instead of slot to ensure correct text rendering in popover list items
