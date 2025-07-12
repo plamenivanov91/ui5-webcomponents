@@ -1,12 +1,16 @@
-commit 1c38b603987bb48e511eadbaa095574bc2b17fe3
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Jul 10 11:14:34 2025 +0300
+commit 95e00fdd299004bf5cb5e5cbd6fd95f130a94795
+Author: Konstantin Gogov <konstantin.gogov@sap.com>
+Date:   Fri Jul 11 13:25:54 2025 +0300
 
-    fix(ui5-tokenizer): sync popover list items with token text changes (#11854)
+    fix(ui5-li): move default slot documentation from class to property level (#11898)
     
-    * fix(ui5-tokenizer): sync popover list items with token text changes
+    The default slot documentation was moved from the class-level JSDoc
+    comments to the actual slot property declaration for better clarity and
+    consistency.
     
-    - add invalidateOnChildChange config to tokens slot to watch for text property changes
-    to ensure popover list items automatically update when token text is modified
+    This change improves documentation structure while maintaining the same
+    functional behavior - the slot is still defined with `type: Node` and
+    `"default": true`, which ensures that text content changes will properly
+    trigger component invalidation as expected for Node-type slots.
     
-    - use the StandardListItem 'text' property instead of slot to ensure correct text rendering in popover list items
+    Relates to #11825
