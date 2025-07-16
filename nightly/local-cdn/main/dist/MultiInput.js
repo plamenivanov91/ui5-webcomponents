@@ -254,7 +254,7 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
         return this.placeholder;
     }
     get accInfo() {
-        const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId} ${this._valueHelpTextId}`.trim();
+        const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId} ${this._valueStateLinksShortcutsTextAccId} ${this._valueHelpTextId}`.trim();
         return {
             ...super.accInfo,
             "ariaRoledescription": this.ariaRoleDescription,

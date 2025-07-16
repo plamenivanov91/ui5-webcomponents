@@ -14,7 +14,6 @@ export default function ComboBoxPopoverTemplate() {
                                     _jsxs("div", { class: this.classes.popoverValueState, style: this.styles.popoverValueStateMessage, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: this._valueStateMessageIcon }), this.open && valueStateMessage.call(this)] })] }), !this._isPhone && this.hasValueStateText &&
                         _jsxs("div", { slot: "header", class: {
                                 "ui5-responsive-popover-header": true,
-                                "ui5-responsive-popover-header--focused": this._isValueStateFocused,
                                 ...this.classes.popoverValueState,
                             }, style: this.styles.suggestionPopoverHeader, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: this._valueStateMessageIcon }), this.open && valueStateMessage.call(this)] }), _jsx(List, { class: "ui5-combobox-items-list", separators: "None", accessibleRole: "ListBox", selectionMode: "Single", onItemClick: this._selectItem, onItemFocused: this._onItemFocus, onMouseDown: this._itemMousedown, children: this._filteredItems.map(item => _jsx("slot", { name: item._individualSlot })) }), this._isPhone &&
                         _jsx("div", { slot: "footer", class: "ui5-responsive-popover-footer", children: _jsx(Button, { design: "Transparent", onClick: this._closeRespPopover, children: this._dialogOkButtonText }) })] }), this.shouldOpenValueStateMessagePopover &&
