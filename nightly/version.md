@@ -1,7 +1,7 @@
-commit 1b8ac70ac0f2d75bafde5c4e9647b997b6a9c799
+commit 71f5ab31be69da70f3ec10b1f240008be1d56796
 Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Tue Jul 15 15:49:43 2025 +0300
+Date:   Wed Jul 16 13:57:47 2025 +0300
 
-    test(ui5-dynamic-date-range): add test (#11813)
+    fix(ui5-dynamic-date-range): skip test (#11924)
     
-    fixes: #11637
+    fixes: #11923
