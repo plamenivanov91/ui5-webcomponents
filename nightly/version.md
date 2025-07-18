@@ -1,7 +1,9 @@
-commit 71f5ab31be69da70f3ec10b1f240008be1d56796
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Wed Jul 16 13:57:47 2025 +0300
+commit 9b6b625d243ae13bd113cb2e8a6f0ca6c59229e3
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Thu Jul 17 09:47:20 2025 +0300
 
-    fix(ui5-dynamic-date-range): skip test (#11924)
+    fix(ui5-button): adjust button badge z-index (#11930)
     
-    fixes: #11923
+    The `z-index` property of the slotted `ui5-button-badge` inside of the `ui5-button` is set to **1000** - this value is very high and it happens that badge can appear over other elements that appear on higher `z-index` (as dialogs, etc.).
+    
+    This PR sets the `z-index` to **1**, which is more secure options and doesn't destroy current badge appearance.
