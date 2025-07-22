@@ -47,6 +47,12 @@ declare class SearchItem extends ListItemBase {
      */
     selected: boolean;
     /**
+     * Defines whether the search item is deletable.
+     * @default false
+     * @public
+     */
+    deletable: boolean;
+    /**
      * Defines the scope of the search item
      * @default undefined
      * @public

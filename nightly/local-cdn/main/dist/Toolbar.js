@@ -313,9 +313,6 @@ let Toolbar = Toolbar_1 = class Toolbar extends UI5Element {
         this.popoverOpen = true;
     }
     onResize() {
-        if (!this.itemsWidth) {
-            return;
-        }
         this.closeOverflow();
         this.processOverflowLayout();
     }

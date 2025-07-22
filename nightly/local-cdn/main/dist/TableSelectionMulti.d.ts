@@ -49,7 +49,10 @@ declare class TableSelectionMulti extends TableSelectionBase {
     headerSelector: `${TableSelectionMultiHeaderSelector}`;
     private _rowsLength;
     private _rangeSelection?;
+    _onClickCaptureBound: (e: MouseEvent) => void;
+    constructor();
     onTableBeforeRendering(): void;
+    onTableAfterRendering(): void;
     isMultiSelectable(): boolean;
     isSelected(row: TableRowBase): boolean;
     setSelected(row: TableRowBase, selected: boolean, fireEvent?: boolean): void;
@@ -78,7 +81,7 @@ declare class TableSelectionMulti extends TableSelectionBase {
     setSelectedAsSet(selectedSet: Set<string>): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement): void;
-    _onclick(e: MouseEvent): void;
+    _onclickCapture(e: MouseEvent): void;
     /**
      * Start the range selection and initialises the range selection state
      * @param row starting row

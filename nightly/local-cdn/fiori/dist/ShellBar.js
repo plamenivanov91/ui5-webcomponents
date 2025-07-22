@@ -14,7 +14,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isSpace, isEnter, isLeft, isRight, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isSpace, isEnter, isLeft, isRight, isHome, isEnd, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
@@ -257,7 +257,7 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
         }
     }
     _onKeyDown(e) {
-        if (!isLeft(e) && !isRight(e)) {
+        if (!isLeft(e) && !isRight(e) && !isHome(e) && !isEnd(e)) {
             return;
         }
         const domRef = this.getDomRef();
@@ -284,6 +284,14 @@ let ShellBar = ShellBar_1 = class ShellBar extends UI5Element {
             }
             else if (isRight(e)) {
                 this._focusNextItem(items, currentIndex);
+            }
+            else if (isHome(e)) {
+                // Move focus to the first ShellBar item
+                items[0]?.focus();
+            }
+            else if (isEnd(e)) {
+                // Move focus to the last ShellBar item
+                items[items.length - 1]?.focus();
             }
         }
     }

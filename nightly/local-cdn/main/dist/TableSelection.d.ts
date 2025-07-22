@@ -69,10 +69,13 @@ declare class TableSelection extends UI5Element implements ITableFeature {
         isMouse: boolean;
         shiftPressed: boolean;
     } | null;
+    onClickCaptureBound: (e: MouseEvent) => void;
+    constructor();
     onTableActivate(table: Table): void;
     onExitDOM(): void;
     onBeforeRendering(): void;
     onTableBeforeRendering(): void;
+    onTableAfterRendering(): void;
     isSelectable(): boolean;
     isMultiSelectable(): boolean;
     isRowSelectorRequired(): boolean;
@@ -90,7 +93,7 @@ declare class TableSelection extends UI5Element implements ITableFeature {
     _invalidateTableAndRows(): void;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement): void;
-    _onclick(e: MouseEvent): void;
+    _onClickCapture(e: MouseEvent): void;
     /**
      * Start the range selection and initialises the range selection state
      * @param row starting row

@@ -195,6 +195,12 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
         }
         for (let i = 0; i < this.items.length; i++) {
             this.items[i].layout = this.layout;
+            if (this.hasGroupItems) {
+                this.items[i].effectiveRole = "treeitem";
+            }
+            else {
+                this.items[i].effectiveRole = "listitem";
+            }
             if (this.items[i + 1] && !!this.items[i + 1].icon) {
                 this.items[i].forcedLineWidth = SHORT_LINE_WIDTH;
             }
@@ -294,6 +300,9 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
     focusItem(item) {
         this._itemNavigation.setCurrentItem(item);
         item.focus();
+    }
+    get hasGroupItems() {
+        return this.items.some(item => item.isGroupItem);
     }
     get _navigableItems() {
         const navigatableItems = [];

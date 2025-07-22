@@ -91,6 +91,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
          * Defines whether the component is required.
          * @default false
          * @public
+         * @since 2.13.0
          */
         this.required = false;
         /**

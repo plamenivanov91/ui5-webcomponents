@@ -23,6 +23,7 @@ interface ITimelineItem extends UI5Element, ITabbable {
     lastItem: boolean;
     isNextItemGroup?: boolean;
     firstItemInTimeline?: boolean;
+    effectiveRole?: string;
 }
 /**
  * @class
@@ -136,6 +137,7 @@ declare class Timeline extends UI5Element {
      * @param item
      */
     focusItem(item: ITimelineItem | ToggleButton): void;
+    get hasGroupItems(): boolean;
     get _navigableItems(): (ToggleButton | ITimelineItem)[];
 }
 export default Timeline;

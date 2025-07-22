@@ -3,6 +3,15 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type WrappingType from "./types/WrappingType.js";
+import type { AriaRole, AriaChecked, AriaDisabled, AriaReadonly } from "@ui5/webcomponents-base/dist/types.js";
+type CheckBoxAccInfo = {
+    role?: AriaRole;
+    ariaChecked?: AriaChecked;
+    ariaReadonly?: AriaReadonly;
+    ariaDisabled?: AriaDisabled;
+    ariaRequired?: boolean;
+    tabindex?: number | undefined;
+};
 /**
  * @class
  *
@@ -177,6 +186,11 @@ declare class CheckBox extends UI5Element implements IFormInputElement {
      * @private
      */
     active: boolean;
+    /**
+     * Defines custom aria implementation object.
+     * @private
+     */
+    _accInfo?: CheckBoxAccInfo;
     static i18nBundle: I18nBundle;
     _deactivate: () => void;
     get formValidityMessage(): string;
@@ -215,5 +229,13 @@ declare class CheckBox extends UI5Element implements IFormInputElement {
     get tabbable(): boolean;
     get isCompletelyChecked(): boolean;
     get isDisplayOnly(): boolean;
+    get accInfo(): {
+        role: import("@ui5/webcomponents-base/dist/thirdparty/preact/jsx.js").JSXInternal.AriaRole | undefined;
+        ariaChecked: import("@ui5/webcomponents-base/dist/thirdparty/preact/jsx.js").JSXInternal.Signalish<import("@ui5/webcomponents-base/dist/thirdparty/preact/jsx.js").Booleanish | "mixed" | undefined>;
+        ariaReadonly: import("@ui5/webcomponents-base/dist/thirdparty/preact/jsx.js").JSXInternal.Signalish<import("@ui5/webcomponents-base/dist/thirdparty/preact/jsx.js").Booleanish | undefined>;
+        ariaDisabled: import("@ui5/webcomponents-base/dist/thirdparty/preact/jsx.js").JSXInternal.Signalish<import("@ui5/webcomponents-base/dist/thirdparty/preact/jsx.js").Booleanish | undefined>;
+        ariaRequired: boolean | undefined;
+        tabindex: number | undefined;
+    };
 }
 export default CheckBox;

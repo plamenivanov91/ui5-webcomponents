@@ -39,6 +39,12 @@ let SearchItem = class SearchItem extends ListItemBase {
          * @public
          */
         this.selected = false;
+        /**
+         * Defines whether the search item is deletable.
+         * @default false
+         * @public
+         */
+        this.deletable = false;
         this.highlightText = "";
         this._markupText = "";
     }
@@ -70,6 +76,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], SearchItem.prototype, "selected", void 0);
+__decorate([
+    property({ type: Boolean })
+], SearchItem.prototype, "deletable", void 0);
 __decorate([
     property()
 ], SearchItem.prototype, "scopeName", void 0);

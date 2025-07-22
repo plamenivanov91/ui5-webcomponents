@@ -311,6 +311,16 @@ let CheckBox = CheckBox_1 = class CheckBox extends UI5Element {
     get isDisplayOnly() {
         return this.displayOnly && !this.disabled;
     }
+    get accInfo() {
+        return {
+            "role": this._accInfo ? this._accInfo.role : "checkbox",
+            "ariaChecked": this._accInfo ? this._accInfo.ariaChecked : this.effectiveAriaChecked,
+            "ariaReadonly": this._accInfo ? this._accInfo.ariaReadonly : this.ariaReadonly,
+            "ariaDisabled": this._accInfo ? this._accInfo.ariaDisabled : this.effectiveAriaDisabled,
+            "ariaRequired": this._accInfo ? this._accInfo.ariaRequired : this.required,
+            "tabindex": this._accInfo ? this._accInfo.tabindex : this.effectiveTabIndex,
+        };
+    }
 };
 __decorate([
     property()
@@ -354,6 +364,9 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], CheckBox.prototype, "active", void 0);
+__decorate([
+    property({ type: Object })
+], CheckBox.prototype, "_accInfo", void 0);
 __decorate([
     i18n("@ui5/webcomponents")
 ], CheckBox, "i18nBundle", void 0);
