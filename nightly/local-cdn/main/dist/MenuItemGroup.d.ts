@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type MenuItem from "./MenuItem.js";
 import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
 import type { IMenuItem } from "./Menu.js";
@@ -45,6 +46,8 @@ declare class MenuItemGroup extends UI5Element implements IMenuItem {
      * @public
      */
     items: Array<IMenuItem>;
+    static i18nBundle: I18nBundle;
+    get ariaLabelText(): string | undefined;
     get isGroup(): boolean;
     get _menuItems(): MenuItem[];
     onBeforeRendering(): void;

@@ -188,9 +188,11 @@ declare class MenuItem extends ListItem implements IMenuItem {
     endContent: Array<HTMLElement>;
     static i18nBundle: I18nBundle;
     _itemNavigation: ItemNavigation;
+    _shiftPressed: boolean;
     constructor();
     get _list(): List | null;
     get _navigableItems(): Array<HTMLElement>;
+    get _isCheckable(): boolean;
     _navigateToEndContent(shouldNavigateToPreviousItem: boolean): void;
     get placement(): `${PopoverPlacement}`;
     get isRtl(): boolean;
@@ -238,7 +240,11 @@ declare class MenuItem extends ListItem implements IMenuItem {
     _setupItemNavigation(): void;
     _closeOtherSubMenus(item: MenuItem): void;
     _itemMouseOver(e: MouseEvent): void;
+    _isSpace(e: KeyboardEvent): boolean;
+    _isEnter(e: KeyboardEvent): boolean;
+    _onclick(e: MouseEvent): void;
     _itemKeyDown(e: KeyboardEvent): void;
+    _itemKeyUp(e: KeyboardEvent): void;
     _endContentKeyDown(e: KeyboardEvent): void;
     _navigateOutOfEndContent(e: CustomEvent): void;
     _closeAll(): void;

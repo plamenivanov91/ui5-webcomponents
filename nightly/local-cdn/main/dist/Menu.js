@@ -10,7 +10,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
-import { isLeft, isRight, isEnter, isSpace, isTabNext, isTabPrevious, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isLeft, isRight, isEnter, isTabNext, isTabPrevious, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop, } from "@ui5/webcomponents-base/dist/Device.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -229,7 +229,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
             });
             if (!prevented) {
                 item._updateCheckedState();
-                this._popover && item.fireDecoratorEvent("close-menu");
+                this._popover && !item._shiftPressed && item.fireDecoratorEvent("close-menu");
             }
         }
         else {
@@ -242,12 +242,8 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         if (!isInstanceOfMenuItem(item)) {
             return;
         }
-        const menuItemInMenu = this._allMenuItems.includes(item);
-        const isItemNavigation = isUp(e) || isDown(e);
-        const isItemSelection = isEnter(e) || isSpace(e);
         const isEndContentNavigation = isRight(e) || isLeft(e);
         const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-        const shouldCloseMenu = menuItemInMenu && !(isItemNavigation || isItemSelection || isEndContentNavigation);
         if (isEnter(e) || isTabNextPrevious) {
             e.preventDefault();
         }
@@ -257,7 +253,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         if (shouldOpenMenu) {
             this._openItemSubMenu(item);
         }
-        else if ((shouldCloseMenu || isTabNextPrevious)) {
+        else if (isTabNextPrevious) {
             this._close();
         }
     }

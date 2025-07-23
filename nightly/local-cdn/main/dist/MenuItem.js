@@ -11,7 +11,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
-import { isLeft, isRight, isEnter, isSpace, isTabNext, isTabPrevious, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isLeft, isRight, isEnter, isSpace, isEnterShift, isSpaceShift, isShift, isTabNext, isTabPrevious, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
@@ -98,6 +98,7 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
          * @private
          */
         this._checkMode = "None";
+        this._shiftPressed = false;
         this._itemNavigation = new ItemNavigation(this, {
             navigationMode: NavigationMode.Horizontal,
             behavior: ItemNavigationBehavior.Static,
@@ -113,6 +114,9 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
                 || item.hasAttribute("ui5-link")
                 || (item.hasAttribute("ui5-icon") && item.getAttribute("mode") === "Interactive");
         });
+    }
+    get _isCheckable() {
+        return this._checkMode !== MenuItemGroupCheckMode.None;
     }
     _navigateToEndContent(shouldNavigateToPreviousItem) {
         const navigatableItems = this._navigableItems;
@@ -266,18 +270,32 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
         item.focus();
         this._closeOtherSubMenus(item);
     }
+    _isSpace(e) {
+        this._shiftPressed = this._isCheckable && isSpaceShift(e);
+        return isSpace(e) || isSpaceShift(e);
+    }
+    _isEnter(e) {
+        this._shiftPressed = this._isCheckable && isEnterShift(e);
+        return isEnter(e) || isEnterShift(e);
+    }
+    _onclick(e) {
+        this._shiftPressed = this._isCheckable && e.shiftKey;
+        super._onclick(e);
+    }
     _itemKeyDown(e) {
         const item = e.target;
         const itemInMenuItems = this._allMenuItems.includes(item);
         const isTabNextPrevious = isTabNext(e) || isTabPrevious(e);
-        const isItemNavigation = isUp(e) || isDown(e);
-        const isItemSelection = isSpace(e) || isEnter(e);
-        const shouldOpenMenu = this.isRtl ? isLeft(e) : isRight(e);
-        const shouldCloseMenu = !(isItemNavigation || isItemSelection || shouldOpenMenu) || isTabNextPrevious;
-        if (itemInMenuItems && shouldCloseMenu) {
+        const shouldCloseMenu = this.isRtl ? isRight(e) : isLeft(e);
+        if (itemInMenuItems && (isTabNextPrevious || shouldCloseMenu)) {
             this._close();
             this.focus();
             e.stopPropagation();
+        }
+    }
+    _itemKeyUp(e) {
+        if (isShift(e)) {
+            this._shiftPressed = false;
         }
     }
     _endContentKeyDown(e) {

@@ -4,14 +4,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var MenuItemGroup_1;
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isInstanceOfMenuItem } from "./MenuItem.js";
 import MenuItemGroupTemplate from "./MenuItemGroupTemplate.js";
 import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
+import { MENU_ITEM_GROUP_NONE_ACCESSIBLE_NAME, MENU_ITEM_GROUP_SINGLE_ACCESSIBLE_NAME, MENU_ITEM_GROUP_MULTI_ACCESSIBLE_NAME, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
@@ -42,7 +45,7 @@ import MenuItemGroupCheckMode from "./types/MenuItemGroupCheckMode.js";
  * @since 2.12.0
  * @public
  */
-let MenuItemGroup = class MenuItemGroup extends UI5Element {
+let MenuItemGroup = MenuItemGroup_1 = class MenuItemGroup extends UI5Element {
     constructor() {
         super(...arguments);
         /**
@@ -51,6 +54,18 @@ let MenuItemGroup = class MenuItemGroup extends UI5Element {
          * @public
          */
         this.checkMode = "None";
+    }
+    get ariaLabelText() {
+        switch (this.checkMode) {
+            case MenuItemGroupCheckMode.None:
+                return MenuItemGroup_1.i18nBundle.getText(MENU_ITEM_GROUP_NONE_ACCESSIBLE_NAME);
+            case MenuItemGroupCheckMode.Single:
+                return MenuItemGroup_1.i18nBundle.getText(MENU_ITEM_GROUP_SINGLE_ACCESSIBLE_NAME);
+            case MenuItemGroupCheckMode.Multiple:
+                return MenuItemGroup_1.i18nBundle.getText(MENU_ITEM_GROUP_MULTI_ACCESSIBLE_NAME);
+            default:
+                return undefined;
+        }
     }
     get isGroup() {
         return true;
@@ -111,7 +126,10 @@ __decorate([
 __decorate([
     slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 ], MenuItemGroup.prototype, "items", void 0);
-MenuItemGroup = __decorate([
+__decorate([
+    i18n("@ui5/webcomponents")
+], MenuItemGroup, "i18nBundle", void 0);
+MenuItemGroup = MenuItemGroup_1 = __decorate([
     customElement({
         tag: "ui5-menu-item-group",
         renderer: jsxRenderer,

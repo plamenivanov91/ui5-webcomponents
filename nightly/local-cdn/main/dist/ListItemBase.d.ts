@@ -67,6 +67,14 @@ declare class ListItemBase extends UI5Element implements ITabbable {
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
     _onclick(e: MouseEvent): void;
+    /**
+     * Override from subcomponent, if needed
+     */
+    _isSpace(e: KeyboardEvent): boolean;
+    /**
+     * Override from subcomponent, if needed
+     */
+    _isEnter(e: KeyboardEvent): boolean;
     fireItemPress(e: Event): void;
     _handleTabNext(e: KeyboardEvent): void;
     _handleTabPrevious(e: KeyboardEvent): void;

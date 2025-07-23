@@ -1,14 +1,13 @@
-commit 87412b58eab6a01969f7a9ef1dd5d6c4563b647f
-Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
-Date:   Mon Jul 21 17:33:18 2025 +0300
+commit 88b6eac7237ca846334532364d5d73451f1dc6ec
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Tue Jul 22 09:28:34 2025 +0300
 
-    fix(ui5-timeline): apply correct accessibility semantics (#11774)
+    feat(ui5-menu): improve accessibility (#11846)
     
-    We've now set correct tree/list roles on the Timeline based on conditions:
+    This PR introduces the following accessibility improvements in ui5-menu component:
     
-    If a ui5-timeline has ui5-timeline-group-item – the role is set to tree so we oblige with the latest accessibility standards.
-    When we have a ui5-timeline with only ui5-timeline-items – the role is set to list.
-    Depending on the role, the correct treeitem/listitem roles are set to the items within.
-    Using a Screen Reader now announces the counting information natively due to correct semantics (e.g Timeline item 2 of 4).
+    Adds aria-label attributes on menu item group wrappers, which already have role="group". The labels are according to the group's checkMode property.
     
-    Added region="Timeline" to the root of the Component according to spec.
+    Adds the possibility to check/uncheck menu items in groups when the checkMode property is set to Single or Multiple. This is achieved by holding down the Shift key while selecting (with mouse or keyboard) the menu items in these groups. Selecting menu items that don't belong to any group, or items inside groups with the checkMode property set to None will always close the menu regardless if Shift is pressed or not.
+    
+    Fixes: #11594
