@@ -146,6 +146,24 @@ let List = List_1 = class List extends UI5Element {
          */
         this.loadingDelay = 1000;
         /**
+        * Defines additional accessibility attributes on different areas of the component.
+        *
+        * The accessibilityAttributes object has the following field:
+        *
+        *  - **growingButton**: `growingButton.name`.
+        *
+        * The accessibility attributes support the following values:
+        *
+        * - **name**: Defines the accessible ARIA name of the growing button.
+        * Accepts any string.
+        *
+        * **Note:** The `accessibilityAttributes` property is in an experimental state and is a subject to change.
+        * @default {}
+        * @public
+        * @since 2.13.0
+        */
+        this.accessibilityAttributes = {};
+        /**
          * Defines the accessible role of the component.
          * @public
          * @default "List"
@@ -308,6 +326,12 @@ let List = List_1 = class List extends UI5Element {
     }
     get ariaDescriptionText() {
         return this._associatedDescriptionRefTexts || getEffectiveAriaDescriptionText(this) || this._getDescriptionForGroups();
+    }
+    get growingButtonAriaLabel() {
+        return this.accessibilityAttributes.growingButton?.name;
+    }
+    get growingButtonAriaLabelledBy() {
+        return this.accessibilityAttributes.growingButton?.name ? undefined : `${this._id}-growingButton-text`;
     }
     get scrollContainer() {
         return this.shadowRoot.querySelector(".ui5-list-scroll-container");
@@ -948,6 +972,9 @@ __decorate([
 __decorate([
     property()
 ], List.prototype, "accessibleName", void 0);
+__decorate([
+    property({ type: Object })
+], List.prototype, "accessibilityAttributes", void 0);
 __decorate([
     property()
 ], List.prototype, "accessibleNameRef", void 0);

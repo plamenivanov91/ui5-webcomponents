@@ -36,6 +36,11 @@ type ListItemClickEventDetail = {
     item: ListItemBase;
 };
 type ListMoveEventDetail = MoveEventDetail;
+type ListAccessibilityAttributes = {
+    growingButton?: {
+        name?: string;
+    };
+};
 /**
  * @class
  *
@@ -186,6 +191,24 @@ declare class List extends UI5Element {
      */
     accessibleName?: string;
     /**
+    * Defines additional accessibility attributes on different areas of the component.
+    *
+    * The accessibilityAttributes object has the following field:
+    *
+    *  - **growingButton**: `growingButton.name`.
+    *
+    * The accessibility attributes support the following values:
+    *
+    * - **name**: Defines the accessible ARIA name of the growing button.
+    * Accepts any string.
+    *
+    * **Note:** The `accessibilityAttributes` property is in an experimental state and is a subject to change.
+    * @default {}
+    * @public
+    * @since 2.13.0
+    */
+    accessibilityAttributes: ListAccessibilityAttributes;
+    /**
      * Defines the IDs of the elements that label the component.
      * @default undefined
      * @public
@@ -301,6 +324,8 @@ declare class List extends UI5Element {
     get ariaLabelledBy(): string | undefined;
     get ariaLabelTxt(): string | undefined;
     get ariaDescriptionText(): string;
+    get growingButtonAriaLabel(): string | undefined;
+    get growingButtonAriaLabelledBy(): string | undefined;
     get scrollContainer(): HTMLElement | null;
     hasGrowingComponent(): boolean;
     _getDescriptionForGroups(): string;
@@ -386,4 +411,4 @@ declare class List extends UI5Element {
     getIntersectionObserver(): IntersectionObserver;
 }
 export default List;
-export type { ListItemClickEventDetail, ListItemFocusEventDetail, ListItemDeleteEventDetail, ListItemCloseEventDetail, ListItemToggleEventDetail, ListSelectionChangeEventDetail, ListMoveEventDetail, };
+export type { ListItemClickEventDetail, ListItemFocusEventDetail, ListItemDeleteEventDetail, ListItemCloseEventDetail, ListItemToggleEventDetail, ListSelectionChangeEventDetail, ListMoveEventDetail, ListAccessibilityAttributes, };
