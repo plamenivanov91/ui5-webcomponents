@@ -302,6 +302,13 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
         this._iconPressed = true;
         this.inner.focus();
         this.fireDecoratorEvent("open");
+        const allItems = this._getItems();
+        const currentItem = allItems.find(item => {
+            return item.selected || item.focused;
+        });
+        if (currentItem) {
+            this._scrollToItem(allItems.indexOf(currentItem));
+        }
     }
     _afterClosePopover() {
         this._iconPressed = false;

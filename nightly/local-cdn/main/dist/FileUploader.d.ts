@@ -161,7 +161,6 @@ declare class FileUploader extends UI5Element implements IFormInputElement {
     _messagePopover: Popover;
     _selectedFilesNames: Array<string>;
     _tokenizerOpen: boolean;
-    _tokenizerExpanded: boolean;
     static emptyInput: HTMLInputElement;
     static i18nBundle: I18nBundle;
     formElementAnchor(): Promise<HTMLElement | undefined>;
@@ -179,6 +178,7 @@ declare class FileUploader extends UI5Element implements IFormInputElement {
     _ondrop(e: DragEvent): void;
     _onfocusin(): void;
     _onfocusout(): void;
+    get _tokenizerExpanded(): boolean;
     _onTokenizerKeyUp(e: KeyboardEvent): void;
     _onTokenizerKeyDown(e: KeyboardEvent): void;
     _onTokenizerClick(e: MouseEvent): void;

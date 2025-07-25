@@ -31,5 +31,8 @@ declare class OpenUI5Support {
     static _listenForThemeChange(): void;
     static attachListeners(): void;
     static cssVariablesLoaded(): boolean | undefined;
+    static addOpenedPopup(popup: object): void;
+    static removeOpenedPopup(popup: object): void;
+    static getTopmostPopup(): object;
 }
 export default OpenUI5Support;

@@ -100,7 +100,6 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         this.focused = false;
         this._selectedFilesNames = [];
         this._tokenizerOpen = false;
-        this._tokenizerExpanded = true;
     }
     async formElementAnchor() {
         return this.getFocusDomRefAsync();
@@ -187,11 +186,21 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
     }
     _onfocusin() {
         this.focused = true;
-        this._tokenizerExpanded = true;
+        if (this._tokenizer) {
+            this._tokenizer.expanded = true;
+        }
     }
     _onfocusout() {
         this.focused = false;
-        this._tokenizerExpanded = this._tokenizerOpen || false;
+        if (this._tokenizer) {
+            this._tokenizer.expanded = this._tokenizerOpen;
+        }
+    }
+    get _tokenizerExpanded() {
+        if (!this._tokenizer) {
+            return true;
+        }
+        return this._tokenizer.expanded;
     }
     _onTokenizerKeyUp(e) {
         if (isSpace(e) || isDelete(e)) {
@@ -459,9 +468,6 @@ __decorate([
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], FileUploader.prototype, "_tokenizerOpen", void 0);
-__decorate([
-    property({ type: Boolean, noAttribute: true })
-], FileUploader.prototype, "_tokenizerExpanded", void 0);
 __decorate([
     i18n("@ui5/webcomponents")
 ], FileUploader, "i18nBundle", void 0);

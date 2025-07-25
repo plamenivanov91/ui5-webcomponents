@@ -13,7 +13,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { isSpace, isUp, isDown, isEnter, isEscape, isHome, isEnd, isShow, isTabNext, isTabPrevious, } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
@@ -632,7 +632,7 @@ let Select = Select_1 = class Select extends UI5Element {
         };
     }
     get ariaLabelText() {
-        return getEffectiveAriaLabelText(this);
+        return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
     }
     get shouldDisplayDefaultValueStateMessage() {
         return !this.valueStateMessage.length && this.hasValueStateText;

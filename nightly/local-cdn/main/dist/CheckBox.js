@@ -13,7 +13,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_SUCCESS, FORM_CHECKABLE_REQUIRED, } from "./generated/i18n/i18n-defaults.js";
 // Styles
@@ -261,7 +261,7 @@ let CheckBox = CheckBox_1 = class CheckBox extends UI5Element {
         };
     }
     get ariaLabelText() {
-        return getEffectiveAriaLabelText(this);
+        return getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
     }
     get classes() {
         return {

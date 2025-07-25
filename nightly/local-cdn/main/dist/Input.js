@@ -647,6 +647,7 @@ let Input = Input_1 = class Input extends UI5Element {
             this.value = valueBeforeClear;
             return;
         }
+        this.typedInValue = "";
         if (!this._isPhone) {
             this.fireResetSelectionChange();
             this.focus();
