@@ -191,6 +191,9 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         }
     }
     _onfocusout() {
+        if (this.matches(":focus-within")) {
+            return;
+        }
         this.focused = false;
         if (this._tokenizer) {
             this._tokenizer.expanded = this._tokenizerOpen;
@@ -257,7 +260,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         if (!this.value) {
             this._input.value = "";
         }
-        this._tokenizerOpen = this._tokenizer?.open || false;
+        this._tokenizerOpen = this._tokenizer ? this._tokenizer.open : false;
         if (this.hideInput && this.content.length > 0) {
             this.content.forEach(element => {
                 element.setAttribute("tabindex", "-1");
