@@ -162,6 +162,9 @@ let Menu = Menu_1 = class Menu extends UI5Element {
             item._siblingsWithIcon = siblingsWithIcon;
         });
     }
+    getFocusDomRef() {
+        return this._list?.getFocusDomRef();
+    }
     _setupItemNavigation() {
         if (this._list) {
             this._list._itemNavigation._getItems = () => this._navigatableMenuItems;

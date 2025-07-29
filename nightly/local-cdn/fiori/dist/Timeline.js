@@ -162,6 +162,9 @@ let Timeline = Timeline_1 = class Timeline extends UI5Element {
     loadMore() {
         this.fireDecoratorEvent("load-more");
     }
+    getFocusDomRef() {
+        return this._itemNavigation._getCurrentItem();
+    }
     _onLoadMoreKeydown(e) {
         if (isSpace(e)) {
             e.preventDefault();

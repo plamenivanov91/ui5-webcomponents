@@ -119,6 +119,7 @@ declare class Timeline extends UI5Element {
     getIntersectionObserver(): IntersectionObserver;
     onIntersection(entries: Array<IntersectionObserverEntry>): void;
     loadMore(): void;
+    getFocusDomRef(): HTMLElement | undefined;
     _onLoadMoreKeydown(e: KeyboardEvent): void;
     _onLoadMoreKeyup(e: KeyboardEvent): void;
     _onLoadMoreClick(): void;

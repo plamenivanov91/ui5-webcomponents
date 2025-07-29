@@ -1,9 +1,15 @@
-commit 006123bba4c4b914acc2b0305de3664fa459a22d
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jul 24 23:53:18 2025 -0700
+commit fec01bde2e30ba01b2b33dc2f8965dd5d0b55ecb
+Author: Petya Markova <petya.markova-bogdanova@sap.com>
+Date:   Mon Jul 28 10:44:23 2025 +0200
 
-    Translation Delivery (#11986)
+    fix(ui5-toolbar): fix console warning in Toolbar (#11692)
     
-    [INTERNAL] Translation delivery: commit by LX Lab
+    * fix(ui5-toolbar): fix console warning in Toolbar
     
-    Change-Id: I34c4f56fe5458587cb57a0bdc87cf9bd38bd5e8a
+    * fix(ui5-toolbar): fix console warning in Toolbar component
+    
+    * fix(ui5-toolbar): fix console warning in Toolbar component
+    
+    ---------
+    
+    Co-authored-by: PetyaMarkovaBogdanova <petya.markova@sap.com>
