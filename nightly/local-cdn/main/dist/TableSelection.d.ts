@@ -79,6 +79,8 @@ declare class TableSelection extends UI5Element implements ITableFeature {
     isSelectable(): boolean;
     isMultiSelectable(): boolean;
     isRowSelectorRequired(): boolean;
+    getAriaDescriptionForTable(): string | undefined;
+    getAriaDescriptionForColumnHeader(): string | undefined;
     getRowKey(row: TableRow): string;
     isSelected(row: TableRowBase): boolean;
     hasSelectedRow(): boolean;

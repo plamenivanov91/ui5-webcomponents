@@ -50,7 +50,8 @@ class TableHeaderRow extends TableRowBase {
     }
     onEnterDOM() {
         super.onEnterDOM();
-        this.setAttribute("aria-roledescription", TableRowBase.i18nBundle.getText(TABLE_COLUMN_HEADER_ROW));
+        this.ariaRowIndex = "1";
+        this.ariaRoleDescription = TableRowBase.i18nBundle.getText(TABLE_COLUMN_HEADER_ROW);
     }
     onBeforeRendering() {
         super.onBeforeRendering();
@@ -69,6 +70,9 @@ class TableHeaderRow extends TableRowBase {
     }
     get _shouldRenderClearAll() {
         return this._tableSelection.headerSelector === "ClearAll";
+    }
+    get _selectionCellAriaDescription() {
+        return this._tableSelection?.getAriaDescriptionForColumnHeader();
     }
     get _i18nSelection() {
         return TableRowBase.i18nBundle.getText(TABLE_SELECTION);

@@ -43,6 +43,7 @@ declare class TableHeaderRow extends TableRowBase {
     get _isSelectable(): boolean;
     get _hasSelectedRows(): boolean;
     get _shouldRenderClearAll(): boolean;
+    get _selectionCellAriaDescription(): string | undefined;
     get _i18nSelection(): string;
     get _i18nRowPopin(): string;
     get _i18nRowActions(): string;

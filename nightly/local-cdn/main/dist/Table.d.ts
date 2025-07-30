@@ -310,7 +310,9 @@ declare class Table extends UI5Element {
     get _stickyElements(): (TableHeaderRow | TableHeaderCell)[];
     get _effectiveNoDataText(): string;
     get _ariaLabel(): string | undefined;
-    get _ariaRowCount(): number | undefined;
+    get _ariaDescription(): string | undefined;
+    get _ariaRowCount(): number;
+    get _ariaColCount(): number;
     get _ariaMultiSelectable(): boolean | undefined;
     get isTable(): boolean;
 }

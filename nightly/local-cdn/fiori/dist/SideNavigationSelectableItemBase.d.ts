@@ -17,6 +17,13 @@ declare class SideNavigationSelectableItemBase extends SideNavigationItemBase {
         "click": SideNavigationItemClickEventDetail;
     };
     /**
+     * Defines if the item's parent is disabled.
+     * @private
+     * @default false
+     * @since 2.10.0
+     */
+    _parentDisabled: boolean;
+    /**
      * Defines the icon of the item.
      *
      * The SAP-icons font provides numerous options.
@@ -122,9 +129,13 @@ declare class SideNavigationSelectableItemBase extends SideNavigationItemBase {
     get _target(): string | undefined;
     get isExternalLink(): boolean | "" | undefined;
     get _selected(): boolean;
+    get _effectiveTag(): "a" | "div";
+    get effectiveDisabled(): boolean;
+    get _ariaHasPopup(): import("@ui5/webcomponents-base/dist/types.js").AriaHasPopup | undefined;
     get classesArray(): string[];
     get _classes(): string;
     get _ariaCurrent(): "page" | undefined;
+    get _ariaSelected(): boolean | undefined;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent): void;
     _onclick(e: MouseEvent): void;

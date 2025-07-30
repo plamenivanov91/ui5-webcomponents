@@ -56,10 +56,10 @@ let TableRow = class TableRow extends TableRowBase {
     }
     onBeforeRendering() {
         super.onBeforeRendering();
-        toggleAttribute(this, "_interactive", this._isInteractive);
-        toggleAttribute(this, "aria-rowindex", this.position !== undefined, `${this.position + 1}`);
         toggleAttribute(this, "aria-current", this._renderNavigated && this.navigated, "true");
+        toggleAttribute(this, "_interactive", this._isInteractive);
         toggleAttribute(this, "draggable", this.movable, "true");
+        this.ariaRowIndex = `${this._rowIndex + 2}`;
     }
     async focus(focusOptions) {
         this.setAttribute("tabindex", "-1");
@@ -99,6 +99,15 @@ let TableRow = class TableRow extends TableRowBase {
     }
     get _isInteractive() {
         return this.interactive || (this._isSelectable && !this._hasSelector);
+    }
+    get _rowIndex() {
+        if (this.position !== undefined) {
+            return this.position;
+        }
+        if (this._table) {
+            return this._table.rows.indexOf(this);
+        }
+        return -1;
     }
     get _hasOverflowActions() {
         let renderedActionsCount = 0;

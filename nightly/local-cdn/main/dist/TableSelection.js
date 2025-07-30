@@ -101,6 +101,12 @@ let TableSelection = class TableSelection extends UI5Element {
     isRowSelectorRequired() {
         return this.mode !== TableSelectionMode.None;
     }
+    getAriaDescriptionForTable() {
+        return undefined;
+    }
+    getAriaDescriptionForColumnHeader() {
+        return undefined;
+    }
     getRowKey(row) {
         return row.rowKey || "";
     }

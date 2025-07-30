@@ -79,6 +79,10 @@ declare class TableSelectionMulti extends TableSelectionBase {
      * @public
      */
     setSelectedAsSet(selectedSet: Set<string>): void;
+    /**
+     * Returns the ARIA description of the selection component displayed in the column header.
+     */
+    getAriaDescriptionForColumnHeader(): string | undefined;
     _onkeydown(e: KeyboardEvent): void;
     _onkeyup(e: KeyboardEvent, eventOrigin: HTMLElement): void;
     _onclickCapture(e: MouseEvent): void;

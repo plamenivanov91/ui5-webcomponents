@@ -12,7 +12,7 @@ export default function TableRowTemplate() {
                             _jsx(RadioButton, { id: "selection-component", tabindex: -1, name: this._tableId, checked: this._isSelected, onChange: this._onSelectionChange, accessibleName: this._i18nRowSelector }) }), this._visibleCells.map(cell => (_jsx("slot", { name: cell._individualSlot }))), this._rowActionCount > 0 &&
                 _jsxs(TableCell, { id: "actions-cell", children: [this._flexibleActions.map(action => (_jsx("slot", { name: action._individualSlot }))), this._hasOverflowActions &&
                             _jsx(Button, { id: "overflow", icon: "overflow", design: ButtonDesign.Transparent, onClick: this._onOverflowButtonClick }), this._fixedActions.map(action => (_jsx("slot", { name: action._individualSlot })))] }), this._renderNavigated &&
-                _jsx(TableCell, { id: "navigated-cell", "data-excluded-from-navigation": true, children: _jsx("div", { id: "navigated" }) }), this._popinCells.length > 0 &&
+                _jsx(TableCell, { id: "navigated-cell", "data-excluded-from-navigation": true, "aria-hidden": true, children: _jsx("div", { id: "navigated" }) }), this._popinCells.length > 0 &&
                 _jsx(TableCell, { id: "popin-cell", children: this._popinCells.map(cell => (_jsx("slot", { name: cell._individualSlot }))) })] }));
 }
 //# sourceMappingURL=TableRowTemplate.js.map

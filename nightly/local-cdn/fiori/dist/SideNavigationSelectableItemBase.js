@@ -22,6 +22,13 @@ let SideNavigationSelectableItemBase = class SideNavigationSelectableItemBase ex
     constructor() {
         super(...arguments);
         /**
+         * Defines if the item's parent is disabled.
+         * @private
+         * @default false
+         * @since 2.10.0
+         */
+        this._parentDisabled = false;
+        /**
          * Defines whether the item is selected.
          *
          * **Note:** Items that have a set `href` and `target` set to `_blank` should not be selectable.
@@ -89,13 +96,25 @@ let SideNavigationSelectableItemBase = class SideNavigationSelectableItemBase ex
         return (!this.effectiveDisabled && this.href) ? this.href : undefined;
     }
     get _target() {
-        return (!this.effectiveDisabled && this.target) ? this.target : undefined;
+        return (!this.effectiveDisabled && this.href && this.target) ? this.target : undefined;
     }
     get isExternalLink() {
         return this.href && this.target === "_blank";
     }
     get _selected() {
         return this.selected;
+    }
+    get _effectiveTag() {
+        return this._href ? "a" : "div";
+    }
+    get effectiveDisabled() {
+        return this.disabled || this._parentDisabled;
+    }
+    get _ariaHasPopup() {
+        if (this.accessibilityAttributes?.hasPopup) {
+            return this.accessibilityAttributes.hasPopup;
+        }
+        return undefined;
     }
     get classesArray() {
         const classes = [];
@@ -111,10 +130,16 @@ let SideNavigationSelectableItemBase = class SideNavigationSelectableItemBase ex
         return this.classesArray.join(" ");
     }
     get _ariaCurrent() {
-        if (!this.selected) {
+        if (!this.sideNavCollapsed && !this.selected) {
             return undefined;
         }
         return "page";
+    }
+    get _ariaSelected() {
+        if (!this.sideNavCollapsed) {
+            return undefined;
+        }
+        return this.selected;
     }
     _onkeydown(e) {
         const isRTL = this.effectiveDir === "rtl";
@@ -176,6 +201,9 @@ let SideNavigationSelectableItemBase = class SideNavigationSelectableItemBase ex
         return true;
     }
 };
+__decorate([
+    property({ type: Boolean, noAttribute: true })
+], SideNavigationSelectableItemBase.prototype, "_parentDisabled", void 0);
 __decorate([
     property()
 ], SideNavigationSelectableItemBase.prototype, "icon", void 0);

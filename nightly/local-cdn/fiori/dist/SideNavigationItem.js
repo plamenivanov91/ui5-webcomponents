@@ -102,22 +102,25 @@ let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends
         if (!this.effectiveDisabled && this.sideNavCollapsed && this.items.length) {
             return "tree";
         }
+        if (this.accessibilityAttributes?.hasPopup) {
+            return this.accessibilityAttributes.hasPopup;
+        }
         return undefined;
     }
     get _ariaChecked() {
-        if (this.isOverflow || this.unselectable) {
+        if (this.isOverflow || this.unselectable || !this.sideNavCollapsed) {
             return undefined;
         }
         return this.selected;
     }
     get _groupId() {
-        if (!this.items.length) {
+        if (!this.items.length || this.sideNavCollapsed) {
             return undefined;
         }
         return `${this._id}-group`;
     }
     get _expanded() {
-        if (!this.items.length) {
+        if (!this.items.length || this.sideNavCollapsed) {
             return undefined;
         }
         return this.expanded;
@@ -233,13 +236,13 @@ let SideNavigationItem = SideNavigationItem_1 = class SideNavigationItem extends
         }
         this.getDomRef().classList.add("ui5-sn-item-no-hover-effect");
     }
-    get isSideNavigationItem() {
-        return true;
-    }
     _toggle() {
         if (this.items.length && !this.effectiveDisabled) {
             this.expanded = !this.expanded;
         }
+    }
+    get isSideNavigationItem() {
+        return true;
     }
 };
 __decorate([
