@@ -152,6 +152,22 @@ let Button = Button_1 = class Button extends UI5Element {
          */
         this.nonInteractive = false;
         /**
+         * Defines whether the button shows a loading indicator.
+         *
+         * **Note:** If set to `true`, a busy indicator component will be displayed on the related button.
+         * @default false
+         * @public
+         * @since 2.13.0
+         */
+        this.loading = false;
+        /**
+         * Specifies the delay in milliseconds before the loading indicator appears within the associated button.
+         * @default 1000
+         * @public
+         * @since 2.13.0
+         */
+        this.loadingDelay = 1000;
+        /**
          * @private
          */
         this._iconSettings = {};
@@ -230,6 +246,10 @@ let Button = Button_1 = class Button extends UI5Element {
         if (this.nonInteractive) {
             return;
         }
+        if (this.loading) {
+            e.preventDefault();
+            return;
+        }
         const { altKey, ctrlKey, metaKey, shiftKey, } = e;
         const prevented = !this.fireDecoratorEvent("click", {
             originalEvent: e,
@@ -260,7 +280,7 @@ let Button = Button_1 = class Button extends UI5Element {
         activeButton = this; // eslint-disable-line
     }
     _ontouchend(e) {
-        if (this.disabled) {
+        if (this.disabled || this.loading) {
             e.preventDefault();
             e.stopPropagation();
         }
@@ -300,7 +320,7 @@ let Button = Button_1 = class Button extends UI5Element {
     }
     _setActiveState(active) {
         const eventPrevented = !this.fireDecoratorEvent("active-state-change");
-        if (eventPrevented) {
+        if (eventPrevented || this.loading) {
             return;
         }
         this.active = active;
@@ -432,6 +452,12 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Button.prototype, "nonInteractive", void 0);
+__decorate([
+    property({ type: Boolean })
+], Button.prototype, "loading", void 0);
+__decorate([
+    property({ type: Number })
+], Button.prototype, "loadingDelay", void 0);
 __decorate([
     property({ noAttribute: true })
 ], Button.prototype, "buttonTitle", void 0);

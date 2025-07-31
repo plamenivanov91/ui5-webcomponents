@@ -189,7 +189,7 @@ declare class AvatarGroup extends UI5Element {
      * @private
      */
     get _overflowButtonEffectiveWidth(): number;
-    get firstAvatarSize(): "S" | "L" | "XS" | "M" | "XL";
+    get firstAvatarSize(): "S" | "L" | "M" | "XS" | "XL";
     onAfterRendering(): void;
     onBeforeRendering(): void;
     onEnterDOM(): void;

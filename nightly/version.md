@@ -1,5 +1,13 @@
-commit 6579e7ca0c463bab7d947473e0b2d76adc1d0224
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Jul 29 16:21:34 2025 +0300
+commit 1cc86a5543ceec058264f6ce9c624dfa3217ce4c
+Author: GerganaKremenska <gergana.georgieva01@sap.com>
+Date:   Wed Jul 30 17:31:28 2025 +0300
 
-    chore: dev server starting (#12031)
+    fix(ui5-popover): allow f6 navigation (#12001)
+    
+    * fix(ui5-popover): allow f6 navigation
+    
+    * fix(ui5-popover): fixed test
+    
+    ---------
+    
+    Co-authored-by: Georgieva <lidiya.georgieva@sap.com>
