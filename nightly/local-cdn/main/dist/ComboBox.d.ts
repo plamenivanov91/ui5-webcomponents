@@ -36,7 +36,7 @@ interface IComboBoxItem extends UI5Element {
 type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 type ComboBoxSelectionChangeEventDetail = {
-    item: ComboBoxItem;
+    item: ComboBoxItem | null;
 };
 /**
  * @class
@@ -285,7 +285,7 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     _getItems(): IComboBoxItem[];
     handleNavKeyPress(e: KeyboardEvent): void;
     _handleItemNavigation(e: KeyboardEvent, indexOfItem: number, isForward: boolean): void;
-    _handleTypeAhead(value: string, filterValue: string, checkForGroupItem: boolean): void;
+    _handleTypeAhead(value: string, filterValue: string): void;
     _handleArrowDown(e: KeyboardEvent, indexOfItem: number): void;
     _handleArrowUp(e: KeyboardEvent, indexOfItem: number): void;
     _handlePageUp(e: KeyboardEvent, indexOfItem: number): void;

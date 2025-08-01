@@ -1,13 +1,5 @@
-commit 1cc86a5543ceec058264f6ce9c624dfa3217ce4c
-Author: GerganaKremenska <gergana.georgieva01@sap.com>
-Date:   Wed Jul 30 17:31:28 2025 +0300
+commit 344d6836e0abe55cb1e5ae228d6bc2ef8c984911
+Author: d.ramadan <63354146+duygu-rmdn@users.noreply.github.com>
+Date:   Thu Jul 31 17:11:19 2025 +0300
 
-    fix(ui5-popover): allow f6 navigation (#12001)
-    
-    * fix(ui5-popover): allow f6 navigation
-    
-    * fix(ui5-popover): fixed test
-    
-    ---------
-    
-    Co-authored-by: Georgieva <lidiya.georgieva@sap.com>
+    test(u5i-side-navigation): stabilze test (#12046)
