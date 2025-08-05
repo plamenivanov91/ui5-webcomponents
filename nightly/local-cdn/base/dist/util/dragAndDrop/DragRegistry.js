@@ -58,9 +58,11 @@ const createDefaultMultiDragElement = async (count) => {
  * The drag ghost will be displayed when dragging multiple items.
  *
  * @param {number} count - The number of items being dragged.
+ * @param {DragEvent} e - The drag event that triggered the operation.
  * @public
  */
-const startMultipleDrag = (count) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const startMultipleDrag = (count, e) => {
     if (count < MIN_MULTI_DRAG_COUNT) {
         console.warn(`Cannot start multiple drag with count ${count}. Minimum is ${MIN_MULTI_DRAG_COUNT}.`); // eslint-disable-line
         return;

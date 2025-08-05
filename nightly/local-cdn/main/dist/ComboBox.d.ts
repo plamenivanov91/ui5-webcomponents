@@ -348,12 +348,10 @@ declare class ComboBox extends UI5Element implements IFormInputElement {
     get clearIconAccessibleName(): string;
     get responsivePopoverId(): string;
     get styles(): {
-        popoverHeader: {
-            width: string;
-        };
         suggestionPopoverHeader: {
             display: string;
             width: string;
+            "max-width": string;
         };
         suggestionsPopover: {
             "min-width": string;

@@ -517,12 +517,10 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     get iconsCount(): number;
     get classes(): ClassMap;
     get styles(): {
-        popoverHeader: {
-            "max-width": string;
-        };
         suggestionPopoverHeader: {
             display: string;
             width: string;
+            "max-width": string;
         };
         suggestionsPopover: {
             "min-width": string;

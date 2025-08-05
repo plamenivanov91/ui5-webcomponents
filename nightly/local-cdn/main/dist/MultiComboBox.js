@@ -1525,7 +1525,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
                 "display": this._listWidth === 0 ? "none" : "inline-block",
             },
             popoverHeader: {
-                "max-width": isPhone() ? "100%" : `${this._inputWidth}px`,
+                "max-width": isPhone() ? "100%" : `22rem`,
             },
             suggestionsPopover: {
                 "min-width": `${this._inputWidth}px`,

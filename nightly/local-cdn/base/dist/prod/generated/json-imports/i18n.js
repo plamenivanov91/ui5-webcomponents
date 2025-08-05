@@ -1,2 +1,2 @@
-"use strict";
+"use strict";import{registerI18nLoader as t}from"@ui5/webcomponents-base/dist/asset-registries/i18n.js";const i=async e=>{switch(e){case"en":return(await import("../assets/i18n/messagebundle_en.json")).default;case"en_US_saprigi":return(await import("../assets/i18n/messagebundle_en_US_saprigi.json")).default;default:throw"unknown locale"}},o=async e=>{const n=await i(e);if(typeof n=="string"&&n.endsWith(".json"))throw new Error('[i18n] Invalid bundling detected - dynamic JSON imports bundled as URLs. Switch to inlining JSON files from the build. Check the "Assets" documentation for more information.');return n},r=["en","en_US_saprigi"];r.forEach(e=>{t("@ui5/webcomponents-base",e,o)});
 //# sourceMappingURL=i18n.js.map

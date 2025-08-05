@@ -151,7 +151,7 @@ let Popover = Popover_1 = class Popover extends Popup {
         if (!opener) {
             return;
         }
-        if (this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
+        if (!opener || this.isOpenerOutsideViewport(opener.getBoundingClientRect())) {
             await renderFinished();
             this.open = false;
             this.fireDecoratorEvent("close");
@@ -189,7 +189,7 @@ let Popover = Popover_1 = class Popover extends Popup {
         removeOpenedPopover(this);
     }
     getOpenerHTMLElement(opener) {
-        if (opener === undefined) {
+        if (opener === undefined || opener === null) {
             return opener;
         }
         if (opener instanceof HTMLElement) {
@@ -254,6 +254,13 @@ let Popover = Popover_1 = class Popover extends Popup {
     async _show() {
         super._show();
         const opener = this.getOpenerHTMLElement(this.opener);
+        if (!opener) {
+            Object.assign(this.style, {
+                top: `0px`,
+                left: `0px`,
+            });
+            return;
+        }
         if (opener && instanceOfUI5Element(opener) && !opener.getDomRef()) {
             return;
         }

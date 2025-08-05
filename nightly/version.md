@@ -1,5 +1,5 @@
-commit 344d6836e0abe55cb1e5ae228d6bc2ef8c984911
-Author: d.ramadan <63354146+duygu-rmdn@users.noreply.github.com>
-Date:   Thu Jul 31 17:11:19 2025 +0300
+commit 005828de6708dade06748df6216ff9072f10aea5
+Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
+Date:   Mon Aug 4 13:52:59 2025 +0000
 
-    test(u5i-side-navigation): stabilze test (#12046)
+    chore(release): publish v2.13.0 [ci skip]

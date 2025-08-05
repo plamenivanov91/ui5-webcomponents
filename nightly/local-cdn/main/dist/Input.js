@@ -1084,7 +1084,7 @@ let Input = Input_1 = class Input extends UI5Element {
         if (this.shouldDisplayDefaultValueStateMessage) {
             return this.valueStateText ? `${valueState} ${this.valueStateText}` : valueState;
         }
-        return `${valueState}`.concat(" ", this.valueStateMessage.map(el => el.textContent).join(" "));
+        return this.valueStateMessage.length ? `${valueState} ${this.valueStateMessage.map(el => el.textContent).join(" ")}` : valueState;
     }
     get itemSelectionAnnounce() {
         return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : "";
@@ -1142,18 +1142,16 @@ let Input = Input_1 = class Input extends UI5Element {
         };
     }
     get styles() {
-        const remSizeIxPx = parseInt(getComputedStyle(document.documentElement).fontSize);
+        const remSizeInPx = parseInt(getComputedStyle(document.documentElement).fontSize);
         const stylesObject = {
-            popoverHeader: {
-                "max-width": this._inputWidth ? `${this._inputWidth}px` : "",
-            },
             suggestionPopoverHeader: {
                 "display": this._listWidth === 0 ? "none" : "inline-block",
                 "width": this._listWidth ? `${this._listWidth}px` : "",
+                "max-width": "inherit",
             },
             suggestionsPopover: {
                 "min-width": this._inputWidth ? `${this._inputWidth}px` : "",
-                "max-width": this._inputWidth && (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
+                "max-width": this._inputWidth && (this._inputWidth / remSizeInPx) > 40 ? `${this._inputWidth}px` : "40rem",
             },
             innerInput: {
                 "padding": "",

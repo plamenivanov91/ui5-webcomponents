@@ -7,9 +7,10 @@ type SetDraggedElementFunction = typeof setDraggedElement;
  * The drag ghost will be displayed when dragging multiple items.
  *
  * @param {number} count - The number of items being dragged.
+ * @param {DragEvent} e - The drag event that triggered the operation.
  * @public
  */
-declare const startMultipleDrag: (count: number) => void;
+declare const startMultipleDrag: (count: number, e: DragEvent) => void;
 type DragAndDropSettings = {
     /**
      * Allow cross-browser and file drag and drop.
@@ -36,7 +37,7 @@ declare const DragRegistry: {
     addSelfManagedArea: (area: HTMLElement | ShadowRoot) => (element: HTMLElement | null) => void;
     removeSelfManagedArea: (area: HTMLElement | ShadowRoot) => void;
     getDraggedElement: () => HTMLElement | null;
-    startMultipleDrag: (count: number) => void;
+    startMultipleDrag: (count: number, e: DragEvent) => void;
 };
 export default DragRegistry;
 export { startMultipleDrag, };

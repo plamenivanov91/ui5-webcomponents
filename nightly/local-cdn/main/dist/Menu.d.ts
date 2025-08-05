@@ -122,7 +122,7 @@ declare class Menu extends UI5Element {
      * @default undefined
      * @since 1.10.0
      */
-    opener?: HTMLElement | string;
+    opener?: HTMLElement | string | null;
     /**
      * Defines the items of this component.
      *
