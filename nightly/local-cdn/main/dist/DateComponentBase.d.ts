@@ -36,9 +36,24 @@ declare class DateComponentBase extends UI5Element {
     /**
      * Determines the format, displayed in the input field.
      * @default undefined
+     * @deprecated
      * @public
      */
     formatPattern?: string;
+    /**
+     * Determines the format, displayed in the input field.
+     * @default undefined
+     * @since 2.14.0
+     * @public
+     */
+    displayFormat?: string;
+    /**
+     * Determines the format, used for the value attribute.
+     * @default undefined
+     * @since 2.14.0
+     * @public
+     */
+    valueFormat?: string;
     /**
      * Determines the minimum date available for selection.
      *
@@ -79,12 +94,21 @@ declare class DateComponentBase extends UI5Element {
     get _maxDate(): CalendarDate;
     get _formatPattern(): string;
     get _isPattern(): boolean;
+    get _isValueFormatPattern(): boolean;
+    get _isDisplayFormatPattern(): boolean;
     get hasSecondaryCalendarType(): boolean;
     _getMinMaxCalendarDateFromString(date: string): CalendarDate | undefined;
     _getCalendarDateFromString(value: string): CalendarDate | undefined;
+    _getCalendarDateFromStringDisplayValue(value: string): CalendarDate | undefined;
     _getTimeStampFromString(value: string): number | undefined;
     _getStringFromTimestamp(timestamp: number): string;
+    _getDisplayStringFromTimestamp(timestamp: number): string;
+    _getValueStringFromTimestamp(timestamp: number): string;
     getFormat(): import("sap/ui/core/format/DateFormat").default;
+    get _displayFormat(): string;
+    get _valueFormat(): string;
+    getDisplayFormat(): import("sap/ui/core/format/DateFormat").default;
+    getValueFormat(): import("sap/ui/core/format/DateFormat").default;
     getISOFormat(): DateFormat;
 }
 export default DateComponentBase;

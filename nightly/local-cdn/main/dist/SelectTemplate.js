@@ -17,7 +17,7 @@ export default function SelectTemplate() {
                             }, children: _jsx(Icon, { name: this.icon, class: {
                                     "ui5-select-icon": true,
                                 } }) }), !this.icon && !this.readonly &&
-                        _jsx("div", { class: {
+                        _jsx("div", { part: "icon-wrapper", class: {
                                 "ui5-select-icon-root": true,
                                 "inputIcon": true,
                                 "inputIcon--pressed": this._iconPressed,

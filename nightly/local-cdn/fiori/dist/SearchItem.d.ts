@@ -1,4 +1,5 @@
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 /**
  * @class
  *
@@ -68,9 +69,11 @@ declare class SearchItem extends ListItemBase {
      */
     image: Array<HTMLElement>;
     _markupText: string;
+    static i18nBundle: I18nBundle;
     _onfocusin(e: FocusEvent): void;
     _onfocusout(): void;
     _onDeleteButtonClick(): void;
     onBeforeRendering(): void;
+    get _deleteButtonTooltip(): string;
 }
 export default SearchItem;

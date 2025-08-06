@@ -210,7 +210,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
                 console.warn(`Invalid value for property "${prop}": ${propValue} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
             }
         });
-        this.value = this.normalizeValue(this.value) || this.value;
+        this.value = this.normalizeFormattedValue(this.value) || this.value;
         this.liveValue = this.value;
     }
     /**
@@ -310,14 +310,15 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     _updateValueAndFireEvents(value, normalizeValue, events, updateValue = true) {
         const valid = this._checkValueValidity(value);
         if (valid && normalizeValue) {
-            value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
+            value = this.getDisplayValueFromValue(value);
+            value = this.normalizeDisplayValue(value); // transform valid values (in any format) to the correct format
         }
         let executeEvent = true;
         this.liveValue = value;
         const previousValue = this.value;
         if (updateValue) {
             this._dateTimeInput.value = value;
-            this.value = value;
+            this.value = this.getValueFromDisplayValue(value);
             this._updateValueState(); // Change the value state to Error/None, but only if needed
         }
         events.forEach(e => {
@@ -341,6 +342,18 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         if (eventPrevented) {
             this.valueState = previousValueState;
         }
+    }
+    getValueFromDisplayValue(value) {
+        if (!this.getDisplayFormat().parse(value)) {
+            return value;
+        }
+        return this.getValueFormat().format(this.getDisplayFormat().parse(value));
+    }
+    getDisplayValueFromValue(value) {
+        if (!this.getValueFormat().parse(value)) {
+            return value;
+        }
+        return this.getDisplayFormat().format(this.getValueFormat().parse(value));
     }
     /**
      * The ui5-input "submit" event handler - fire change event when the user presses enter
@@ -370,7 +383,18 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         if (value === "") {
             return true;
         }
-        return this.isValid(value) && this.isInValidRange(value);
+        return this.isValidValue(value) && this.isInValidRange(value);
+    }
+    /**
+     * Checks if the provided value is valid and within valid range.
+     * @protected
+     * @param value
+     */
+    _checkDisplayValueValidity(value) {
+        if (value === "") {
+            return true;
+        }
+        return this.isValidDisplayValue(value) && this.isInValidRangeDisplayValue(value);
     }
     _click(e) {
         if (isPhone()) {
@@ -391,6 +415,28 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         return !!this.getFormat().parse(value);
     }
     /**
+     * Checks if a value is valid against the current date format of the DatePicker.
+     * @public
+     * @param value A value to be tested against the current date format
+     */
+    isValidValue(value) {
+        if (value === "" || value === undefined) {
+            return true;
+        }
+        return !!this.getValueFormat().parse(value);
+    }
+    /**
+     * Checks if a value is valid against the current date format of the DatePicker.
+     * @public
+     * @param value A value to be tested against the current date format
+     */
+    isValidDisplayValue(value) {
+        if (value === "" || value === undefined) {
+            return true;
+        }
+        return !!this.getDisplayFormat().parse(value);
+    }
+    /**
      * Checks if a date is between the minimum and maximum date.
      * @public
      * @param value A value to be checked
@@ -400,6 +446,16 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
             return true;
         }
         const calendarDate = this._getCalendarDateFromString(value);
+        if (!calendarDate || !this._minDate || !this._maxDate) {
+            return false;
+        }
+        return calendarDate.valueOf() >= this._minDate.valueOf() && calendarDate.valueOf() <= this._maxDate.valueOf();
+    }
+    isInValidRangeDisplayValue(value) {
+        if (value === "" || value === undefined) {
+            return true;
+        }
+        const calendarDate = this._getCalendarDateFromStringDisplayValue(value);
         if (!calendarDate || !this._minDate || !this._maxDate) {
             return false;
         }
@@ -415,9 +471,28 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         }
         return this.getFormat().format(this.getFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
     }
-    get _displayFormat() {
-        // @ts-ignore oFormatOptions is a private API of DateFormat
-        return this.getFormat().oFormatOptions.pattern;
+    /**
+     * The parser understands many formats, but we need one format
+     * @protected
+     */
+    normalizeFormattedValue(value) {
+        if (!this.getValueFormat().parse(value, true)) {
+            return "";
+        }
+        if (value === "") {
+            return value;
+        }
+        return this.getValueFormat().format(this.getValueFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
+    }
+    /**
+     * The parser understands many formats, but we need one format
+     * @protected
+     */
+    normalizeDisplayValue(value) {
+        if (value === "" || !this.getDisplayFormat().parse(value, true)) {
+            return value;
+        }
+        return this.getDisplayFormat().format(this.getDisplayFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
     }
     get _lastDayOfTheYear() {
         const currentYear = UI5Date.getInstance().getFullYear();
@@ -442,6 +517,15 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     }
     get showFooter() {
         return isPhone();
+    }
+    get displayValue() {
+        if (!this.getValueFormat().parse(this.value, true)) {
+            return this.value;
+        }
+        if (!this.value) {
+            return "";
+        }
+        return this.getDisplayFormat().format(this.getValueFormat().parse(this.value, true), true);
     }
     get accInfo() {
         return {
@@ -561,7 +645,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
      * @returns The date as string
      */
     formatValue(date) {
-        return this.getFormat().format(date);
+        return this.getValueFormat().format(date);
     }
     _togglePicker() {
         this.open = !this.open;
@@ -576,10 +660,10 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
      * @default null
      */
     get dateValue() {
-        return this.liveValue ? this.getFormat().parse(this.liveValue) : this.getFormat().parse(this.value);
+        return this.liveValue ? this.getValueFormat().parse(this.liveValue) : this.getValueFormat().parse(this.value);
     }
     get dateValueUTC() {
-        return this.liveValue ? this.getFormat().parse(this.liveValue, true) : this.getFormat().parse(this.value);
+        return this.liveValue ? this.getValueFormat().parse(this.liveValue, true) : this.getValueFormat().parse(this.value);
     }
     get styles() {
         return {
