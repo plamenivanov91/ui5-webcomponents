@@ -17,11 +17,9 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isTabNext, isSpace, isEnter, isTabPrevious, isCtrl, isEnd, isHome, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
-import handleDragOver from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDragOver.js";
-import handleDrop from "@ui5/webcomponents-base/dist/util/dragAndDrop/handleDrop.js";
-import Orientation from "@ui5/webcomponents-base/dist/types/Orientation.js";
 import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
-import { findClosestPosition, findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
+import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
+import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getAllAccessibleDescriptionRefTexts, getEffectiveAriaDescriptionText, getEffectiveAriaLabelText, registerUI5Element, deregisterUI5Element, getAllAccessibleNameRefTexts, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
@@ -206,6 +204,13 @@ let List = List_1 = class List extends UI5Element {
         this.onForwardAfterBound = this.onForwardAfter.bind(this);
         this.onForwardBeforeBound = this.onForwardBefore.bind(this);
         this.onItemTabIndexChangeBound = this.onItemTabIndexChange.bind(this);
+        // Initialize the DragAndDropHandler with the necessary configurations
+        // The handler will manage the drag and drop operations for the list items.
+        this._dragAndDropHandler = new DragAndDropHandler(this, {
+            getItems: () => this.items,
+            getDropIndicator: () => this.dropIndicatorDOM,
+            useOriginalEvent: true,
+        });
     }
     /**
      * Returns an array containing the list item instances without the groups in a flat structure.
@@ -718,34 +723,16 @@ let List = List_1 = class List extends UI5Element {
         this.setForwardingFocus(false);
     }
     _ondragenter(e) {
-        e.preventDefault();
+        this._dragAndDropHandler.ondragenter(e);
     }
     _ondragleave(e) {
-        if (e.relatedTarget instanceof Node && this.shadowRoot.contains(e.relatedTarget)) {
-            return;
-        }
-        this.dropIndicatorDOM.targetReference = null;
+        this._dragAndDropHandler.ondragleave(e);
     }
     _ondragover(e) {
-        if (!(e.target instanceof HTMLElement)) {
-            return;
-        }
-        const closestPosition = findClosestPosition(this.items, e.clientY, Orientation.Vertical);
-        if (!closestPosition) {
-            this.dropIndicatorDOM.targetReference = null;
-            return;
-        }
-        const { targetReference, placement } = handleDragOver(e, this, closestPosition, closestPosition.element, { originalEvent: true });
-        this.dropIndicatorDOM.targetReference = targetReference;
-        this.dropIndicatorDOM.placement = placement;
+        this._dragAndDropHandler.ondragover(e);
     }
     _ondrop(e) {
-        if (!this.dropIndicatorDOM?.targetReference || !this.dropIndicatorDOM?.placement) {
-            e.preventDefault();
-            return;
-        }
-        handleDrop(e, this, this.dropIndicatorDOM.targetReference, this.dropIndicatorDOM.placement, { originalEvent: true });
-        this.dropIndicatorDOM.targetReference = null;
+        this._dragAndDropHandler.ondrop(e);
     }
     isForwardElement(element) {
         const elementId = element.id;

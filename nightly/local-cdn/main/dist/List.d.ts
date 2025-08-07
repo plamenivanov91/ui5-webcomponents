@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import type { MoveEventDetail } from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
@@ -294,6 +295,7 @@ declare class List extends UI5Element {
     onForwardAfterBound: (e: CustomEvent) => void;
     onForwardBeforeBound: (e: CustomEvent) => void;
     onItemTabIndexChangeBound: (e: CustomEvent) => void;
+    _dragAndDropHandler: DragAndDropHandler;
     constructor();
     /**
      * Returns an array containing the list item instances without the groups in a flat structure.

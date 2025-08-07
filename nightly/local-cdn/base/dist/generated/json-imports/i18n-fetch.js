@@ -3,6 +3,7 @@ import { registerI18nLoader } from "@ui5/webcomponents-base/dist/asset-registrie
 const importMessageBundle = async (localeId) => {
     switch (localeId) {
         case "en": return (await fetch(new URL("../assets/i18n/messagebundle_en.json", import.meta.url))).json();
+        case "en_US_sappsd": return (await fetch(new URL("../assets/i18n/messagebundle_en_US_sappsd.json", import.meta.url))).json();
         case "en_US_saprigi": return (await fetch(new URL("../assets/i18n/messagebundle_en_US_saprigi.json", import.meta.url))).json();
         default: throw "unknown locale";
     }
@@ -15,6 +16,7 @@ const importAndCheck = async (localeId) => {
     return data;
 };
 const localeIds = ["en",
+    "en_US_sappsd",
     "en_US_saprigi",];
 localeIds.forEach(localeId => {
     registerI18nLoader("@ui5/webcomponents-base", localeId, importAndCheck);

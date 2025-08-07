@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import MovePlacement from "@ui5/webcomponents-base/dist/types/MovePlacement.js";
 import type DropIndicator from "./DropIndicator.js";
 import type ListItemBase from "./ListItemBase.js";
@@ -80,6 +81,8 @@ declare class ListItemGroup extends UI5Element {
     * @public
     */
     header: Array<ListItemBase>;
+    _dragAndDropHandler: DragAndDropHandler;
+    constructor();
     onEnterDOM(): void;
     onExitDOM(): void;
     get groupHeaderItem(): ListItemGroupHeader;
@@ -91,6 +94,7 @@ declare class ListItemGroup extends UI5Element {
     _ondragleave(e: DragEvent): void;
     _ondragover(e: DragEvent): void;
     _ondrop(e: DragEvent): void;
+    _filterPlacements(placements: MovePlacement[], draggedElement: HTMLElement, targetElement: HTMLElement): MovePlacement[];
 }
 declare const isInstanceOfListItemGroup: (object: any) => object is ListItemGroup;
 export default ListItemGroup;
