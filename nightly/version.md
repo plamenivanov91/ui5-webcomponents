@@ -1,9 +1,14 @@
-commit b19d29f85839baac4054dd816986565c52d907f7
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Aug 5 23:58:53 2025 -0700
+commit b392d46c349c9e884f54c1a95c506abd8734d514
+Author: Konstantin Gogov <konstantin.gogov@sap.com>
+Date:   Thu Aug 7 16:55:32 2025 +0300
 
-    Translation Delivery (#12074)
+    fix(ui5-dynamic-page): correct pin button tooltip based on pinned state (#12086)
     
-    [INTERNAL] Translation delivery: commit by LX Lab
+    The pin button tooltip now correctly displays:
+    - "Pin Header" when header is not pinned
+    - "Unpin Header" when header is pinned
     
-    Change-Id: I28c2fa818b70b525ea8366f59b8bcd65b10654d8
+    Previously, the tooltip always showed "Pin Header" regardless
+    of the current pinned state, which was confusing for users.
+    
+    Fixes: #12064

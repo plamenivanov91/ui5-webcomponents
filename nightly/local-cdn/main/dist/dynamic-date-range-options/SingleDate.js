@@ -22,7 +22,7 @@ class SingleDate {
     }
     format(value) {
         const valuesArray = value?.values;
-        if (!valuesArray || valuesArray.length !== 1) {
+        if (!valuesArray) {
             return "";
         }
         const date = valuesArray[0];

@@ -8,7 +8,7 @@ import type { DynamicDateRangeValue, IDynamicDateRangeOption } from "../DynamicD
 declare class Today implements IDynamicDateRangeOption {
     parse(): DynamicDateRangeValue;
     format(): string;
-    toDates(): Date[];
+    toDates(): Array<Date>;
     isValidString(value: string): boolean;
     get text(): string;
     get operator(): string;

@@ -12,7 +12,7 @@ declare class SingleDate implements IDynamicDateRangeOption {
     constructor();
     parse(value: string): DynamicDateRangeValue;
     format(value: DynamicDateRangeValue): string;
-    toDates(value: DynamicDateRangeValue): Date[];
+    toDates(value: DynamicDateRangeValue): Array<Date>;
     isValidString(value: string): boolean;
     get text(): string;
     get operator(): string;

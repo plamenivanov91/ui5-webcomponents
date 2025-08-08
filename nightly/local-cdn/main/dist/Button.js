@@ -365,10 +365,11 @@ let Button = Button_1 = class Button extends UI5Element {
         return this.nonInteractive ? -1 : Number.parseInt(this.forcedTabIndex);
     }
     get ariaLabelText() {
+        const textContent = this.textContent || "";
         const ariaLabelText = getEffectiveAriaLabelText(this) || "";
         const typeLabelText = this.hasButtonType ? this.buttonTypeText : "";
         const internalLabelText = this.effectiveBadgeDescriptionText || "";
-        const labelParts = [ariaLabelText, typeLabelText, internalLabelText].filter(part => part);
+        const labelParts = [textContent, ariaLabelText, typeLabelText, internalLabelText].filter(part => part);
         return labelParts.join(" ");
     }
     get ariaDescriptionText() {

@@ -7,12 +7,12 @@ import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
  * @public
  * @since 2.11.0
  */
-declare class DateRangeRange implements IDynamicDateRangeOption {
+declare class DateRange implements IDynamicDateRangeOption {
     template: JsxTemplate;
     constructor();
     parse(value: string): DynamicDateRangeValue;
     format(value: DynamicDateRangeValue): string;
-    toDates(value: DynamicDateRangeValue): Date[];
+    toDates(value: DynamicDateRangeValue): Array<Date>;
     get text(): string;
     get operator(): string;
     get icon(): string;
@@ -20,4 +20,4 @@ declare class DateRangeRange implements IDynamicDateRangeOption {
     getFormat(): DateFormat;
     handleSelectionChange(e: CustomEvent): DynamicDateRangeValue | undefined;
 }
-export default DateRangeRange;
+export default DateRange;
