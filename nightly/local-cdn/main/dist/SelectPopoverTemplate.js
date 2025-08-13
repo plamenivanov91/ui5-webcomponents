@@ -7,7 +7,7 @@ import Icon from "./Icon.js";
 import decline from "@ui5/webcomponents-icons/dist/decline.js";
 export default function SelectPopoverTemplate() {
     return (_jsxs(_Fragment, { children: [this.options.length > 0 &&
-                _jsxs(ResponsivePopover, { class: {
+                _jsxs(ResponsivePopover, { id: this.responsivePopoverId, class: {
                         "ui5-select-popover": true,
                         ...this.classes.popover
                     }, part: "popover", style: this.styles.responsivePopover, placement: "Bottom", horizontalAlign: "Start", hideArrow: true, preventInitialFocus: true, onOpen: this._afterOpen, onBeforeOpen: this._beforeOpen, onClose: this._afterClose, onKeyDown: this._onkeydown, children: [this._isPhone &&

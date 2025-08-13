@@ -337,6 +337,7 @@ declare class Select extends UI5Element implements IFormInputElement {
     get valueStateTypeText(): string;
     get hasValueState(): boolean;
     get valueStateTextId(): string | undefined;
+    get responsivePopoverId(): string;
     get isDisabled(): true | undefined;
     get _headerTitleText(): string;
     get _currentlySelectedOption(): IOption;

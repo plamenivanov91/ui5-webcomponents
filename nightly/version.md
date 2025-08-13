@@ -1,5 +1,5 @@
-commit 191b700cbe707b0155b97cead1bb7dd7e930c1ee
-Author: Petya Markova <petya.markova@sap.com>
-Date:   Fri Aug 8 09:40:27 2025 +0300
+commit 89c63324e6094d33afa3b7ebc2879461fde71ef2
+Author: d.ramadan <63354146+duygu-rmdn@users.noreply.github.com>
+Date:   Tue Aug 12 17:30:06 2025 +0300
 
-    fix(ui5-list-item): adjust line height for byline (#12063)
+    chore(ui5-side-navigation): add custom width usage sample and update documentation (#12105)

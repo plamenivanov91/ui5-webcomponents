@@ -127,8 +127,7 @@ declare class Timeline extends UI5Element {
     onBeforeRendering(): void;
     _setLastItem(): void;
     _setIsNextItemGroup(): void;
-    _onkeydown(e: KeyboardEvent): void;
-    _handleNextOrPreviousItem(e: KeyboardEvent, isNext?: boolean): void;
+    _onkeydown(e: KeyboardEvent): Promise<void>;
     _handleDown(): void;
     focusGrowingButton(): void;
     _handleUp(e: KeyboardEvent): void;
