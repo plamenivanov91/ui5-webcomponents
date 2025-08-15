@@ -1,9 +1,5 @@
-commit 79903f4fbc83a9a67ee851b175c04b9eaf533cdb
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Wed Aug 13 16:03:52 2025 +0300
+commit f752f8397888756dcc8c2d8f6ec7ec7dabf88794
+Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
+Date:   Thu Aug 14 08:10:22 2025 +0000
 
-    feat(ui5-product-switch-item): added image slot (#11965)
-    
-    There is a new `image` slot which can be used instead of the old `icon` property.
-    
-    Also a new entry is added in the `AvatarColorScheme` enum called `Transparent` in order to achieve the target design for the transparent images/SVGs in the ProductSwitchItem with image.
+    chore(release): publish v2.14.0-rc.1 [ci skip]
