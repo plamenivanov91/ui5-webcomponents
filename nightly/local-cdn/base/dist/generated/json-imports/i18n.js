@@ -5,6 +5,7 @@ const importMessageBundle = async (localeId) => {
         case "en": return (await import(/* webpackChunkName: "ui5-webcomponents-base-messagebundle-en" */ "../assets/i18n/messagebundle_en.json")).default;
         case "en_US_sappsd": return (await import(/* webpackChunkName: "ui5-webcomponents-base-messagebundle-en_US_sappsd" */ "../assets/i18n/messagebundle_en_US_sappsd.json")).default;
         case "en_US_saprigi": return (await import(/* webpackChunkName: "ui5-webcomponents-base-messagebundle-en_US_saprigi" */ "../assets/i18n/messagebundle_en_US_saprigi.json")).default;
+        case "en_US_saptrc": return (await import(/* webpackChunkName: "ui5-webcomponents-base-messagebundle-en_US_saptrc" */ "../assets/i18n/messagebundle_en_US_saptrc.json")).default;
         default: throw "unknown locale";
     }
 };
@@ -17,7 +18,8 @@ const importAndCheck = async (localeId) => {
 };
 const localeIds = ["en",
     "en_US_sappsd",
-    "en_US_saprigi",];
+    "en_US_saprigi",
+    "en_US_saptrc",];
 localeIds.forEach(localeId => {
     registerI18nLoader("@ui5/webcomponents-base", localeId, importAndCheck);
 });

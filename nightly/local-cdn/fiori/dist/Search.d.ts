@@ -145,7 +145,7 @@ declare class Search extends SearchField {
     _handleTypeAhead(item: ISearchSuggestionItem): void;
     _startsWithMatchingItems(str: string): Array<ISearchSuggestionItem>;
     _startsWithPerTermMatchingItems(str: string): Array<ISearchSuggestionItem>;
-    _isGroupItem(item: ISearchSuggestionItem): boolean;
+    _isGroupItem(item: HTMLElement): item is SearchItemGroup;
     _deselectItems(): void;
     _handleDown(e: KeyboardEvent): void;
     _handleArrowDown(): void;

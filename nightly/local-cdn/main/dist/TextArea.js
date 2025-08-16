@@ -185,9 +185,13 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
         this._keyDown = true;
         if (isEscape(e)) {
             const nativeTextArea = this.getInputDomRef();
-            this.value = this.previousValue;
-            nativeTextArea.value = this.value;
-            this.fireDecoratorEvent("input");
+            const prevented = !this.fireDecoratorEvent("input", {
+                escapePressed: true,
+            });
+            if (!prevented) {
+                this.value = this.previousValue;
+                nativeTextArea.value = this.value;
+            }
         }
     }
     _onkeyup() {
@@ -477,11 +481,13 @@ TextArea = TextArea_1 = __decorate([
      * Fired when the value of the component changes at each keystroke or when
      * something is pasted.
      * @since 1.0.0-rc.5
+     * @param {boolean} escapePressed Indicates whether the Escape key was pressed, which triggers a revert to the previous value
      * @public
      */
     ,
     event("input", {
         bubbles: true,
+        cancelable: true,
     })
     /**
      * Fired when some text has been selected.

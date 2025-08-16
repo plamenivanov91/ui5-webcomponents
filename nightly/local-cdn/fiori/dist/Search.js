@@ -172,7 +172,8 @@ let Search = Search_1 = class Search extends SearchField {
         }
     }
     _handleArrowDown() {
-        const firstListItem = this._getItemsList()?.getSlottedNodes("items")[0];
+        const focusableItems = this._getItemsList().listItems;
+        const firstListItem = focusableItems.at(0);
         if (this.open) {
             this._deselectItems();
             this.value = this._typedInValue || this.value;
@@ -249,8 +250,13 @@ let Search = Search_1 = class Search extends SearchField {
         }
     }
     _onItemKeydown(e) {
-        const isFirstItem = this._flattenItems[0] === e.target;
-        const isLastItem = this._flattenItems[this._flattenItems.length - 1] === e.target;
+        const target = e.target;
+        // if focus is on the group header (in group's shadow dom) the target is the group itself,
+        // if so using getFocusDomRef ensures the actual focused element is used
+        const focusedItem = this._isGroupItem(target) ? target?.getFocusDomRef() : target;
+        const focusableItems = this._getItemsList().listItems;
+        const isFirstItem = focusableItems.at(0) === focusedItem;
+        const isLastItem = focusableItems.at(-1) === focusedItem;
         const isArrowUp = isUp(e);
         const isArrowDown = isDown(e);
         const isTab = isTabNext(e);

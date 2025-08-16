@@ -95,6 +95,7 @@ declare class ListItemGroup extends UI5Element {
     _ondragover(e: DragEvent): void;
     _ondrop(e: DragEvent): void;
     _filterPlacements(placements: MovePlacement[], draggedElement: HTMLElement, targetElement: HTMLElement): MovePlacement[];
+    getFocusDomRef(): ListItemGroupHeader;
 }
 declare const isInstanceOfListItemGroup: (object: any) => object is ListItemGroup;
 export default ListItemGroup;

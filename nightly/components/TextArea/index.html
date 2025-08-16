@@ -9,7 +9,7 @@
 
 
 <link rel="search" type="application/opensearchdescription+xml" title="UI5 Web Components" href="/ui5-webcomponents/nightly/opensearch.xml"><link rel="stylesheet" href="/ui5-webcomponents/nightly/assets/css/styles.03d88f9e.css">
-<script src="/ui5-webcomponents/nightly/assets/js/runtime~main.cb2a0ddf.js" defer="defer"></script>
+<script src="/ui5-webcomponents/nightly/assets/js/runtime~main.497a0dc6.js" defer="defer"></script>
 <script src="/ui5-webcomponents/nightly/assets/js/main.dfaec64c.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -56,7 +56,7 @@ You can define the rows of the <code>ui5-textarea</code> and also determine spec
 <h3 class="anchor anchorWithStickyNavbar_fF9Z" id="change">change<a href="#change" class="hash-link" aria-label="Direct link to change" title="Direct link to change">​</a></h3>
 <table style="display:table;border-radius:0.5rem;box-shadow:inset 0 0 0 1px var(--ifm-table-border-color);border-style:hidden"><tbody><tr><td>Description</td><td>Fired when the text has changed and the focus leaves the component.</td></tr><tr><td>Type</td><td><code>CustomEvent</code></td></tr><tr><td>Bubbles</td><td>Yes</td></tr><tr><td>Cancelable</td><td>No</td></tr></tbody></table>
 <h3 class="anchor anchorWithStickyNavbar_fF9Z" id="input">input<a href="#input" class="hash-link" aria-label="Direct link to input" title="Direct link to input">​</a></h3>
-<table style="display:table;border-radius:0.5rem;box-shadow:inset 0 0 0 1px var(--ifm-table-border-color);border-style:hidden"><tbody><tr><td>Description</td><td>Fired when the value of the component changes at each keystroke or when something is pasted.</td></tr><tr><td>Type</td><td><code>CustomEvent</code></td></tr><tr><td>Since</td><td>1.0.0-rc.5</td></tr><tr><td>Bubbles</td><td>Yes</td></tr><tr><td>Cancelable</td><td>No</td></tr></tbody></table>
+<table style="display:table;border-radius:0.5rem;box-shadow:inset 0 0 0 1px var(--ifm-table-border-color);border-style:hidden"><tbody><tr><td>Description</td><td>Fired when the value of the component changes at each keystroke or when something is pasted.</td></tr><tr><td>Type</td><td><code>CustomEvent&lt;TextAreaInputEventDetail&gt;</code></td></tr><tr><td>Parameters</td><td><strong>escapePressed</strong>: <code>boolean</code><br>Indicates whether the Escape key was pressed, which triggers a revert to the previous value</td></tr><tr><td>Since</td><td>1.0.0-rc.5</td></tr><tr><td>Bubbles</td><td>Yes</td></tr><tr><td>Cancelable</td><td>Yes - via <code>preventDefault()</code></td></tr></tbody></table>
 <h3 class="anchor anchorWithStickyNavbar_fF9Z" id="select">select<a href="#select" class="hash-link" aria-label="Direct link to select" title="Direct link to select">​</a></h3>
 <table style="display:table;border-radius:0.5rem;box-shadow:inset 0 0 0 1px var(--ifm-table-border-color);border-style:hidden"><tbody><tr><td>Description</td><td>Fired when some text has been selected.</td></tr><tr><td>Type</td><td><code>CustomEvent</code></td></tr><tr><td>Since</td><td>1.23.0</td></tr><tr><td>Bubbles</td><td>Yes</td></tr><tr><td>Cancelable</td><td>No</td></tr></tbody></table>
 <h3 class="anchor anchorWithStickyNavbar_fF9Z" id="scroll">scroll<a href="#scroll" class="hash-link" aria-label="Direct link to scroll" title="Direct link to scroll">​</a></h3>
