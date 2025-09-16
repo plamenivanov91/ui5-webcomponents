@@ -17,7 +17,7 @@ import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateB
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getAllAccessibleNameRefTexts, getEffectiveAriaDescriptionText, getAllAccessibleDescriptionRefTexts, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { isPageUp, isPageDown, isPageUpShift, isPageDownShift, isPageUpShiftCtrl, isPageDownShiftCtrl, isShow, isF4, isEnter, isTabNext, isTabPrevious, isF6Next, isF6Previous, } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -62,7 +62,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
  * the input field, it must fit to the used date format.
  *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table).
  *
  * For example, if the `format-pattern` is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
@@ -407,6 +407,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
      * Checks if a value is valid against the current date format of the DatePicker.
      * @public
      * @param value A value to be tested against the current date format
+     * @deprecated Use isValidValue or isValidDisplayValue instead
      */
     isValid(value) {
         if (value === "" || value === undefined) {
@@ -510,7 +511,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         return `${DatePicker_1.i18nBundle.getText(DATETIME_COMPONENTS_PLACEHOLDER_PREFIX)} ${this._lastDayOfTheYear}`;
     }
     get _headerTitleText() {
-        return DatePicker_1.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+        return this.ariaLabelText || DatePicker_1.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
     }
     get showHeader() {
         return isPhone();
@@ -529,11 +530,15 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     }
     get accInfo() {
         return {
-            "ariaRoledescription": this.dateAriaDescription,
+            "ariaRoledescription": this.roleDescription,
             "ariaHasPopup": "grid",
             "ariaRequired": this.required,
-            "ariaLabel": getEffectiveAriaLabelText(this),
+            "ariaLabel": this.ariaLabelText || undefined,
+            "ariaDescription": getAllAccessibleDescriptionRefTexts(this) || getEffectiveAriaDescriptionText(this) || undefined,
         };
+    }
+    get ariaLabelText() {
+        return getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
     }
     get valueStateDefaultText() {
         if (this.valueState === ValueState.None) {
@@ -564,11 +569,11 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     get openIconName() {
         return "appointment-2";
     }
-    get dateAriaDescription() {
+    get roleDescription() {
         return DatePicker_1.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
     }
     get pickerAccessibleName() {
-        return DatePicker_1.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME);
+        return DatePicker_1.i18nBundle.getText(DATEPICKER_POPOVER_ACCESSIBLE_NAME, this.ariaLabelText);
     }
     /**
      * Defines whether the dialog on mobile should have header
@@ -709,6 +714,12 @@ __decorate([
 __decorate([
     property()
 ], DatePicker.prototype, "accessibleNameRef", void 0);
+__decorate([
+    property()
+], DatePicker.prototype, "accessibleDescription", void 0);
+__decorate([
+    property()
+], DatePicker.prototype, "accessibleDescriptionRef", void 0);
 __decorate([
     property({ type: Object })
 ], DatePicker.prototype, "_respPopoverConfig", void 0);

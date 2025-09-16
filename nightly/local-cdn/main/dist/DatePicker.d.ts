@@ -53,7 +53,7 @@ type Picker = "day" | "month" | "year";
  * the input field, it must fit to the used date format.
  *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table).
  *
  * For example, if the `format-pattern` is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
@@ -198,6 +198,20 @@ declare class DatePicker extends DateComponentBase implements IFormInputElement 
      * @since 1.0.0-rc.15
      */
     accessibleNameRef?: string;
+    /**
+     * Defines the accessible description of the component.
+     * @default undefined
+     * @public
+     * @since 2.14.0
+     */
+    accessibleDescription?: string;
+    /**
+     * Receives id(or many ids) of the elements that describe the input.
+     * @default undefined
+     * @public
+     * @since 2.14.0
+     */
+    accessibleDescriptionRef?: string;
     _respPopoverConfig?: object;
     _calendarCurrentPicker: Picker;
     liveValue?: string;
@@ -289,6 +303,7 @@ declare class DatePicker extends DateComponentBase implements IFormInputElement 
      * Checks if a value is valid against the current date format of the DatePicker.
      * @public
      * @param value A value to be tested against the current date format
+     * @deprecated Use isValidValue or isValidDisplayValue instead
      */
     isValid(value: string): boolean;
     /**
@@ -335,6 +350,7 @@ declare class DatePicker extends DateComponentBase implements IFormInputElement 
     get showFooter(): boolean;
     get displayValue(): string;
     get accInfo(): InputAccInfo;
+    get ariaLabelText(): string;
     get valueStateDefaultText(): string | undefined;
     get valueStateTextMappings(): ValueStateAnnouncement;
     get shouldDisplayDefaultValueStateMessage(): boolean;
@@ -342,7 +358,7 @@ declare class DatePicker extends DateComponentBase implements IFormInputElement 
     get hasValueState(): boolean;
     get openIconTitle(): string;
     get openIconName(): string;
-    get dateAriaDescription(): string;
+    get roleDescription(): string;
     get pickerAccessibleName(): string;
     /**
      * Defines whether the dialog on mobile should have header

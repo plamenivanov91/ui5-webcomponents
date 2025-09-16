@@ -131,6 +131,20 @@ declare class FileUploader extends UI5Element implements IFormInputElement {
      */
     accessibleNameRef?: string;
     /**
+     * Defines the accessible description of the component.
+     * @default undefined
+     * @public
+     * @since 2.14.0
+     */
+    accessibleDescription?: string;
+    /**
+     * Receives id(or many ids) of the elements that describe the input.
+     * @default undefined
+     * @public
+     * @since 2.14.0
+     */
+    accessibleDescriptionRef?: string;
+    /**
      * @private
      */
     focused: boolean;

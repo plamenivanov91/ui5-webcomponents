@@ -133,7 +133,7 @@ declare class DateTimePicker extends DatePicker implements IFormInputElement {
     /**
      * @override
      */
-    get dateAriaDescription(): string;
+    get roleDescription(): string;
     /**
      * @override
      */

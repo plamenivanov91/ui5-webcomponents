@@ -18,7 +18,7 @@ import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.j
 import { submitForm } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getAllAccessibleNameRefTexts, getEffectiveAriaDescriptionText, getAllAccessibleDescriptionRefTexts, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -55,7 +55,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
  * the input field, it must fit to the used time format.
  *
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see [UTS #35: Unicode Locale Data Markup Language](http://unicode.org/reports/tr35/#Date_Field_Symbol_Table).
+ * For more information, see [UTS #35: Unicode Locale Data Markup Language](https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table).
  *
  * For example, if the `format-pattern` is "HH:mm:ss",
  * a valid value string is "11:42:35" and the same is displayed in the input.
@@ -156,19 +156,23 @@ let TimePicker = TimePicker_1 = class TimePicker extends UI5Element {
         }
         this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(UI5Date.getInstance());
     }
-    get dateAriaDescription() {
+    get roleDescription() {
         return TimePicker_1.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
     }
     get pickerAccessibleName() {
-        return TimePicker_1.i18nBundle.getText(TIMEPICKER_POPOVER_ACCESSIBLE_NAME);
+        return TimePicker_1.i18nBundle.getText(TIMEPICKER_POPOVER_ACCESSIBLE_NAME, this.ariaLabelText);
     }
     get accInfo() {
         return {
-            "ariaRoledescription": this.dateAriaDescription,
-            "ariaHasPopup": "dialog",
+            "ariaRoledescription": this.roleDescription,
+            "ariaHasPopup": "grid",
             "ariaRequired": this.required,
-            "ariaLabel": getEffectiveAriaLabelText(this),
+            "ariaLabel": this.ariaLabelText || undefined,
+            "ariaDescription": getAllAccessibleDescriptionRefTexts(this) || getEffectiveAriaDescriptionText(this) || undefined,
         };
+    }
+    get ariaLabelText() {
+        return getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
     }
     /**
      * Currently selected time represented as JavaScript Date instance
@@ -561,6 +565,12 @@ __decorate([
 __decorate([
     property()
 ], TimePicker.prototype, "accessibleNameRef", void 0);
+__decorate([
+    property()
+], TimePicker.prototype, "accessibleDescription", void 0);
+__decorate([
+    property()
+], TimePicker.prototype, "accessibleDescriptionRef", void 0);
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], TimePicker.prototype, "_isInputsPopoverOpen", void 0);

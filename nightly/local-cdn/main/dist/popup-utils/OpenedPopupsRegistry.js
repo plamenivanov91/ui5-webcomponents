@@ -3,8 +3,8 @@ import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 const OpenedPopupsRegistry = getSharedResource("OpenedPopupsRegistry", { openedRegistry: [] });
 const openUI5Support = getFeature("OpenUI5Support");
-function registerPopupWithOpenUI5Support(popup) {
-    openUI5Support?.addOpenedPopup(popup);
+function registerPopupWithOpenUI5Support(popupInfo) {
+    openUI5Support?.addOpenedPopup(popupInfo);
 }
 function unregisterPopupWithOpenUI5Support(popup) {
     openUI5Support?.removeOpenedPopup(popup);
@@ -15,7 +15,10 @@ const addOpenedPopup = (instance, parentPopovers = []) => {
             instance,
             parentPopovers,
         });
-        registerPopupWithOpenUI5Support(instance);
+        registerPopupWithOpenUI5Support({
+            type: "WebComponent",
+            instance,
+        });
     }
     _updateTopModalPopup();
     if (OpenedPopupsRegistry.openedRegistry.length === 1) {

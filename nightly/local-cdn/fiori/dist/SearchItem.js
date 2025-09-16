@@ -16,6 +16,8 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import { SEARCH_ITEM_DELETE_BUTTON } from "./generated/i18n/i18n-defaults.js";
 import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
+// @ts-expect-error
+import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 /**
  * @class
  *
@@ -64,7 +66,7 @@ let SearchItem = SearchItem_1 = class SearchItem extends ListItemBase {
     onBeforeRendering() {
         super.onBeforeRendering();
         // bold the matched text
-        this._markupText = this.highlightText ? generateHighlightedMarkup((this.text || ""), this.highlightText) : (this.text || "");
+        this._markupText = this.highlightText ? generateHighlightedMarkup((this.text || ""), this.highlightText) : encodeXML(this.text || "");
     }
     get _deleteButtonTooltip() {
         return SearchItem_1.i18nBundle.getText(SEARCH_ITEM_DELETE_BUTTON);

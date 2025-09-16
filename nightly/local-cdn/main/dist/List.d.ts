@@ -281,16 +281,16 @@ declare class List extends UI5Element {
     static i18nBundle: I18nBundle;
     _previouslyFocusedItem: ListItemBase | null;
     _forwardingFocus: boolean;
-    listEndObserved: boolean;
-    _handleResizeCallback: ResizeObserverCallback;
-    initialIntersection: boolean;
     _selectionRequested?: boolean;
     _groupCount: number;
     _groupItemCount: number;
-    growingIntersectionObserver?: IntersectionObserver | null;
+    _endIntersectionObserver?: IntersectionObserver | null;
+    _startIntersectionObserver?: IntersectionObserver | null;
     _itemNavigation: ItemNavigation;
     _beforeElement?: HTMLElement | null;
     _afterElement?: HTMLElement | null;
+    _startMarkerOutOfView: boolean;
+    handleResizeCallback: ResizeObserverCallback;
     onItemFocusedBound: (e: CustomEvent) => void;
     onForwardAfterBound: (e: CustomEvent) => void;
     onForwardBeforeBound: (e: CustomEvent) => void;
@@ -316,6 +316,7 @@ declare class List extends UI5Element {
     get headerID(): string;
     get modeLabelID(): string;
     get listEndDOM(): Element | null;
+    get listStartDOM(): Element | null;
     get dropIndicatorDOM(): DropIndicator | null;
     get hasData(): boolean;
     get showBusyIndicatorOverlay(): boolean;
@@ -328,7 +329,6 @@ declare class List extends UI5Element {
     get ariaDescriptionText(): string;
     get growingButtonAriaLabel(): string | undefined;
     get growingButtonAriaLabelledBy(): string | undefined;
-    get scrollContainer(): HTMLElement | null;
     hasGrowingComponent(): boolean;
     _getDescriptionForGroups(): string;
     get ariaLabelModeText(): string;
@@ -341,7 +341,10 @@ declare class List extends UI5Element {
     prepareListItems(): void;
     observeListEnd(): Promise<void>;
     unobserveListEnd(): void;
-    onInteresection(entries: Array<IntersectionObserverEntry>): void;
+    observeListStart(): Promise<void>;
+    unobserveListStart(): void;
+    onEndIntersection(entries: Array<IntersectionObserverEntry>): void;
+    onStartIntersection(entries: Array<IntersectionObserverEntry>): void;
     onSelectionRequested(e: CustomEvent<SelectionRequestEventDetail>): void;
     handleSingle(item: ListItemBase): boolean;
     handleSingleStart(item: ListItemBase): boolean;
@@ -410,7 +413,8 @@ declare class List extends UI5Element {
     getFirstItem(filter: (item: ListItemBase) => boolean): ListItemBase | null;
     getAfterElement(): HTMLElement;
     getBeforeElement(): HTMLElement;
-    getIntersectionObserver(): IntersectionObserver;
+    getEndIntersectionObserver(): IntersectionObserver;
+    getStartIntersectionObserver(): IntersectionObserver;
 }
 export default List;
 export type { ListItemClickEventDetail, ListItemFocusEventDetail, ListItemDeleteEventDetail, ListItemCloseEventDetail, ListItemToggleEventDetail, ListSelectionChangeEventDetail, ListMoveEventDetail, ListAccessibilityAttributes, };

@@ -166,14 +166,14 @@ let DateRangePicker = DateRangePicker_1 = class DateRangePicker extends DatePick
     /**
      * @override
      */
-    get dateAriaDescription() {
+    get roleDescription() {
         return DateRangePicker_1.i18nBundle.getText(DATERANGE_DESCRIPTION);
     }
     /**
      * @override
      */
     get pickerAccessibleName() {
-        return DateRangePicker_1.i18nBundle.getText(DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME);
+        return DateRangePicker_1.i18nBundle.getText(DATERANGEPICKER_POPOVER_ACCESSIBLE_NAME, this.ariaLabelText);
     }
     /**
      * @override

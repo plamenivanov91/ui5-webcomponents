@@ -371,8 +371,9 @@ let Input = Input_1 = class Input extends UI5Element {
         }
         if (isEnter(e)) {
             const isValueUnchanged = this.previousValue === this.getInputDOMRefSync().value;
+            const shouldSubmit = this._internals.form && this._internals.form.querySelectorAll("[ui5-input]").length === 1;
             this._enterKeyDown = true;
-            if (isValueUnchanged && this._internals.form) {
+            if (isValueUnchanged && shouldSubmit) {
                 submitForm(this);
             }
             return this._handleEnter(e);
@@ -614,6 +615,7 @@ let Input = Input_1 = class Input extends UI5Element {
         }
     }
     _handleChange() {
+        const shouldSubmit = this._internals.form && this._internals.form.querySelectorAll("[ui5-input]").length === 1;
         if (this._clearIconClicked) {
             this._clearIconClicked = false;
             return;
@@ -633,7 +635,7 @@ let Input = Input_1 = class Input extends UI5Element {
             }
             else {
                 fireChange();
-                if (this._enterKeyDown && this._internals.form) {
+                if (this._enterKeyDown && shouldSubmit) {
                     submitForm(this);
                 }
             }
@@ -843,10 +845,9 @@ let Input = Input_1 = class Input extends UI5Element {
         if (this._isGroupItem(item)) {
             return;
         }
-        const value = this.typedInValue || this.value;
         const itemText = item.text || "";
         const fireChange = keyboardUsed
-            ? this.valueBeforeItemSelection !== itemText : value !== itemText;
+            ? this.valueBeforeItemSelection !== itemText : this.previousValue !== itemText;
         this.hasSuggestionItemSelected = true;
         this.value = itemText;
         if (fireChange && (this.previousValue !== itemText)) {

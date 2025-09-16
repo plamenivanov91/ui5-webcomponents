@@ -17,13 +17,11 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isTabNext, isSpace, isEnter, isTabPrevious, isCtrl, isEnd, isHome, isDown, isUp, } from "@ui5/webcomponents-base/dist/Keys.js";
-import DragRegistry from "@ui5/webcomponents-base/dist/util/dragAndDrop/DragRegistry.js";
 import DragAndDropHandler from "./delegate/DragAndDropHandler.js";
 import { findClosestPositionsByKey } from "@ui5/webcomponents-base/dist/util/dragAndDrop/findClosestPosition.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getAllAccessibleDescriptionRefTexts, getEffectiveAriaDescriptionText, getEffectiveAriaLabelText, registerUI5Element, deregisterUI5Element, getAllAccessibleNameRefTexts, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
-import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListSelectionMode from "./types/ListSelectionMode.js";
@@ -38,7 +36,6 @@ import listCss from "./generated/themes/List.css.js";
 // Texts
 import { LIST_ROLE_LIST_GROUP_DESCRIPTION, LIST_ROLE_LISTBOX_GROUP_DESCRIPTION, LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE, ARIA_LABEL_LIST_MULTISELECTABLE, ARIA_LABEL_LIST_DELETABLE, } from "./generated/i18n/i18n-defaults.js";
 import { isInstanceOfListItemGroup } from "./ListItemGroup.js";
-import { findVerticalScrollContainer } from "./TableUtils.js";
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 const PAGE_UP_DOWN_SIZE = 10;
 /**
@@ -184,20 +181,16 @@ let List = List_1 = class List extends UI5Element {
          * @private
          */
         this.mediaRange = "S";
+        this._startMarkerOutOfView = false;
         this._previouslyFocusedItem = null;
         // Indicates that the List is forwarding the focus before or after the internal ul.
         this._forwardingFocus = false;
-        // Indicates if the IntersectionObserver started observing the List
-        this.listEndObserved = false;
         this._itemNavigation = new ItemNavigation(this, {
             skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
             navigationMode: NavigationMode.Vertical,
             getItemsCallback: () => this.getEnabledItems(),
         });
-        this._handleResizeCallback = this._handleResize.bind(this);
-        // Indicates the List bottom most part has been detected by the IntersectionObserver
-        // for the first time.
-        this.initialIntersection = true;
+        this.handleResizeCallback = this._handleResize.bind(this);
         this._groupCount = 0;
         this._groupItemCount = 0;
         this.onItemFocusedBound = this.onItemFocused.bind(this);
@@ -227,14 +220,13 @@ let List = List_1 = class List extends UI5Element {
     }
     onEnterDOM() {
         registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
-        DragRegistry.subscribe(this);
-        ResizeHandler.register(this.getDomRef(), this._handleResizeCallback);
+        ResizeHandler.register(this.getDomRef(), this.handleResizeCallback);
     }
     onExitDOM() {
         deregisterUI5Element(this);
         this.unobserveListEnd();
-        ResizeHandler.deregister(this.getDomRef(), this._handleResizeCallback);
-        DragRegistry.unsubscribe(this);
+        this.unobserveListStart();
+        ResizeHandler.deregister(this.getDomRef(), this.handleResizeCallback);
     }
     onBeforeRendering() {
         this.detachGroupHeaderEvents();
@@ -244,9 +236,11 @@ let List = List_1 = class List extends UI5Element {
         this.attachGroupHeaderEvents();
         if (this.growsOnScroll) {
             this.observeListEnd();
+            this.observeListStart();
         }
-        else if (this.listEndObserved) {
+        else {
             this.unobserveListEnd();
+            this.unobserveListStart();
         }
         if (this.grows) {
             this.checkListInViewport();
@@ -286,6 +280,9 @@ let List = List_1 = class List extends UI5Element {
     }
     get listEndDOM() {
         return this.shadowRoot.querySelector(".ui5-list-end-marker");
+    }
+    get listStartDOM() {
+        return this.shadowRoot.querySelector(".ui5-list-start-marker");
     }
     get dropIndicatorDOM() {
         return this.shadowRoot.querySelector("[ui5-drop-indicator]");
@@ -338,12 +335,9 @@ let List = List_1 = class List extends UI5Element {
     get growingButtonAriaLabelledBy() {
         return this.accessibilityAttributes.growingButton?.name ? undefined : `${this._id}-growingButton-text`;
     }
-    get scrollContainer() {
-        return this.shadowRoot.querySelector(".ui5-list-scroll-container");
-    }
     hasGrowingComponent() {
-        if (this.growsOnScroll && this.scrollContainer) {
-            return this.scrollContainer.clientHeight !== this.scrollContainer.scrollHeight;
+        if (this.growsOnScroll) {
+            return this._startMarkerOutOfView;
         }
         return this.growsWithButton;
     }
@@ -409,28 +403,35 @@ let List = List_1 = class List extends UI5Element {
         });
     }
     async observeListEnd() {
-        if (!this.listEndObserved) {
-            await renderFinished();
-            this.getIntersectionObserver().observe(this.listEndDOM);
-            this.listEndObserved = true;
-        }
+        await renderFinished();
+        this.getEndIntersectionObserver().observe(this.listEndDOM);
     }
     unobserveListEnd() {
-        if (this.growingIntersectionObserver) {
-            this.growingIntersectionObserver.disconnect();
-            this.growingIntersectionObserver = null;
-            this.listEndObserved = false;
+        if (this._endIntersectionObserver) {
+            this._endIntersectionObserver.disconnect();
+            this._endIntersectionObserver = null;
         }
     }
-    onInteresection(entries) {
-        if (this.initialIntersection) {
-            this.initialIntersection = false;
-            return;
+    async observeListStart() {
+        await renderFinished();
+        this.getStartIntersectionObserver().observe(this.listStartDOM);
+    }
+    unobserveListStart() {
+        if (this._startIntersectionObserver) {
+            this._startIntersectionObserver.disconnect();
+            this._startIntersectionObserver = null;
         }
+    }
+    onEndIntersection(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 debounce(this.loadMore.bind(this), INFINITE_SCROLL_DEBOUNCE_RATE);
             }
+        });
+    }
+    onStartIntersection(entries) {
+        entries.forEach(entry => {
+            this._startMarkerOutOfView = !entry.isIntersecting;
         });
     }
     /*
@@ -914,16 +915,25 @@ let List = List_1 = class List extends UI5Element {
         }
         return this._beforeElement;
     }
-    getIntersectionObserver() {
-        if (!this.growingIntersectionObserver) {
-            const scrollContainer = this.scrollContainer || findVerticalScrollContainer(this.getDomRef());
-            this.growingIntersectionObserver = new IntersectionObserver(this.onInteresection.bind(this), {
-                root: scrollContainer,
-                rootMargin: "5px",
+    getEndIntersectionObserver() {
+        if (!this._endIntersectionObserver) {
+            this._endIntersectionObserver = new IntersectionObserver(this.onEndIntersection.bind(this), {
+                root: null, // null means the viewport
+                rootMargin: "0px",
                 threshold: 1.0,
             });
         }
-        return this.growingIntersectionObserver;
+        return this._endIntersectionObserver;
+    }
+    getStartIntersectionObserver() {
+        if (!this._startIntersectionObserver) {
+            this._startIntersectionObserver = new IntersectionObserver(this.onStartIntersection.bind(this), {
+                root: null, // null means the viewport
+                rootMargin: "0px",
+                threshold: 1.0,
+            });
+        }
+        return this._startIntersectionObserver;
     }
 };
 __decorate([
@@ -1010,7 +1020,6 @@ List = List_1 = __decorate([
         template: ListTemplate,
         styles: [
             listCss,
-            getEffectiveScrollbarStyle(),
         ],
     })
     /**

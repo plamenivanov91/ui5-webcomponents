@@ -193,14 +193,14 @@ let DateTimePicker = DateTimePicker_1 = class DateTimePicker extends DatePicker 
     /**
      * @override
      */
-    get dateAriaDescription() {
+    get roleDescription() {
         return DateTimePicker_1.i18nBundle.getText(DATETIME_DESCRIPTION);
     }
     /**
      * @override
      */
     get pickerAccessibleName() {
-        return DateTimePicker_1.i18nBundle.getText(DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME);
+        return DateTimePicker_1.i18nBundle.getText(DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME, this.ariaLabelText);
     }
     /**
      * Defines whether the dialog on mobile should have header

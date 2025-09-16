@@ -104,6 +104,7 @@ declare abstract class SliderBase extends UI5Element {
     _resizeHandler: ResizeObserverCallback;
     _moveHandler: (e: TouchEvent | MouseEvent) => void;
     _upHandler: (e: TouchEvent | MouseEvent) => void;
+    _windowMouseoutHandler: (e: MouseEvent) => void;
     _stateStorage: StateStorage;
     notResized: boolean;
     _isUserInteraction: boolean;

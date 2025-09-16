@@ -12,7 +12,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getAllAccessibleNameRefTexts, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getAllAccessibleNameRefTexts, getEffectiveAriaDescriptionText, getAllAccessibleDescriptionRefTexts, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isUpAlt, isDownAlt, isEnter, isDelete, isF4, isSpace, isRight, isLeft, } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -196,7 +196,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         }
         this.focused = false;
         if (this._tokenizer) {
-            this._tokenizer.expanded = this._tokenizerOpen;
+            this._tokenizer.expanded = this._tokenizer.open;
         }
     }
     get _tokenizerExpanded() {
@@ -359,6 +359,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
             "ariaInvalid": this.valueState === ValueState.Negative || undefined,
             "ariaHasPopup": "dialog",
             "ariaLabel": getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || undefined,
+            "ariaDescription": getAllAccessibleDescriptionRefTexts(this) || getEffectiveAriaDescriptionText(this) || undefined,
         };
     }
     get inputTitle() {
@@ -393,7 +394,7 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         return !this.valueStateMessage.length && this.hasValueState;
     }
     get shouldOpenValueStateMessagePopover() {
-        return this.focused && this.hasValueState && !this.hideInput && !this._tokenizerOpen;
+        return this.focused && this.hasValueState && !this.hideInput && !this._tokenizer?.open;
     }
     /**
      * This method is relevant for sap_horizon theme only
@@ -444,6 +445,12 @@ __decorate([
 __decorate([
     property()
 ], FileUploader.prototype, "accessibleNameRef", void 0);
+__decorate([
+    property()
+], FileUploader.prototype, "accessibleDescription", void 0);
+__decorate([
+    property()
+], FileUploader.prototype, "accessibleDescriptionRef", void 0);
 __decorate([
     property({ type: Boolean })
 ], FileUploader.prototype, "focused", void 0);

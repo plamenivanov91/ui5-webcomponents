@@ -198,6 +198,9 @@ let ColorPicker = ColorPicker_1 = class ColorPicker extends UI5Element {
     _handleHEXChange(e) {
         const input = e.target;
         let inputValueLowerCase = input.value.toLowerCase();
+        if (inputValueLowerCase.startsWith("#")) {
+            inputValueLowerCase = inputValueLowerCase.slice(1);
+        }
         // Shorthand Syntax
         if (inputValueLowerCase.length === 3) {
             inputValueLowerCase = `${inputValueLowerCase[0]}${inputValueLowerCase[0]}${inputValueLowerCase[1]}${inputValueLowerCase[1]}${inputValueLowerCase[2]}${inputValueLowerCase[2]}`;

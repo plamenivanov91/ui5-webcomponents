@@ -131,6 +131,7 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
          *     Accepts any string value.
          *   - **title**: Specifies a tooltip or description for screen readers.
          *     Accepts any string value.
+         * 	- **ariaKeyShortcuts**: Defines keyboard shortcuts that activate or give focus to the button.
          *
          * - **arrowButton**: Attributes applied specifically to the arrow (split) button.
          *   - **hasPopup**: Indicates the presence and type of popup triggered by the arrow button.
@@ -297,7 +298,7 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
     get effectiveActiveArrowButton() {
         return this.activeArrowButton || this._activeArrowButton;
     }
-    get textButtonAccText() {
+    get buttonTextContent() {
         return this.textContent;
     }
     get isTextButton() {
@@ -315,6 +316,7 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
                 hasPopup: this.accessibilityAttributes?.root?.hasPopup,
                 roleDescription: this.accessibilityAttributes?.root?.roleDescription || (this._hideArrowButton ? undefined : SplitButton_1.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION)),
                 title: this.accessibilityAttributes?.root?.title,
+                ariaKeyShortcuts: this.accessibilityAttributes?.root?.ariaKeyShortcuts,
             },
             arrowButton: {
                 hasPopup: this.accessibilityAttributes?.arrowButton?.hasPopup || "menu",
