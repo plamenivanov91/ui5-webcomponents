@@ -794,7 +794,7 @@ describe("Events", () => {
 			cy.get("@shellbar")
 				.shadow()
 				.find("[data-profile-btn]")
-				.click();
+    			.click({ force: true });
 
 			cy.get("@profileClick")
 				.should("have.been.calledOnce");
@@ -1016,7 +1016,7 @@ describe("Events", () => {
 			cy.get("@shellbar")
 				.shadow()
 				.find("[data-profile-btn]")
-				.click();
+   				.click({ force: true });
 
 			cy.get("@profileClick")
 				.should("have.been.calledOnce");
