@@ -1,14 +1,17 @@
-commit 972e6dba29d0966bcf3f4136be67114571a69745
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Thu Sep 18 15:56:05 2025 +0300
+commit cd08a6a295be951b0d53ef34248edabd6dfb710c
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Tue Sep 23 00:14:36 2025 -0700
 
-    fix(ui5-select): announce header text on mobile (#11849)
+    Translation Delivery (#12324)
     
-    Summary
-    Fixes mobile accessibility issues for the Select component.
+    * [INTERNAL] Translation delivery: commit by LX Lab
     
-    Changes
+    Change-Id: I3c102f0d64d6890d7cde1ad19490220c2a647778
     
-    - Sets accessibleName on ResponsivePopover so screen readers announce the header text on mobile.
-    - Improves focus handling for selected options in the popover.
-    - Adds tests covering mobile and desktop scenarios.
+    * [INTERNAL] Translation delivery: commit by LX Lab
+    
+    Change-Id: Iee6224e7999e4e70110c0ac8ba21d79b708131ec
+    
+    * [INTERNAL] Translation delivery: commit by LX Lab
+    
+    Change-Id: I7fa2db2ce80638acea996cc4655b3506383e6c67
