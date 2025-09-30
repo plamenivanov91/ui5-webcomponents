@@ -210,7 +210,9 @@ export default function ShellBarTemplate(this: ShellBar) {
 							{this.customItemsInfo.map(item => (
 								<ShellBarItem
 									id={item.id}
+									class={`${item.classes} ui5-shellbar-items-for-arrow-nav`}
 									isOverflowing={false}
+									// onClick={item.press}
 									count={item.count}
 									icon={item.icon}>
 								</ShellBarItem>

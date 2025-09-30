@@ -9,6 +9,9 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 // Template
 import ShellBarItemTemplate from "./ShellBarItemTemplate.js";
 
+// Styles
+import shellBarItemStyles from "./generated/themes/ShellBarItem.css.js";
+
 type ShellBarItemClickEventDetail = {
 	targetRef: HTMLElement,
 };
@@ -34,6 +37,7 @@ type ShellBarItemAccessibilityAttributes = Pick<AccessibilityAttributes, "expand
  */
 @customElement({
 	tag: "ui5-shellbar-item",
+	styles: shellBarItemStyles,
 	renderer: jsxRenderer,
 	template: ShellBarItemTemplate,
 })
@@ -77,6 +81,15 @@ class ShellBarItem extends UI5Element {
 	 */
 	@property()
 	count?: string;
+
+	/**
+	 * Defines the text of the tooltip that would be displayed for the list item.
+	 * @default undefined
+	 * @public
+	 * @since 1.23.0
+	 */
+	@property()
+	tooltip?: string;
 
 	/**
 	 * Defines whether the item is inside ShellBar overflow area.

@@ -33,7 +33,8 @@ export default function PopoversTemplate(this: ShellBar) {
 							id={index.toString()}
 							isOverflowing={true}
 							count={icon.count}
-							icon={icon.title}>
+							tooltip={icon.tooltip}
+							icon={icon.icon ? icon.icon : ""}>
 							{icon.text}
 						</ShellBarItem>
 						// <ListItemStandard

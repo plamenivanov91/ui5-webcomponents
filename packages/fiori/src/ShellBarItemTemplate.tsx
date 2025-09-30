@@ -11,16 +11,16 @@ export default function ShellBarItemTemplate(this: ShellBarItem) {
 				data-count={this.count}
 				icon={this.icon}
 				type="Active"
-				tooltip={this.icon}
+				tooltip={this.tooltip}
 			>
-				{this.icon}
+				<slot></slot>
 			</ListItemStandard>
 		) : (
 			<Button
 				key={this.id}
 				id={this.id}
 				icon={this.icon}
-				tooltip={this.icon}
+				tooltip={this.tooltip}
 				data-ui5-notifications-count={this.count}
 			>
 				{this.count && (
