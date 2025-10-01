@@ -207,32 +207,8 @@ export default function ShellBarTemplate(this: ShellBar) {
 									)}
 								</Button>
 							)}
-							{this.customItemsInfo.map(item => (
-								<ShellBarItem
-									id={item.id}
-									class={`${item.classes} ui5-shellbar-items-for-arrow-nav`}
-									isOverflowing={false}
-									// onClick={item.press}
-									count={item.count}
-									icon={item.icon}>
-								</ShellBarItem>
-								// <Button
-								// 	key={item.id}
-								// 	id={item.id}
-								// 	class={`${item.classes} ui5-shellbar-items-for-arrow-nav`}
-								// 	icon={item.icon}
-								// 	tooltip={item.tooltip}
-								// 	data-ui5-notifications-count={this.notificationsCount}
-								// 	data-ui5-external-action-item-id={item.refItemid}
-								// 	data-ui5-stable={item.stableDomRef}
-								// 	onClick={item.press}
-								// 	accessibilityAttributes={item.accessibilityAttributes}
-								// >
-								// 	{item.count && (
-								// 		<ButtonBadge slot="badge" design="OverlayText" text={item.count} />
-								// 	)}
-								// </Button>
-							))}
+							{ this.items.map(mySlotEl => <slot name={mySlotEl._individualSlot}></slot>)}
+
 						</div>
 					</div>
 				</div>
