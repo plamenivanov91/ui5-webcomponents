@@ -131,6 +131,11 @@ declare class Search extends SearchField {
      * @private
      */
     _proposedItem?: ISearchSuggestionItem;
+    /**
+     * This property is used during rendering to indicate that the user has started typing in the input
+     * @private
+     */
+    _isTyping: boolean;
     static i18nBundle: I18nBundle;
     constructor();
     onBeforeRendering(): void;
@@ -152,6 +157,7 @@ declare class Search extends SearchField {
     _handleSearchEvent(): void;
     _handleEscape(): void;
     _handleInput(e: InputEvent): void;
+    _handleClear(): void;
     _popoupHasAnyContent(): boolean;
     _onFooterButtonKeyDown(e: KeyboardEvent): void;
     _onItemKeydown(e: KeyboardEvent): void;

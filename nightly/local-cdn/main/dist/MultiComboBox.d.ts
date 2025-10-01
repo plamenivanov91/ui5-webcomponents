@@ -435,6 +435,7 @@ declare class MultiComboBox extends UI5Element implements IFormInputElement {
     get _iconAccessibleNameText(): string;
     get _showSelectedButtonAccessibleNameText(): string;
     get _dialogOkButton(): string;
+    get _dialogCancelButton(): string;
     get _tokenizerExpanded(): boolean;
     get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}`;
     get iconsCount(): number;

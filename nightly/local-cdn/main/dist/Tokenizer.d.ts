@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/InputElementsFormSupport.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { UI5CustomEvent } from "@ui5/webcomponents-base";
 import type ResponsivePopover from "./ResponsivePopover.js";
@@ -63,7 +64,7 @@ declare enum ClipboardDataOperation {
  * @since 2.0.0
  * @experimental This component is availabe since 2.0 under an experimental flag and its API and behaviour are subject to change.
  */
-declare class Tokenizer extends UI5Element {
+declare class Tokenizer extends UI5Element implements IFormInputElement {
     eventDetails: {
         "token-delete": TokenizerTokenDeleteEventDetail;
         "selection-change": TokenizerSelectionChangeEventDetail;
@@ -88,6 +89,16 @@ declare class Tokenizer extends UI5Element {
      * @public
      */
     multiLine: boolean;
+    /**
+     * Determines the name by which the component will be identified upon submission in an HTML form.
+     *
+     * **Note:** This property is only applicable within the context of an HTML Form element.
+     * **Note:** When the component is used inside a form element,
+     * the value is sent as the first element in the form data, even if it's empty.
+     * @default undefined
+     * @public
+     */
+    name?: string;
     /**
      * Defines whether "Clear All" button is present. Ensure `multiLine` is enabled, otherwise `showClearAll` will have no effect.
      *
@@ -191,6 +202,7 @@ declare class Tokenizer extends UI5Element {
      */
     _scrollToEndOnExpand: boolean;
     _handleResize(): void;
+    get formFormattedValue(): FormData | null;
     constructor();
     handleClearAll(): void;
     onBeforeRendering(): void;

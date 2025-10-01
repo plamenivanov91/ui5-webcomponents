@@ -29,7 +29,7 @@ import { isBackSpace, isDelete, isShow, isUp, isDown, isEnter, isEscape, isTabNe
 import { attachListeners } from "@ui5/webcomponents-base/dist/util/valueStateNavigation.js";
 import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import * as Filters from "./Filters.js";
-import { VALUE_STATE_SUCCESS, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_INFORMATION, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, VALUE_STATE_LINK, VALUE_STATE_LINKS, VALUE_STATE_LINK_MAC, VALUE_STATE_LINKS_MAC, INPUT_SUGGESTIONS_TITLE, COMBOBOX_AVAILABLE_OPTIONS, COMBOBOX_DIALOG_OK_BUTTON, SELECT_OPTIONS, LIST_ITEM_POSITION, LIST_ITEM_GROUP_HEADER, INPUT_CLEAR_ICON_ACC_NAME, FORM_TEXTFIELD_REQUIRED, } from "./generated/i18n/i18n-defaults.js";
+import { VALUE_STATE_SUCCESS, VALUE_STATE_ERROR, VALUE_STATE_WARNING, VALUE_STATE_INFORMATION, VALUE_STATE_TYPE_SUCCESS, VALUE_STATE_TYPE_INFORMATION, VALUE_STATE_TYPE_ERROR, VALUE_STATE_TYPE_WARNING, VALUE_STATE_LINK, VALUE_STATE_LINKS, VALUE_STATE_LINK_MAC, VALUE_STATE_LINKS_MAC, INPUT_SUGGESTIONS_TITLE, COMBOBOX_AVAILABLE_OPTIONS, COMBOBOX_DIALOG_OK_BUTTON, COMBOBOX_DIALOG_CANCEL_BUTTON, SELECT_OPTIONS, LIST_ITEM_POSITION, LIST_ITEM_GROUP_HEADER, INPUT_CLEAR_ICON_ACC_NAME, FORM_TEXTFIELD_REQUIRED, } from "./generated/i18n/i18n-defaults.js";
 // Templates
 import ComboBoxTemplate from "./ComboBoxTemplate.js";
 // Styles
@@ -799,6 +799,11 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
             });
             return item;
         });
+        const noUserInteraction = !this.focused && !this._isKeyNavigation && !this._selectionPerformed && !this._iconPressed;
+        // Skip firing "selection-change" event if this is initial rendering or if there has been no user interaction yet
+        if (this._initialRendering || noUserInteraction) {
+            return;
+        }
         // Fire selection-change event only when selection actually changes
         if (previouslySelectedItem !== itemToBeSelected) {
             if (itemToBeSelected) {
@@ -952,6 +957,9 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
     }
     get _dialogOkButtonText() {
         return ComboBox_1.i18nBundle.getText(COMBOBOX_DIALOG_OK_BUTTON);
+    }
+    get _dialogCancelButtonText() {
+        return ComboBox_1.i18nBundle.getText(COMBOBOX_DIALOG_CANCEL_BUTTON);
     }
     get inner() {
         return (isPhone() && this.open)

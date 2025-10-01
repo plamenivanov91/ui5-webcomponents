@@ -178,6 +178,7 @@ declare class TabContainer extends UI5Element {
     _endOverflowText: string;
     _popoverItemsFlat: Array<ITab>;
     _width?: number;
+    _dragging: boolean;
     /**
      * Defines the tabs.
      *

@@ -158,6 +158,7 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         this._startOverflowText = "0";
         this._endOverflowText = "More";
         this._popoverItemsFlat = [];
+        this._dragging = false;
         this._itemsFlat = [];
         this._hasScheduledPopoverOpen = false;
         this._handleResizeBound = this._handleResize.bind(this);
@@ -315,9 +316,10 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
         this.dropIndicatorDOM.targetReference = null;
     }
     _moveHeaderItem(tab, e) {
-        if (!tab.movable) {
+        if (!tab.movable || this._dragging) {
             return;
         }
+        this._dragging = true;
         const headerItems = this.items.map(item => item.getDomRefInStrip())
             .filter((item) => !item?.hasAttribute("hidden"));
         let positions = findClosestPositionsByKey(headerItems, tab.getDomRefInStrip(), e);
@@ -356,7 +358,12 @@ let TabContainer = TabContainer_1 = class TabContainer extends UI5Element {
                     placement: acceptedPosition.placement,
                 },
             });
-            tab.focus();
+            tab.focus().then(() => {
+                this._dragging = false;
+            });
+        }
+        else {
+            this._dragging = false;
         }
     }
     _onHeaderDragLeave(e) {

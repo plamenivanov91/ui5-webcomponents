@@ -414,7 +414,13 @@ let Dialog = Dialog_1 = class Dialog extends Popup {
         let newWidth, newLeft;
         if (this._isRTL) {
             newWidth = clamp(this._initialWidth - (clientX - this._initialX), this._minWidth, this._initialLeft + this._initialWidth);
-            newLeft = clamp(this._initialLeft + (clientX - this._initialX), 0, this._initialX + this._initialWidth - this._minWidth);
+            // check if width is changed to avoid "left" jumping when max width is reached
+            Object.assign(this.style, {
+                width: `${newWidth}px`,
+            });
+            const deltaWidth = newWidth - this.getBoundingClientRect().width;
+            const rightEdge = this._initialLeft + this._initialWidth + deltaWidth;
+            newLeft = clamp(rightEdge - newWidth, 0, rightEdge - this._minWidth);
         }
         else {
             newWidth = clamp(this._initialWidth + (clientX - this._initialX), this._minWidth, window.innerWidth - this._initialLeft);
@@ -423,7 +429,7 @@ let Dialog = Dialog_1 = class Dialog extends Popup {
         Object.assign(this.style, {
             height: `${newHeight}px`,
             width: `${newWidth}px`,
-            left: newLeft ? `${newLeft}px` : undefined,
+            left: this._isRTL ? `${newLeft}px` : undefined,
         });
     }
     _onResizeMouseUp() {

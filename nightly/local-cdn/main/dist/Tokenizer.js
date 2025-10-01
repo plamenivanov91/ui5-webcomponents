@@ -78,6 +78,18 @@ let Tokenizer = Tokenizer_1 = class Tokenizer extends UI5Element {
     _handleResize() {
         this._nMoreCount = this.overflownTokens.length;
     }
+    get formFormattedValue() {
+        const tokens = this.tokens || [];
+        if (this.name && tokens.length) {
+            const formData = new FormData();
+            const name = this.name;
+            tokens.forEach(token => {
+                formData.append(name, token.text || "");
+            });
+            return formData;
+        }
+        return null;
+    }
     constructor() {
         super();
         /**
@@ -820,6 +832,9 @@ __decorate([
     property({ type: Boolean })
 ], Tokenizer.prototype, "multiLine", void 0);
 __decorate([
+    property({ type: String })
+], Tokenizer.prototype, "name", void 0);
+__decorate([
     property({ type: Boolean })
 ], Tokenizer.prototype, "showClearAll", void 0);
 __decorate([
@@ -878,6 +893,7 @@ Tokenizer = Tokenizer_1 = __decorate([
     customElement({
         tag: "ui5-tokenizer",
         languageAware: true,
+        formAssociated: true,
         renderer: jsxRenderer,
         template: TokenizerTemplate,
         styles: [

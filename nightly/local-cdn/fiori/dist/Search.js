@@ -65,21 +65,27 @@ let Search = Search_1 = class Search extends SearchField {
         // The typed in value.
         this._typedInValue = "";
         this._valueBeforeOpen = this.getAttribute("value") || "";
+        this._isTyping = false;
     }
     onBeforeRendering() {
         super.onBeforeRendering();
+        if (this.collapsed && !isPhone()) {
+            this.open = false;
+            return;
+        }
         const innerInput = this.nativeInput;
         const autoCompletedChars = innerInput && (innerInput.selectionEnd - innerInput.selectionStart);
+        this.open = this.open || (this._popoupHasAnyContent() && this._isTyping && innerInput.value.length > 0);
         // If there is already a selection the autocomplete has already been performed
         if (this._shouldAutocomplete && !autoCompletedChars) {
             const item = this._getFirstMatchingItem(this.value);
             this._proposedItem = item;
-            if (!isPhone()) {
-                this.open = this._popoupHasAnyContent();
-            }
             if (item) {
                 this._handleTypeAhead(item);
                 this._selectMatchingItem(item);
+            }
+            else {
+                this._deselectItems();
             }
         }
         if (isPhone() && this.open) {
@@ -135,7 +141,6 @@ let Search = Search_1 = class Search extends SearchField {
         this._innerValue = originalValue;
         this._performTextSelection = true;
         this.value = originalValue;
-        this._shouldAutocomplete = false;
     }
     _startsWithMatchingItems(str) {
         return StartsWith(str, this._flattenItems.filter(item => !this._isGroupItem(item) && !this._isShowMoreItem(item)), "text");
@@ -192,6 +197,7 @@ let Search = Search_1 = class Search extends SearchField {
         const innerInput = this.nativeInput;
         innerInput.setSelectionRange(this.value.length, this.value.length);
         this.open = false;
+        this._isTyping = false;
     }
     _onMobileInputKeydown(e) {
         if (isEnter(e)) {
@@ -206,14 +212,24 @@ let Search = Search_1 = class Search extends SearchField {
     _handleEscape() {
         this.value = this._typedInValue || this.value;
         this._innerValue = this.value;
+        this._isTyping = false;
     }
     _handleInput(e) {
         super._handleInput(e);
         this._typedInValue = this.value;
+        this._proposedItem = undefined;
         if (isPhone()) {
             return;
         }
-        this.open = (e.currentTarget.value.length > 0) && this._popoupHasAnyContent();
+        this._isTyping = true;
+        this.open = this.value.length > 0;
+    }
+    _handleClear() {
+        super._handleClear();
+        this._typedInValue = "";
+        this._innerValue = "";
+        this._shouldAutocomplete = false;
+        this.open = false;
     }
     _popoupHasAnyContent() {
         return this.items.length > 0 || this.illustration.length > 0 || this.messageArea.length > 0 || this.loading || this.action.length > 0;
@@ -258,7 +274,10 @@ let Search = Search_1 = class Search extends SearchField {
         this.value = item.text;
         this._innerValue = this.value;
         this._typedInValue = this.value;
+        this._shouldAutocomplete = false;
+        this._performTextSelection = true;
         this.open = false;
+        this._isTyping = false;
         this.focus();
     }
     _onkeydown(e) {
@@ -285,6 +304,7 @@ let Search = Search_1 = class Search extends SearchField {
             return;
         }
         this.open = false;
+        this._isTyping = false;
     }
     _handleBeforeClose(e) {
         if (e.detail.escPressed) {
@@ -298,6 +318,7 @@ let Search = Search_1 = class Search extends SearchField {
     }
     _handleClose() {
         this.open = false;
+        this._isTyping = false;
         this.fireDecoratorEvent("close");
     }
     _handleBeforeOpen() {
