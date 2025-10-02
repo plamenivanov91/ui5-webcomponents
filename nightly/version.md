@@ -1,9 +1,5 @@
-commit 151656acc8a5dffb1cb4e4e85db1aab85ee404fc
+commit 8260ba39bbb2fc2348242aaf47fe067c7461b959
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Sep 30 14:57:51 2025 +0300
+Date:   Wed Oct 1 16:09:20 2025 +0300
 
-    chore: correct file loading on dev (#12399)
-    
-    `vite-plugin-checker` is not emitting `.ts` files (the ones overriding the original OpenUI5 files) during development, which leads to missing files and errors.
-    
-    With this PR, the overridden files are explicitly listed in Vite so that they are resolved from the `src` directory in development mode.
+    test: stabilze failing test (#12408)
