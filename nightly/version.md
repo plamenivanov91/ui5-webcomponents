@@ -1,5 +1,5 @@
-commit 8260ba39bbb2fc2348242aaf47fe067c7461b959
+commit e7231c3247ac136cc9423e46d3cdb8b5f1ceb412
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Oct 1 16:09:20 2025 +0300
+Date:   Thu Oct 2 15:33:36 2025 +0300
 
-    test: stabilze failing test (#12408)
+    chore: ai test pages (#12421)

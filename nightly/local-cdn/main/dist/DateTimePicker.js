@@ -26,7 +26,7 @@ import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
-import { renderFinished } from "@ui5/webcomponents-base";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 const PHONE_MODE_BREAKPOINT = 640; // px
 /**
  * @class
