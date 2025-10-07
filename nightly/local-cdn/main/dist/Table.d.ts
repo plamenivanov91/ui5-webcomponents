@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import TableNavigation from "./TableNavigation.js";
 import TableOverflowMode from "./types/TableOverflowMode.js";
 import TableDragAndDrop from "./TableDragAndDrop.js";
+import TableCustomAnnouncement from "./TableCustomAnnouncement.js";
 import type DropIndicator from "./DropIndicator.js";
 import type TableHeaderRow from "./TableHeaderRow.js";
 import type TableRow from "./TableRow.js";
@@ -264,6 +265,7 @@ declare class Table extends UI5Element {
     _onResizeBound: ResizeObserverCallback;
     _tableNavigation?: TableNavigation;
     _tableDragAndDrop?: TableDragAndDrop;
+    _tableCustomAnnouncement?: TableCustomAnnouncement;
     _poppedIn: Array<{
         col: TableHeaderCell;
         width: number;

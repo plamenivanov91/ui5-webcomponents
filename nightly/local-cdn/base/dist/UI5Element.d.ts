@@ -27,7 +27,7 @@ type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends (<T>() => T extends Y 
 type IsAny<T, Y, N> = 0 extends (1 & T) ? Y : N;
 type KebabToCamel<T extends string> = T extends `${infer H}-${infer J}${infer K}` ? `${Uncapitalize<H>}${Capitalize<J>}${KebabToCamel<K>}` : T;
 type KebabToPascal<T extends string> = Capitalize<KebabToCamel<T>>;
-type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref" | "inert";
+type GlobalHTMLAttributeNames = "accesskey" | "autocapitalize" | "autofocus" | "autocomplete" | "contenteditable" | "contextmenu" | "class" | "dir" | "draggable" | "enterkeyhint" | "hidden" | "id" | "inputmode" | "lang" | "nonce" | "part" | "exportparts" | "pattern" | "slot" | "spellcheck" | "style" | "tabIndex" | "tabindex" | "title" | "translate" | "ref" | "inert" | "role";
 type ElementProps<I> = Partial<Omit<I, keyof HTMLElement>>;
 type TargetedCustomEvent<D, T> = Omit<CustomEvent<D>, "currentTarget"> & {
     currentTarget: T;
@@ -341,7 +341,7 @@ declare abstract class UI5Element extends HTMLElement {
      * Returns the component accessibility info.
      * @private
      */
-    get accessibilityInfo(): AccessibilityInfo;
+    get accessibilityInfo(): AccessibilityInfo | undefined;
     /**
      * Do not override this method in derivatives of UI5Element, use metadata properties instead
      * @private

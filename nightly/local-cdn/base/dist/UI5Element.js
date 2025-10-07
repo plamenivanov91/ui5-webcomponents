@@ -889,7 +889,7 @@ class UI5Element extends HTMLElement {
      * @private
      */
     get accessibilityInfo() {
-        return {};
+        return undefined;
     }
     /**
      * Do not override this method in derivatives of UI5Element, use metadata properties instead

@@ -1,5 +1,14 @@
-commit e7231c3247ac136cc9423e46d3cdb8b5f1ceb412
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Oct 2 15:33:36 2025 +0300
+commit 485aab51242876f2a10580da2ed23783408df00b
+Author: Nikola Anachkov <87311182+NakataCode@users.noreply.github.com>
+Date:   Fri Oct 3 17:13:07 2025 +0300
 
-    chore: ai test pages (#12421)
+    fix(ui5-list-item): change highlight state color variables (#12427)
+    
+    Change highlight background colors to use border color variables instead of text color variables to align with the design spec.
+    
+    Negative: sapNegativeTextColor → sapErrorBorderColor
+    Critical: sapCriticalTextColor → sapWarningBorderColor
+    Positive: sapPositiveTextColor → sapSuccessBorderColor
+    Information: sapInformativeTextColor → sapInformationBorderColor
+    
+    Fixes: #12332
