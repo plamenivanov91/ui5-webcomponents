@@ -123,6 +123,14 @@ class ShellBarItem extends UI5Element {
 	@property({ type: Object })
 	accessibilityAttributes: ShellBarItemAccessibilityAttributes = {};
 
+	/**
+	 * Indicates whether the item should be shown.
+	 * @default false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	show = !!this.icon || false;
+
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}

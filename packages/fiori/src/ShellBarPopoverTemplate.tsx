@@ -2,7 +2,6 @@ import Popover from "@ui5/webcomponents/dist/Popover.js";
 import List from "@ui5/webcomponents/dist/List.js";
 // import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 import type ShellBar from "./ShellBar.js";
-import ShellBarItem from "./ShellBarItem.js";
 import ListItemStandard from "@ui5/webcomponents/dist/ListItemStandard.js";
 
 export default function PopoversTemplate(this: ShellBar) {
@@ -32,7 +31,7 @@ export default function PopoversTemplate(this: ShellBar) {
 
 					{this._hiddenIcons.map((icon, index) => {
 						return icon.custom ? (
-							<slot name={this.items.find(item => icon.id === item.id)!._individualSlot}></slot>
+							icon.isOverflowing ? (<slot name={this.items.find(item => ((icon.id === item.__id)))!._individualSlot}></slot>) : ""
 						) : (
 							<ListItemStandard
 								key={index}

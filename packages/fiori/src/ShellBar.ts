@@ -136,12 +136,14 @@ interface IShellBarSearchField extends HTMLElement {
 }
 
 interface IShellBarHidableItem {
+	custom?: boolean;
 	classes: string,
 	id: string,
 	show: boolean,
 }
 
 interface IShelBarItemInfo extends IShellBarHidableItem {
+	isOverflowing: any;
 	icon?: string,
 	text?: string,
 	count?: string,
@@ -899,6 +901,10 @@ class ShellBar extends UI5Element {
 			this._detachSearchFieldListeners(this.search);
 			this._attachSearchFieldListeners(this.search);
 		}
+
+		// this.items.forEach(item => {
+		// 	item.isOverflowing = item.classList.contains("ui5-shellbar-hidden-button");
+		// });
 	}
 
 	/**
@@ -961,14 +967,20 @@ class ShellBar extends UI5Element {
 		items.forEach(item => {
 			if (item.classes.indexOf("ui5-shellbar-no-overflow-button") === -1) {
 				item.classes = `${item.classes} ui5-shellbar-hidden-button`;
+				// if (item.custom) {
+				// 	this.items.find(sbItem => item.id === sbItem.__id)!.isOverflowing = true;
+				// }
 			}
-		});
+		}, this);
 		return items;
 	}
 
 	_resetItemsVisibility(items: Array<HTMLElement>) {
 		items.forEach(item => {
 			item.classList.remove("ui5-shellbar-hidden-button");
+			// if (item.tagName === "UI5-SHELLBAR-ITEM") {
+			// 	(item as ShellBarItem).isOverflowing = false;
+			// }
 		});
 	}
 
@@ -988,20 +1000,20 @@ class ShellBar extends UI5Element {
 			}
 
 			const item = hidableDomElements[i];
-			hiddenItems.push(item.id);
+			hiddenItems.push(item.id || item.__id);
 			item.classList.add("ui5-shellbar-hidden-button");
 		}
 
 		if (hiddenItems.length === 1 && !this.showSearchField) {
 			const nextItemToHide = hidableDomElements[++lastHiddenIndex];
 			if (nextItemToHide) {
-				hiddenItems.push(nextItemToHide.id);
+				hiddenItems.push(nextItemToHide.id || nextItemToHide.__id);
 			}
 		}
 
 		const itemsInfo = this._getItemsInfo().filter(item => item.show && item.classes.indexOf("ui5-shellbar-no-overflow-button") === -1);
 		const contentInfo = this._getContentInfo().sort((a, b) => a.hideOrder - b.hideOrder);
-		const itemsToHide = [...itemsInfo, ...contentInfo].filter(item => hiddenItems.includes(item.id));
+		const itemsToHide = [...itemsInfo, ...contentInfo].filter(item => hiddenItems.includes(item.id || item.__id));
 
 		this._hideItems(itemsToHide);
 
@@ -1232,6 +1244,7 @@ class ShellBar extends UI5Element {
 					id: item.slot,
 					classes: "ui5-shellbar-content-item",
 					show: false,
+					custom: false,
 				};
 			}),
 		];
@@ -1290,6 +1303,7 @@ class ShellBar extends UI5Element {
 					show,
 					press: this._handleCustomActionPress.bind(this),
 					custom: true,
+					isOverflowing: item.isOverflowing,
 					title: item.title,
 					stableDomRef: item.stableDomRef,
 					tooltip: item.title || item.text,
@@ -1679,6 +1693,8 @@ class ShellBar extends UI5Element {
 		const contentItems = this.contentItemsWrappersSorted;
 		const firstContentItem = contentItems.pop();
 		const prioritizeContent = this.showSearchField && this.hasSearchField;
+
+		items.push(...this.items);
 
 		// order here is important for the responsive behavior, the items will be
 		// measured and hidden in the order they are returned until no overlap is detected

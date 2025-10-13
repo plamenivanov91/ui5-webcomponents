@@ -4,7 +4,6 @@ import type ShellBar from "./ShellBar.js";
 import ShellBarPopoverTemplate from "./ShellBarPopoverTemplate.js";
 import slimArrowDown from "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import ButtonBadge from "@ui5/webcomponents/dist/ButtonBadge.js";
-import ShellBarItem from "./ShellBarItem.js";
 
 export default function ShellBarTemplate(this: ShellBar) {
 	return (
@@ -207,7 +206,8 @@ export default function ShellBarTemplate(this: ShellBar) {
 									)}
 								</Button>
 							)}
-							{ this.items.map(mySlotEl => <slot name={mySlotEl._individualSlot}></slot>)}
+
+							{ this.items.filter(item => !item.isOverflowing).map(item => <slot name={item._individualSlot}></slot>) }
 
 						</div>
 					</div>
