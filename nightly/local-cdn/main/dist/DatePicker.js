@@ -210,7 +210,9 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
                 console.warn(`Invalid value for property "${prop}": ${propValue} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
             }
         });
-        this.value = this.normalizeFormattedValue(this.value) || this.value;
+        if (!this.isLiveUpdate) {
+            this.value = this.normalizeFormattedValue(this.value) || this.value;
+        }
         this.liveValue = this.value;
     }
     /**
@@ -309,7 +311,8 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     }
     _updateValueAndFireEvents(value, normalizeValue, events, updateValue = true) {
         const valid = this._checkValueValidity(value);
-        if (valid && normalizeValue) {
+        this.isLiveUpdate = !updateValue;
+        if ((valid && normalizeValue) || !this.isLiveUpdate) {
             value = this.getDisplayValueFromValue(value);
             value = this.normalizeDisplayValue(value); // transform valid values (in any format) to the correct format
         }
@@ -525,6 +528,9 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         }
         if (!this.value) {
             return "";
+        }
+        if (this.isLiveUpdate) {
+            return this.liveValue;
         }
         return this.getDisplayFormat().format(this.getValueFormat().parse(this.value, true), true);
     }

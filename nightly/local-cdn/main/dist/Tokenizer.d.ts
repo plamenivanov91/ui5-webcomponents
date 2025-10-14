@@ -159,7 +159,7 @@ declare class Tokenizer extends UI5Element implements IFormInputElement {
     popoverMinWidth?: number;
     /**
      * Prevents tokens to be part of the tab chain.
-     * **Note:** Used inside MultiInput and MultiComboBox components.
+     * **Note:** Used inside MultiInput, MultiComboBox and FileUploader components.
      * @default false
      * @private
      */

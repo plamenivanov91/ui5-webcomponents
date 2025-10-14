@@ -215,6 +215,7 @@ declare class DatePicker extends DateComponentBase implements IFormInputElement 
     _respPopoverConfig?: object;
     _calendarCurrentPicker: Picker;
     liveValue?: string;
+    isLiveUpdate?: boolean;
     /**
      * Defines the value state message that will be displayed as pop up under the component.
      *

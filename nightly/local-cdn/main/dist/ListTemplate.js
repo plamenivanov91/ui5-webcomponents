@@ -10,10 +10,11 @@ export default function ListTemplate() {
                             _jsx("div", { id: `${this._id}-after`, tabindex: 0, role: "none", class: "ui5-list-focusarea" }), _jsx("span", { tabindex: -1, "aria-hidden": "true", class: "ui5-list-end-marker" })] }), _jsx(DropIndicator, { orientation: "Horizontal", ownerReference: this })] }) }));
 }
 function moreRow() {
-    return (_jsx("div", { class: "ui5-growing-button", part: "growing-button", children: _jsxs("div", { id: `${this._id}-growing-btn`, role: "button", tabindex: 0, part: "growing-button-inner", class: {
-                "ui5-growing-button-inner": true,
-                "ui5-growing-button-inner-active": this._loadMoreActive,
-            }, "aria-label": this.growingButtonAriaLabel, "aria-labelledby": this.growingButtonAriaLabelledBy, onClick: this._onLoadMoreClick, onKeyDown: this._onLoadMoreKeydown, onKeyUp: this._onLoadMoreKeyup, onMouseDown: this._onLoadMoreMousedown, onMouseUp: this._onLoadMoreMouseup, children: [this.loading &&
-                    _jsx(BusyIndicator, { delay: this.loadingDelay, part: "growing-button-busy-indicator", class: "ui5-list-growing-button-busy-indicator", active: true }), _jsx("span", { id: `${this._id}-growingButton-text`, class: "ui5-growing-button-text", "growing-button-text": true, children: this._growingButtonText })] }) }));
+    return (_jsxs("div", { class: "ui5-growing-button", part: "growing-button", children: [_jsxs("div", { id: `${this._id}-growing-btn`, role: "button", tabindex: 0, part: "growing-button-inner", class: {
+                    "ui5-growing-button-inner": true,
+                    "ui5-growing-button-inner-active": this._loadMoreActive,
+                }, "aria-label": this.growingButtonAriaLabel, "aria-labelledby": this.growingButtonAriaLabelledBy, "aria-describedby": this.growingButtonAriaDescribedBy, onClick: this._onLoadMoreClick, onKeyDown: this._onLoadMoreKeydown, onKeyUp: this._onLoadMoreKeyup, onMouseDown: this._onLoadMoreMousedown, onMouseUp: this._onLoadMoreMouseup, children: [this.loading &&
+                        _jsx(BusyIndicator, { delay: this.loadingDelay, part: "growing-button-busy-indicator", class: "ui5-list-growing-button-busy-indicator", active: true }), _jsx("span", { id: `${this._id}-growingButton-text`, class: "ui5-growing-button-text", "growing-button-text": true, children: this._growingButtonText })] }), this.accessibilityAttributes.growingButton?.description &&
+                _jsx("span", { id: `${this._id}-growingButton-description`, class: "ui5-hidden-text", children: this.accessibilityAttributes.growingButton.description })] }));
 }
 //# sourceMappingURL=ListTemplate.js.map

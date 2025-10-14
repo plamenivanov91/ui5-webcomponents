@@ -40,6 +40,7 @@ type ListMoveEventDetail = MoveEventDetail;
 type ListAccessibilityAttributes = {
     growingButton?: {
         name?: string;
+        description?: string;
     };
 };
 /**
@@ -196,11 +197,14 @@ declare class List extends UI5Element {
     *
     * The accessibilityAttributes object has the following field:
     *
-    *  - **growingButton**: `growingButton.name`.
+    *  - **growingButton**: `growingButton.name`, `growingButton.description`.
     *
     * The accessibility attributes support the following values:
     *
     * - **name**: Defines the accessible ARIA name of the growing button.
+    * Accepts any string.
+    *
+    * - **description**: Defines the accessible ARIA description of the growing button.
     * Accepts any string.
     *
     * **Note:** The `accessibilityAttributes` property is in an experimental state and is a subject to change.
@@ -329,6 +333,7 @@ declare class List extends UI5Element {
     get ariaDescriptionText(): string;
     get growingButtonAriaLabel(): string | undefined;
     get growingButtonAriaLabelledBy(): string | undefined;
+    get growingButtonAriaDescribedBy(): string | undefined;
     hasGrowingComponent(): boolean;
     _getDescriptionForGroups(): string;
     get ariaLabelModeText(): string;

@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import SelectTwoColumnSeparator from "./types/SelectTwoColumnSeparator.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -186,6 +187,14 @@ declare class Select extends UI5Element implements IFormInputElement {
      */
     tooltip?: string;
     /**
+     * Defines the separator type for the two columns layout when Select is in read-only mode.
+     *
+     * @default "Dash"
+     * @public
+     * @since 2.16.0
+     */
+    twoColumnSeparator: `${SelectTwoColumnSeparator}`;
+    /**
      * Constantly updated value of texts collected from the associated description texts
      * @private
      */
@@ -307,7 +316,17 @@ declare class Select extends UI5Element implements IFormInputElement {
      * @default undefined
      */
     get selectedOption(): IOption | undefined;
-    get text(): string | undefined;
+    /**
+     * Helper function to build display text with separator when additional text exists
+     * @param mainText - The main text content
+     * @param additionalText - The additional text (optional)
+     * @returns The combined text with separator if additionalText exists, otherwise just mainText
+     * @private
+     */
+    _buildDisplayText(mainText: string, additionalText?: string): string;
+    get text(): string;
+    get _effectiveTooltip(): string | undefined;
+    get _separatorSymbol(): string;
     _toggleRespPopover(): void;
     _onkeydown(e: KeyboardEvent): void;
     _handleKeyboardNavigation(e: KeyboardEvent): void;

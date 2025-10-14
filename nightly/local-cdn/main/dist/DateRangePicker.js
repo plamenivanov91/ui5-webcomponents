@@ -251,6 +251,9 @@ let DateRangePicker = DateRangePicker_1 = class DateRangePicker extends DatePick
         const values = this._splitValueByDelimiter(value);
         const firstDateTimestamp = this._exctractDisplayTimestamp(values[0]);
         const lastDateTimestamp = this._exctractDisplayTimestamp(values[1]);
+        if (!firstDateTimestamp || !lastDateTimestamp) {
+            return value;
+        }
         if (firstDateTimestamp && lastDateTimestamp && firstDateTimestamp > lastDateTimestamp) { // if both are timestamps (not undefined), flip if necessary
             return this._buildDisplayValue(lastDateTimestamp, firstDateTimestamp);
         }
@@ -265,7 +268,7 @@ let DateRangePicker = DateRangePicker_1 = class DateRangePicker extends DatePick
         let lastDateString = "";
         firstDateString = this._getValueStringFromTimestamp(this._exctractDisplayTimestamp(values[0]) * 1000);
         lastDateString = this._getValueStringFromTimestamp(this._exctractDisplayTimestamp(values[1]) * 1000);
-        if (!firstDateString && !lastDateString) {
+        if (!firstDateString || !lastDateString) {
             return value;
         }
         return `${firstDateString} ${this._effectiveDelimiter} ${lastDateString}`;
@@ -420,6 +423,9 @@ let DateRangePicker = DateRangePicker_1 = class DateRangePicker extends DatePick
         return "";
     }
     getDisplayValueFromValue(value) {
+        if (this.isLiveUpdate) {
+            return value;
+        }
         let firstDateString = "";
         let lastDateString = "";
         firstDateString = this._getDisplayStringFromTimestamp(this._extractFirstTimestamp(value) * 1000);

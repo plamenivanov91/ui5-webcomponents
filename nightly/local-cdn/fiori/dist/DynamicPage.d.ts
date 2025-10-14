@@ -118,11 +118,14 @@ declare class DynamicPage extends UI5Element {
     skipSnapOnScroll: boolean;
     showHeaderInStickArea: boolean;
     isToggled: boolean;
+    _focusInHandler?: (e: FocusEvent) => void;
     _headerSnapped: boolean;
     scrollContainer?: HTMLElement;
     headerActions?: DynamicPageHeaderActions;
     constructor();
     onBeforeRendering(): void;
+    onAfterRendering(): void;
+    onExitDOM(): void;
     get dynamicPageTitle(): DynamicPageTitle | null;
     get dynamicPageHeader(): DynamicPageHeader | null;
     get footerWrapper(): Element | null | undefined;

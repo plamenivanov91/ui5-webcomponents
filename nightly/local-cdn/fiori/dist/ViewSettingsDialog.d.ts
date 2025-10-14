@@ -166,7 +166,6 @@ declare class ViewSettingsDialog extends UI5Element {
     _groupBy?: List;
     static i18nBundle: I18nBundle;
     onBeforeRendering(): void;
-    onAfterRendering(): void;
     onInvalidation(changeInfo: ChangeInfo): void;
     _setAdditionalTexts(): void;
     get _selectedFilter(): (VSDItem & {

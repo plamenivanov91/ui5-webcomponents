@@ -433,6 +433,8 @@ declare class Input extends UI5Element implements SuggestionComponent, IFormInpu
     _handleResize(): void;
     _updateAssociatedLabelsTexts(): void;
     _closePicker(): void;
+    _confirmMobileValue(): void;
+    _cancelMobileValue(): void;
     _afterOpenPicker(): void;
     _afterClosePicker(): void;
     _handlePickerAfterOpen(): void;

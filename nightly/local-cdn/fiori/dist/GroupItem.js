@@ -26,7 +26,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  * @constructor
  * @extends UI5Element
  * @abstract
- * @since 2.13.0
+ * @since 2.15.0
  * @public
  */
 let GroupItem = class GroupItem extends UI5Element {

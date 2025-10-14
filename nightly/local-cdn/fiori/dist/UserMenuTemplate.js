@@ -32,9 +32,9 @@ function headerContent() {
             _jsxs("div", { class: "ui5-user-menu-selected-account", "aria-labelledby": this._ariaLabelledByAccountInformationText, children: [_jsxs(Avatar, { size: "L", onClick: this._handleAvatarClick, initials: this._selectedAccount._initials, fallbackIcon: personPlaceholder, class: "ui5-user-menu--selected-account-avatar", interactive: true, children: [this._selectedAccount.avatarSrc &&
                                 _jsx("img", { src: this._selectedAccount.avatarSrc }), this.showEditButton &&
                                 _jsx(Tag, { slot: "badge", wrappingType: "None", design: "Set1", colorScheme: "5", title: this._editAvatarTooltip, children: _jsx(Icon, { slot: "icon", name: edit }) })] }), this._selectedAccount.titleText &&
-                        _jsx(Text, { maxLines: 2, id: "selected-account-title", class: "ui5-user-menu-selected-account-title", children: this._selectedAccount.titleText }), this._selectedAccount.subtitleText &&
-                        _jsx(Text, { maxLines: 1, class: "ui5-user-menu-selected-account-subtitleText", children: this._selectedAccount.subtitleText }), this._selectedAccount.description &&
-                        _jsx(Text, { maxLines: 1, class: "ui5-user-menu-selected-account-description", children: this._selectedAccount.description }), this.showManageAccount &&
+                        _jsx(Text, { id: "selected-account-title", class: "ui5-user-menu-selected-account-title", children: this._selectedAccount.titleText }), this._selectedAccount.subtitleText &&
+                        _jsx(Text, { class: "ui5-user-menu-selected-account-subtitleText", children: this._selectedAccount.subtitleText }), this._selectedAccount.description &&
+                        _jsx(Text, { class: "ui5-user-menu-selected-account-description", children: this._selectedAccount.description }), this.showManageAccount &&
                         _jsx(Button, { id: "selected-account-manage-btn", icon: userSettings, class: "ui5-user-menu-manage-account-btn", onClick: this._handleManageAccountClick, children: this._manageAccountButtonText })] }) }));
 }
 function otherAccountsContent() {
@@ -45,9 +45,9 @@ function otherAccountsContent() {
 function otherAccountsList() {
     return (_jsx(_Fragment, { children: _jsx(List, { onItemClick: this._handleAccountSwitch, "aria-labelledby": this._ariaLabelledByActions, loadingDelay: 0, loading: this._otherAccounts.some(account => account.loading === true), children: this._otherAccounts.map((account, index) => _jsx(ListItemCustom, { ref: this.captureRef.bind(account), "aria-labelledby": account.titleText, "aria-possition": index + 1, "aria-setsize": this._otherAccounts.length, "aria-dectiption": this.getAccountDescriptionText(account), children: _jsxs("div", { class: "ui5-user-menu-other-accounts-content", children: [_jsx(Avatar, { slot: "image", size: "S", initials: account._initials, fallbackIcon: personPlaceholder, children: account.avatarSrc &&
                                 _jsx("img", { src: account.avatarSrc }) }), _jsxs("div", { class: "ui5-user-menu-other-accounts-info", children: [account.titleText &&
-                                    _jsx(Title, { class: "ui5-user-menu-other-accounts-title", "wrapping-type": "None", children: account.titleText }), account.subtitleText &&
-                                    _jsx(Label, { class: "ui5-user-menu-other-accounts-additional-info", "wrapping-type": "None", children: account.subtitleText }), account.description &&
-                                    _jsx(Label, { class: "ui5-user-menu-other-accounts-additional-info", "wrapping-type": "None", children: account.description })] }), _jsx("div", { children: account.selected &&
+                                    _jsx(Title, { class: "ui5-user-menu-other-accounts-title", children: account.titleText }), account.subtitleText &&
+                                    _jsx(Label, { class: "ui5-user-menu-other-accounts-additional-info", children: account.subtitleText }), account.description &&
+                                    _jsx(Label, { class: "ui5-user-menu-other-accounts-additional-info", children: account.description })] }), _jsx("div", { children: account.selected &&
                                 _jsx(Icon, { part: "icon", name: selectedAccount, class: "ui5-user-menu-selected-account-icon", mode: "Decorative" }) })] }) })) }) }));
 }
 //# sourceMappingURL=UserMenuTemplate.js.map

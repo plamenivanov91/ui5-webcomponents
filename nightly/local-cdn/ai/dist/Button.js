@@ -9,6 +9,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import query from "@ui5/webcomponents-base/dist/decorators/query.js";
@@ -19,7 +20,6 @@ import ButtonTemplate from "./ButtonTemplate.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getAllAccessibleNameRefTexts, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 // Styles
 import ButtonCss from "./generated/themes/Button.css.js";
-import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 /**
  * @class
  *
@@ -240,7 +240,7 @@ let Button = Button_1 = class Button extends UI5Element {
     }
     get _computedAccessibilityAttributes() {
         const labelRefTexts = getAllAccessibleNameRefTexts(this) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this) || "";
-        const mainTitle = this._hasText ? Button_1.i18nBundle.getText(BUTTON_TOOLTIP_TEXT, this._stateText) : "";
+        const mainTitle = this._hasText ? Button_1.i18nBundleAi.getText(BUTTON_TOOLTIP_TEXT, this._stateText) : "";
         const title = `${mainTitle} ${labelRefTexts}`.trim();
         return {
             root: {
@@ -288,8 +288,8 @@ __decorate([
     query(".ui5-ai-button-hidden[ui5-split-button]")
 ], Button.prototype, "_hiddenSplitButton", void 0);
 __decorate([
-    i18n("@ui5/webcomponents")
-], Button, "i18nBundle", void 0);
+    i18n("@ui5/webcomponents-ai")
+], Button, "i18nBundleAi", void 0);
 Button = Button_1 = __decorate([
     customElement({
         tag: "ui5-ai-button",

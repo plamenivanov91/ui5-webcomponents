@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { JsxTemplate } from "@ui5/webcomponents-base";
+import type { JsxTemplate } from "@ui5/webcomponents-base/dist/index.js";
 import IconMode from "./types/IconMode.js";
 import type Input from "./Input.js";
 import type List from "./List.js";
@@ -123,18 +123,21 @@ declare class DynamicDateRange extends UI5Element {
      */
     open: boolean;
     _currentOption?: IDynamicDateRangeOption;
+    _lastSelectedOption?: IDynamicDateRangeOption;
     currentValue?: DynamicDateRangeValue;
     optionsObjects: Array<IDynamicDateRangeOption>;
     static optionsClasses: Map<string, new (operators?: Array<string>) => IDynamicDateRangeOption>;
     _input?: Input;
     _list?: List;
     onBeforeRendering(): void;
+    onAfterRendering(): Promise<void>;
     /**
      * Creates and normalizes options from the options string
      */
     _createNormalizedOptions(): Array<IDynamicDateRangeOption>;
     splitOptions(options: string): Array<string>;
     _focusSelectedItem(): void;
+    _focusLastSelectedItem(): void;
     /**
      * Defines whether the value help icon is hidden
      * @private

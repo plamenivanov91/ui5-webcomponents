@@ -124,7 +124,7 @@ declare class Button extends UI5Element {
     states: Array<ButtonState>;
     _splitButton?: SplitButton;
     _hiddenSplitButton?: SplitButton;
-    static i18nBundle: I18nBundle;
+    static i18nBundleAi: I18nBundle;
     get _hideArrowButton(): boolean;
     get _effectiveState(): string;
     get _effectiveStateObject(): ButtonState | undefined;

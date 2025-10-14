@@ -141,6 +141,32 @@ let DynamicPage = DynamicPage_1 = class DynamicPage extends UI5Element {
             }
         }
     }
+    onAfterRendering() {
+        if (this.scrollContainer) {
+            if (this._focusInHandler) {
+                this.scrollContainer.removeEventListener("focusin", this._focusInHandler);
+            }
+            this._focusInHandler = (e) => {
+                const target = e.target;
+                if (!target || target === this.scrollContainer) {
+                    return;
+                }
+                if (this.dynamicPageHeader?.contains(target) || this.dynamicPageTitle?.contains(target)) {
+                    return;
+                }
+                requestAnimationFrame(() => {
+                    target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                });
+            };
+            this.scrollContainer.addEventListener("focusin", this._focusInHandler);
+        }
+    }
+    onExitDOM() {
+        if (this.scrollContainer && this._focusInHandler) {
+            this.scrollContainer.removeEventListener("focusin", this._focusInHandler);
+            this._focusInHandler = undefined;
+        }
+    }
     get dynamicPageTitle() {
         return this.querySelector("[ui5-dynamic-page-title]");
     }

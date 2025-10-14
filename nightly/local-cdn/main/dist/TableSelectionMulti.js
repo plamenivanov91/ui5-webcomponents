@@ -50,14 +50,10 @@ let TableSelectionMulti = class TableSelectionMulti extends TableSelectionBase {
          * @since 2.12
          */
         this.headerSelector = "SelectAll";
-        this._rowsLength = 0;
         this._onClickCaptureBound = this._onclickCapture.bind(this);
     }
     onTableBeforeRendering() {
-        if (this._table && this._table.headerRow[0] && this._rowsLength !== this._table.rows.length) {
-            this._rowsLength = this._table.rows.length;
-            this._table.headerRow[0]._invalidate++;
-        }
+        super.onTableBeforeRendering();
         this._table?.removeEventListener("click", this._onClickCaptureBound);
     }
     onTableAfterRendering() {

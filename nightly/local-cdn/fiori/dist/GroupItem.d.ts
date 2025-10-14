@@ -18,7 +18,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  * @constructor
  * @extends UI5Element
  * @abstract
- * @since 2.13.0
+ * @since 2.15.0
  * @public
  */
 declare class GroupItem extends UI5Element {

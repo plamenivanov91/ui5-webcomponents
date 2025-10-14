@@ -16,7 +16,6 @@ import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
 import "@ui5/webcomponents-icons/dist/filter.js";
@@ -124,13 +123,6 @@ let ViewSettingsDialog = ViewSettingsDialog_1 = class ViewSettingsDialog extends
         }
         if (this.shouldBuildGroup) {
             this._currentMode = ViewSettingsDialogMode.Group;
-        }
-    }
-    onAfterRendering() {
-        if (this.isModeFilter) {
-            renderFinished().then(() => {
-                this._list?.focusFirstItem();
-            });
         }
     }
     onInvalidation(changeInfo) {
