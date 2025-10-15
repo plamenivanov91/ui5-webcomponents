@@ -5,6 +5,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "./SegmentedButtonItem.js";
 import type SegmentedButtonItem from "./SegmentedButtonItem.js";
 import SegmentedButtonSelectionMode from "./types/SegmentedButtonSelectionMode.js";
+import SegmentedButtonContentMode from "./types/SegmentedButtonContentMode.js";
 /**
  * Interface for components that may be slotted inside `ui5-segmented-button` as items
  * @public
@@ -73,6 +74,17 @@ declare class SegmentedButton extends UI5Element {
      * @since 1.14.0
      */
     selectionMode: `${SegmentedButtonSelectionMode}`;
+    /**
+     * Defines the content mode of the segmented button items.
+     *
+     * - "EqualSized": All items are sized equally to fill the available space.
+     * - "ContentFit": Each item is sized to fit its content, with any extra space placed after the last item.
+     *
+     * @default "EqualSized"
+     * @public
+     * @since 2.16.0
+     */
+    contentMode: `${SegmentedButtonContentMode}`;
     /**
      * Defines the items of `ui5-segmented-button`.
      *

@@ -201,8 +201,13 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
             e.preventDefault();
             e.stopPropagation();
             this._textButtonActive = false;
-            if (!this._shiftOrEscapePressedDuringSpace && target !== this.arrowButton) { // Do not fire click if Arrow button is focused by mouse and Space is pressed afterwards
-                this._fireClick();
+            if (!this._shiftOrEscapePressedDuringSpace) { // Do not fire click if Arrow button is focused by mouse and Space is pressed afterwards
+                if (target !== this.arrowButton) {
+                    this._fireClick();
+                }
+                else {
+                    this._fireArrowClick();
+                }
             }
             this._shiftOrEscapePressedDuringSpace = false;
             return;
@@ -281,13 +286,13 @@ let SplitButton = SplitButton_1 = class SplitButton extends UI5Element {
     _handleDefaultAction(e) {
         e.preventDefault();
         const target = e.target;
-        if (this.arrowButton && target === this.arrowButton) {
-            this._activeArrowButton = true;
-            this._fireArrowClick();
-            return;
-        }
-        this._textButtonActive = true;
         if (isEnter(e)) {
+            if (this.arrowButton && target === this.arrowButton) {
+                this._activeArrowButton = true;
+                this._fireArrowClick();
+                return;
+            }
+            this._textButtonActive = true;
             this._fireClick(e);
             return;
         }

@@ -46,7 +46,7 @@ import "@ui5/webcomponents-icons/dist/stop.js";
  *
  * @constructor
  * @extends UI5Element
- * @since 1.0.0-rc.1
+ * @since 2.16.0
  * @private
  */
 let WritingAssistant = WritingAssistant_1 = class WritingAssistant extends UI5Element {
@@ -68,7 +68,6 @@ let WritingAssistant = WritingAssistant_1 = class WritingAssistant extends UI5El
          *
          * @default ""
          * @public
-         * @since 1.0.0-rc.1
          */
         this.actionText = "";
         /**
@@ -79,7 +78,7 @@ let WritingAssistant = WritingAssistant_1 = class WritingAssistant extends UI5El
          *
          * @default 1
          * @public
-         * @since 1.0.0-rc.1
+         * @since 2.16.0
          */
         this.currentVersionIndex = 1;
         /**
@@ -90,7 +89,6 @@ let WritingAssistant = WritingAssistant_1 = class WritingAssistant extends UI5El
          *
          * @default 1
          * @public
-         * @since 1.0.0-rc.1
          */
         this.totalVersions = 1;
     }

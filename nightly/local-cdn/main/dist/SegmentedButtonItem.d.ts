@@ -134,5 +134,6 @@ declare class SegmentedButtonItem extends UI5Element implements IButton, ISegmen
     get ariaLabelText(): string | undefined;
     get ariaDescriptionText(): string | undefined;
     get showIconTooltip(): boolean;
+    get slotTextContent(): string;
 }
 export default SegmentedButtonItem;

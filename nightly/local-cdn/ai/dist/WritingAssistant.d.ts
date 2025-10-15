@@ -22,7 +22,7 @@ import "@ui5/webcomponents-icons/dist/stop.js";
  *
  * @constructor
  * @extends UI5Element
- * @since 1.0.0-rc.1
+ * @since 2.16.0
  * @private
  */
 declare class WritingAssistant extends UI5Element {
@@ -51,7 +51,6 @@ declare class WritingAssistant extends UI5Element {
      *
      * @default ""
      * @public
-     * @since 1.0.0-rc.1
      */
     actionText: string;
     /**
@@ -62,7 +61,7 @@ declare class WritingAssistant extends UI5Element {
      *
      * @default 1
      * @public
-     * @since 1.0.0-rc.1
+     * @since 2.16.0
      */
     currentVersionIndex: number;
     /**
@@ -73,7 +72,6 @@ declare class WritingAssistant extends UI5Element {
      *
      * @default 1
      * @public
-     * @since 1.0.0-rc.1
      */
     totalVersions: number;
     static i18nBundleAi: I18nBundle;

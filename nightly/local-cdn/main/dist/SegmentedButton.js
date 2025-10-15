@@ -23,6 +23,7 @@ import SegmentedButtonSelectionMode from "./types/SegmentedButtonSelectionMode.j
 import SegmentedButtonTemplate from "./SegmentedButtonTemplate.js";
 // Styles
 import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
+import SegmentedButtonContentMode from "./types/SegmentedButtonContentMode.js";
 /**
  * @class
  *
@@ -51,6 +52,17 @@ let SegmentedButton = SegmentedButton_1 = class SegmentedButton extends UI5Eleme
          * @since 1.14.0
          */
         this.selectionMode = "Single";
+        /**
+         * Defines the content mode of the segmented button items.
+         *
+         * - "EqualSized": All items are sized equally to fill the available space.
+         * - "ContentFit": Each item is sized to fit its content, with any extra space placed after the last item.
+         *
+         * @default "EqualSized"
+         * @public
+         * @since 2.16.0
+         */
+        this.contentMode = "EqualSized";
         this._itemNavigation = new ItemNavigation(this, {
             getItemsCallback: () => this.navigatableItems,
         });
@@ -66,7 +78,9 @@ let SegmentedButton = SegmentedButton_1 = class SegmentedButton extends UI5Eleme
             item.sizeOfSet = item.hidden ? undefined : visibleItems.length;
         });
         this.normalizeSelection();
-        this.style.setProperty(getScopedVarName("--_ui5_segmented_btn_items_count"), `${visibleItems.length}`);
+        if (this.contentMode === SegmentedButtonContentMode.EqualSized) {
+            this.style.setProperty(getScopedVarName("--_ui5_segmented_btn_items_count"), `${visibleItems.length}`);
+        }
     }
     normalizeSelection() {
         if (!this.items.length) {
@@ -203,6 +217,9 @@ __decorate([
 __decorate([
     property()
 ], SegmentedButton.prototype, "selectionMode", void 0);
+__decorate([
+    property()
+], SegmentedButton.prototype, "contentMode", void 0);
 __decorate([
     slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 ], SegmentedButton.prototype, "items", void 0);

@@ -158,6 +158,20 @@ declare class TextArea extends UI5Element implements IFormInputElement {
      */
     accessibleNameRef?: string;
     /**
+     * Defines the accessible description of the component.
+     * @default undefined
+     * @public
+     * @since 2.16.0
+     */
+    accessibleDescription?: string;
+    /**
+     * Receives id(or many ids) of the elements that describe the textarea.
+     * @default undefined
+     * @public
+     * @since 2.16.0
+     */
+    accessibleDescriptionRef?: string;
+    /**
      * @private
      */
     focused: boolean;
@@ -247,6 +261,8 @@ declare class TextArea extends UI5Element implements IFormInputElement {
     };
     get tabIndex(): 0 | -1;
     get ariaLabelText(): string | undefined;
+    get ariaDescriptionText(): string | undefined;
+    get ariaDescriptionTextId(): "" | "accessibleDescription";
     get ariaDescribedBy(): string | undefined;
     get ariaValueStateHiddenText(): string | undefined;
     get valueStateDefaultText(): string;

@@ -23,7 +23,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
  *
  * @constructor
  * @extends TextArea
- * @since 1.0.0-rc.1
+ * @since 2.16.0
  * @public
  * @slot {HTMLElement} menu Defines a slot for `ui5-menu` integration. This slot allows you to pass a `ui5-menu` instance that will be associated with the assistant.
  */
@@ -39,7 +39,6 @@ declare class AITextArea extends TextArea {
      * Defines whether the `ui5-ai-textarea` is currently in a loading(processing) state.
      *
      * @default false
-     * @since 1.0.0-rc.14
      * @public
      */
     loading: boolean;

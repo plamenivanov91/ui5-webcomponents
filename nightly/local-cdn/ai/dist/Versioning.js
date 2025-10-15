@@ -60,7 +60,7 @@ var LastClickedButton;
  *
  * @constructor
  * @extends ToolbarItem
- * @since 1.0.0-rc.1
+ * @since 2.16.0
  * @private
  */
 let Versioning = Versioning_1 = class Versioning extends ToolbarItem {
@@ -81,7 +81,6 @@ let Versioning = Versioning_1 = class Versioning extends ToolbarItem {
          *
          * @default 0
          * @public
-         * @since 1.0.0-rc.1
          */
         this.totalSteps = 0;
         this._previousCurrentStep = 0;

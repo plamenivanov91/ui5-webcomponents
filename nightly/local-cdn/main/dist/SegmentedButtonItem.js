@@ -126,6 +126,13 @@ let SegmentedButtonItem = SegmentedButtonItem_1 = class SegmentedButtonItem exte
     get showIconTooltip() {
         return getEnableDefaultTooltips() && this.iconOnly && !this.tooltip;
     }
+    get slotTextContent() {
+        return this.text
+            .filter(node => node.nodeType === Node.TEXT_NODE)
+            .map(node => node.textContent?.trim() || "")
+            .filter(Boolean)
+            .join(" ");
+    }
 };
 __decorate([
     property({ type: Boolean })

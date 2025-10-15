@@ -21,7 +21,7 @@
 
 
 
-		<script type="module" crossorigin src="/webcomponents/nightly/assets/bundle.esm-oZcWfAbk.js"></script>
+		<script type="module" crossorigin src="/webcomponents/nightly/assets/bundle.esm-k4b8JhAg.js"></script>
 		<link rel="stylesheet" crossorigin href="/webcomponents/nightly/assets/TextArea-DYi5mzCS.css">
 	</head>
 
@@ -213,6 +213,16 @@
 	<section class="group">
 		<ui5-label>Text Area: Escape Prevention</ui5-title>
 		<ui5-textarea id="textarea-prevent-escape" class="textarea-width" placeholder="Escape prevention test"></ui5-textarea>
+	</section>
+
+	<section class="group">
+		<ui5-title>Text Area: Accessible Description</ui5-title>
+		<div id="external-desc">This is an external description element</div>
+		<div id="another-desc">Additional description text</div>
+		<ui5-textarea id="textarea-accessible-description" class="textarea-width" accessible-description="Direct accessible description" placeholder="TextArea with direct accessible description"></ui5-textarea>
+		<ui5-textarea id="textarea-accessible-description-ref" class="textarea-width" accessible-description-ref="external-desc" placeholder="TextArea with referenced accessible description"></ui5-textarea>
+		<ui5-textarea id="textarea-accessible-description-multiple-refs" class="textarea-width" accessible-description-ref="external-desc another-desc" placeholder="TextArea with multiple referenced descriptions"></ui5-textarea>
+		<ui5-textarea id="textarea-accessible-description-both" class="textarea-width" accessible-description="Direct description" accessible-description-ref="external-desc" placeholder="TextArea with both direct and referenced descriptions"></ui5-textarea>
 	</section>
 
 	<script>

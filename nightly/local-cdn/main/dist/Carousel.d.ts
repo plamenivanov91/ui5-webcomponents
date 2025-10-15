@@ -8,7 +8,7 @@ import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorType from "./types/CarouselPageIndicatorType.js";
 import type BackgroundDesign from "./types/BackgroundDesign.js";
 import type BorderDesign from "./types/BorderDesign.js";
-import type Button from "./Button.js";
+import type Icon from "./Icon.js";
 type CarouselNavigateEventDetail = {
     selectedIndex: number;
 };
@@ -20,7 +20,7 @@ type ItemsInfo = {
     tabIndex: number;
     posinset: number;
     setsize: number;
-    selected: boolean;
+    visible: boolean;
     _individualSlot?: string;
 };
 /**
@@ -118,6 +118,15 @@ declare class Carousel extends UI5Element {
      */
     hideNavigationArrows: boolean;
     /**
+     * Defines the current first visible item in the viewport.
+     * Default value is 0, which means the first item in the viewport.
+     *
+     * @since 1.0.0-rc.15
+     * @default 0
+     * @public
+     */
+    _currentSlideIndex: number;
+    /**
      * Defines the visibility of the page indicator.
      * If set to true the page indicator will be hidden.
      * @since 1.0.0-rc.15
@@ -162,7 +171,7 @@ declare class Carousel extends UI5Element {
      * @default 0
      * @private
      */
-    _selectedIndex: number;
+    _focusedItemIndex: number;
     /**
      * Defines the position of arrows.
      *
@@ -195,6 +204,10 @@ declare class Carousel extends UI5Element {
     _resizing: boolean;
     _lastFocusedElements: Array<HTMLElement>;
     _orderOfLastFocusedPages: Array<number>;
+    _lastInnerFocusedElement?: HTMLElement;
+    _pageStep: number;
+    _visibleItemsIndexes: Array<number>;
+    _itemIndicator: number;
     /**
      * Defines the content of the component.
      * @public
@@ -210,16 +223,27 @@ declare class Carousel extends UI5Element {
     validateSelectedIndex(): void;
     _onResize(): void;
     _updateScrolling(e: ScrollEnablementEventListenerParam): void;
-    _onkeydown(e: KeyboardEvent): Promise<void>;
+    _onkeydown(e: KeyboardEvent): void;
     _onfocusin(e: FocusEvent): void;
     _onmouseout(): void;
     _onmouseover(): void;
-    _handleF7Key(e: KeyboardEvent): void;
+    _ontouchstart(e: TouchEvent): void;
+    _onmousedown(e: MouseEvent): void;
+    _handleF7Key(e: KeyboardEvent): Promise<void>;
+    _handleHome(e: KeyboardEvent): void;
+    _handleEnd(e: KeyboardEvent): void;
+    _handlePageUp(e: KeyboardEvent): void;
+    _handlePageDown(e: KeyboardEvent): void;
     get _backgroundDesign(): string;
     get _getLastFocusedActivePageIndex(): number;
     navigateLeft(): void;
     navigateRight(): void;
-    _navButtonClick(e: UI5CustomEvent<Button, "click">): void;
+    navigateArrowRight(): void;
+    navigateArrowLeft(): void;
+    _calculateItemSlideIndex(currentSlideIndex: number, itemStep: number): number;
+    _moveToItem(slideIndex: number): void;
+    focusItem(): void;
+    _navButtonClick(e: UI5CustomEvent<Icon, "click">): void;
     /**
      * Changes the currently displayed page.
      * @param itemIndex The index of the target page
@@ -227,6 +251,7 @@ declare class Carousel extends UI5Element {
      * @public
      */
     navigateTo(itemIndex: number): void;
+    skipToItem(focusIndex: number, offset: number): Promise<void>;
     /**
      * Assuming that all items have the same width
      * @private
@@ -234,6 +259,7 @@ declare class Carousel extends UI5Element {
     get items(): Array<ItemsInfo>;
     get effectiveItemsPerPage(): number;
     isItemInViewport(index: number): boolean;
+    _updateVisibleItems(index: number): void;
     isIndexInRange(index: number): boolean;
     /**
      * @private
@@ -278,13 +304,7 @@ declare class Carousel extends UI5Element {
     get nextPageText(): string;
     get previousPageText(): string;
     get _roleDescription(): string;
-    /**
-     * The indices of the currently visible items of the component.
-     * @public
-     * @since 1.0.0-rc.15
-     * @default []
-     */
-    get visibleItemsIndices(): Array<number>;
+    carouselItemDomRef(idx: number): Array<HTMLElement>;
 }
 export default Carousel;
 export type { CarouselNavigateEventDetail, };

@@ -13,7 +13,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getEffectiveAriaDescriptionText, } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import TextAreaTemplate from "./TextAreaTemplate.js";
@@ -327,8 +327,18 @@ let TextArea = TextArea_1 = class TextArea extends UI5Element {
         }
         return effectiveAriaLabelText;
     }
+    get ariaDescriptionText() {
+        return getEffectiveAriaDescriptionText(this);
+    }
+    get ariaDescriptionTextId() {
+        return this.ariaDescriptionText ? "accessibleDescription" : "";
+    }
     get ariaDescribedBy() {
-        return this.hasValueState ? `${this._id}-valueStateDesc` : undefined;
+        const ids = [
+            this.hasValueState ? `${this._id}-valueStateDesc` : "",
+            this.ariaDescriptionTextId,
+        ].filter(Boolean).join(" ");
+        return ids || undefined;
     }
     get ariaValueStateHiddenText() {
         if (!this.hasValueState) {
@@ -425,6 +435,12 @@ __decorate([
 __decorate([
     property()
 ], TextArea.prototype, "accessibleNameRef", void 0);
+__decorate([
+    property()
+], TextArea.prototype, "accessibleDescription", void 0);
+__decorate([
+    property()
+], TextArea.prototype, "accessibleDescriptionRef", void 0);
 __decorate([
     property({ type: Boolean })
 ], TextArea.prototype, "focused", void 0);
