@@ -207,7 +207,12 @@ export default function ShellBarTemplate(this: ShellBar) {
 								</Button>
 							)}
 
-							{ this.items.filter(item => !item.isOverflowing).map(item => <slot name={item._individualSlot}></slot>) }
+							{this.items.map(item => <>
+								{/* wrap in a div element that will always be rendered, we always measure the wrappers as actual items might be in the popover */}
+								<div id={(item as any)._individualSlot} class="ui5-shellbar-item">
+									{!item.isOverflowing && <slot name={(item as any)._individualSlot}></slot>}
+								</div>
+							</>)}
 
 						</div>
 					</div>

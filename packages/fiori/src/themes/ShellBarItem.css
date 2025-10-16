@@ -1,3 +1,7 @@
+.ui5-shellbar-item {
+	width: 2.5rem;
+}
+
 :host [ui5-li]::part(icon) {
 	color: var(--sapList_TextColor);
 }
@@ -64,4 +68,8 @@
 	background: var(--sapShell_Active_Background);
 	border-color: var(--sapButton_Lite_Active_BorderColor);
 	color: var(--_ui5_shellbar_button_active_color);
+}
+
+[ui5-button] [slot="badge"] {
+	inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }

@@ -28,25 +28,23 @@ export default function PopoversTemplate(this: ShellBar) {
 				onClose={this._overflowPopoverAfterClose}
 			>
 				<List separators="None" onItemClick={this._handleActionListClick}>
+					{this.items.filter(item => item.isOverflowing).map(item => <slot name={(item as any)._individualSlot}></slot>)}
 
-					{this._hiddenIcons.map((icon, index) => {
-						return icon.custom ? (
-							icon.isOverflowing ? (<slot name={this.items.find(item => ((icon.id === item.__id)))!._individualSlot}></slot>) : ""
-						) : (
-							<ListItemStandard
-								key={index}
-								data-count={icon.count}
-								data-ui5-external-action-item-id={icon.refItemid}
-								icon={icon.icon ? icon.icon : ""}
-								type="Active"
-								onui5-_press={icon.press}
-								tooltip={icon.tooltip}
-								accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
-							>
-								{icon.text}
-							</ListItemStandard>
-						);
-					})}
+					{this._hiddenIcons.map((icon, index) => (
+						<ListItemStandard
+							key={index}
+							data-count={icon.count}
+							data-ui5-external-action-item-id={icon.refItemid}
+							data-ui5-stable={icon.stableDomRef}
+							icon={icon.icon ? icon.icon : ""}
+							type="Active"
+							onui5-_press={icon.press}
+							tooltip={icon.tooltip}
+							accessibilityAttributes={this.accInfo.search.accessibilityAttributes}
+						>
+							{icon.text}
+						</ListItemStandard>
+					))}
 				</List>
 			</Popover>
 		</>
