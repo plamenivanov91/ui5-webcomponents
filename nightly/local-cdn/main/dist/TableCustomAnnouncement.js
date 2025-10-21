@@ -1,7 +1,7 @@
 import TableExtension from "./TableExtension.js";
 import I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
-import { TABLE_ROW, TABLE_ROW_INDEX, TABLE_ROW_SELECTED, TABLE_ROW_ACTIVE, TABLE_ROW_NAVIGABLE, TABLE_COLUMN_HEADER_ROW, TABLE_CELL_SINGLE_CONTROL, TABLE_CELL_MULTIPLE_CONTROLS, TABLE_ACC_STATE_EMPTY, TABLE_ACC_STATE_REQUIRED, TABLE_ACC_STATE_DISABLED, TABLE_ACC_STATE_READONLY, } from "./generated/i18n/i18n-defaults.js";
+import { TABLE_ROW, TABLE_ROW_INDEX, TABLE_ROW_SELECTED, TABLE_ROW_ACTIVE, TABLE_ROW_NAVIGABLE, TABLE_ROW_NAVIGATED, TABLE_COLUMN_HEADER_ROW, TABLE_CELL_SINGLE_CONTROL, TABLE_CELL_MULTIPLE_CONTROLS, TABLE_ACC_STATE_EMPTY, TABLE_ACC_STATE_REQUIRED, TABLE_ACC_STATE_DISABLED, TABLE_ACC_STATE_READONLY, } from "./generated/i18n/i18n-defaults.js";
 let invisibleText;
 const i18nBundle = new I18nBundle("@ui5/webcomponents/main");
 const checkVisibility = (element) => {
@@ -167,6 +167,9 @@ class TableCustomAnnouncement extends TableExtension {
         });
         if (row._availableActionsCount > 0) {
             descriptions.push(row._actionCellAccText);
+        }
+        if (row._renderNavigated && row.navigated) {
+            descriptions.push(i18nBundle.getText(TABLE_ROW_NAVIGATED));
         }
         updateInvisibleText(row, descriptions);
     }

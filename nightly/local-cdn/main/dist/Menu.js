@@ -152,7 +152,7 @@ let Menu = Menu_1 = class Menu extends UI5Element {
         });
         return items;
     }
-    get acessibleNameText() {
+    get accessibleNameText() {
         return Menu_1.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
     }
     onBeforeRendering() {

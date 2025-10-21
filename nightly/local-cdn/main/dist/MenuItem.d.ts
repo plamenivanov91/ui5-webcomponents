@@ -204,7 +204,7 @@ declare class MenuItem extends ListItem implements IMenuItem {
     get isPhone(): boolean;
     get labelBack(): string;
     get labelClose(): string;
-    get acessibleNameText(): string;
+    get accessibleNameText(): string;
     onBeforeRendering(): void;
     focus(focusOptions?: FocusOptions): Promise<void>;
     get _focusable(): boolean;

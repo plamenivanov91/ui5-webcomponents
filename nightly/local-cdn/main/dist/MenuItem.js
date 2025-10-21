@@ -158,7 +158,7 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
     get labelClose() {
         return MenuItem_1.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
     }
-    get acessibleNameText() {
+    get accessibleNameText() {
         return MenuItem_1.i18nBundle.getText(MENU_POPOVER_ACCESSIBLE_NAME);
     }
     onBeforeRendering() {

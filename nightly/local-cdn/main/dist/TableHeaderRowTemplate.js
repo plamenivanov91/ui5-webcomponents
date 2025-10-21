@@ -15,13 +15,15 @@ export default function TableHeaderRowTemplate(ariaColIndex = 1) {
                                 :
                                     _jsx(CheckBox, { id: "selection-component", tabindex: -1, checked: this._isSelected, onChange: this._onSelectionChange, accessibleName: this._i18nRowSelector, title: this._isSelected ? this._i18nDeselectAllRows : this._i18nSelectAllRows }) }), this.cells.flatMap(cell => {
                 if (cell._popin) {
+                    cell.role = null;
                     cell.ariaColIndex = null;
                     return [];
                 }
-                cell.ariaColIndex = `${ariaColIndex++}`;
+                cell.role ??= cell.ariaRole;
+                cell.ariaColIndex = (cell.role === cell.ariaRole) ? `${ariaColIndex++}` : null;
                 return [_jsx("slot", { name: cell._individualSlot })];
             }), this._rowActionCount > 0 &&
                 _jsx(TableHeaderCell, { id: "actions-cell", "aria-colindex": ariaColIndex++, children: _jsx("div", { id: "actions-cell-content", children: this._i18nRowActions }) }), this._popinCells.length > 0 &&
-                _jsx(TableHeaderCell, { id: "popin-cell", "aria-colindex": ariaColIndex++, "aria-label": this._i18nRowPopin, "data-excluded-from-navigation": true })] }));
+                _jsx(TableHeaderCell, { id: "popin-cell", "aria-colindex": ariaColIndex++, "data-excluded-from-navigation": true, children: _jsx("div", { id: "popin-cell-content", children: this._i18nRowPopin }) })] }));
 }
 //# sourceMappingURL=TableHeaderRowTemplate.js.map

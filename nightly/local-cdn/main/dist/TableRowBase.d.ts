@@ -16,6 +16,7 @@ declare abstract class TableRowBase extends UI5Element {
     _invalidate: number;
     _rowActionCount: number;
     _renderNavigated: boolean;
+    _alternate: boolean;
     _selectionCell?: HTMLElement;
     _navigatedCell?: HTMLElement;
     static i18nBundle: I18nBundle;

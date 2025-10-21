@@ -3,6 +3,7 @@ import type { IFormInputElement } from "@ui5/webcomponents-base/dist/features/In
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
+import IconMode from "./types/IconMode.js";
 import type Popover from "./Popover.js";
 import type DateTimeInput from "./DateTimeInput.js";
 import type { InputAccInfo } from "./Input.js";
@@ -230,6 +231,11 @@ declare class TimePicker extends UI5Element implements IFormInputElement {
     get _isPhone(): boolean;
     get _isMobileDevice(): boolean;
     get shouldDisplayValueStateMessageInResponsivePopover(): boolean;
+    /**
+     * Defines whether the value help icon is hidden
+     * @private
+     */
+    get _iconMode(): IconMode.Decorative | IconMode.Interactive;
     onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>): void;
     _togglePicker(): void;
     submitPickers(): void;

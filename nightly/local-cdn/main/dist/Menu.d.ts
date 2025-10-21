@@ -145,7 +145,7 @@ declare class Menu extends UI5Element {
     get _allMenuItems(): MenuItem[];
     /** Returns menu items included in the ItemNavigation */
     get _navigatableMenuItems(): MenuItem[];
-    get acessibleNameText(): string;
+    get accessibleNameText(): string;
     onBeforeRendering(): void;
     getFocusDomRef(): HTMLElement | undefined;
     _setupItemNavigation(): void;

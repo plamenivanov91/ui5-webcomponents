@@ -14,7 +14,7 @@ export default function FormTemplate() {
                                     [`ui5-form-column-spanXL-${groupItem.colsXl}`]: true,
                                     [`ui5-form-column-spanM-${groupItem.colsM}`]: true,
                                     [`ui5-form-column-spanS-${groupItem.colsS}`]: true,
-                                }, part: "column", children: _jsxs("div", { class: "ui5-form-group", role: "form", "aria-labelledby": groupItemInfo.accessibleNameRef, children: [groupItem.headerText &&
+                                }, part: "column", children: _jsxs("div", { class: "ui5-form-group", role: "form", "aria-labelledby": groupItemInfo.accessibleNameRef, "aria-label": groupItemInfo.accessibleName, children: [groupItem.headerText &&
                                             _jsx("div", { class: "ui5-form-group-heading", children: _jsx(Title, { id: `${groupItem._id}-group-header-text`, level: groupItem.headerLevel, size: "H6", children: groupItem.headerText }) }), _jsx("div", { class: "ui5-form-group-layout", children: _jsx("slot", { name: groupItem._individualSlot }) })] }) }));
                         }) })
                     :

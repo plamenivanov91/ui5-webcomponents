@@ -34,7 +34,8 @@ function headerContent() {
                                 _jsx(Tag, { slot: "badge", wrappingType: "None", design: "Set1", colorScheme: "5", title: this._editAvatarTooltip, children: _jsx(Icon, { slot: "icon", name: edit }) })] }), this._selectedAccount.titleText &&
                         _jsx(Text, { id: "selected-account-title", class: "ui5-user-menu-selected-account-title", children: this._selectedAccount.titleText }), this._selectedAccount.subtitleText &&
                         _jsx(Text, { class: "ui5-user-menu-selected-account-subtitleText", children: this._selectedAccount.subtitleText }), this._selectedAccount.description &&
-                        _jsx(Text, { class: "ui5-user-menu-selected-account-description", children: this._selectedAccount.description }), this.showManageAccount &&
+                        _jsx(Text, { class: "ui5-user-menu-selected-account-description", children: this._selectedAccount.description }), this._selectedAccount.additionalInfo &&
+                        _jsx(Text, { class: "ui5-user-menu-selected-account-additional-info", children: this._selectedAccount.additionalInfo }), this.showManageAccount &&
                         _jsx(Button, { id: "selected-account-manage-btn", icon: userSettings, class: "ui5-user-menu-manage-account-btn", onClick: this._handleManageAccountClick, children: this._manageAccountButtonText })] }) }));
 }
 function otherAccountsContent() {

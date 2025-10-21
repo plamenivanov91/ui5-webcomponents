@@ -873,7 +873,7 @@ let ComboBox = ComboBox_1 = class ComboBox extends UI5Element {
             announce(`${groupHeaderText} ${currentItem.headerText}`, InvisibleMessageMode.Polite);
         }
         else {
-            announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), InvisibleMessageMode.Polite);
+            announce(`${currentItemAdditionalText} ${this.open ? itemPositionText : ""}`.trim(), InvisibleMessageMode.Polite);
         }
     }
     _clear() {

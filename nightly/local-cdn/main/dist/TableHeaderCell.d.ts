@@ -100,7 +100,7 @@ declare class TableHeaderCell extends TableCellBase {
     _popin: boolean;
     _defaultSlot: HTMLSlotElement;
     _actionSlot: HTMLSlotElement;
-    protected ariaRole: string;
+    ariaRole: string;
     _popinWidth: number;
     onBeforeRendering(): void;
     get accessibilityInfo(): {

@@ -1,11 +1,5 @@
-commit 68e6a3e43eaad261414a68d18ab8dfac37a2124b
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Tue Oct 14 13:10:15 2025 +0300
+commit a52e4c1b73811925b12fe8b35ea453367eafb652
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Mon Oct 20 09:29:13 2025 +0300
 
-    fix(ui5-button): prioritize accessibleName over button text in aria-label (#12473)
-    
-    When both text content and accessibleName are provided, the aria-label
-    should use only the accessibleName value plus button type text,
-    not concatenate both text content and accessibleName.
-    
-    Fixes #12398
+    fix(ui5-time-picker): Add interactive mode for the icon on mobile devices (#12500)

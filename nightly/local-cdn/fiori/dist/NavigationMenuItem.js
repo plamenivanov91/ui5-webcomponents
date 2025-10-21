@@ -15,7 +15,7 @@ import { isSpace, isEnter, isEnterShift, isEnterCtrl, isEnterAlt, } from "@ui5/w
 import NavigationMenuItemTemplate from "./NavigationMenuItemTemplate.js";
 // Styles
 import navigationMenuItemCss from "./generated/themes/NavigationMenuItem.css.js";
-import { NAVIGATION_MENU_POPOVER_HIDDEN_TEXT, } from "./generated/i18n/i18n-defaults.js";
+import { NAVIGATION_MENU_SELECTABLE_ITEM_HIDDEN_TEXT, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
@@ -51,9 +51,10 @@ let NavigationMenuItem = NavigationMenuItem_1 = class NavigationMenuItem extends
     }
     get _accInfo() {
         const accInfo = super._accInfo;
-        accInfo.role = this.href ? "none" : "treeitem";
-        if (!accInfo.ariaHaspopup) {
-            accInfo.ariaHaspopup = this.accessibilityAttributes.hasPopup;
+        accInfo.role = "none";
+        if (this.hasSubmenu && this.associatedItem?.isSelectable) {
+            // For the menu item on first level (parent item)
+            accInfo.ariaSelectedText = NavigationMenuItem_1.i18nBundleFiori.getText(NAVIGATION_MENU_SELECTABLE_ITEM_HIDDEN_TEXT);
         }
         return accInfo;
     }
@@ -128,8 +129,9 @@ let NavigationMenuItem = NavigationMenuItem_1 = class NavigationMenuItem extends
             }
         }
     }
-    get acessibleNameText() {
-        return NavigationMenuItem_1.i18nBundleFiori.getText(NAVIGATION_MENU_POPOVER_HIDDEN_TEXT);
+    get accessibleNameText() {
+        // For the submenu's dialog
+        return this.text ?? "";
     }
 };
 __decorate([

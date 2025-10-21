@@ -81,6 +81,6 @@ declare class NavigationMenuItem extends MenuItem {
     _activate(e: MouseEvent | KeyboardEvent): void;
     _onkeydown(e: KeyboardEvent): Promise<void>;
     _onkeyup(e: KeyboardEvent): void;
-    get acessibleNameText(): string;
+    get accessibleNameText(): string;
 }
 export default NavigationMenuItem;

@@ -1,5 +1,8 @@
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+type ShowMoreItemClickEventDetail = {
+    fromKeyboard: boolean;
+};
 /**
  * @class
  * ### Overview
@@ -17,6 +20,9 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
  * @experimental
  */
 declare class SearchItemShowMore extends ListItemBase {
+    eventDetails: ListItemBase["eventDetails"] & {
+        "click": ShowMoreItemClickEventDetail;
+    };
     /**
      * Specifies the number of additional items available to show.
      * This value replaces the placeholder (N) in the "Show more (N)" text.
@@ -35,5 +41,9 @@ declare class SearchItemShowMore extends ListItemBase {
     get showMoreTextCount(): string;
     _onfocusin(e: FocusEvent): void;
     _onfocusout(): void;
+    _onclick(e: MouseEvent | KeyboardEvent, fromKeyboard?: boolean): void;
+    _onkeydown(e: KeyboardEvent): void;
+    _onkeyup(e: KeyboardEvent): void;
 }
 export default SearchItemShowMore;
+export type { ShowMoreItemClickEventDetail, };
