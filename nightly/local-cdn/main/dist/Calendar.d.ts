@@ -17,12 +17,11 @@ import type SpecialCalendarDate from "./SpecialCalendarDate.js";
 import type CalendarLegendItemType from "./types/CalendarLegendItemType.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import type { YearRangePickerChangeEventDetail } from "./YearRangePicker.js";
-interface ICalendarPicker {
+interface ICalendarPicker extends HTMLElement {
     _showPreviousPage: () => void;
     _showNextPage: () => void;
     _hasPreviousPage: () => boolean;
     _hasNextPage: () => boolean;
-    _autoFocus?: boolean;
     _currentYearRange?: CalendarYearRangeT;
 }
 /**
@@ -253,18 +252,19 @@ declare class Calendar extends CalendarPart {
     /**
      * The user clicked the "month" button in the header
      */
-    onHeaderShowMonthPress(): void;
-    showMonth(): void;
+    onHeaderMonthButtonPress(): void;
+    switchToDayPicker(suppressFocus?: boolean): Promise<void>;
+    switchToMonthPicker(suppressFocus?: boolean): Promise<void>;
     /**
      * The user clicked the "year" button in the header
      */
-    onHeaderShowYearPress(): void;
-    showYear(): void;
+    onHeaderYearButtonPress(): void;
+    switchToYearPicker(suppressFocus?: boolean): Promise<void>;
     /**
      * The user clicked the "year range" button in the YearPicker header
      */
-    onHeaderShowYearRangePress(): void;
-    showYearRange(): void;
+    onHeaderYearRangeButtonPress(): void;
+    switchToYearRangePicker(suppressFocus?: boolean): Promise<void>;
     get _currentPickerDOM(): ICalendarPicker;
     /**
      * The year clicked the "Previous" button in the header
@@ -305,7 +305,7 @@ declare class Calendar extends CalendarPart {
     onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>): void;
     onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>): void;
     onSelectedYearRangeChange(e: CustomEvent<YearRangePickerChangeEventDetail>): void;
-    onNavigate(e: CustomEvent): void;
+    onNavigate(e: CustomEvent): Promise<void>;
     _onkeydown(e: KeyboardEvent): void;
     _onLegendFocusOut(): void;
     get _specialDates(): SpecialCalendarDate[];

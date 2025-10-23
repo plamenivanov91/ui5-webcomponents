@@ -154,5 +154,15 @@ const toDatesLastNext = (value, option) => {
     }
     return lastNextToDates(value, unit, direction);
 };
-export { dateOptionToDates, dateRangeOptionToDates, todayToDates, tomorrowToDates, yesterdayToDates, lastNextToDates, toDatesLastNext, };
+const dateTimeOptionToDates = (value) => {
+    if (!value || !value.values || value.values.length === 0) {
+        return [];
+    }
+    const startDate = value.values ? value.values[0] : UI5Date.getInstance();
+    const endDate = UI5Date.getInstance(startDate.getTime());
+    startDate.setMilliseconds(0);
+    endDate.setMilliseconds(999);
+    return [startDate, endDate];
+};
+export { dateOptionToDates, dateRangeOptionToDates, todayToDates, tomorrowToDates, yesterdayToDates, lastNextToDates, toDatesLastNext, dateTimeOptionToDates, };
 //# sourceMappingURL=toDates.js.map

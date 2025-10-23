@@ -10,4 +10,5 @@ declare const lastNextToDates: (value: DynamicDateRangeValue, unit: string, dire
  * Uses operator name to determine time unit and direction.
  */
 declare const toDatesLastNext: (value: DynamicDateRangeValue, option: IDynamicDateRangeOption) => Array<Date>;
-export { dateOptionToDates, dateRangeOptionToDates, todayToDates, tomorrowToDates, yesterdayToDates, lastNextToDates, toDatesLastNext, };
+declare const dateTimeOptionToDates: (value: DynamicDateRangeValue) => Array<Date>;
+export { dateOptionToDates, dateRangeOptionToDates, todayToDates, tomorrowToDates, yesterdayToDates, lastNextToDates, toDatesLastNext, dateTimeOptionToDates, };

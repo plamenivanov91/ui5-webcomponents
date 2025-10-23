@@ -48,6 +48,8 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  * - "TOMORROW" - Represents the next date. An example value is `{ operator: "TOMORROW"}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/Tomorrow.js";`
  * - "DATE" - Represents a single date. An example value is `{ operator: "DATE", values: [new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/SingleDate.js";`
  * - "DATERANGE" - Represents a range of dates. An example value is `{ operator: "DATERANGE", values: [new Date(), new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/DateRange.js";`
+ * - "FROMDATETIME" - Represents a range from date and time. An example value is `{ operator: "FROMDATETIME", values: [new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/FromDateTime.js";`
+ * - "TODATETIME" - Represents a range to date and time. An example value is `{ operator: "TODATETIME", values: [new Date()]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/ToDateTime.js";`
  * - "LASTDAYS" - Represents Last X Days from today. An example value is `{ operator: "LASTDAYS", values: [2]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastOptions.js";`
  * - "LASTWEEKS" - Represents Last X Weeks from today. An example value is `{ operator: "LASTWEEKS", values: [3]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastOptions.js";`
  * - "LASTMONTHS" - Represents Last X Months from today. An example value is `{ operator: "LASTMONTHS", values: [6]}`. Import: `import "@ui5/webcomponents/dist/dynamic-date-range-options/LastOptions.js";`
@@ -160,7 +162,7 @@ let DynamicDateRange = DynamicDateRange_1 = class DynamicDateRange extends UI5El
     }
     _togglePicker() {
         if (this.open) {
-            this.open = false;
+            this._close();
         }
         else {
             this.open = true;
@@ -245,10 +247,12 @@ let DynamicDateRange = DynamicDateRange_1 = class DynamicDateRange extends UI5El
         else {
             this.value = undefined;
         }
+        this._currentOption?.resetState?.();
         this._currentOption = undefined;
         this.open = false;
     }
     _close() {
+        this._currentOption?.resetState?.();
         this._currentOption = undefined;
         this.open = false;
     }
@@ -280,7 +284,11 @@ let DynamicDateRange = DynamicDateRange_1 = class DynamicDateRange extends UI5El
         return DynamicDateRange_1.i18nBundle.getText(DYNAMIC_DATE_RANGE_EMPTY_SELECTED_TEXT);
     }
     handleSelectionChange(e) {
-        this.currentValue = this._currentOption?.handleSelectionChange && this._currentOption?.handleSelectionChange(e);
+        const value = this._currentOption?.handleSelectionChange?.(e, this.currentValue);
+        this.currentValue = JSON.parse(JSON.stringify(value)); // deep clone
+        if (this.currentValue) {
+            this.currentValue.values = value?.values;
+        }
         // Update _currentOption if the operator changed
         if (this.currentValue && this.currentValue.operator !== this._currentOption?.operator) {
             this._currentOption = this.getOption(this.currentValue.operator);

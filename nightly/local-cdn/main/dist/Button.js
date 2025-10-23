@@ -369,15 +369,17 @@ let Button = Button_1 = class Button extends UI5Element {
     get ariaLabelText() {
         const effectiveAriaLabelText = getEffectiveAriaLabelText(this) || "";
         const textContent = this.textContent || "";
-        const typeLabelText = this.hasButtonType ? this.buttonTypeText : "";
         const internalLabelText = this.effectiveBadgeDescriptionText || "";
         // Use either the effective aria label text (if accessibleName is provided) or the button's text content
         const mainLabelText = effectiveAriaLabelText || textContent;
-        const labelParts = [mainLabelText, typeLabelText, internalLabelText].filter(part => part);
+        const labelParts = [mainLabelText, internalLabelText].filter(part => part);
         return labelParts.join(" ");
     }
     get ariaDescriptionText() {
-        return this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+        const accessibleDescription = this.accessibleDescription === "" ? undefined : this.accessibleDescription;
+        const typeLabelText = this.hasButtonType ? this.buttonTypeText : "";
+        const descriptionParts = [accessibleDescription, typeLabelText].filter(part => part);
+        return descriptionParts.length > 0 ? descriptionParts.join(" ") : undefined;
     }
     get _computedAccessibilityAttributes() {
         return {
