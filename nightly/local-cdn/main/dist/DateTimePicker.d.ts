@@ -122,6 +122,8 @@ declare class DateTimePicker extends DatePicker implements IFormInputElement {
      * @private
      */
     _togglePicker(): void;
+    get formValidityMessage(): string;
+    get formValidity(): ValidityStateFlags;
     get _formatPattern(): string;
     get _calendarTimestamp(): number;
     get _calendarSelectedDates(): string[];

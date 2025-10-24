@@ -177,6 +177,8 @@ declare class FileUploader extends UI5Element implements IFormInputElement {
     _tokenizerOpen: boolean;
     static emptyInput: HTMLInputElement;
     static i18nBundle: I18nBundle;
+    get formValidityMessage(): string;
+    get formValidity(): ValidityStateFlags;
     formElementAnchor(): Promise<HTMLElement | undefined>;
     /**
      * @override

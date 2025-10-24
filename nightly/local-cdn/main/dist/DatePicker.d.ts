@@ -325,6 +325,8 @@ declare class DatePicker extends DateComponentBase implements IFormInputElement 
      * @param value A value to be checked
      */
     isInValidRange(value: string): boolean;
+    isValidMin(value: string): boolean;
+    isValidMax(value: string): boolean;
     isInValidRangeDisplayValue(value: string): boolean;
     /**
      * The parser understands many formats, but we need one format

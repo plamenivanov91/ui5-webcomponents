@@ -24,7 +24,7 @@ import { isPageUp, isPageDown, isPageUpShift, isPageDownShift, isPageUpShiftCtrl
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
-import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, DATETIME_COMPONENTS_PLACEHOLDER_PREFIX, INPUT_SUGGESTIONS_TITLE, FORM_TEXTFIELD_REQUIRED, DATEPICKER_POPOVER_ACCESSIBLE_NAME, VALUE_STATE_ERROR, VALUE_STATE_INFORMATION, VALUE_STATE_SUCCESS, VALUE_STATE_WARNING, } from "./generated/i18n/i18n-defaults.js";
+import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, DATETIME_COMPONENTS_PLACEHOLDER_PREFIX, INPUT_SUGGESTIONS_TITLE, DATEPICKER_POPOVER_ACCESSIBLE_NAME, VALUE_STATE_ERROR, VALUE_STATE_INFORMATION, VALUE_STATE_SUCCESS, VALUE_STATE_WARNING, DATEPICKER_VALUE_MISSING, DATEPICKER_PATTERN_MISSMATCH, DATEPICKER_RANGE_UNDERFLOW, DATEPICKER_RANGE_OVERFLOW, } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import InputType from "./types/InputType.js";
 import IconMode from "./types/IconMode.js";
@@ -172,10 +172,30 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         this._calendarCurrentPicker = "day";
     }
     get formValidityMessage() {
-        return DatePicker_1.i18nBundle.getText(FORM_TEXTFIELD_REQUIRED);
+        const validity = this.formValidity;
+        if (validity.valueMissing) {
+            // @ts-ignore oFormatOptions is a private API of DateFormat
+            return DatePicker_1.i18nBundle.getText(DATEPICKER_VALUE_MISSING, this.getFormat().oFormatOptions.pattern);
+        }
+        if (validity.patternMismatch) {
+            // @ts-ignore oFormatOptions is a private API of DateFormat
+            return DatePicker_1.i18nBundle.getText(DATEPICKER_PATTERN_MISSMATCH, this.getFormat().oFormatOptions.pattern);
+        }
+        if (validity.rangeUnderflow) {
+            return DatePicker_1.i18nBundle.getText(DATEPICKER_RANGE_UNDERFLOW, this.minDate);
+        }
+        if (validity.rangeOverflow) {
+            return DatePicker_1.i18nBundle.getText(DATEPICKER_RANGE_OVERFLOW, this.maxDate);
+        }
+        return "";
     }
     get formValidity() {
-        return { valueMissing: this.required && !this.value };
+        return {
+            valueMissing: this.required && !this.value,
+            patternMismatch: !this.isValidValue(this.value),
+            rangeUnderflow: !this.isValidMin(this.value),
+            rangeOverflow: !this.isValidMax(this.value),
+        };
     }
     async formElementAnchor() {
         return (await this.getFocusDomRefAsync())?.getFocusDomRefAsync();
@@ -312,7 +332,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
     _updateValueAndFireEvents(value, normalizeValue, events, updateValue = true) {
         const valid = this._checkValueValidity(value);
         this.isLiveUpdate = !updateValue;
-        if ((valid && normalizeValue) || !this.isLiveUpdate) {
+        if ((valid && normalizeValue) || !this.isLiveUpdate) { // in case that value is not valid we format it in change event
             value = this.getDisplayValueFromValue(value);
             value = this.normalizeDisplayValue(value); // transform valid values (in any format) to the correct format
         }
@@ -322,7 +342,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
         if (updateValue) {
             this._dateTimeInput.value = value;
             this.value = this.getValueFromDisplayValue(value);
-            this._updateValueState(); // Change the value state to Error/None, but only if needed
+            this._updateValueState();
         }
         events.forEach(e => {
             if (!this.fireDecoratorEvent(e, { value, valid })) {
@@ -454,6 +474,26 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
             return false;
         }
         return calendarDate.valueOf() >= this._minDate.valueOf() && calendarDate.valueOf() <= this._maxDate.valueOf();
+    }
+    isValidMin(value) {
+        if (value === "" || value === undefined) {
+            return true;
+        }
+        const calendarDate = this._getCalendarDateFromString(value);
+        if (!calendarDate || !this._minDate) {
+            return false;
+        }
+        return calendarDate.valueOf() >= this._minDate.valueOf();
+    }
+    isValidMax(value) {
+        if (value === "" || value === undefined) {
+            return true;
+        }
+        const calendarDate = this._getCalendarDateFromString(value);
+        if (!calendarDate || !this._maxDate) {
+            return false;
+        }
+        return calendarDate.valueOf() <= this._maxDate.valueOf();
     }
     isInValidRangeDisplayValue(value) {
         if (value === "" || value === undefined) {

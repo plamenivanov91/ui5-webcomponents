@@ -127,7 +127,7 @@ let MultiInput = MultiInput_1 = class MultiInput extends Input {
             this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens
             return this._focusFirstToken(e);
         }
-        if (isEnter(e)) {
+        if (isEnter(e) && !!this._internals.form) {
             e.preventDefault();
         }
         if (isLeft(e)) {

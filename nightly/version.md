@@ -1,5 +1,5 @@
-commit fd8ed791418cae14a3e76ad60a3a9e6234e1b921
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Wed Oct 22 14:08:36 2025 +0300
+commit 3c9d9780c53818828a7cd5dcced6f8ddde9270be
+Author: ilhan orhan <ilhan.orhan007@gmail.com>
+Date:   Thu Oct 23 15:13:16 2025 +0300
 
-    build: enable node version checks (#12440)
+    test(ui5-dynamic-date-range): comment failig test (#12539)

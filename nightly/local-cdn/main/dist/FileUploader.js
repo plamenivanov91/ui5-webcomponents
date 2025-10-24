@@ -16,7 +16,7 @@ import { getEffectiveAriaLabelText, getAssociatedLabelForTexts, getAllAccessible
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { isUpAlt, isDownAlt, isEnter, isDelete, isF4, isSpace, isRight, isLeft, } from "@ui5/webcomponents-base/dist/Keys.js";
-import { FILEUPLOADER_INPUT_TOOLTIP, FILEUPLOADER_VALUE_HELP_TOOLTIP, FILEUPLOADER_CLEAR_ICON_TOOLTIP, VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION, VALUE_STATE_ERROR, VALUE_STATE_WARNING, FILEUPLOADER_DEFAULT_PLACEHOLDER, FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER, FILEUPLOADER_ROLE_DESCRIPTION, } from "./generated/i18n/i18n-defaults.js";
+import { FILEUPLOADER_INPUT_TOOLTIP, FILEUPLOADER_VALUE_HELP_TOOLTIP, FILEUPLOADER_CLEAR_ICON_TOOLTIP, VALUE_STATE_SUCCESS, VALUE_STATE_INFORMATION, VALUE_STATE_ERROR, VALUE_STATE_WARNING, FILEUPLOADER_DEFAULT_PLACEHOLDER, FILEUPLOADER_DEFAULT_MULTIPLE_PLACEHOLDER, FILEUPLOADER_ROLE_DESCRIPTION, FILEUPLOAER_VALUE_MISSING, } from "./generated/i18n/i18n-defaults.js";
 // Template
 import FileUploaderTemplate from "./FileUploaderTemplate.js";
 // Styles
@@ -100,6 +100,18 @@ let FileUploader = FileUploader_1 = class FileUploader extends UI5Element {
         this.focused = false;
         this._selectedFilesNames = [];
         this._tokenizerOpen = false;
+    }
+    get formValidityMessage() {
+        const validity = this.formValidity;
+        if (validity.valueMissing) {
+            return FileUploader_1.i18nBundle.getText(FILEUPLOAER_VALUE_MISSING);
+        }
+        return "";
+    }
+    get formValidity() {
+        return {
+            valueMissing: this.required && (!this.files || this.files.length === 0),
+        };
     }
     async formElementAnchor() {
         return this.getFocusDomRefAsync();

@@ -600,6 +600,11 @@ let Tokenizer = Tokenizer_1 = class Tokenizer extends UI5Element {
         this._handleTokenSelection(e);
     }
     _onfocusin(e) {
+        const target = e.target;
+        if (target && target.toBeDeleted) {
+            this._tokenDeleting = true;
+            return;
+        }
         this.open = false;
         this.expanded = true;
         this._addTokenToNavigation(e.target);

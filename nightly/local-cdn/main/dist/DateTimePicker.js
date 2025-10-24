@@ -18,7 +18,7 @@ import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import DatePicker from "./DatePicker.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 // i18n texts
-import { TIMEPICKER_SUBMIT_BUTTON, TIMEPICKER_CANCEL_BUTTON, DATETIME_DESCRIPTION, DATETIME_PICKER_DATE_BUTTON, DATETIME_PICKER_TIME_BUTTON, DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME, } from "./generated/i18n/i18n-defaults.js";
+import { TIMEPICKER_SUBMIT_BUTTON, TIMEPICKER_CANCEL_BUTTON, DATETIME_DESCRIPTION, DATETIME_PICKER_DATE_BUTTON, DATETIME_PICKER_TIME_BUTTON, DATETIMEPICKER_POPOVER_ACCESSIBLE_NAME, DATETIME_VALUE_MISSING, DATETIME_PATTERN_MISMATCH, DATETIME_RANGEUNDERFLOW, DATETIME_RANGEOVERFLOW, } from "./generated/i18n/i18n-defaults.js";
 // Template
 import DateTimePickerTemplate from "./DateTimePickerTemplate.js";
 // Styles
@@ -157,6 +157,32 @@ let DateTimePicker = DateTimePicker_1 = class DateTimePicker extends DatePicker 
                 timeSelectionValue,
             };
         }
+    }
+    get formValidityMessage() {
+        const validity = this.formValidity;
+        if (validity.valueMissing) {
+            // @ts-ignore oFormatOptions is a private API of DateFormat
+            return DateTimePicker_1.i18nBundle.getText(DATETIME_VALUE_MISSING, this.getFormat().oFormatOptions.pattern);
+        }
+        if (validity.patternMismatch) {
+            // @ts-ignore oFormatOptions is a private API of DateFormat
+            return DateTimePicker_1.i18nBundle.getText(DATETIME_PATTERN_MISMATCH, this.getFormat().oFormatOptions.pattern);
+        }
+        if (validity.rangeUnderflow) {
+            return DateTimePicker_1.i18nBundle.getText(DATETIME_RANGEUNDERFLOW, this.minDate);
+        }
+        if (validity.rangeOverflow) {
+            return DateTimePicker_1.i18nBundle.getText(DATETIME_RANGEOVERFLOW, this.maxDate);
+        }
+        return "";
+    }
+    get formValidity() {
+        return {
+            valueMissing: this.required && !this.value,
+            patternMismatch: !this.isValidValue(this.value),
+            rangeUnderflow: !this.isValidMin(this.value),
+            rangeOverflow: !this.isValidMax(this.value),
+        };
     }
     get _formatPattern() {
         const hasHours = !!(this.formatPattern || "").match(/H/i);
