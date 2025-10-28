@@ -31,6 +31,7 @@ const dialog = document.getElementById("dialog");
 const busyIndicator = document.querySelector("ui5-busy-indicator");
 const applyTextImprovementsButton = document.getElementById("applyTextImprovementsButton");
 const openDialogButton = document.getElementById("openDialogButton");
+const closeDialogButton = document.getElementById("closeDialogButton");
 const output = document.getElementById("output");
 const structureSelect = document.getElementById("structureSelect");
 const languageSelect = document.getElementById("languageSelect");
@@ -139,6 +140,7 @@ sendButton.addEventListener("click", function() {
 
 structureSelect.addEventListener("change", structureSelectHandler);
 openDialogButton.addEventListener("click", openDialogButtonClickHandler);
+closeDialogButton.addEventListener("click", closeDialog);
 applyTextImprovementsButton.addEventListener("click", applyTextImprovementsButtonClickHandler);
 languageSelect.addEventListener("change", languageSelectHandler);
 toneOfVoiceSelect.addEventListener(
