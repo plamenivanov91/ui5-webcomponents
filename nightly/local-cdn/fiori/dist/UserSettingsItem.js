@@ -75,6 +75,10 @@ let UserSettingsItem = class UserSettingsItem extends UI5Element {
          * @public
          */
         this.icon = "globe";
+        /**
+         * Indicates whether any of the element siblings have icon.
+         */
+        this._siblingsWithIcon = false;
     }
     get _hasSelectedPageView() {
         return this.pages.some(view => view.selected);
@@ -178,6 +182,9 @@ __decorate([
         },
     })
 ], UserSettingsItem.prototype, "pages", void 0);
+__decorate([
+    property({ type: Boolean, noAttribute: true })
+], UserSettingsItem.prototype, "_siblingsWithIcon", void 0);
 UserSettingsItem = __decorate([
     customElement({
         tag: "ui5-user-settings-item",

@@ -361,7 +361,7 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             }
         }
         this._effectiveValueState = this.valueState;
-        if (!filteredItems.length && value && !this.noValidation) {
+        if (!this._isComposing && !filteredItems.length && value && !this.noValidation) {
             const newValue = this.valueBeforeAutoComplete || this._inputLastValue;
             input.value = newValue;
             this.value = newValue;
@@ -370,7 +370,9 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             this._resetValueState(oldValueState);
             return;
         }
-        this._inputLastValue = input.value;
+        if (!this._isComposing) {
+            this._inputLastValue = input.value;
+        }
         this.value = input.value;
         this._filteredItems = filteredItems;
         if (!isPhone()) {
@@ -1177,7 +1179,6 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
             this._allSelected = selectedListItemsCount > 0 && ((selectedListItemsCount === this.items.length) || (list?.getSlottedNodes("items").length === selectedListItemsCount));
         }
         this._effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
-        this._inputLastValue = value;
         if (input && !input.value) {
             this.valueBeforeAutoComplete = "";
             this._filteredItems = this._getItems();
@@ -1197,10 +1198,10 @@ let MultiComboBox = MultiComboBox_1 = class MultiComboBox extends UI5Element {
         // If there is already a selection the autocomplete has already been performed
         if (this._shouldAutocomplete && !isAndroid()) {
             const item = this._getFirstMatchingItem(value);
-            // Keep the original typed in text intact
-            this.valueBeforeAutoComplete = value;
             // Prevent typeahead during composition to avoid interfering with the composition process
             if (!this._isComposing && item) {
+                // Keep the original typed in text intact
+                this.valueBeforeAutoComplete = value;
                 this._handleTypeAhead(item, value);
             }
         }

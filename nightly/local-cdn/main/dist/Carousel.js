@@ -111,15 +111,6 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
          */
         this.hideNavigationArrows = false;
         /**
-         * Defines the current first visible item in the viewport.
-         * Default value is 0, which means the first item in the viewport.
-         *
-         * @since 1.0.0-rc.15
-         * @default 0
-         * @public
-         */
-        this._currentSlideIndex = 0;
-        /**
          * Defines the visibility of the page indicator.
          * If set to true the page indicator will be hidden.
          * @since 1.0.0-rc.15
@@ -182,8 +173,31 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
          * @since 1.0.0-rc.15
          */
         this._visibleNavigationArrows = false;
+        /**
+         * Internal trigger flag that forces component re-rendering when content items change.
+         * @private
+         * @since 2.16.0
+         */
+        this._visibleItemsCount = 0;
+        /**
+         * Defines the current slide index, which contains the visible item in the viewport.
+         * @private
+         * @since 2.16.0-r.c1
+         */
+        this._currentSlideIndex = 0;
         this._pageStep = 10;
         this._itemIndicator = 0;
+        this._observableContent = [];
+        this._contentItemsObserver = new MutationObserver(() => {
+            const visibleItemsCount = this._visibleItems.length;
+            if (this._visibleItemsCount === visibleItemsCount) {
+                return;
+            }
+            this._visibleItemsCount = visibleItemsCount;
+            this._currentSlideIndex = clamp(this._currentSlideIndex, 0, Math.max(0, this.items.length - this.effectiveItemsPerPage));
+            this._focusedItemIndex = clamp(this._focusedItemIndex, this._currentSlideIndex, this.items.length - 1);
+            this._moveToItem(this._currentSlideIndex);
+        });
         this._scrollEnablement = new ScrollEnablement(this);
         this._scrollEnablement.attachEvent("touchend", e => {
             this._updateScrolling(e);
@@ -195,6 +209,7 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         this._visibleItemsIndexes = [];
     }
     onBeforeRendering() {
+        this._observeContentItems();
         if (this.arrowsPlacement === CarouselArrowsPlacement.Navigation || !isDesktop()) {
             this._visibleNavigationArrows = true;
         }
@@ -211,6 +226,8 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         }
     }
     onExitDOM() {
+        this._contentItemsObserver.disconnect();
+        this._observableContent = [];
         ResizeHandler.deregister(this, this._onResizeBound);
     }
     validateSelectedIndex() {
@@ -276,8 +293,8 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
             return;
         }
         let pageIndex = -1;
-        for (let i = 0; i < this.content.length; i++) {
-            if (this.content[i].isEqualNode(target?.querySelector("slot")?.assignedNodes()[0])) {
+        for (let i = 0; i < this._visibleItems.length; i++) {
+            if (this._visibleItems[i].isEqualNode(target?.querySelector("slot")?.assignedNodes()[0])) {
                 pageIndex = i;
                 break;
             }
@@ -332,6 +349,30 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         else if (this._lastInnerFocusedElement) {
             this._lastInnerFocusedElement.focus();
         }
+    }
+    _observeContentItems() {
+        if (this.hasMatchingContent) {
+            return;
+        }
+        this.content.forEach(item => {
+            if (!this._observableContent.includes(item)) {
+                this._contentItemsObserver.observe(item, {
+                    characterData: false,
+                    childList: false,
+                    subtree: false,
+                    attributes: true,
+                    attributeFilter: ["hidden"],
+                });
+            }
+        });
+        this._observableContent = this.content;
+    }
+    get hasMatchingContent() {
+        if (this._observableContent.length !== this.content.length) {
+            return false;
+        }
+        const observableContentSet = new WeakSet(this._observableContent);
+        return this.content.every(item => observableContentSet.has(item));
     }
     _handleHome(e) {
         e.preventDefault();
@@ -497,6 +538,9 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
      * @public
      */
     navigateTo(itemIndex) {
+        if (!this.isIndexInRange(itemIndex)) {
+            return;
+        }
         if (this._focusedItemIndex < itemIndex) {
             this._itemIndicator = 1;
         }
@@ -521,17 +565,26 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         this.focusItem();
     }
     /**
+     * The indices of the currently visible items of the component.
+     * @public
+     * @since 1.0.0-rc.15
+     * @default []
+     */
+    get visibleItemsIndices() {
+        return this._visibleItemsIndexes;
+    }
+    /**
      * Assuming that all items have the same width
      * @private
      */
     get items() {
-        return this.content.map((item, idx) => {
+        return this._visibleItems.map((item, idx) => {
             return {
                 id: `${this._id}-carousel-item-${idx + 1}`,
                 item,
                 tabIndex: this.isItemInViewport(this._focusedItemIndex) ? 0 : -1,
                 posinset: idx + 1,
-                setsize: this.content.length,
+                setsize: this._visibleItems.length,
                 visible: this.isItemInViewport(idx),
             };
         });
@@ -628,7 +681,7 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         };
     }
     get pagesCount() {
-        const items = this.content.length;
+        const items = this._visibleItems.length;
         return items > this.effectiveItemsPerPage ? items - this.effectiveItemsPerPage + 1 : 1;
     }
     get isPageTypeDots() {
@@ -659,7 +712,7 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
         return this.cyclic || (this._focusedItemIndex - 1 >= 0 && this._currentSlideIndex !== 0);
     }
     get hasNext() {
-        return this.cyclic || (this._focusedItemIndex + 1 <= this.content.length - 1 && this._currentSlideIndex < this.pagesCount - 1);
+        return this.cyclic || (this._focusedItemIndex + 1 <= this._visibleItems.length - 1 && this._currentSlideIndex < this.pagesCount - 1);
     }
     get suppressAnimation() {
         return this._resizing || getAnimationMode() === AnimationMode.None;
@@ -673,9 +726,6 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
     get ofText() {
         return Carousel_1.i18nBundle.getText(CAROUSEL_OF_TEXT);
     }
-    get ariaActiveDescendant() {
-        return this.content.length ? `${this._id}-carousel-item-${this._focusedItemIndex + 1}` : undefined;
-    }
     get ariaLabelTxt() {
         return getEffectiveAriaLabelText(this);
     }
@@ -687,6 +737,15 @@ let Carousel = Carousel_1 = class Carousel extends UI5Element {
     }
     get _roleDescription() {
         return Carousel_1.i18nBundle.getText(CAROUSEL_ARIA_ROLE_DESCRIPTION);
+    }
+    /**
+     * Returns only visible (non-hidden) content items.
+     * Items with the 'hidden' attribute are automatically excluded from carousel navigation.
+     * @private
+     * @returns {Array<HTMLElement>}
+     */
+    get _visibleItems() {
+        return this.content.filter(x => !x.hasAttribute("hidden"));
     }
     carouselItemDomRef(idx) {
         const items = this.getDomRef()?.querySelectorAll(".ui5-carousel-item") || [];
@@ -710,9 +769,6 @@ __decorate([
 __decorate([
     property({ type: Boolean })
 ], Carousel.prototype, "hideNavigationArrows", void 0);
-__decorate([
-    property({ type: Number, noAttribute: true })
-], Carousel.prototype, "_currentSlideIndex", void 0);
 __decorate([
     property({ type: Boolean })
 ], Carousel.prototype, "hidePageIndicator", void 0);
@@ -743,6 +799,12 @@ __decorate([
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], Carousel.prototype, "_visibleNavigationArrows", void 0);
+__decorate([
+    property({ type: Number, noAttribute: true })
+], Carousel.prototype, "_visibleItemsCount", void 0);
+__decorate([
+    property({ type: Number, noAttribute: true })
+], Carousel.prototype, "_currentSlideIndex", void 0);
 __decorate([
     slot({ "default": true, type: HTMLElement, individualSlots: true })
 ], Carousel.prototype, "content", void 0);

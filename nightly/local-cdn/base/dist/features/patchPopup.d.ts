@@ -7,12 +7,12 @@ type OpenUI5Popup = {
         _closed: (...args: any[]) => void;
         getOpenState: () => "CLOSED" | "CLOSING" | "OPEN" | "OPENING";
         getContent: () => Control | HTMLElement | null;
-        onFocusEvent: (e: FocusEvent) => void;
+        onFocusEvent: (...args: any[]) => void;
     };
 };
 type OpenUI5PopupBasedControl = {
     prototype: {
-        onsapescape: (e: Event) => void;
+        onsapescape: (...args: any[]) => void;
         oPopup: OpenUI5Popup;
     };
 };
