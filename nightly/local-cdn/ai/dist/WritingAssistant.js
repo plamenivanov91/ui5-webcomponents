@@ -61,7 +61,7 @@ let WritingAssistant = WritingAssistant_1 = class WritingAssistant extends UI5El
          */
         this.loading = false;
         /**
-         * Defines the action text of the AI Writing Assistant.
+         * Defines the prompt description of the Writing Assistant.
          *
          * This text is displayed in the toolbar to indicate the current or last
          * performed AI action (e.g., "Generated text", "Simplified text").
@@ -69,28 +69,28 @@ let WritingAssistant = WritingAssistant_1 = class WritingAssistant extends UI5El
          * @default ""
          * @public
          */
-        this.actionText = "";
+        this.promptDescription = "";
         /**
          * Indicates the index of the currently displayed result version.
          *
-         * The index is **1-based** (i.e. `1` represents the first result).
+         * The index is **0-based** (i.e. `0` represents the first result).
          * This property is synchronized with the parent AI TextArea component.
          *
-         * @default 1
+         * @default 0
          * @public
          * @since 2.16.0
          */
-        this.currentVersionIndex = 1;
+        this.currentVersion = 0;
         /**
          * Indicates the total number of result versions available.
          *
          * This property determines whether version navigation controls are displayed.
-         * When totalVersions > 1, previous/next buttons become available.
+         * When totalVersions > 0, previous/next buttons become available.
          *
-         * @default 1
+         * @default 0
          * @public
          */
-        this.totalVersions = 1;
+        this.totalVersions = 0;
     }
     /**
      * Handles the version change event from the versioning component.
@@ -138,10 +138,10 @@ __decorate([
 ], WritingAssistant.prototype, "loading", void 0);
 __decorate([
     property()
-], WritingAssistant.prototype, "actionText", void 0);
+], WritingAssistant.prototype, "promptDescription", void 0);
 __decorate([
     property({ type: Number })
-], WritingAssistant.prototype, "currentVersionIndex", void 0);
+], WritingAssistant.prototype, "currentVersion", void 0);
 __decorate([
     property({ type: Number })
 ], WritingAssistant.prototype, "totalVersions", void 0);

@@ -525,4 +525,5 @@ TextArea = TextArea_1 = __decorate([
 ], TextArea);
 TextArea.define();
 export default TextArea;
+export { TextArea as BaseTextArea };
 //# sourceMappingURL=TextArea.js.map

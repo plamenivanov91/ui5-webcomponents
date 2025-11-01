@@ -1,9 +1,5 @@
-commit 7f0faedb157d4dd4348bee67027fbbe3a9f80859
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Tue Oct 28 10:02:25 2025 +0200
+commit b4e8489ee1773f658bb4cd488b028e6cd6dc2ce6
+Author: Stefan Dimitrov <115184100+StefanDimitrov04@users.noreply.github.com>
+Date:   Fri Oct 31 10:16:56 2025 +0200
 
-    feat(ui5-search) add actions to search items (#12405)
-    
-    * feat(ui5-search): add actions to search items
-    
-    BGSOFUIRILA-4120
+    chore(ui5-ai-input): fix sample (#12592)

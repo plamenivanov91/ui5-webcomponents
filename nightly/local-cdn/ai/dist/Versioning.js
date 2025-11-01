@@ -111,9 +111,9 @@ let Versioning = Versioning_1 = class Versioning extends ToolbarItem {
             return;
         }
         const isPreviousDisabled = this.currentStep <= 1;
-        const isNextDisabled = this.currentStep === this.totalSteps;
+        const isNextDisabled = this.currentStep >= this.totalSteps;
         const wasPreviousDisabled = this._previousCurrentStep <= 1;
-        const wasNextDisabled = this._previousCurrentStep === this._previousTotalSteps;
+        const wasNextDisabled = this._previousCurrentStep >= this._previousTotalSteps;
         if (isPreviousDisabled && !wasPreviousDisabled && !isNextDisabled && this._lastClickedButton === LastClickedButton.Previous && nextButton instanceof HTMLElement) {
             nextButton.focus();
             this._lastClickedButton = LastClickedButton.None;

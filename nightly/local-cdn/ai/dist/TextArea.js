@@ -4,18 +4,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var AITextArea_1;
+var TextArea_1;
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
-import TextArea from "@ui5/webcomponents/dist/TextArea.js";
+import { BaseTextArea } from "@ui5/webcomponents/dist/TextArea.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { WRITING_ASSISTANT_LABEL, } from "./generated/i18n/i18n-defaults.js";
 // Styles
-import AITextAreaCss from "./generated/themes/AITextArea.css.js";
+import TextAreaCss from "./generated/themes/TextArea.css.js";
 import textareaStyles from "@ui5/webcomponents/dist/generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "@ui5/webcomponents/dist/generated/themes/ValueStateMessage.css.js";
 // Templates
@@ -26,29 +26,28 @@ import WritingAssistant from "./WritingAssistant.js";
  *
  * ### Overview
  *
- * The `ui5-ai-textarea` component extends the standard TextArea with AI Writing Assistant capabilities.
+ * The `ui5-ai-textarea` component extends the standard TextArea with Writing Assistant capabilities.
  * It provides AI-powered text generation, editing suggestions, and version management functionality.
  *
  * ### Structure
  * The `ui5-ai-textarea` consists of the following elements:
  * - TextArea: The main text input area with all standard textarea functionality
- * - AI Toolbar: Specialized toolbar with AI generation controls
- * - Version Navigation: Controls for navigating between AI-generated versions
- * - Menu Integration: Support for AI action menu
- *
- * Single vs multiple result display is determined internally based on totalVersions count.
+ * - WritingAssistant: Dedicated toolbar containing:
+ *   - Versioning: A component with left/right navigation buttons and a label for browsing AI-generated versions
+ *   - AI Button: Opens a menu that can be extended with custom AI generation options through slotting
  *
  * ### ES6 Module Import
  *
- * `import "@sap-webcomponents/ai/dist/TextArea.js";`
+ * `import "@ui5/webcomponents-ai/dist/TextArea.js";`
  *
  * @constructor
- * @extends TextArea
+ * @extends BaseTextArea
+ * @experimental The **@ui5/webcomponents-ai** package is under development and considered experimental - components' APIs are subject to change.
  * @since 2.16.0
  * @public
  * @slot {HTMLElement} menu Defines a slot for `ui5-menu` integration. This slot allows you to pass a `ui5-menu` instance that will be associated with the assistant.
  */
-let AITextArea = AITextArea_1 = class AITextArea extends TextArea {
+let TextArea = TextArea_1 = class TextArea extends BaseTextArea {
     constructor() {
         super(...arguments);
         /**
@@ -59,28 +58,30 @@ let AITextArea = AITextArea_1 = class AITextArea extends TextArea {
          */
         this.loading = false;
         /**
-         * Defines the action text of the AI Writing Assistant.
+         * Defines the prompt description of the current action.
          *
          * @default ""
          * @public
          */
-        this.actionText = "";
+        this.promptDescription = "";
         /**
-         * Indicates the index of the currently displayed result version.
+         * Indicates the index of the currently displayed version.
          *
-         * The index is **1-based** (i.e. `1` represents the first result).
          *
-         * @default 1
+         * @default 0
          * @public
          */
-        this.currentVersionIndex = 1;
+        this.currentVersion = 0;
         /**
          * Indicates the total number of result versions available.
          *
-         * @default 1
+         * Notes:
+         * Versioning is hidden if the value is `0`
+         *
+         * @default 0
          * @public
          */
-        this.totalVersions = 1;
+        this.totalVersions = 0;
         /**
          * Handles the generate click event from the AI toolbar.
          * Opens the AI menu and sets the opener element.
@@ -112,7 +113,7 @@ let AITextArea = AITextArea_1 = class AITextArea extends TextArea {
         };
     }
     static async onDefine() {
-        AITextArea_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");
+        TextArea_1.i18nBundle = await getI18nBundle("@ui5/webcomponents-ai");
     }
     /**
      * Handles the click event for the "Previous Version" button.
@@ -180,25 +181,25 @@ let AITextArea = AITextArea_1 = class AITextArea extends TextArea {
         }
     }
     get _ariaLabel() {
-        return this.accessibleName || AITextArea_1.i18nBundle.getText(WRITING_ASSISTANT_LABEL);
+        return this.accessibleName || TextArea_1.i18nBundle.getText(WRITING_ASSISTANT_LABEL);
     }
 };
 __decorate([
     property({ type: Boolean })
-], AITextArea.prototype, "loading", void 0);
+], TextArea.prototype, "loading", void 0);
 __decorate([
     property()
-], AITextArea.prototype, "actionText", void 0);
+], TextArea.prototype, "promptDescription", void 0);
 __decorate([
     property({ type: Number })
-], AITextArea.prototype, "currentVersionIndex", void 0);
+], TextArea.prototype, "currentVersion", void 0);
 __decorate([
     property({ type: Number })
-], AITextArea.prototype, "totalVersions", void 0);
+], TextArea.prototype, "totalVersions", void 0);
 __decorate([
     slot({ type: HTMLElement })
-], AITextArea.prototype, "menu", void 0);
-AITextArea = AITextArea_1 = __decorate([
+], TextArea.prototype, "menu", void 0);
+TextArea = TextArea_1 = __decorate([
     customElement({
         tag: "ui5-ai-textarea",
         languageAware: true,
@@ -207,7 +208,7 @@ AITextArea = AITextArea_1 = __decorate([
         styles: [
             textareaStyles,
             valueStateMessageStyles,
-            AITextAreaCss,
+            TextAreaCss,
         ],
         dependencies: [
             WritingAssistant,
@@ -228,7 +229,7 @@ AITextArea = AITextArea_1 = __decorate([
      */
     ,
     event("stop-generation")
-], AITextArea);
-AITextArea.define();
-export default AITextArea;
+], TextArea);
+TextArea.define();
+export default TextArea;
 //# sourceMappingURL=TextArea.js.map

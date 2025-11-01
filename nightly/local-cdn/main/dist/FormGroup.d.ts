@@ -78,7 +78,7 @@ declare class FormGroup extends UI5Element implements IFormItem {
     onBeforeRendering(): void;
     processFormItems(): void;
     getEffectiveAccessibleName(index: number): string | undefined;
-    get effectiveАccessibleNameRef(): string | undefined;
+    get effectiveAccessibleNameRef(): string | undefined;
     get isGroup(): boolean;
 }
 export default FormGroup;

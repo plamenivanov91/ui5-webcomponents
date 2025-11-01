@@ -178,6 +178,21 @@ let Form = Form_1 = class Form extends UI5Element {
     constructor() {
         super(...arguments);
         /**
+         * Defines the accessibility mode of the component in "edit" and "display" use-cases.
+         *
+         * Based on the mode, the component renders different HTML elements and ARIA attributes,
+         * which are appropriate for the use-case.
+         *
+         * **Usage:**
+         * - Set this property to "Display", when the form consists of non-editable (e.g. texts) form items.
+         * - Set this property to "Edit", when the form consists of editable (e.g. input fields) form items.
+         *
+         * @default "Display"
+         * @since 2.16.0
+         * @public
+         */
+        this.accessibleMode = "Display";
+        /**
          * Defines the number of columns to distribute the form content by breakpoint.
          *
          * Supported values:
@@ -230,9 +245,9 @@ let Form = Form_1 = class Form extends UI5Element {
         /**
          * Defines the vertical spacing between form items.
          *
-         * **Note:** If the Form is meant to be switched between "non-edit" and "edit" modes,
-         * we recommend using "Large" item spacing in "non-edit" mode, and "Normal" - for "edit" mode,
-         * to avoid "jumping" effect, caused by the hight difference between texts in "non-edit" mode and the input fields in "edit" mode.
+         * **Note:** If the Form is meant to be switched between "display"("non-edit") and "edit" modes,
+         * we recommend using "Large" item spacing in "display"("non-edit") mode, and "Normal" - for "edit" mode,
+         * to avoid "jumping" effect, caused by the hight difference between texts in "display"("non-edit") mode and the input fields in "edit" mode.
          *
          * @default "Normal"
          * @public
@@ -262,7 +277,7 @@ let Form = Form_1 = class Form extends UI5Element {
         // Define how many columns a group should take.
         this.setGroupsColSpan();
         // Set item spacing
-        this.setItemSpacing();
+        this.setItemsState();
     }
     onAfterRendering() {
         // Create additional CSS for number of columns that are not supported by default.
@@ -402,9 +417,10 @@ let Form = Form_1 = class Form extends UI5Element {
         // 7 cols & 3 groups => 3, 2, 2
         return index === 0 ? MIN_COL_SPAN + (delta - groups) + 1 : MIN_COL_SPAN + 1;
     }
-    setItemSpacing() {
+    setItemsState() {
         this.items.forEach((item) => {
             item.itemSpacing = this.itemSpacing;
+            item.accessibleMode = this.accessibleMode;
         });
     }
     get hasGroupItems() {
@@ -426,6 +442,9 @@ let Form = Form_1 = class Form extends UI5Element {
         return this.hasHeader ? undefined : Form_1.i18nBundle.getText(FORM_ACCESSIBLE_NAME);
     }
     get effectiveАccessibleNameRef() {
+        if (this.accessibleName) {
+            return;
+        }
         return this.hasHeaderText && !this.hasCustomHeader ? `${this._id}-header-text` : undefined;
     }
     get effectiveAccessibleRole() {
@@ -451,11 +470,15 @@ let Form = Form_1 = class Form extends UI5Element {
                     currentItem++;
                 }
             });
+            const accessibleNameRef = groupItem.effectiveAccessibleNameRef;
             return {
                 groupItem,
-                accessibleName: groupItem.getEffectiveAccessibleName(index),
-                accessibleNameRef: groupItem.effectiveАccessibleNameRef,
+                accessibleName: this.accessibleMode === "Edit" ? groupItem.getEffectiveAccessibleName(index) : undefined,
+                accessibleNameInner: this.accessibleMode === "Edit" ? undefined : groupItem.getEffectiveAccessibleName(index),
+                accessibleNameRef: this.accessibleMode === "Edit" ? accessibleNameRef : undefined,
+                accessibleNameRefInner: this.accessibleMode === "Edit" ? undefined : accessibleNameRef,
                 items: this.getItemsInfo(Array.from(groupItem.children)),
+                role: this.accessibleMode === "Edit" ? "form" : undefined,
             };
         });
     }
@@ -545,6 +568,9 @@ let Form = Form_1 = class Form extends UI5Element {
 __decorate([
     property()
 ], Form.prototype, "accessibleName", void 0);
+__decorate([
+    property()
+], Form.prototype, "accessibleMode", void 0);
 __decorate([
     property()
 ], Form.prototype, "layout", void 0);

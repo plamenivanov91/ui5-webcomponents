@@ -218,7 +218,8 @@ let MenuItem = MenuItem_1 = class MenuItem extends ListItem {
     /** Returns all menu items (including those in groups */
     get _allMenuItems() {
         const items = [];
-        this.items.forEach(item => {
+        const slottedItems = this.getSlottedNodes("items");
+        slottedItems.forEach(item => {
             if (isInstanceOfMenuItemGroup(item)) {
                 items.push(...item._menuItems);
             }

@@ -23,7 +23,6 @@ import SegmentedButtonSelectionMode from "./types/SegmentedButtonSelectionMode.j
 import SegmentedButtonTemplate from "./SegmentedButtonTemplate.js";
 // Styles
 import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
-import SegmentedButtonContentMode from "./types/SegmentedButtonContentMode.js";
 /**
  * @class
  *
@@ -53,16 +52,16 @@ let SegmentedButton = SegmentedButton_1 = class SegmentedButton extends UI5Eleme
          */
         this.selectionMode = "Single";
         /**
-         * Defines the content mode of the segmented button items.
+         * Determines whether the segmented button items should be sized to fit their content.
          *
-         * - "EqualSized": All items are sized equally to fill the available space.
-         * - "ContentFit": Each item is sized to fit its content, with any extra space placed after the last item.
+         * If set to `true`, each item will be sized to fit its content, with any extra space distributed after the last item.
+         * If set to `false` (the default), all items will be equally sized to fill the available space.
          *
-         * @default "EqualSized"
+         * @default false
          * @public
          * @since 2.16.0
-         */
-        this.contentMode = "EqualSized";
+        */
+        this.itemsFitContent = false;
         this._itemNavigation = new ItemNavigation(this, {
             getItemsCallback: () => this.navigatableItems,
         });
@@ -78,7 +77,7 @@ let SegmentedButton = SegmentedButton_1 = class SegmentedButton extends UI5Eleme
             item.sizeOfSet = item.hidden ? undefined : visibleItems.length;
         });
         this.normalizeSelection();
-        if (this.contentMode === SegmentedButtonContentMode.EqualSized) {
+        if (!this.itemsFitContent) {
             this.style.setProperty(getScopedVarName("--_ui5_segmented_btn_items_count"), `${visibleItems.length}`);
         }
     }
@@ -218,8 +217,8 @@ __decorate([
     property()
 ], SegmentedButton.prototype, "selectionMode", void 0);
 __decorate([
-    property()
-], SegmentedButton.prototype, "contentMode", void 0);
+    property({ type: Boolean })
+], SegmentedButton.prototype, "itemsFitContent", void 0);
 __decorate([
     slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 ], SegmentedButton.prototype, "items", void 0);

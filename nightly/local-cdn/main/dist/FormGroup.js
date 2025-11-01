@@ -74,7 +74,7 @@ let FormGroup = FormGroup_1 = class FormGroup extends UI5Element {
         }
         return FormGroup_1.i18nBundle.getText(FORM_GROUP_ACCESSIBLE_NAME, index + 1);
     }
-    get effectiveАccessibleNameRef() {
+    get effectiveAccessibleNameRef() {
         return this.headerText ? `${this._id}-group-header-text` : undefined;
     }
     get isGroup() {
