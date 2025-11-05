@@ -365,30 +365,6 @@ class IllustratedMessage extends UI5Element {
 		}
 	}
 
-	_setSVGAccAttrs() {
-		const svg = this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration svg");
-
-		if (!svg) {
-			return;
-		}
-
-		if (this.decorative) {
-			svg.setAttribute("role", "presentation");
-			svg.setAttribute("aria-hidden", "true");
-			svg.removeAttribute("aria-label");
-		} else {
-			svg.removeAttribute("role");
-			svg.removeAttribute("aria-hidden");
-
-			// Set aria-label only when not decorative and text exists
-			if (this.ariaLabelText) {
-				svg.setAttribute("aria-label", this.ariaLabelText);
-			} else {
-				svg.removeAttribute("aria-label");
-			}
-		}
-	}
-
 	_adjustHeightToFitContainer() {
 		const illustrationWrapper = <HTMLElement> this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration"),
 			illustration = illustrationWrapper.querySelector("svg");
@@ -400,10 +376,6 @@ class IllustratedMessage extends UI5Element {
 				this._applyMedia(true /* height change */);
 			}
 		}
-	}
-
-	onAfterRendering() {
-		this._setSVGAccAttrs();
 	}
 
 	/**

@@ -3,12 +3,19 @@ import type IllustratedMessage from "./IllustratedMessage.js";
 
 export default function IllustratedMessageTemplate(this: IllustratedMessage) {
 	return (
-		<div class="ui5-illustrated-message-root">
+		<div role="region"
+			aria-label="Illustrated Message"
+			aria-describedby={`${this._id}-im-title`}
+			class="ui5-illustrated-message-root">
 			<div class="ui5-illustrated-message-inner">
-				<div class="ui5-illustrated-message-illustration" dangerouslySetInnerHTML={{ __html: this.effectiveIllustration || "" }}></div>
+				<div class="ui5-illustrated-message-illustration"
+					role={this.decorative ? "presentation" : "img"}
+					aria-hidden={this.decorative}
+					aria-label={!this.decorative ? this.name : undefined}
+					dangerouslySetInnerHTML={{ __html: this.effectiveIllustration || "" }}></div>
 				<div class="ui5-illustrated-message-text-and-actions-container">
 					{this.hasTitle &&
-						<div part="title" class="ui5-illustrated-message-title">
+						<div part="title" id={`${this._id}-im-title`} class="ui5-illustrated-message-title">
 							{this.hasFormattedTitle ?
 								<slot name="title"></slot>
 								:
