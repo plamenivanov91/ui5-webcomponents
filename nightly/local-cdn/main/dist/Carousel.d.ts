@@ -326,6 +326,7 @@ declare class Carousel extends UI5Element {
     get nextPageText(): string;
     get previousPageText(): string;
     get _roleDescription(): string;
+    get _ariaListLabel(): string;
     /**
      * Returns only visible (non-hidden) content items.
      * Items with the 'hidden' attribute are automatically excluded from carousel navigation.

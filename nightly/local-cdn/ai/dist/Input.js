@@ -19,7 +19,7 @@ import ResponsivePopoverCommonCss from "@ui5/webcomponents/dist/generated/themes
 import ValueStateMessageCss from "@ui5/webcomponents/dist/generated/themes/ValueStateMessage.css.js";
 // templates
 import InputTemplate from "./InputTemplate.js";
-import { VERSIONING_NEXT_BUTTON_TEXT, VERSIONING_PREVIOUS_BUTTON_TEXT, INPUT_WRITING_ASSISTANT_LABEL, WRITING_ASSISTANT_GENERATING_ANNOUNCEMENT, } from "./generated/i18n/i18n-defaults.js";
+import { INPUT_VERSIONING_NEXT_BUTTON_TOOLTIP, INPUT_VERSIONING_PREVIOUS_BUTTON_TOOLTIP, INPUT_WRITING_ASSISTANT_BUTTON_TOOLTIP, WRITING_ASSISTANT_GENERATING_ANNOUNCEMENT, } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
  *
@@ -216,16 +216,16 @@ let Input = Input_1 = class Input extends BaseInput {
         return !!this?.menu?.getSlottedNodes("items").length;
     }
     get ariaLabel() {
-        return this.accessibleName || !this.loading ? Input_1.i18nBundle.getText(INPUT_WRITING_ASSISTANT_LABEL) : Input_1.i18nBundle.getText(WRITING_ASSISTANT_GENERATING_ANNOUNCEMENT);
+        return this.accessibleName || !this.loading ? Input_1.i18nBundle.getText(INPUT_WRITING_ASSISTANT_BUTTON_TOOLTIP) : Input_1.i18nBundle.getText(WRITING_ASSISTANT_GENERATING_ANNOUNCEMENT);
     }
     get stopGeneratingTooltip() {
         return Input_1.i18nBundle.getText(WRITING_ASSISTANT_GENERATING_ANNOUNCEMENT);
     }
     get nextButtonAccessibleName() {
-        return Input_1.i18nBundle.getText(VERSIONING_NEXT_BUTTON_TEXT);
+        return Input_1.i18nBundle.getText(INPUT_VERSIONING_NEXT_BUTTON_TOOLTIP);
     }
     get previousButtonAccessibleName() {
-        return Input_1.i18nBundle.getText(VERSIONING_PREVIOUS_BUTTON_TEXT);
+        return Input_1.i18nBundle.getText(INPUT_VERSIONING_PREVIOUS_BUTTON_TOOLTIP);
     }
     get menu() {
         return this.shadowRoot?.querySelector("ui5-menu");

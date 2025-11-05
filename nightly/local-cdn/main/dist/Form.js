@@ -12,6 +12,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 // Template
 import FormTemplate from "./FormTemplate.js";
 // Styles
@@ -436,13 +437,13 @@ let Form = Form_1 = class Form extends UI5Element {
         return !!this.header.length;
     }
     get effectiveAccessibleName() {
-        if (this.accessibleName) {
-            return this.accessibleName;
+        if (this.accessibleName || this.accessibleNameRef) {
+            return getEffectiveAriaLabelText(this);
         }
         return this.hasHeader ? undefined : Form_1.i18nBundle.getText(FORM_ACCESSIBLE_NAME);
     }
     get effectiveАccessibleNameRef() {
-        if (this.accessibleName) {
+        if (this.accessibleName || this.accessibleNameRef) {
             return;
         }
         return this.hasHeaderText && !this.hasCustomHeader ? `${this._id}-header-text` : undefined;
@@ -568,6 +569,9 @@ let Form = Form_1 = class Form extends UI5Element {
 __decorate([
     property()
 ], Form.prototype, "accessibleName", void 0);
+__decorate([
+    property()
+], Form.prototype, "accessibleNameRef", void 0);
 __decorate([
     property()
 ], Form.prototype, "accessibleMode", void 0);

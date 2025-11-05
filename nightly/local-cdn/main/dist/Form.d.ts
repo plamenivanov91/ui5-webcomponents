@@ -188,6 +188,13 @@ declare class Form extends UI5Element {
      */
     accessibleName?: string;
     /**
+     * Defines id (or many ids) of the element (or elements) that label the component.
+     * @default undefined
+     * @public
+     * @since 2.16.0
+     */
+    accessibleNameRef?: string;
+    /**
      * Defines the accessibility mode of the component in "edit" and "display" use-cases.
      *
      * Based on the mode, the component renders different HTML elements and ARIA attributes,

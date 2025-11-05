@@ -12,7 +12,8 @@ import { i18n } from "@ui5/webcomponents-base/dist/decorators.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { WRITING_ASSISTANT_LABEL, VERSIONING_PREVIOUS_BUTTON_TEXT, VERSIONING_NEXT_BUTTON_TEXT, WRITING_ASSISTANT_GENERATING_ANNOUNCEMENT, WRITING_ASSISTANT_TOOLBAR_ACCESSIBLE_NAME, WRITING_ASSISTANT_BUTTON_ACCESSIBLE_NAME, WRITING_ASSISTANT_BUTTON_TOOLTIP, } from "./generated/i18n/i18n-defaults.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { WRITING_ASSISTANT_LABEL, VERSIONING_PREVIOUS_BUTTON_TEXT, VERSIONING_NEXT_BUTTON_TEXT, WRITING_ASSISTANT_GENERATING_ANNOUNCEMENT, WRITING_ASSISTANT_TOOLBAR_ACCESSIBLE_NAME, WRITING_ASSISTANT_BUTTON_ACCESSIBLE_NAME, WRITING_ASSISTANT_BUTTON_TOOLTIP, WRITING_ASSISTANT_STOP_TOOLTIP, } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import WritingAssistantCss from "./generated/themes/WritingAssistant.css.js";
 // Templates
@@ -92,6 +93,9 @@ let WritingAssistant = WritingAssistant_1 = class WritingAssistant extends UI5El
          */
         this.totalVersions = 0;
     }
+    static async onDefine() {
+        WritingAssistant_1.i18nBundleAi = await getI18nBundle("@ui5/webcomponents-ai");
+    }
     /**
      * Handles the version change event from the versioning component.
      */
@@ -131,6 +135,9 @@ let WritingAssistant = WritingAssistant_1 = class WritingAssistant extends UI5El
     }
     get _buttonTooltip() {
         return WritingAssistant_1.i18nBundleAi.getText(WRITING_ASSISTANT_BUTTON_TOOLTIP);
+    }
+    get _stopTooltip() {
+        return WritingAssistant_1.i18nBundleAi.getText(WRITING_ASSISTANT_STOP_TOOLTIP);
     }
 };
 __decorate([

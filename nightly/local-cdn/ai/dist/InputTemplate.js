@@ -2,6 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "@ui5/webcompo
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import MenuItem from "@ui5/webcomponents/dist/MenuItem.js";
+import MenuSeparator from "@ui5/webcomponents/dist/MenuSeparator.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Menu from "@ui5/webcomponents/dist/Menu.js";
 import "@ui5/webcomponents-icons/dist/navigation-left-arrow.js";
@@ -20,7 +21,7 @@ export default function InputTemplate(hooks) {
                         } }, children: [_jsx("slot", { name: "actions" }), this.totalVersions > 1 && Versioning.call(this)] })] }) }) }));
 }
 function Versioning() {
-    return (_jsx(_Fragment, { children: _jsxs(MenuItem, { type: "Inactive", class: "ui5-ai-versioning-menu-footer", text: `${this.currentVersion} / ${this.totalVersions}`, children: [_jsx(Button, { id: "arrow-left", class: "versioning-button", slot: "endContent", design: "Transparent", icon: "navigation-left-arrow", tooltip: this.previousButtonAccessibleName, accessibleName: this.previousButtonAccessibleName, "aria-keyshortcut": "Shift+Ctrl+Z", disabled: this.currentVersion <= 1, onClick: this._handlePreviousButtonClick, "data-ui5-versioning-button": "previous" }), _jsx(Button, { id: "arrow-right", class: "versioning-button", slot: "endContent", design: "Transparent", icon: "navigation-right-arrow", tooltip: this.nextButtonAccessibleName, accessibleName: this.nextButtonAccessibleName, "aria-keyshortcut": "Shift+Ctrl+Y", disabled: this.currentVersion >= this.totalVersions, onClick: this._handleNextButtonClick, "data-ui5-versioning-button": "next" })] }) }));
+    return (_jsxs(_Fragment, { children: [_jsx(MenuSeparator, {}), _jsxs(MenuItem, { type: "Inactive", class: "ui5-ai-versioning-menu-footer", text: `${this.currentVersion} / ${this.totalVersions}`, children: [_jsx(Button, { id: "arrow-left", class: "versioning-button", slot: "endContent", design: "Transparent", icon: "navigation-left-arrow", tooltip: this.previousButtonAccessibleName, accessibleName: this.previousButtonAccessibleName, "aria-keyshortcut": "Shift+Ctrl+Z", disabled: this.currentVersion <= 1, onClick: this._handlePreviousButtonClick, "data-ui5-versioning-button": "previous" }), _jsx(Button, { id: "arrow-right", class: "versioning-button", slot: "endContent", design: "Transparent", icon: "navigation-right-arrow", tooltip: this.nextButtonAccessibleName, accessibleName: this.nextButtonAccessibleName, "aria-keyshortcut": "Shift+Ctrl+Y", disabled: this.currentVersion >= this.totalVersions, onClick: this._handleNextButtonClick, "data-ui5-versioning-button": "next" })] })] }));
 }
 function defaultPreContent() { }
 function defaultPostContent() { }

@@ -10,6 +10,7 @@ import i18n from "@ui5/webcomponents-base/dist/decorators/i18n.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AccessibilityTextsHelper.js";
 import { FORM_GROUP_ACCESSIBLE_NAME } from "./generated/i18n/i18n-defaults.js";
 /**
  * @class
@@ -66,8 +67,8 @@ let FormGroup = FormGroup_1 = class FormGroup extends UI5Element {
         });
     }
     getEffectiveAccessibleName(index) {
-        if (this.accessibleName) {
-            return this.accessibleName;
+        if (this.accessibleName || this.accessibleNameRef) {
+            return getEffectiveAriaLabelText(this);
         }
         if (this.headerText) {
             return undefined;
@@ -75,6 +76,9 @@ let FormGroup = FormGroup_1 = class FormGroup extends UI5Element {
         return FormGroup_1.i18nBundle.getText(FORM_GROUP_ACCESSIBLE_NAME, index + 1);
     }
     get effectiveAccessibleNameRef() {
+        if (this.accessibleName || this.accessibleNameRef) {
+            return undefined;
+        }
         return this.headerText ? `${this._id}-group-header-text` : undefined;
     }
     get isGroup() {
@@ -93,6 +97,9 @@ __decorate([
 __decorate([
     property()
 ], FormGroup.prototype, "accessibleName", void 0);
+__decorate([
+    property()
+], FormGroup.prototype, "accessibleNameRef", void 0);
 __decorate([
     slot({
         type: HTMLElement,

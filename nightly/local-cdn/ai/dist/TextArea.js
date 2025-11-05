@@ -11,7 +11,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event-strict.js";
 import jsxRenderer from "@ui5/webcomponents-base/dist/renderer/JsxRenderer.js";
 import { BaseTextArea } from "@ui5/webcomponents/dist/TextArea.js";
-import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { WRITING_ASSISTANT_LABEL, } from "./generated/i18n/i18n-defaults.js";
 // Styles
@@ -20,7 +19,6 @@ import textareaStyles from "@ui5/webcomponents/dist/generated/themes/TextArea.cs
 import valueStateMessageStyles from "@ui5/webcomponents/dist/generated/themes/ValueStateMessage.css.js";
 // Templates
 import TextAreaTemplate from "./TextAreaTemplate.js";
-import WritingAssistant from "./WritingAssistant.js";
 /**
  * @class
  *
@@ -209,10 +207,6 @@ TextArea = TextArea_1 = __decorate([
             textareaStyles,
             valueStateMessageStyles,
             TextAreaCss,
-        ],
-        dependencies: [
-            WritingAssistant,
-            BusyIndicator,
         ],
     })
     /**

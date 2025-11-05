@@ -365,6 +365,7 @@ DynamicDateRange = DynamicDateRange_1 = __decorate([
     customElement({
         tag: "ui5-dynamic-date-range",
         languageAware: true,
+        cldr: true,
         template: DynamicDateRangeTemplate,
         renderer: jsxRenderer,
         styles: [

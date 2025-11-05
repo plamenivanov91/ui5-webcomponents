@@ -62,6 +62,13 @@ declare class FormGroup extends UI5Element implements IFormItem {
      */
     accessibleName?: string;
     /**
+     * Defines id (or many ids) of the element (or elements) that label the component.
+     * @default undefined
+     * @public
+     * @since 2.16.0
+     */
+    accessibleNameRef?: string;
+    /**
      * Defines the items of the component.
      * @public
      */

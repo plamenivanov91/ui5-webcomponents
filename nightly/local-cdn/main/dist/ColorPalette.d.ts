@@ -145,6 +145,16 @@ declare class ColorPalette extends UI5Element {
     _isFirstSwatch(target: ColorPaletteItem, swatches: Array<IColorPaletteItem>): boolean;
     _isLastSwatch(target: ColorPaletteItem, swatches: Array<IColorPaletteItem>): boolean;
     /**
+     * Checks if the target swatch is the first swatch in its row.
+     * @private
+     */
+    _isFirstSwatchInRow(target: ColorPaletteItem): boolean;
+    /**
+     * Checks if the target swatch is the last swatch in its row.
+     * @private
+     */
+    _isLastSwatchInRow(target: ColorPaletteItem): boolean;
+    /**
      * Checks if the given color swatch is the last swatch of the last full row.
      *
      * Example 1: 12 colors with rowSize 5
@@ -157,6 +167,14 @@ declare class ColorPalette extends UI5Element {
      */
     _isLastSwatchOfLastFullRow(target: ColorPaletteItem): boolean;
     _isSwatchInLastRow(target: ColorPaletteItem): boolean;
+    /**
+     * Checks if HOME/END navigation should be prevented in embedded mode.
+     * In embedded mode, HOME/END keys are blocked as they only work in popup mode per design.
+     * @private
+     * @param e The keyboard event to check
+     * @returns True if the event should be prevented, false otherwise
+     */
+    _shouldPreventHomeEnd(e: KeyboardEvent): boolean;
     /**
      * Helper to check if all displayed colors fit in a single row
      * @private

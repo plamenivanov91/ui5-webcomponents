@@ -75,6 +75,7 @@ declare class WritingAssistant extends UI5Element {
      */
     totalVersions: number;
     static i18nBundleAi: I18nBundle;
+    static onDefine(): Promise<void>;
     /**
      * Handles the version change event from the versioning component.
      */
@@ -94,5 +95,6 @@ declare class WritingAssistant extends UI5Element {
     get _toolbarAccessibleName(): string;
     get _buttonAccessibleName(): string;
     get _buttonTooltip(): string;
+    get _stopTooltip(): string;
 }
 export default WritingAssistant;

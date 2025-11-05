@@ -171,7 +171,7 @@ __decorate([
             slots: false,
         },
     })
-], UserSettingsItem.prototype, "tabs", void 0);
+], UserSettingsItem.prototype, "pages", void 0);
 __decorate([
     slot({
         type: HTMLElement,
@@ -181,7 +181,7 @@ __decorate([
             slots: false,
         },
     })
-], UserSettingsItem.prototype, "pages", void 0);
+], UserSettingsItem.prototype, "tabs", void 0);
 __decorate([
     property({ type: Boolean, noAttribute: true })
 ], UserSettingsItem.prototype, "_siblingsWithIcon", void 0);

@@ -228,6 +228,9 @@ let Button = Button_1 = class Button extends UI5Element {
             this.removeEventListener("click", this._onclickBound);
             this._clickHandlerAttached = false;
         }
+        if (activeButton === this) {
+            activeButton = null;
+        }
     }
     async onBeforeRendering() {
         this._setBadgeOverlayStyle();
