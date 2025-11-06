@@ -13,6 +13,9 @@ export default function IllustratedMessageTemplate(this: IllustratedMessage) {
 					aria-hidden={this.decorative}
 					aria-label={!this.decorative ? this.name : undefined}
 					dangerouslySetInnerHTML={{ __html: this.effectiveIllustration || "" }}></div>
+				<div class="ui5-illustrated-message-illustration">
+					{renderIllustration.call(this)}
+				</div>
 				<div class="ui5-illustrated-message-text-and-actions-container">
 					{this.hasTitle &&
 						<div part="title" id={`${this._id}-im-title`} class="ui5-illustrated-message-title">
@@ -75,4 +78,20 @@ export default function IllustratedMessageTemplate(this: IllustratedMessage) {
 			</svg>
 		</div>
 	);
+}
+
+function renderIllustration(this: IllustratedMessage) {
+	const illustration = this.effectiveIllustration;
+
+	// Safe variant: render template
+	if (illustration && typeof illustration === "object") {
+		return illustration;
+	}
+
+	// Unsafe variant: render SVG string
+	if (illustration && typeof illustration === "string") {
+		return <div dangerouslySetInnerHTML={{ __html: illustration }}></div>;
+	}
+
+	return null;
 }
