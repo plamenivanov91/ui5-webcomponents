@@ -20362,14 +20362,14 @@
             },
             {
               "kind": "field",
-              "name": "twoColumnSeparator",
+              "name": "textSeparator",
               "type": {
-                "text": "SelectTwoColumnSeparator",
+                "text": "SelectTextSeparator",
                 "references": [
                   {
-                    "name": "SelectTwoColumnSeparator",
+                    "name": "SelectTextSeparator",
                     "package": "@ui5/webcomponents",
-                    "module": "dist/types/SelectTwoColumnSeparator.js"
+                    "module": "dist/types/SelectTextSeparator.js"
                   }
                 ]
               },
@@ -20598,9 +20598,9 @@
             },
             {
               "description": "Defines the separator type for the two columns layout when Select is in read-only mode.",
-              "name": "two-column-separator",
+              "name": "text-separator",
               "default": "\"Dash\"",
-              "fieldName": "twoColumnSeparator",
+              "fieldName": "textSeparator",
               "type": {
                 "text": "\"Bullet\" | \"Dash\" | \"VerticalLine\""
               }
@@ -35169,11 +35169,11 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/types/SelectTwoColumnSeparator.js",
+      "path": "dist/types/SelectTextSeparator.js",
       "declarations": [
         {
           "kind": "enum",
-          "name": "SelectTwoColumnSeparator",
+          "name": "SelectTextSeparator",
           "description": "Defines the separator types for Select component two-column layout.",
           "_ui5privacy": "public",
           "_ui5since": "2.16.0",
@@ -35213,8 +35213,8 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "SelectTwoColumnSeparator",
-            "module": "dist/types/SelectTwoColumnSeparator.js"
+            "name": "SelectTextSeparator",
+            "module": "dist/types/SelectTextSeparator.js"
           }
         }
       ]

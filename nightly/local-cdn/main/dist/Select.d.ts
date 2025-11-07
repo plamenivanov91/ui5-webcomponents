@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import SelectTwoColumnSeparator from "./types/SelectTwoColumnSeparator.js";
+import SelectTextSeparator from "./types/SelectTextSeparator.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -193,7 +193,7 @@ declare class Select extends UI5Element implements IFormInputElement {
      * @public
      * @since 2.16.0
      */
-    twoColumnSeparator: `${SelectTwoColumnSeparator}`;
+    textSeparator: `${SelectTextSeparator}`;
     /**
      * Constantly updated value of texts collected from the associated description texts
      * @private

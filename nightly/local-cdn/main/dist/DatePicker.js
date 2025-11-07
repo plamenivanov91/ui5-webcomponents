@@ -345,7 +345,7 @@ let DatePicker = DatePicker_1 = class DatePicker extends DateComponentBase {
             this._updateValueState();
         }
         events.forEach(e => {
-            if (!this.fireDecoratorEvent(e, { value, valid })) {
+            if (!this.fireDecoratorEvent(e, { value: this.value, valid })) {
                 executeEvent = false;
             }
         });

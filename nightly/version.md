@@ -1,7 +1,20 @@
-commit 7977d02e25c8d0f916f1e2cd8399e974c89eaf05
-Author: Siyana Todorova <72251110+s-todorova@users.noreply.github.com>
-Date:   Tue Nov 4 16:13:59 2025 +0200
+commit 2ee9b024e152029394b39324f2bb7dcb73293dbb
+Author: Konstantin Gogov <konstantin.gogov@sap.com>
+Date:   Thu Nov 6 17:17:04 2025 +0200
 
-    refactor(ui5-side-navigation): allow long item texts to wrap instead of truncating (#12577)
+    feat(framework): Custom Illustrations Documentation & API Enhancement (#12260)
     
-    JIRA: BGSOFUIRODOPI-3547
+    - Rename registerIllustration to unsafeRegisterIllustration with security warnings
+    - Add new registerIllustration API that accepts template functions instead of raw SVG strings
+    - Update IllustratedMessage component to execute templates via executeTemplate()
+    - Add IllustratedMessageTemplate support for both safe (object) and unsafe (string) variants
+    - Update build tool to use unsafeRegisterIllustration for generated illustrations
+    - Add comprehensive documentation for both registration methods
+    - Create playground page demonstrating safe and unsafe approaches with working examples
+    - Export IllustrationData and UnsafeIllustrationData types for better TypeScript support
+    
+    The safe variant (registerIllustration) uses template functions to prevent XSS vulnerabilities,
+    while the unsafe variant (unsafeRegisterIllustration) maintains backward compatibility for
+    raw SVG strings with explicit security warnings.
+    
+    Jira: BGSOFUIPIRIN-6913
