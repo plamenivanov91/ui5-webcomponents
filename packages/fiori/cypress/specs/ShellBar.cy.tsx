@@ -1405,7 +1405,7 @@ describe("Component Behavior", () => {
 			);
 
 			// When no aria-label is provided, imageBtnText should fallback to SHELLBAR_IMAGE_BTN i18n text
-			cy.get("[ui5-shellbar]").should("have.prop", "imageBtnText", "Profile Menu");
+			cy.get("[ui5-shellbar]").should("have.prop", "imageBtnText", "User Menu");
 		});
 
 		it("tests SHELLBAR_IMAGE_BTN i18n key is properly used as fallback", () => {
@@ -1418,15 +1418,15 @@ describe("Component Behavior", () => {
 			// Verify that the exact i18n text from SHELLBAR_IMAGE_BTN is used
 			cy.get("[ui5-shellbar]").then(($shellbar) => {
 				const imageBtnText = $shellbar.prop("imageBtnText");
-				// This should be exactly "Profile Menu" from messagebundle.properties SHELLBAR_IMAGE_BTN
-				expect(imageBtnText).to.equal("Profile Menu");
+				// This should be exactly "User Menu" from messagebundle.properties SHELLBAR_IMAGE_BTN
+				expect(imageBtnText).to.equal("User Menu");
 			});
 
 			// Verify the profile button actually uses this text in its aria-label
 			cy.get("[ui5-shellbar]")
 				.shadow()
 				.find(".ui5-shellbar-image-button")
-				.should("have.attr", "aria-label", "Profile Menu");
+				.should("have.attr", "aria-label", "User Menu");
 		});
 	});
 
