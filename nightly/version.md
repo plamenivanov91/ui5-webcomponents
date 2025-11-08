@@ -1,20 +1,12 @@
-commit 2ee9b024e152029394b39324f2bb7dcb73293dbb
+commit ddbb8d4bed6a75d661a994c8d5737654a7a62e9c
 Author: Konstantin Gogov <konstantin.gogov@sap.com>
-Date:   Thu Nov 6 17:17:04 2025 +0200
+Date:   Fri Nov 7 10:55:40 2025 +0200
 
-    feat(framework): Custom Illustrations Documentation & API Enhancement (#12260)
+    fix(ui5-dynamic-page-title): correct ARIA attribute handling for non-interactive titles (#12598)
     
-    - Rename registerIllustration to unsafeRegisterIllustration with security warnings
-    - Add new registerIllustration API that accepts template functions instead of raw SVG strings
-    - Update IllustratedMessage component to execute templates via executeTemplate()
-    - Add IllustratedMessageTemplate support for both safe (object) and unsafe (string) variants
-    - Update build tool to use unsafeRegisterIllustration for generated illustrations
-    - Add comprehensive documentation for both registration methods
-    - Create playground page demonstrating safe and unsafe approaches with working examples
-    - Export IllustrationData and UnsafeIllustrationData types for better TypeScript support
+    When the DynamicPageTitle is non-interactive, the ARIA labelledby attribute
+    should not reference any heading elements. This change ensures that the
+    _ariaLabelledBy getter returns undefined when the title is not interactive,
+    preventing potential accessibility issues.
     
-    The safe variant (registerIllustration) uses template functions to prevent XSS vulnerabilities,
-    while the unsafe variant (unsafeRegisterIllustration) maintains backward compatibility for
-    raw SVG strings with explicit security warnings.
-    
-    Jira: BGSOFUIPIRIN-6913
+    Fixes: #12466
