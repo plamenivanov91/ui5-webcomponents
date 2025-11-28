@@ -15,6 +15,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { isSpace, isSpaceShift, isEnter, isEnterShift, isUp, isDown, isLeft, isRight, isHome, isEnd, isHomeCtrl, isEndCtrl, isPageUp, isPageDown, isPageUpShift, isPageUpAlt, isPageUpShiftCtrl, isPageDownShift, isPageDownAlt, isPageDownShiftCtrl, } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import UI5Date from "@ui5/webcomponents-localization/dist/dates/UI5Date.js";
@@ -653,9 +654,20 @@ let DayPicker = DayPicker_1 = class DayPicker extends CalendarPart {
         return firstDay;
     }
     _getFirstDayOfWeek() {
-        const result = CalendarUtils.getWeekConfigurationValues(this.calendarWeekNumbering);
         const localeData = getCachedLocaleDataInstance(getLocale());
-        return result?.firstDayOfWeek ? result.firstDayOfWeek : localeData.getFirstDayOfWeek();
+        let firstDayOfWeek;
+        const configurationFirstDayOfWeek = getFirstDayOfWeek();
+        if (configurationFirstDayOfWeek !== undefined) {
+            firstDayOfWeek = configurationFirstDayOfWeek;
+        }
+        else {
+            firstDayOfWeek = localeData.getFirstDayOfWeek();
+        }
+        const result = CalendarUtils.getWeekConfigurationValues(this.calendarWeekNumbering);
+        if (result?.firstDayOfWeek !== undefined && this.calendarWeekNumbering !== "Default") {
+            return result.firstDayOfWeek;
+        }
+        return firstDayOfWeek;
     }
     get styles() {
         return {

@@ -1,8 +1,7 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
-import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
+import { createOrUpdateStyle } from "../ManagedStyles.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
-import { getFeature } from "../FeaturesRegistry.js";
 import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoot.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 import { getCurrentRuntimeIndex } from "../Runtimes.js";
@@ -25,9 +24,6 @@ const loadThemeBase = async (theme) => {
         createOrUpdateStyle(cssData, "data-ui5-theme-properties", BASE_THEME_PACKAGE, theme);
     }
 };
-const deleteThemeBase = () => {
-    removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
-};
 const loadComponentPackages = async (theme, externalThemeName) => {
     const registeredPackages = getRegisteredPackages();
     const packagesStylesPromises = [...registeredPackages].map(async (packageName) => {
@@ -42,39 +38,29 @@ const loadComponentPackages = async (theme, externalThemeName) => {
     return Promise.all(packagesStylesPromises);
 };
 const detectExternalTheme = async (theme) => {
+    if (getThemeRoot()) {
+        await attachCustomThemeStylesToHead(theme);
+    }
     // If theme designer theme is detected, use this
     const extTheme = getThemeDesignerTheme();
     if (extTheme) {
         return extTheme;
     }
-    // If OpenUI5Support is enabled, try to find out if it loaded variables
-    const openUI5Support = getFeature("OpenUI5Support");
-    if (openUI5Support && openUI5Support.isOpenUI5Detected()) {
-        const varsLoaded = openUI5Support.cssVariablesLoaded();
-        if (varsLoaded) {
-            return {
-                themeName: openUI5Support.getConfigurationSettingsObject()?.theme, // just themeName
-                baseThemeName: "", // baseThemeName is only relevant for custom themes
-            };
-        }
-    }
-    else if (getThemeRoot()) {
-        await attachCustomThemeStylesToHead(theme);
-        return getThemeDesignerTheme();
-    }
 };
 const applyTheme = async (theme) => {
+    // Detect external theme if available (e.g., from theme designer or custom theme root)
     const extTheme = await detectExternalTheme(theme);
-    // Only load theme_base properties if there is no externally loaded theme, or there is, but it is not being loaded
-    if (!extTheme || theme !== extTheme.themeName) {
-        await loadThemeBase(theme);
-    }
-    else {
-        deleteThemeBase();
-    }
-    // Always load component packages properties. For non-registered themes, try with the base theme, if any
+    // Determine which theme to use for component packages:
+    // 1. If the requested theme is registered, use it directly
+    // 2. If external theme exists, use its base theme (e.g., "my_custom_theme" extends "sap_fiori_3")
+    // 3. Otherwise, fallback to the default theme
     const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
-    await loadComponentPackages(packagesTheme || DEFAULT_THEME, extTheme && extTheme.themeName === theme ? theme : undefined);
+    const effectiveTheme = packagesTheme || DEFAULT_THEME;
+    // Load base theme properties
+    await loadThemeBase(effectiveTheme);
+    // Load component-specific theme properties
+    // Pass external theme name only if it matches the requested theme to avoid conflicts
+    await loadComponentPackages(effectiveTheme, extTheme && extTheme.themeName === theme ? theme : undefined);
     fireThemeLoaded(theme);
 };
 export default applyTheme;

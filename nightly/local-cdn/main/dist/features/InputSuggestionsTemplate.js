@@ -15,7 +15,7 @@ export default function InputSuggestionsTemplate(hooks) {
                 _jsxs("div", { slot: "header", class: {
                         "ui5-responsive-popover-header": true,
                         ...this.classes.popoverValueState,
-                    }, style: this.styles.suggestionPopoverHeader, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: valueStateMessageInputIcon?.call(this) }), this.open && valueStateMessage?.call(this)] }), suggestionsList.call(this), this._isPhone &&
+                    }, style: this.styles.suggestionPopoverHeader, children: [_jsx(Icon, { class: "ui5-input-value-state-message-icon", name: valueStateMessageInputIcon?.call(this) }), this.open && valueStateMessage?.call(this)] }), this.showSuggestions && suggestionsList.call(this), this._isPhone &&
                 _jsxs("div", { slot: "footer", class: "ui5-responsive-popover-footer", children: [_jsx(Button, { design: "Emphasized", onClick: this._confirmMobileValue, children: this._suggestionsOkButtonText }), _jsx(Button, { class: "ui5-responsive-popover-close-btn", design: "Transparent", onClick: this._cancelMobileValue, children: this._suggestionsCancelButtonText })] })] }));
 }
 function defaultSuggestionsList() {

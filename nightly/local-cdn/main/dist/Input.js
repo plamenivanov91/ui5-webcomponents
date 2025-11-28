@@ -589,7 +589,7 @@ let Input = Input_1 = class Input extends UI5Element {
     innerFocusIn() { }
     _onfocusout(e) {
         const toBeFocused = e.relatedTarget;
-        if (this.Suggestions?._getPicker().contains(toBeFocused) || this.contains(toBeFocused) || this.getSlottedNodes("valueStateMessage").some(el => el.contains(toBeFocused))) {
+        if (this.Suggestions?._getPicker()?.contains(toBeFocused) || this.contains(toBeFocused) || this.getSlottedNodes("valueStateMessage").some(el => el.contains(toBeFocused))) {
             return;
         }
         this._keepInnerValue = false;
@@ -640,7 +640,7 @@ let Input = Input_1 = class Input extends UI5Element {
         };
         if (this.previousValue !== this.getInputDOMRefSync().value) {
             // if picker is open there might be a selected item, wait next tick to get the value applied
-            if (this.Suggestions?._getPicker().open && this._flattenItems.some(item => item.hasAttribute("ui5-suggestion-item") && item.selected)) {
+            if (this.Suggestions?._getPicker()?.open && this._flattenItems.some(item => item.hasAttribute("ui5-suggestion-item") && item.selected)) {
                 this._changeToBeFired = true;
             }
             else {
@@ -955,13 +955,19 @@ let Input = Input_1 = class Input extends UI5Element {
     }
     getInputDOMRef() {
         if (isPhone() && this.Suggestions) {
-            return this.Suggestions._getPicker().querySelector(".ui5-input-inner-phone");
+            const picker = this.Suggestions._getPicker();
+            if (picker) {
+                return picker.querySelector(".ui5-input-inner-phone");
+            }
         }
         return this.nativeInput;
     }
     getInputDOMRefSync() {
-        if (isPhone() && this.Suggestions?._getPicker()) {
-            return this.Suggestions._getPicker().querySelector(".ui5-input-inner-phone").shadowRoot.querySelector("input");
+        if (isPhone() && this.Suggestions) {
+            const picker = this.Suggestions._getPicker();
+            if (picker) {
+                return picker.querySelector(".ui5-input-inner-phone").shadowRoot.querySelector("input");
+            }
         }
         return this.nativeInput;
     }
@@ -1282,9 +1288,6 @@ let Input = Input_1 = class Input extends UI5Element {
 			`;
         }
         return "";
-    }
-    get _valueStatePopoverHorizontalAlign() {
-        return this.effectiveDir !== "rtl" ? "Start" : "End";
     }
     /**
      * This method is relevant for sap_horizon theme only
