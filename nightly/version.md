@@ -1,5 +1,5 @@
-commit b7e93525288be73f17828a4aec16465097c1550b
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Thu Nov 27 08:06:33 2025 +0000
+commit 2f236870c6768e5744a14568b239eea9cc7bdb30
+Author: Konstantin Gogov <konstantin.gogov@sap.com>
+Date:   Fri Nov 28 16:28:10 2025 +0200
 
-    chore(release): publish v2.17.0-rc.4 [ci skip]
+    chore(ui5-illustrated-message): remove unnecessary imports from sample (#12709)

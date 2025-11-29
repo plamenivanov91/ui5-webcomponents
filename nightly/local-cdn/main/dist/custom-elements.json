@@ -1599,6 +1599,10 @@
             {
               "name": "specialDates",
               "description": "Defines the special dates, visually emphasized in the calendar."
+            },
+            {
+              "name": "disabledDates",
+              "description": "Defines the disabled date ranges that cannot be selected in the calendar.\nUse `ui5-date-range` elements to specify ranges of disabled dates.\nEach range can define a start date, an end date, or both."
             }
           ],
           "members": [

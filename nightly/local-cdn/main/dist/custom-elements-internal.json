@@ -1915,6 +1915,22 @@
                 ]
               },
               "_ui5privacy": "public"
+            },
+            {
+              "name": "disabledDates",
+              "description": "Defines the disabled date ranges that cannot be selected in the calendar.\nUse `ui5-date-range` elements to specify ranges of disabled dates.\nEach range can define a start date, an end date, or both.",
+              "_ui5since": "2.16.0",
+              "_ui5type": {
+                "text": "Array<CalendarDateRange>",
+                "references": [
+                  {
+                    "name": "CalendarDateRange",
+                    "package": "@ui5/webcomponents",
+                    "module": "dist/CalendarDateRange.js"
+                  }
+                ]
+              },
+              "_ui5privacy": "public"
             }
           ],
           "members": [
