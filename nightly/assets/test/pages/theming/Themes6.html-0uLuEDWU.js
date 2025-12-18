@@ -1,1 +1,0 @@
-import"../../../bundle.esm-CrisjVU2.js";setTimeout(()=>{window["sap-ui-webcomponents-bundle"].configuration.setTheme("sap_horizon_hcb"),setTimeout(()=>{const e=document.createElement("link");e.rel="stylesheet",e.href="https://cdn.jsdelivr.net/npm/@sap-theming/theming-base-content/content/Base/baseLib/sap_belize/css_variables.css",document.head.appendChild(e)},1e3)},1e3);
