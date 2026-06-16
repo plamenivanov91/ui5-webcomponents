@@ -8695,12 +8695,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/illustrations/AllIllustrations.js",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
       "path": "dist/types/FCLLayout.js",
       "declarations": [],
       "exports": [
@@ -9028,6 +9022,12 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/illustrations/AllIllustrations.js",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",
