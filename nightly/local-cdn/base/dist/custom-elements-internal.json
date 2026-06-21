@@ -1081,6 +1081,36 @@
     },
     {
       "kind": "javascript-module",
+      "path": "dist/asset-registries/Icons.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/asset-registries/Illustrations.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/asset-registries/LocaleData.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/asset-registries/Themes.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/asset-registries/i18n.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "dist/config/AnimationMode.js",
       "declarations": [],
       "exports": []
@@ -1148,36 +1178,6 @@
     {
       "kind": "javascript-module",
       "path": "dist/config/Tooltips.js",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/asset-registries/Icons.js",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/asset-registries/Illustrations.js",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/asset-registries/LocaleData.js",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/asset-registries/Themes.js",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/asset-registries/i18n.js",
       "declarations": [],
       "exports": []
     },
@@ -1633,6 +1633,51 @@
     },
     {
       "kind": "javascript-module",
+      "path": "dist/renderer/JsxRenderer.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "jsxRenderer",
+            "module": "dist/renderer/JsxRenderer.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/renderer/LitRenderer.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "litRender",
+            "module": "dist/renderer/LitRenderer.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/renderer/executeTemplate.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "executeTemplate",
+            "module": "dist/renderer/executeTemplate.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "dist/locale/Locale.js",
       "declarations": [],
       "exports": [
@@ -1735,51 +1780,6 @@
           "declaration": {
             "name": "normalizeLocale",
             "module": "dist/locale/normalizeLocale.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/renderer/JsxRenderer.js",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "jsxRenderer",
-            "module": "dist/renderer/JsxRenderer.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/renderer/LitRenderer.js",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "litRender",
-            "module": "dist/renderer/LitRenderer.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/renderer/executeTemplate.js",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "executeTemplate",
-            "module": "dist/renderer/executeTemplate.js"
           }
         }
       ]
