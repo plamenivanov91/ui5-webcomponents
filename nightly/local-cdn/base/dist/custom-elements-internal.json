@@ -1111,6 +1111,21 @@
     },
     {
       "kind": "javascript-module",
+      "path": "dist/converters/DOMReference.js",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "DOMReferenceConverter",
+            "module": "dist/converters/DOMReference.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "dist/config/AnimationMode.js",
       "declarations": [],
       "exports": []
@@ -1180,21 +1195,6 @@
       "path": "dist/config/Tooltips.js",
       "declarations": [],
       "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/converters/DOMReference.js",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "DOMReferenceConverter",
-            "module": "dist/converters/DOMReference.js"
-          }
-        }
-      ]
     },
     {
       "kind": "javascript-module",
